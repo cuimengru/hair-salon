@@ -6,10 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    use DefaultDatetimeFormat;
 
     /**
      * The attributes that are mass assignable.
@@ -17,9 +20,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password','avatar','nickname','phone','email_verified_at','remember_token','introduce',
+        'integral','balance','status','created_at','updated_at',
     ];
 
     /**
@@ -40,4 +42,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+    /* @array $appends */
+    protected $appends = [
+        'avatar_url',
+    ];
+    // 返回头像链接
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->avatar) {
+            return Storage::disk('public')->url($this->avatar);
+        } else {
+            return '';
+        }
+    }
 }
