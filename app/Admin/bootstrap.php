@@ -18,4 +18,9 @@
  *
  */
 
-Encore\Admin\Form::forget(['map', 'editor']);
+Encore\Admin\Form::forget(['map']);
+/*Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
+    $navbar->right(Nav\Link::make('Settings', 'configx/edit'));
+    $navbar->right(new Actions\ClearCache());
+    $navbar->left(new Nav\Dropdown());
+});*/

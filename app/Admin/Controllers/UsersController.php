@@ -25,7 +25,14 @@ class UsersController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User());
-
+        $grid->filter(function ($filter) {
+            //$filter->disableIdFilter();  // 去掉默认的id过滤器
+            // 在这里添加字段过滤器
+            //$filter->like('name', 'name');
+            $filter->like('phone', '手机号');
+            $filter->like('email', '邮箱');
+            $filter->between('created_at','创建时间')->datetime();
+        });
         $grid->column('id', __('Id'));
         $grid->column('avatar_url', __('头像'))->display(function ($value) {
             $icon = "";

@@ -13,4 +13,12 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('users', UsersController::class);// 用户管理
+    $router->resource('categories', CategoryController::class);//商品类目管理
+    $router->get('categories/create', 'CategoryController@create');// 创建商品类目管理表单
+    $router->post('categories', 'CategoryController@store'); // 新增商品类目管理
+    $router->get('categories/{id}/edit', 'CategoryController@edit');// 修改商品类目管理表单
+    $router->get('api/categories', 'CategoriesController@apiIndex');
+    $router->resource('products', ProductsController::class);//商品信息管理(集品类型)
+    $router->resource('self_products', SelfProductsController::class);//商品信息管理(自营类型)
+    $router->resource('idle_products', IdleProductsController::class);//商品信息管理(闲置类型)
 });
