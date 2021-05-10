@@ -12,7 +12,7 @@ class Product extends Model
     use DefaultDatetimeFormat;
     protected $fillable = [
         'title', 'description', 'image', 'on_sale','rating', 'sold_count', 'review_count', 'price',
-        'category_id','original_price','type','is_recommend'
+        'category_id','original_price','type','is_recommend','country'
     ];
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -98,7 +99,7 @@ class SelfProductsController extends AdminController
     {
         $form = new Form(new Product());
 
-        //$form->number('category_id', __('Category id'));
+        $form->select('category_id', __('类目'))->options(Category::selectOptions());
         $form->text('title', __('商品名称'))->rules('required');
         $form->image('image', __('封面图片'))->rules('required|image');
         $form->editor('description', __('商品描述'))->rules('required');

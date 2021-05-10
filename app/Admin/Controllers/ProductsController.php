@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -98,8 +99,9 @@ class ProductsController extends AdminController
     {
         $form = new Form(new Product());
 
-        //$form->number('category_id', __('Category id'));
+        $form->select('category_id', __('类目'))->options(Category::selectOptions());
         $form->text('title', __('商品名称'))->rules('required');
+        $form->text('country','商品产地');
         $form->image('image', __('封面图片'))->rules('required|image');
         $form->editor('description', __('商品描述'))->rules('required');
         $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('0');
@@ -115,7 +117,7 @@ class ProductsController extends AdminController
         $form->hasMany('skus', 'SKU 列表', function (Form\NestedForm $form) {
             $form->text('title', 'SKU 名称')->rules('required');
             $form->text('description', 'SKU 描述')->rules('required');
-            $form->text('price', '单价')->rules('required|numeric|min:0.01');
+            $form->text('price', '单价')->rules('required|numeric|min:0.00');
             $form->text('stock', '剩余库存')->rules('required|integer|min:0');
         });
 
