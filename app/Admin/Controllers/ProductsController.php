@@ -58,6 +58,7 @@ class ProductsController extends AdminController
             });
         });
         $grid->model()->where('type', '=',1);
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

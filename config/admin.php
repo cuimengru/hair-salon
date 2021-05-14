@@ -405,5 +405,18 @@ return [
             ],
             'field_type' => 'editor'
         ],
+        'configx' => [
+            // Set to `false` if you want to disable this extension
+            'enable' => true,
+            'tabs' => [
+                'website' => '基本设置',
+                'upload' => '文件上传',
+                'app' => 'APP',
+            ],
+            // Whether check group permissions.
+            //if (!Admin::user()->can('confix.tab.base')) {/*hide base tab*/ } .
+            'check_permission' => true,
+            'break_when_errors' => false // do not save anything if have errors
+        ],
     ],
 ];

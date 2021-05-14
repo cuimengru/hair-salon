@@ -58,6 +58,7 @@ class SelfProductsController extends AdminController
             });
         });
         $grid->model()->where('type', '=',2);
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

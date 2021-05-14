@@ -44,10 +44,10 @@ class UsersController extends AdminController
         $grid->column('name', __('姓名'));
         $grid->column('nickname', __('昵称'));
         $grid->column('phone', __('手机号'));
-        $grid->column('email', __('邮箱'));
-        $grid->email_verified_at('已验证邮箱')->display(function ($value) {
-            return $value ? '是' : '否';
-        });
+        //$grid->column('email', __('邮箱'));
+//        $grid->email_verified_at('已验证邮箱')->display(function ($value) {
+//            return $value ? '是' : '否';
+//        });
         $grid->status('审核状态')->radio([
             0 => '未审核',
             1 => '已审核',
@@ -56,7 +56,8 @@ class UsersController extends AdminController
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('更新时间'));
         $grid->actions(function ($actions) {
-            $actions->disableEdit();// 去掉删除
+            $actions->disableDelete();
+            //$actions->disableEdit();// 去掉删除
         });
 
         $grid->disableExport(); // 禁用导出数据
@@ -76,18 +77,18 @@ class UsersController extends AdminController
         $show = new Show(User::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->avatar_url()->image();
+        $show->field('avatar_url', __('头像'))->image();
         $show->field('name', __('姓名'));
         $show->field('nickname', __('昵称'));
         $show->field('phone', __('手机号'));
-        $show->field('email', __('邮箱'));
-        $show->field('email_verified_at', __('邮箱验证'));
+        //$show->field('email', __('邮箱'));
+        //$show->field('email_verified_at', __('邮箱验证'));
         $show->field('introduce', __('简介'));
         $show->field('integral', __('积分'));
         $show->field('balance', __('余额'));
         $show->field('status', __('审核状态'))->using(['1' => '已审核', '0' => '未审核','-1'=>'审核中']);
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }

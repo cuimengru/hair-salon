@@ -58,6 +58,7 @@ class IdleProductsController extends AdminController
             });
         });
         $grid->model()->where('type', '=',3);
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
 
         return $grid;
