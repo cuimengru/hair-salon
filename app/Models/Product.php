@@ -39,4 +39,8 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function label()
+    {
+        return $this->hasMany(ProductLabel::class);
+    }
 }

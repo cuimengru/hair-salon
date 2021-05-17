@@ -18,4 +18,8 @@ class ReserveInformation extends Model
     {
         return $this->belongsTo(Designer::class);
     }
+    public function service()
+    {
+        return $this->hasMany(ServiceProject::class);
+    }
 }

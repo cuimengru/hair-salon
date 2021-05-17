@@ -28,4 +28,8 @@ class ReserveOrder extends Model
     {
         return $this->belongsTo(Designer::class);
     }
+    public function service()
+    {
+        return $this->belongsTo(ServiceProject::class);
+    }
 }

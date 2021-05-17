@@ -41,4 +41,8 @@ Route::group([
     $router->resource('reserve_orders', ReserveOrderController::class);//预约订单管理
     $router->resource('designer_comments', DesignersCommentController::class);//设计师评价管理
     $router->resource('product_comments', ProductsCommentController::class);//商品评价管理
+    $router->resource('service_projects', ServiceProjectController::class);//服务项目管理
+    $router->resource('balances', BalanceController::class);//余额管理
+    $router->get('balances/{balance}', 'BalanceController@show')->name('admin.orders.balanceshow');//余额详情
+    $router->resource('product_labels', ProductLabelController::class);//产品标签管理
 });

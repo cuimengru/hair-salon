@@ -94,7 +94,7 @@ class OrdersController extends AdminController
      * @param mixed $id
      * @return Show
      */
-    protected function detail($id)
+   /* protected function detail($id)
     {
         $show = new Show(Order::findOrFail($id));
 
@@ -118,7 +118,7 @@ class OrdersController extends AdminController
         $show->field('updated_at', __('Updated at'));
 
         return $show;
-    }
+    }*/
 
     /**
      * Make a form builder.
