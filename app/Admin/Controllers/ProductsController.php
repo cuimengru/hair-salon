@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductLabel;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -103,12 +104,21 @@ class ProductsController extends AdminController
         $form->select('category_id', __('类目'))->options(Category::selectOptions());
         $form->text('title', __('商品名称'))->rules('required');
         $form->text('country','商品产地');
+        $form->multipleSelect('label_id','商品标签')->options(ProductLabel::all()->pluck('name','id'));
         $form->image('image', __('封面图片'))->rules('required|image');
+        $form->multipleImage('many_image','多图上传');
         $form->editor('description', __('商品描述'))->rules('required');
         $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('0');
         $form->text('rating', __('评分'))->default(5.0);
         $form->decimal('price', __('商品现价'))->default(0.00);
         $form->decimal('original_price', __('商品原价'))->default(0.00);
+        $form->radio('package_mail', '是否包邮')->options(['1' => '是', '0'=> '否'])->default(1)->required();
+        $form->decimal('postage','邮费')->default(0)->required();
+        $form->hidden('postage')->default(0)->required();
+        $form->table('property', __('属性'), function ($table) {
+            $table->text('property_name','属性名称');
+            $table->text('property_content','属性内容');
+        });
         $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
@@ -117,6 +127,7 @@ class ProductsController extends AdminController
         // 直接添加一对多的关联模型
         $form->hasMany('skus', 'SKU 列表', function (Form\NestedForm $form) {
             $form->text('title', 'SKU 名称')->rules('required');
+            $form->image('image','SKU图片')->required();
             $form->text('description', 'SKU 描述')->rules('required');
             $form->text('price', '单价')->rules('required|numeric|min:0.00');
             $form->text('stock', '剩余库存')->rules('required|integer|min:0');
