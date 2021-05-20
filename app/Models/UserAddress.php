@@ -13,6 +13,7 @@ class UserAddress extends Model
         'city',
         'district',
         'address',
+        'street',
         'zip',
         'contact_name',
         'contact_phone',
@@ -32,6 +33,6 @@ class UserAddress extends Model
 
     public function getFullAddressAttribute()
     {
-        return "{$this->province}{$this->city}{$this->district}{$this->address}";
+        return "{$this->province}{$this->city}{$this->district}{$this->street}{$this->address}";
     }
 }

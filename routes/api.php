@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\IndexController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UserAddressController;
 
 
 /*
@@ -36,6 +37,12 @@ Route::prefix('v1')
                 Route::get('products/index', [ProductController::class, 'index']);//商城产品首页
                 Route::get('products/search', [ProductController::class, 'search']);//商城产品搜索
                 Route::get('products/{product}', [ProductController::class, 'show']);//商城产品详情
+
+                Route::get('user_addresses', [UserAddressController::class, 'index']);//删除收货地址(放在登陆后)
+                Route::post('user_addresses', [UserAddressController::class, 'store']);//创建收货地址(放在登陆后)
+                Route::patch('user_addresses/{id}', [UserAddressController::class, 'update']);//编辑收货地址(放在登陆后)
+                Route::delete('user_addresses/{id}', [UserAddressController::class, 'destroy']);//删除收货地址(放在登陆后)
+
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {

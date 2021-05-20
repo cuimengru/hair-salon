@@ -31,20 +31,23 @@ class ProductController extends Controller
         }
 
         //推荐产品
-        $product['recommend_product'] = QueryBuilder::for(Product::class)
-            ->allowedFilters([
-                AllowedFilter::exact('type') //商品类型 1集品 2自营 3闲置
-            ])
-            ->defaultSort('-created_at') //按照创建时间排序
-            ->allowedSorts('updated_at', 'price') // 支持排序字段 更新时间 价格
-            ->where('on_sale','=',1)
-            ->where('is_recommend','=',1)
-            ->select('id','title','country_name','label_id','image','price','original_price')
-            ->get();
-
-        foreach ($product['recommend_product'] as $k=>$value){
-            $product['recommend_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+        if($request->filter['type'] == 1 || $request->filter['type'] == 2){
+            //集品类
+            $product['recommend_product'] = QueryBuilder::for(Product::class)
+                ->allowedFilters([
+                    AllowedFilter::exact('type') //商品类型 1集品 2自营 3闲置
+                ])
+                ->defaultSort('-created_at') //按照创建时间排序
+                ->allowedSorts('updated_at', 'price') // 支持排序字段 更新时间 价格
+                ->where('on_sale','=',1)
+                ->where('is_recommend','=',1)
+                ->select('id','title','country_name','label_id','image','price','original_price')
+                ->get();
+            foreach ($product['recommend_product'] as $k=>$value){
+                $product['recommend_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+            }
         }
+
 
         //锦之选处的产品
         $product['choice_product'] = QueryBuilder::for(Product::class)
