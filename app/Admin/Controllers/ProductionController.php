@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Designer;
 use App\Models\Production;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -31,7 +32,7 @@ class ProductionController extends AdminController
         });
 
         $grid->column('id', __('Id'))->sortable();
-        //$grid->column('designer_id', __('Designer id'));
+        $grid->column('designer.name', __('设计师'));
         $grid->column('title', __('标题'))->limit(20);
         $grid->column('thumb_url', __('封面图片'))->display(function ($value) {
             $icon = "";
@@ -42,7 +43,11 @@ class ProductionController extends AdminController
         });
 
         $grid->column('rating', __('浏览次数'));
-        //$grid->column('is_recommend', __('Is recommend'));
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
+        ];
+        $grid->column('is_recommend', __('是否推荐'))->switch($states1);
         $grid->column('created_at', __('创建时间'));
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -92,14 +97,24 @@ class ProductionController extends AdminController
     {
         $form = new Form(new Production());
 
-        //$form->number('designer_id', __('Designer id'));
+        $form->select('designer_id',__('设计师'))->options(function ($id) {
+            $designer = Designer::find($id);
+
+            if ($designer) {
+                return [$designer->id => $designer->name];
+            }
+        })->ajax('/admin/api/designer')->required();
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName();
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName();// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->textarea('description', __('描述'));
         //$form->text('content', __('Content'));
         $form->number('rating', __('浏览次数'))->default(0);
-        //$form->number('is_recommend', __('Is recommend'));
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
+        ];
+        $form->switch('is_recommend', __('是否推荐'))->states($states1);
 
         return $form;
     }

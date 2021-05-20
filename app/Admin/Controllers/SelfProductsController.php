@@ -104,11 +104,12 @@ class SelfProductsController extends AdminController
         $form->select('category_id', __('类目'))->options(Category::selectOptions());
         $form->text('title', __('商品名称'))->rules('required');
         $form->text('country','商品产地');
+        $form->text('country_name','所属国家');
         $form->multipleSelect('label_id','商品标签')->options(ProductLabel::all()->pluck('name','id'));
-        $form->image('image', __('封面图片'))->rules('required|image');
-        $form->multipleImage('many_image','多图上传');
+        $form->image('image', __('封面图片'))->uniqueName()->rules('required|image');
+        $form->multipleImage('many_image','多图上传')->uniqueName()->removable();
         $form->editor('description', __('商品描述'))->rules('required');
-        $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('0');
+        $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('1')->required();
         $form->text('rating', __('评分'))->default(5.0);
         $form->decimal('price', __('商品现价'))->default(0.00);
         $form->decimal('original_price', __('商品原价'))->default(0.00);

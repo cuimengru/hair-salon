@@ -35,4 +35,9 @@ class Production extends Model
             return "";
         }
     }
+
+    public function designer()
+    {
+        return $this->belongsTo(Designer::class);
+    }
 }

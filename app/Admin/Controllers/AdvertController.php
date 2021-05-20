@@ -16,7 +16,7 @@ class AdvertController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Advert';
+    protected $title = '广告';
 
     /**
      * Make a grid builder.
@@ -87,12 +87,12 @@ class AdvertController extends AdminController
             }
         })->ajax('/admin/api/advert_categories')->required();
         $form->text('title', __('标题'))->required();
-        $form->image('thumb', __('头像'))->required();
+        $form->image('thumb', __('图片'))->uniqueName()->required();
         $form->textarea('description', __('描述'));
         $form->editor('content', __('内容'))->required();
         $form->url('url', __('跳转链接'));
-        $form->number('order', __('排序'))->default(0);
-        $form->radio('is_recommend', '是否推荐')->options(['1' => '是', '0'=> '否'])->default('0');
+        $form->number('order', __('排序'))->default(0)->help('越小越靠前');
+        //$form->radio('is_recommend', '是否推荐')->options(['1' => '是', '0'=> '否'])->default('0');
 
         return $form;
     }

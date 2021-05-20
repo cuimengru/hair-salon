@@ -14,7 +14,7 @@ class Product extends Model
     protected $fillable = [
         'title', 'description', 'image', 'on_sale','rating', 'sold_count', 'review_count', 'price',
         'category_id','original_price','type','is_recommend','country','label_id','many_image','property',
-        'package_mail','postage'
+        'package_mail','postage','country_name'
     ];
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段

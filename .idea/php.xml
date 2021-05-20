@@ -118,6 +118,7 @@
       <path value="$PROJECT_DIR$/vendor/laravel-admin-ext/config" />
       <path value="$PROJECT_DIR$/vendor/ichynul/row-table" />
       <path value="$PROJECT_DIR$/vendor/ichynul/configx" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-query-builder" />
     </include_path>
   </component>
   <component name="PhpUnit">

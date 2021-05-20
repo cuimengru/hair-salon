@@ -16,7 +16,7 @@ class AdvertCategoryController extends AdminController
      *
      * @var string
      */
-    protected $title = 'AdvertCategory';
+    protected $title = '广告分类';
 
     /**
      * Make a grid builder.
@@ -28,7 +28,7 @@ class AdvertCategoryController extends AdminController
         $grid = new Grid(new AdvertCategory());
 
         $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->column('name', __('名称'));
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('Updated at'));
         $grid->actions(function ($actions) {
