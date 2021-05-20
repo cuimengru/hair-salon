@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\IndexController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserAddressController;
-
+use App\Http\Controllers\Api\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +38,14 @@ Route::prefix('v1')
                 Route::get('products/search', [ProductController::class, 'search']);//商城产品搜索
                 Route::get('products/{product}', [ProductController::class, 'show']);//商城产品详情
 
+
                 Route::get('user_addresses', [UserAddressController::class, 'index']);//删除收货地址(放在登陆后)
                 Route::post('user_addresses', [UserAddressController::class, 'store']);//创建收货地址(放在登陆后)
                 Route::patch('user_addresses/{id}', [UserAddressController::class, 'update']);//编辑收货地址(放在登陆后)
-                Route::delete('user_addresses/{id}', [UserAddressController::class, 'destroy']);//删除收货地址(放在登陆后)
+                Route::post('user_addresses/address', [UserAddressController::class, 'destroy']);//删除收货地址(放在登陆后)
+                Route::post('cart', [CartController::class, 'store']);//添加商品到购物车(放在登陆后)
+                Route::post('cart/destroy', [CartController::class, 'destroy']);//在购物车中删除商品(放在登陆后)
+                Route::get('cart/index', [CartController::class, 'index']);//购物车列表(放在登陆后)
 
 
                 // 登录后可以访问的接口

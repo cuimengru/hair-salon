@@ -36,15 +36,20 @@ class UserAddressController extends Controller
     }
 
     //删除收货地址
-    public function destroy(string $Id,Request $request)
+    public function destroy(Request $request)
     {
-        $user_address = UserAddress::findOrFail($Id);
         $user = $request->user();
-        if($user->id != $user_address->user_id){
-            $data['message'] = "This action is unauthorized."; // 验证权限
-            return response()->json($data, 500);
+        foreach ($request->address_id as $k=>$value){
+            $user_address[$k] = UserAddress::findOrFail($value);
+
+            if($user->id != $user_address[$k]->user_id){
+                $data['message'] = "This action is unauthorized."; // 验证权限
+                return response()->json($data, 500);
+            }
+
+            $user_address[$k]->delete();
         }
-        $user_address->delete();
+
         $data['message'] = "Address Deleted OK!";
         return response()->json($data, 200);
     }

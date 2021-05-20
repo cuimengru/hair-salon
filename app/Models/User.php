@@ -59,8 +59,16 @@ class User extends Authenticatable
             return '';
         }
     }
+
+    //收货地址
     public function addresses()
     {
         return $this->hasMany(UserAddress::class);
+    }
+
+    //购物车
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 }
