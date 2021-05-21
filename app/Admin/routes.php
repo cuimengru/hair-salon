@@ -45,4 +45,5 @@ Route::group([
     $router->resource('balances', BalanceController::class);//余额管理
     $router->get('balances/{balance}', 'BalanceController@show')->name('admin.orders.balanceshow');//余额详情
     $router->resource('product_labels', ProductLabelController::class);//产品标签管理
+    $router->resource('sensitive_words', SensitiveWordController::class);//敏感词管理
 });

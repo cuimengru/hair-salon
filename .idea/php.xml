@@ -119,6 +119,7 @@
       <path value="$PROJECT_DIR$/vendor/ichynul/row-table" />
       <path value="$PROJECT_DIR$/vendor/ichynul/configx" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-query-builder" />
+      <path value="$PROJECT_DIR$/vendor/lustre/php-dfa-sensitive" />
     </include_path>
   </component>
   <component name="PhpUnit">
