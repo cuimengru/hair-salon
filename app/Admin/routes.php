@@ -13,10 +13,10 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('users', UsersController::class);// 用户管理
-    $router->resource('categories', CategoryController::class);//商品类目管理
-    $router->get('categories/create', 'CategoryController@create');// 创建商品类目管理表单
-    $router->post('categories', 'CategoryController@store'); // 新增商品类目管理
-    $router->get('categories/{id}/edit', 'CategoryController@edit');// 修改商品类目管理表单
+    $router->resource('categories', CategoryController::class);//集品商品类目管理
+    $router->get('categories/create', 'CategoryController@create');// 创建集品商品类目管理表单
+    $router->post('categories', 'CategoryController@store'); // 新增集品商品类目管理
+    $router->get('categories/{id}/edit', 'CategoryController@edit');// 修改集品商品类目管理表单
     $router->get('api/categories', 'CategoriesController@apiIndex');
     $router->resource('products', ProductsController::class);//商品信息管理(集品类型)
     $router->resource('self_products', SelfProductsController::class);//商品信息管理(自营类型)
@@ -46,4 +46,12 @@ Route::group([
     $router->get('balances/{balance}', 'BalanceController@show')->name('admin.orders.balanceshow');//余额详情
     $router->resource('product_labels', ProductLabelController::class);//产品标签管理
     $router->resource('sensitive_words', SensitiveWordController::class);//敏感词管理
+    $router->resource('self_categories', SelfCategoryController::class);//自营商品类目管理
+    $router->get('self_categories/create', 'SelfCategoryController@create');// 创建自营商品类目管理表单
+    $router->post('self_categories', 'SelfCategoryController@store'); // 新增自营商品类目管理
+    $router->get('self_categories/{id}/edit', 'SelfCategoryController@edit');// 修改自营商品类目管理表单
+    $router->resource('idle_categories', IdleCategoryController::class);//闲置商品类目管理
+    $router->get('idle_categories/create', 'IdleCategoryController@create');// 创建闲置商品类目管理表单
+    $router->post('idle_categories', 'IdleCategoryController@store'); // 新增闲置商品类目管理
+    $router->get('idle_categories/{id}/edit', 'IdleCategoryController@edit');// 修改闲置商品类目管理表单
 });

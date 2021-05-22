@@ -3,30 +3,25 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Category;
+use App\Models\IdleCategory;
+use App\Models\SelfCategory;
 use Encore\Admin\Controllers\AdminController;
-use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Layout\Content;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Show;
 use Encore\Admin\Layout\Column;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
+use Encore\Admin\Show;
 use Encore\Admin\Tree;
 use Encore\Admin\Widgets\Box;
 
-class CategoryController extends AdminController
+class IdleCategoryController extends AdminController
 {
-    use HasResourceActions;
-    /**
-     * Title for current resource.
-     *
-     * @var string
-     */
-    protected $title = '集品类商品类目';
+    protected $title = '闲置类商品类目';
 
     public function index(Content $content)
     {
-        return $content->title('集品类商品类目')
+        return $content->title('闲置类商品类目')
             ->description('列表')
             ->row(function (Row $row) {
                 // 显示分类树状图
@@ -34,8 +29,8 @@ class CategoryController extends AdminController
 
                 $row->column(6, function (Column $column) {
                     $form = new \Encore\Admin\Widgets\Form();
-                    $form->action(admin_url('categories'));
-                    $form->select('parent_id', __('父类目'))->options(Category::selectOptions());
+                    $form->action(admin_url('idle_categories'));
+                    $form->select('parent_id', __('父类目'))->options(IdleCategory::selectOptions());
                     $form->text('name', __('名称'))->required();
                     $form->number('order', __('排序'))->default(0)->help('越小越靠前');
                     // 定义一个名为『是否目录』的单选框
@@ -44,7 +39,7 @@ class CategoryController extends AdminController
                         ->default('0')
                         ->rules('required');
                     $form->hidden('_token')->default(csrf_token());
-                    $column->append((new Box(__('新增集品类商品类目'), $form))->style('success'));
+                    $column->append((new Box(__('新增闲置类商品类目'), $form))->style('success'));
                 });
             });
     }
@@ -54,10 +49,10 @@ class CategoryController extends AdminController
      */
     protected function treeView()
     {
-        return Category::tree(function (Tree $tree) {
+        return IdleCategory::tree(function (Tree $tree) {
             $tree->disableCreate(); // 关闭新增按钮
             $tree->branch(function ($branch) {
-                    return "<strong>{$branch['name']}</strong>"; // 标题添加strong标签
+                return "<strong>{$branch['name']}</strong>"; // 标题添加strong标签
             });
         });
     }
@@ -70,7 +65,7 @@ class CategoryController extends AdminController
      */
     public function show($id, Content $content)
     {
-        return redirect()->route('categories.edit', ['id' => $id]);
+        return redirect()->route('idle_categories.edit', ['id' => $id]);
     }
 
     /**
@@ -82,7 +77,7 @@ class CategoryController extends AdminController
      */
     public function edit($id, Content $content)
     {
-        return $content->title(__('集品类商品类目'))
+        return $content->title(__('闲置类商品类目'))
             ->description(__('编辑'))
             ->row($this->form()->edit($id));
     }
@@ -93,7 +88,7 @@ class CategoryController extends AdminController
      */
     protected function form($isEditing = false)
     {
-        $form = new Form(new Category());
+        $form = new Form(new IdleCategory());
 
         $form->display('id', 'ID');
         $form->select('parent_id', __('父类目'))->options(Category::selectOptions());
@@ -103,21 +98,5 @@ class CategoryController extends AdminController
             return $value ? '是' :'否';
         });
         return $form;
-    }
-
-    public function apiIndex(Request $request)
-    {
-        $search = $request->input('q');
-        $result = Category::query()
-            // 通过 is_directory 参数来控制 由于这里选择的是父类目，因此需要限定 is_directory 为 true
-            ->where('is_directory', boolval($request->input('is_directory', true)))
-            ->where('name', 'like', '%'.$search.'%')
-            ->paginate();
-        // 把查询出来的结果重新组装成 Laravel-Admin 需要的格式
-        $result->setCollection($result->getCollection()->map(function (Category $category) {
-            return ['id' => $category->id, 'text' => $category->full_name];
-        }));
-
-        return $result;
     }
 }

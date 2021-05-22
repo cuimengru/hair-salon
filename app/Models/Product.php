@@ -14,7 +14,7 @@ class Product extends Model
     protected $fillable = [
         'title', 'description', 'image', 'on_sale','rating', 'sold_count', 'review_count', 'price',
         'category_id','original_price','type','is_recommend','country','label_id','many_image','property',
-        'package_mail','postage','country_name'
+        'package_mail','postage','country_name','selfcategory_id','idlecategory_id'
     ];
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段
@@ -80,6 +80,8 @@ class Product extends Model
     {
         return $this->hasMany(ProductSku::class);
     }
+
+    //与集品商品类目关联
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -87,5 +89,17 @@ class Product extends Model
     public function label()
     {
         return $this->hasMany(ProductLabel::class);
+    }
+
+    //与自营商品类目关联
+    public function selfcategory()
+    {
+        return $this->belongsTo(SelfCategory::class);
+    }
+
+    //与闲置商品类目关联
+    public function idlecategory()
+    {
+        return $this->belongsTo(IdleCategory::class);
     }
 }

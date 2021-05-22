@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Category;
+use App\Models\IdleCategory;
 use App\Models\Product;
 use App\Models\ProductLabel;
 use Encore\Admin\Controllers\AdminController;
@@ -28,12 +29,12 @@ class IdleProductsController extends AdminController
     {
         $grid = new Grid(new Product());
         $grid->filter(function ($filter) {
-            $filter->like('category_id', '商品类目ID');
+            $filter->like('idlecategory.name', '商品类目');
             $filter->like('title', '商品名称');
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('category.name', __('商品类目'));
+        $grid->column('idlecategory.name', __('商品类目'));
         $grid->column('title', __('商品名称'));
         $grid->on_sale('已上架')->display(function ($value) {
             return $value ? '是' : '否';
@@ -103,7 +104,7 @@ class IdleProductsController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->select('category_id', __('类目'))->options(Category::selectOptions());
+        $form->select('idlecategory_id', __('类目'))->options(IdleCategory::selectOptions());
         $form->text('title', __('商品名称'))->rules('required');
         $form->text('country','商品产地');
         $form->text('country_name','所属国家');

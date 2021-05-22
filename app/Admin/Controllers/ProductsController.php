@@ -28,7 +28,7 @@ class ProductsController extends AdminController
     {
         $grid = new Grid(new Product());
         $grid->filter(function ($filter) {
-            $filter->like('category_id', '商品类目ID');
+            $filter->like('category.name', '商品类目');
             $filter->like('title', '商品名称');
             $filter->between('created_at','创建时间')->datetime();
         });
