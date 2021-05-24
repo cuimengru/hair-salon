@@ -8,11 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
+use Laravel\Passport\HasApiTokens;
+use Overtrue\EasySms\PhoneNumber;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
     use DefaultDatetimeFormat;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +64,11 @@ class User extends Authenticatable
         }
     }
 
+    public function routeNotificationForEasySms($notification)
+    {
+        return new PhoneNumber($this->phone);
+    }
+
     //收货地址
     public function addresses()
     {
@@ -70,5 +79,19 @@ class User extends Authenticatable
     public function cartItems()
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    /**
+     * Passport 登录支持 邮箱 和 手机号码
+     * @param $username
+     * @return mixed
+     */
+    public function findForPassport($username)
+    {
+        filter_var($username, FILTER_VALIDATE_EMAIL) ?
+            $credentials['email'] = $username :
+            $credentials['phone'] = $username;
+
+        return self::where($credentials)->first();
     }
 }
