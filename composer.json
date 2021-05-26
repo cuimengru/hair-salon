@@ -22,6 +22,7 @@
         "laravel/horizon": "^5.7",
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.2",
         "leonis/easysms-notification-channel": "^1.0",
         "lustre/php-dfa-sensitive": "^1.4",
         "maatwebsite/excel": "^3.1",

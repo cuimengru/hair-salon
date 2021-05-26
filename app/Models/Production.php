@@ -12,8 +12,13 @@ class Production extends Model
     use HasFactory;
     use DefaultDatetimeFormat;
     protected $fillable = [
-        'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend'
+        'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend','type','many_images'
     ];
+
+    protected $casts = [
+        'many_images'=>'array',
+    ];
+
     protected $appends = [
         'thumb_url','video_url'
     ];
@@ -34,6 +39,18 @@ class Production extends Model
         } else {
             return "";
         }
+    }
+
+    public function setManyImagesAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['many_images'] = json_encode($value);
+        }
+    }
+
+    public function getManyImagesAttribute($value)
+    {
+        return json_decode($value, true);
     }
 
     public function designer()

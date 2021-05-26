@@ -24,7 +24,7 @@ class CreateCommentsTable extends Migration
             $table->integer('product_sku_id')->nullable()->comment('对应商品 SKU ID');
             $table->integer('rate')->default(0)->comment('评分');
             $table->string('render_content')->nullable()->comment('评论内容');
-            $table->json('render_image')->nullable()->comment('评论图片');
+            $table->string('render_image')->nullable()->comment('评论图片');
             $table->string('render_video')->nullable()->comment('评论视频');
             $table->integer('status')->default(0)->comment('审核状态：0未审核1已审核');
             $table->timestamps();

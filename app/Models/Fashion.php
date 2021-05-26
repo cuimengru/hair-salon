@@ -37,4 +37,5 @@ class Fashion extends Model
             return "";
         }
     }
+
 }

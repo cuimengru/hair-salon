@@ -16,33 +16,32 @@ class Comment extends Model
         'render_content','render_image','render_video','status'
     ];
     protected $appends = [
-        'thumb_url','video_url'
+        'video_url'
     ];
-    /*protected $casts = [
-        'render_image'=>'json',
+    protected $casts = [
+        'render_image'=>'array',
     ];
+    public function setRenderImageAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['render_image'] = json_encode($value);
+        }
+    }
 
     public function getRenderImageAttribute($value)
     {
-        //return array_values(json_decode($value, true) ?: []);
-        return explode(',', $value);
+        return json_decode($value, true);
     }
 
-    public function setRenderImageAttribute($value)
-    {
-        $this->attributes['sales_labels'] = implode(',', $value);
-        //$this->attributes['render_image'] = json_encode(array_values($value));
-    }*/
-
     // 返回图片链接
-    public function getThumbUrlAttribute()
+   /* public function getThumbUrlAttribute()
     {
         if ($this->render_image) {
             return Storage::disk('public')->url($this->render_image);
         } else {
             return '';
         }
-    }
+    }*/
 
     public function getVideoUrlAttribute()
     {

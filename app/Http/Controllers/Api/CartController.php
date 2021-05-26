@@ -72,5 +72,23 @@ class CartController extends Controller
         return $cart;
     }
 
-
+    //减去购物车商品数量
+    public function update($cartId,Request $request)
+    {
+        $cart = CartItem::findOrFail($cartId);
+        $amount = $request->amount;
+        if($cart->amount == 1){
+            $data['message'] = "商品数量必须大于等于 1!";
+            return response()->json($data, 403);
+        }
+        $user = $request->user();
+        if($cart = $user->cartItems()->where('product_sku_id',$cart->product_sku_id)->first()){
+        //如果存在则直接叠加商品数量
+        $cart->update([
+            'amount' => $cart->amount - $amount,
+        ]);
+    }
+        $data['message'] = "Product Updated OK!";
+        return response()->json($data, 200);
+    }
 }

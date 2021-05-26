@@ -15,7 +15,7 @@ class FashionController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Fashion';
+    protected $title = '时尚咨询';
 
     /**
      * Make a grid builder.
@@ -30,7 +30,7 @@ class FashionController extends AdminController
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('title', __('标题'))->limit(20);
+        $grid->column('title', __('标题'))->limit(30);
         $grid->column('thumb_url', __('封面图片'))->display(function ($value) {
             $icon = "";
             if ($value) {
@@ -38,11 +38,11 @@ class FashionController extends AdminController
             }
             return $icon; // 标题添加strong标签
         });
-        /*$grid->column('video', __('Video'));
-        $grid->column('description', __('Description'));
-        $grid->column('content', __('Content'));
-        $grid->column('order', __('Order'));
-        $grid->column('is_recommend', __('Is recommend'));*/
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
+        ];
+        $grid->column('is_recommend', __('是否推荐'))->switch($states1);
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('Updated at'));
         $grid->actions(function ($actions) {
@@ -99,7 +99,11 @@ class FashionController extends AdminController
         $form->textarea('description', __('描述'));
         $form->editor('content', __('内容'))->required();
         $form->number('order', __('排序'))->default(0)->help('越小越靠前');
-        //$form->number('is_recommend', __('Is recommend'));
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
+        ];
+        $form->switch('is_recommend', __('是否推荐'))->states($states1);
 
         return $form;
     }

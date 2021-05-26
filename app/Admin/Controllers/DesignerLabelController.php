@@ -2,21 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\AdvertCategory;
+use App\Models\DesignerLabel;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use Illuminate\Http\Request;
 
-class AdvertCategoryController extends AdminController
+class DesignerLabelController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '广告分类';
+    protected $title = '设计师标签';
 
     /**
      * Make a grid builder.
@@ -25,16 +24,19 @@ class AdvertCategoryController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new AdvertCategory());
+        $grid = new Grid(new DesignerLabel());
 
         $grid->column('id', __('Id'));
         $grid->column('name', __('名称'));
         $grid->column('created_at', __('创建时间'));
-        //$grid->column('updated_at', __('Updated at'));
-        $grid->actions(function ($actions) {
-            $actions->disableDelete();
-            $actions->disableView();
+        $grid->tools(function ($tools) {
+            // 禁用批量删除按钮
+            $tools->batch(function ($batch) {
+                $batch->disableDelete();
+            });
         });
+        $grid->model()->orderBy('id', 'desc');
+
         return $grid;
     }
 
@@ -46,7 +48,7 @@ class AdvertCategoryController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(AdvertCategory::findOrFail($id));
+        $show = new Show(DesignerLabel::findOrFail($id));
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
@@ -63,17 +65,10 @@ class AdvertCategoryController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new AdvertCategory());
+        $form = new Form(new DesignerLabel());
 
-        $form->text('id', __('Id'))->readonly();
         $form->text('name', __('名称'));
 
         return $form;
-    }
-    public function apiIndex(Request $request)
-    {
-        $q = $request->get('q');
-
-        return AdvertCategory::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
     }
 }

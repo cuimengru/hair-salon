@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Designer;
+use App\Models\DesignerLabel;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -41,6 +42,11 @@ class DesignerController extends AdminController
         });
         $grid->column('position', __('职位'));
         $grid->column('rating', __('评价数量'));
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
+        ];
+        $grid->column('is_recommend', __('是否推荐'))->switch($states1);
         $grid->column('created_at', __('创建时间'));
         $grid->tools(function ($tools) {
             // 禁用批量删除按钮
@@ -85,10 +91,20 @@ class DesignerController extends AdminController
 
         $form->text('name', __('姓名'))->required();
         $form->image('thumb', __('封面图片'))->required();
+        $form->multipleImage('many_images','多图上传')->uniqueName()->removable();
         $form->textarea('description', __('描述'));
+        $form->multipleSelect('label_id','设计师标签')->options(DesignerLabel::all()->pluck('name','id'));
         $form->text('position', __('职位'));
+        $form->list('certificate',__('证书'));
+        $form->list('honor',__('荣誉'));
+        $form->text('score', __('评分'))->default(0.0);
         $form->number('rating', __('评价数量'))->default(0);
 
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
+        ];
+        $form->switch('is_recommend', __('是否推荐'))->states($states1);
         return $form;
     }
 

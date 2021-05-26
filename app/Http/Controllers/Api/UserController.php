@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Notifications\VerificationCode;
+use App\Services\SensitiveWords;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,11 +28,18 @@ class UserController extends Controller
     public function sms(Request $request)
     {
         $this->validate($request, [
-            'phone' => 'required|numeric|unique:users',
+            'phone' => 'required|numeric',
         ]);
 
         $phone = $request->phone;
+
+        $user = User::where('phone','=',$phone)->first();
+
         $code = str_pad(random_int(1, 999999), 6, 0, STR_PAD_LEFT); // 生成6位随机数，左侧补0
+        if($user){
+            $user->notify(new VerificationCode($code));
+            Notification::send($user,new VerificationCode($code));
+        }
         Notification::route(
             EasySmsChannel::class,
             new PhoneNumber($phone)
@@ -98,10 +106,11 @@ class UserController extends Controller
 
         $data = [
             'id' => $user->id,
-            'mobile' => $user->phone, // 手机号码
+            'phone' => $user->phone, // 手机号码
             'nickname' => $user->nickname, // 昵称
             'name' => $user->name, // 账户
             'avatar' => $user->avatar, //头像
+            'gender' => $user->gender,//性别
             //'introduce' => $user->introduce, //简介
             'balance' => $user->balance, //余额
             'integral' => $user->integral,
@@ -144,5 +153,84 @@ class UserController extends Controller
 
         $data['message'] = "头像上传成功";
         return response()->json($data, 200);
+    }
+
+    //修改密码
+    public function resetPassword(Request $request)
+    {
+        $this->validate($request, [
+            //'phone' => 'required|numeric|exists:users',
+            'password' => 'required|string|min:6|confirmed', // 需要字段 password_confirmation
+        ]);
+        $user = $request->user();
+
+        $verifyData = \Cache::get($request->verification_key);
+
+        if (!$verifyData) {
+            abort(403, '验证码已失效');
+        }
+
+        if(!hash_equals($verifyData['code'], $request->verification_code)){
+            // 返回401
+            throw new AuthenticationException('验证码错误');
+        }
+
+        if ($user) {
+            $user->update(['password' => bcrypt($request->password)]);
+            $data['message'] = "密码修改成功";
+            return response()->json($data, 200);
+        } else {
+            $data['message'] = "用户不存在";
+            return response()->json($data, 404);
+        }
+    }
+
+    //编辑用户
+    public function update(UserRequest $request)
+    {
+        $user = $request->user();
+
+        $attributes = $request->only(['phone','nickname','gender']);
+        $bad_nickname = SensitiveWords::getBadWord($request->nickname);
+        if(!empty($bad_nickname)){
+            $attributes['nickname'] = SensitiveWords::replace($request->nickname,"***"); //替换敏感词为 ***
+        }else{
+            $attributes['nickname'] = $request->nickname;
+        }
+
+        $user->update($attributes);
+
+        $data['message'] = "修改成功";
+        return response()->json($data, 200);
+    }
+
+    //忘记密码
+    public function forgetPassword(Request $request)
+    {
+        $this->validate($request, [
+            //'phone' => 'required|numeric|exists:users',
+            'password' => 'required|string|min:6|confirmed', // 需要字段 password_confirmation
+        ]);
+        $user = User::where('phone','=',$request->phone)->first();
+
+        $verifyData = \Cache::get($request->verification_key);
+
+        if (!$verifyData) {
+            abort(403, '验证码已失效');
+        }
+
+        if(!hash_equals($verifyData['code'], $request->verification_code)){
+            // 返回401
+            throw new AuthenticationException('验证码错误');
+        }
+
+        if ($user) {
+            $user->update(['password' => bcrypt($request->password)]);
+            $data['message'] = "密码修改成功";
+            return response()->json($data, 200);
+        } else {
+            $data['message'] = "用户不存在";
+            return response()->json($data, 404);
+        }
     }
 }

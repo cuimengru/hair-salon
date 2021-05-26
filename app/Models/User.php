@@ -25,7 +25,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password','avatar','nickname','phone','email_verified_at','remember_token','introduce',
-        'integral','balance','status','created_at','updated_at',
+        'integral','balance','status','created_at','updated_at','gender'
     ];
 
     /**
@@ -93,5 +93,23 @@ class User extends Authenticatable
             $credentials['phone'] = $username;
 
         return self::where($credentials)->first();
+    }
+
+    //收藏设计师
+    public function favoriteDesigners()
+    {
+        return $this->belongsToMany(Designer::class,'user_favorite_designers')
+            ->withTimestamps()
+            ->select('designers.id', 'designers.name', 'designers.thumb', 'designers.position', 'designers.description','designers.label_id')
+            ->orderBy('user_favorite_designers.created_at', 'desc');
+    }
+
+    //收藏作品
+    public function favoriteProductions()
+    {
+        return $this->belongsToMany(Production::class,'user_favorite_productions')
+            ->withTimestamps()
+            ->select('productions.id','productions.type','productions.title','productions.thumb')
+            ->orderBy('user_favorite_productions.created_at','desc');
     }
 }

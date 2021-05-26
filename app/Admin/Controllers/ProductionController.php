@@ -106,9 +106,11 @@ class ProductionController extends AdminController
         })->ajax('/admin/api/designer')->required();
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName();
+        $form->multipleImage('many_images','多图上传')->uniqueName()->removable();
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName();// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->textarea('description', __('描述'));
-        //$form->text('content', __('Content'));
+        $form->editor('content', __('内容'))->required();
+        $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0');
         $form->number('rating', __('浏览次数'))->default(0);
         $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
