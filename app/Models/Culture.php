@@ -12,7 +12,8 @@ class Culture extends Model
     use HasFactory;
     use DefaultDatetimeFormat;
     protected $fillable = [
-        'place_id', 'title', 'description', 'content','thumb', 'video', 'video_url', 'is_recommend'
+        'place_id', 'title', 'description', 'content','thumb', 'video', 'video_url', 'is_recommend','teacher',
+        'start_time'
     ];
     protected $appends = [
         'thumb_url','vimeo_player_url'

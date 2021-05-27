@@ -46,12 +46,12 @@ class IdleCategory extends Model
     }
     public function parent()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(IdleCategory::class);
     }
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(IdleCategory::class, 'parent_id');
     }
 
     public function products()
@@ -70,7 +70,7 @@ class IdleCategory extends Model
     // 定义一个访问器，获取所有祖先类目并按层级排序
     public function getAncestorsAttribute()
     {
-        return Category::query()
+        return IdleCategory::query()
             // 使用上面的访问器获取所有祖先类目 ID
             ->whereIn('id', $this->path_ids)
             // 按层级排序
@@ -96,14 +96,14 @@ class IdleCategory extends Model
     public function getCategoryTree($parentId = null, $allCategories = null)
     {
         if (is_null($allCategories)) {
-            $allCategories = Category::all();// 取出所有类目
+            $allCategories = IdleCategory::all();// 取出所有类目
         }
 
         return $allCategories
             ->where('parent_id', $parentId)
             ->sortBy('order')
             // 遍历分类，并用返回值构建一个新的集合
-            ->map(function (Category $category) use ($allCategories) {
+            ->map(function (IdleCategory $category) use ($allCategories) {
                 $data = [
                     'id' => $category->id,
                     'name' => $category->name,

@@ -34,7 +34,7 @@ class IdleProductsController extends AdminController
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('idlecategory.name', __('商品类目'));
+        /*$grid->column('idlecategory.name', __('商品类目'));*/
         $grid->column('title', __('商品名称'));
         $grid->on_sale('已上架')->display(function ($value) {
             return $value ? '是' : '否';
@@ -104,7 +104,7 @@ class IdleProductsController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->select('idlecategory_id', __('类目'))->options(IdleCategory::selectOptions());
+        //$form->select('idlecategory_id', __('类目'))->options(IdleCategory::selectOptions());
         $form->text('title', __('商品名称'))->rules('required');
         $form->text('country','商品产地');
         $form->text('country_name','所属国家');

@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\ImagesController;
 use App\Http\Controllers\Api\HelpCenterController;
 use App\Http\Controllers\Api\ProductionController;
 use App\Http\Controllers\Api\DesignerController;
+use App\Http\Controllers\Api\CategoriesController;
+use App\Http\Controllers\Api\CultureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,11 +48,21 @@ Route::prefix('v1')
                 Route::get('products/index', [ProductController::class, 'index']);//商城产品首页
                 Route::get('products/search', [ProductController::class, 'search']);//商城产品搜索
                 Route::get('products/{product}', [ProductController::class, 'show']);//商城产品详情
+
                 Route::get('help_center', [HelpCenterController::class, 'index']); //帮助中心列表
                 Route::get('help_center/{id}', [HelpCenterController::class, 'show']);  //某个帮助中心详情
+
                 Route::get('production', [ProductionController::class, 'index']);  //作品首页
                 Route::get('production/{id}', [ProductionController::class, 'show']);  //作品详情
                 Route::get('designer/{id}', [DesignerController::class, 'show']);//某个设计师详情
+
+                Route::get('products_category', [CategoriesController::class, 'allcategory']);//集品类商品分类
+                Route::get('self_categories', [CategoriesController::class, 'selfcategory']);//自营类商品分类
+                Route::get('idle_categories', [CategoriesController::class, 'idlecategory']);//闲置类商品分类
+                Route::get('category/products', [ProductController::class, 'allproducts']);//根据分类查询商品
+
+                Route::get('culture', [CultureController::class, 'index']);//文教娱乐列表
+                Route::get('culture/{id}', [CultureController::class, 'show']);//文教娱乐详情
 
 
 

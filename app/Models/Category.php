@@ -6,6 +6,7 @@ use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -17,14 +18,27 @@ class Category extends Model
 
         $this->setTitleColumn('name');// title 字段
     }
-    protected $fillable = ['name','parent_id','is_directory', 'level', 'path','order'];
+    protected $fillable = ['name','parent_id','is_directory', 'level', 'path','order','many_images'];
     protected $casts = [
         'is_directory' => 'boolean',
+        'many_images' => 'array',
     ];
 
     protected $hidden = [
         'is_directory','path'
     ];
+
+    //多图
+    public function setManyImagesAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['many_images'] = json_encode($value);
+        }
+    }
+    public function getManyImagesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
     protected static function boot()
     {
@@ -109,7 +123,14 @@ class Category extends Model
                     'name' => $category->name,
                     'order' => $category->order,
                     'level' => $category->level,
+                    'many_images' => $category->many_images,
                 ];
+                if($category->many_images){
+                    foreach ($category->many_images as $k=>$value){
+                        $many_imageUrl[$k] = Storage::disk('public')->url($value);
+                    }
+                    $data['many_imageUrl'] = $many_imageUrl;
+                }
                 // 如果存在子类目，进行递归调用，并将子类目的数据存入 children 字段中
                 $data['children'] = $this->getCategoryTree($category->id, $allCategories)->toArray();
                 $data['children'] = array_values($data['children']);

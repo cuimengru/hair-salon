@@ -6,6 +6,7 @@ use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class SelfCategory extends Model
 {
@@ -17,9 +18,10 @@ class SelfCategory extends Model
 
         $this->setTitleColumn('name');// title 字段
     }
-    protected $fillable = ['name','parent_id','is_directory', 'level', 'path','order'];
+    protected $fillable = ['name','parent_id','is_directory', 'level', 'path','order','many_images'];
     protected $casts = [
         'is_directory' => 'boolean',
+        'many_images' => 'array',
     ];
 
     protected $hidden = [
@@ -46,12 +48,12 @@ class SelfCategory extends Model
     }
     public function parent()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(SelfCategory::class);
     }
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(SelfCategory::class, 'parent_id');
     }
 
     public function products()
@@ -70,7 +72,7 @@ class SelfCategory extends Model
     // 定义一个访问器，获取所有祖先类目并按层级排序
     public function getAncestorsAttribute()
     {
-        return Category::query()
+        return SelfCategory::query()
             // 使用上面的访问器获取所有祖先类目 ID
             ->whereIn('id', $this->path_ids)
             // 按层级排序
@@ -96,20 +98,27 @@ class SelfCategory extends Model
     public function getCategoryTree($parentId = null, $allCategories = null)
     {
         if (is_null($allCategories)) {
-            $allCategories = Category::all();// 取出所有类目
+            $allCategories = SelfCategory::all();// 取出所有类目
         }
 
         return $allCategories
             ->where('parent_id', $parentId)
             ->sortBy('order')
             // 遍历分类，并用返回值构建一个新的集合
-            ->map(function (Category $category) use ($allCategories) {
+            ->map(function (SelfCategory $category) use ($allCategories) {
                 $data = [
                     'id' => $category->id,
                     'name' => $category->name,
                     'order' => $category->order,
                     'level' => $category->level,
+                    'many_images' => $category->many_images,
                 ];
+                if($category->many_images){
+                    foreach ($category->many_images as $k=>$value){
+                        $many_imageUrl[$k] = Storage::disk('public')->url($value);
+                    }
+                    $data['many_imageUrl'] = $many_imageUrl;
+                }
                 // 如果存在子类目，进行递归调用，并将子类目的数据存入 children 字段中
                 $data['children'] = $this->getCategoryTree($category->id, $allCategories)->toArray();
                 $data['children'] = array_values($data['children']);

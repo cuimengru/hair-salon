@@ -31,6 +31,7 @@ class SelfCategoryController extends AdminController
                     $form->action(admin_url('self_categories'));
                     $form->select('parent_id', __('父类目'))->options(SelfCategory::selectOptions());
                     $form->text('name', __('名称'))->required();
+                    $form->multipleImage('many_images','多图上传')->uniqueName()->removable();
                     $form->number('order', __('排序'))->default(0)->help('越小越靠前');
                     // 定义一个名为『是否目录』的单选框
                     $form->radio('is_directory', '是否目录')
@@ -92,6 +93,7 @@ class SelfCategoryController extends AdminController
         $form->display('id', 'ID');
         $form->select('parent_id', __('父类目'))->options(Category::selectOptions());
         $form->text('name', '类目名称')->rules('required');
+        $form->multipleImage('many_images','多图上传')->uniqueName()->removable();
         $form->number('order', __('排序'))->default(0)->help('越小越靠前');
         $form->display('is_directory', '是否目录')->with(function ($value) {
             return $value ? '是' :'否';
