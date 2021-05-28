@@ -8,6 +8,8 @@ use App\Models\Designer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class DesignerController extends Controller
 {
@@ -77,6 +79,22 @@ class DesignerController extends Controller
             $designer['comments'][$c]['user_name'] = $user->nickname;
             $designer['comments'][$c]['user_avatar'] = $user->avatar_url;
         }
+        return $designer;
+    }
+
+    //设计师列表
+    public function index()
+    {
+        $designer = QueryBuilder::for(Designer::class)
+            /*->allowedFilters([
+                AllowedFilter::exact('type'), //商品类型 1集品 2自营 3闲置
+                'title'
+            ])*/
+            ->defaultSort('-created_at') //按照创建时间排序
+            ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
+            ->select('id','name','position','thumb','label_id')
+            ->paginate(6);
+
         return $designer;
     }
 }

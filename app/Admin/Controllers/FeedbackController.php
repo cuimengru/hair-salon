@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Storage;
 
 class FeedbackController extends AdminController
 {
@@ -26,11 +27,11 @@ class FeedbackController extends AdminController
     {
         $grid = new Grid(new Feedback());
         $grid->filter(function ($filter) {
-            $filter->like('user.name', '用户姓名');
+            $filter->like('user.nickname', '用户昵称');
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('user.name', __('用户姓名'));
+        $grid->column('user.nickname', __('用户昵称'));
         $grid->column('content', __('内容'))->limit(20);
         $grid->actions(function ($actions) {
             //$actions->disableView();
@@ -61,7 +62,16 @@ class FeedbackController extends AdminController
         $show->field('id', __('Id'));
         $show->field('user.name', __('用户姓名'));
         $show->field('content', __('内容'));
-
+        $show->field('many_images', __('图片'))->unescape()->as(function ($content) {
+            $images = '';
+            foreach ($content as $k=>$value){
+                $image = Storage::disk('public')->url($value);
+                $images = $images."<div style='margin-top: 25px'>
+                        <img src='{$image}'  width='400' height='400'/>
+                        </div>";
+            }
+            return $images;
+        });
 
         return $show;
     }

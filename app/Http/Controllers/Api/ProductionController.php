@@ -10,6 +10,8 @@ use App\Models\Production;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductionController extends Controller
 {
@@ -132,5 +134,39 @@ class ProductionController extends Controller
             unset($production[$k]['pivot']);
         }
         return $production;
+    }
+
+    //全部作品列表
+    public function allIndex(Request $request)
+    {
+        $productions = QueryBuilder::for(Production::class)
+            /*->allowedFilters([
+                AllowedFilter::exact('type'), //商品类型 1集品 2自营 3闲置
+                'title'
+            ])*/
+            ->defaultSort('-created_at') //按照创建时间排序
+            ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
+            ->select('id','title','thumb','type')
+            ->paginate(9);
+        foreach ($productions as $p=>$product){
+            //收藏作品
+            if($request->user_id){
+                $productions[$p]['follows'] = DB::table('user_favorite_productions')
+                    ->where('user_id','=',$request->user_id)
+                    ->where('production_id','=',$product->id)
+                    ->first();
+                if ($productions[$p]['follows']){
+                    $productions[$p]['follows_production'] = 1; //已收藏
+                }else{
+                    $productions[$p]['follows_production'] = 0; //未收藏
+                }
+                unset($productions[$p]['follows']);
+            }else{
+                $productions[$p]['follows_production'] = 0; //未收藏
+            }
+            $index['production'] = $productions;
+        }
+
+        return $productions;
     }
 }

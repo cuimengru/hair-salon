@@ -43,14 +43,14 @@ class Comment extends Model
         }
     }*/
 
-    /*public function getVideoUrlAttribute()
+    public function getVideoUrlAttribute()
     {
         if ($this->render_image) {
-            return Storage::disk('public')->url($this->render_image);
+            return Storage::disk('public')->url($this->render_video);
         } else {
             return '';
         }
-    }*/
+    }
 
     public function user()
     {

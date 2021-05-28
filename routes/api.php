@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\ProductionController;
 use App\Http\Controllers\Api\DesignerController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\CultureController;
+use App\Http\Controllers\Api\UserLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +54,9 @@ Route::prefix('v1')
                 Route::get('help_center/{id}', [HelpCenterController::class, 'show']);  //某个帮助中心详情
 
                 Route::get('production', [ProductionController::class, 'index']);  //作品首页
+                Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
                 Route::get('production/{id}', [ProductionController::class, 'show']);  //作品详情
+                Route::get('designer', [DesignerController::class, 'index']);//设计师列表
                 Route::get('designer/{id}', [DesignerController::class, 'show']);//某个设计师详情
 
                 Route::get('products_category', [CategoriesController::class, 'allcategory']);//集品类商品分类
@@ -63,6 +66,8 @@ Route::prefix('v1')
 
                 Route::get('culture', [CultureController::class, 'index']);//文教娱乐列表
                 Route::get('culture/{id}', [CultureController::class, 'show']);//文教娱乐详情
+                Route::get('fashion', [CultureController::class, 'fashionIndex']);//时尚资讯列表
+                Route::get('fashion/{id}', [CultureController::class, 'fashionShow']);//时尚资讯详情
 
 
 
@@ -93,6 +98,13 @@ Route::prefix('v1')
                     Route::post('favor/{production}/production', [ProductionController::class, 'favor']);  //收藏作品
                     Route::delete('unfavor/{production}/production', [ProductionController::class, 'disfavor']);  //取消收藏作品
                     Route::post('production/followlist', [ProductionController::class, 'followlist']);//收藏作品列表
+                    Route::post('feedback', [HelpCenterController::class, 'storefeedback']); //提交反馈问题
+
+                    Route::post('like/product', [UserLikeController::class, 'likeProduct']); //创建集品商品浏览记录
+                    Route::post('like/idleproduct', [UserLikeController::class, 'likeIdleProduct']); //创建转售商品浏览记录
+                    Route::post('like/designer', [UserLikeController::class, 'likeDesigner']); //创建设计师浏览记录
+                    Route::post('like/production', [UserLikeController::class, 'likeProduction']); //创建作品浏览记录
+                    Route::get('like/list', [UserLikeController::class, 'likeList']); //浏览列表
 
 
 
