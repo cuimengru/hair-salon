@@ -83,3 +83,31 @@ function get_array_ids(array $data, string $key = 'id'): array
     return array_keys($ids);
 }
 
+/**
+ * 根据 video_id 获取 mp4 直链 TODO 从视频文件数组提取 540P 720P 1080P
+ * @param $video
+ * @param int $vip 0-免费 1-Pro 收费账户
+ * @return mixed
+ */
+function get_vimeo_mp4($video,$type)
+{
+    $path = Storage::disk('public')->putFile($type . '/' . date('Y/m/d'), $video);
+
+    return $path;
+}
+
+/**
+ * 允许上传视频文件类型
+ * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed|string
+ */
+function video_ext()
+{
+    if (config('upload.video_ext')) {
+        $ext = config('upload.video_ext');
+    } else {
+        $ext = "mp4,mov,wmv,avi,flv"; // 默认上传文件类型
+    }
+
+    return $ext;
+}
+

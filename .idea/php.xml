@@ -160,6 +160,11 @@
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-diactoros" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-zendframework-bridge" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/predis/predis" />
+      <path value="$PROJECT_DIR$/vendor/ankitpokhrel/tus-php" />
+      <path value="$PROJECT_DIR$/vendor/graham-campbell/manager" />
+      <path value="$PROJECT_DIR$/vendor/vimeo/vimeo-api" />
+      <path value="$PROJECT_DIR$/vendor/vimeo/laravel" />
     </include_path>
   </component>
   <component name="PhpUnit">

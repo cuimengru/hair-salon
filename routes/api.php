@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\DesignerController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\CultureController;
 use App\Http\Controllers\Api\UserLikeController;
+use App\Http\Controllers\Api\CommunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,7 @@ Route::prefix('v1')
                 Route::get('fashion', [CultureController::class, 'fashionIndex']);//时尚资讯列表
                 Route::get('fashion/{id}', [CultureController::class, 'fashionShow']);//时尚资讯详情
 
+                Route::get('community', [CommunityController::class, 'index']); //社区列表
 
 
                 // 登录后可以访问的接口
@@ -105,6 +107,9 @@ Route::prefix('v1')
                     Route::post('like/designer', [UserLikeController::class, 'likeDesigner']); //创建设计师浏览记录
                     Route::post('like/production', [UserLikeController::class, 'likeProduction']); //创建作品浏览记录
                     Route::get('like/list', [UserLikeController::class, 'likeList']); //浏览列表
+
+                    Route::post('community', [CommunityController::class, 'store']); //发布社区内容
+                    Route::post('message', [CommunityController::class, 'storeMessage']); //创建社区评论
 
 
 

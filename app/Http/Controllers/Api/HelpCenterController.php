@@ -42,6 +42,17 @@ class HelpCenterController extends Controller
                 $attributes['many_images'][$k] = $image->path;
                 //$avatar_image_id = array($image->id);
             }
+            $feedback = Feedback::create([
+                'user_id' => $user->id,
+                'content' => $request->contents,
+                'many_images' => $attributes['many_images'],
+            ]);
+        }else{
+            $feedback = Feedback::create([
+                'user_id' => $user->id,
+                'content' => $request->contents,
+                //'many_images' => $attributes['many_images'],
+            ]);
         }
         //查询和清理多余头像
         /*foreach ($avatar_image_id as $a=>$item){
@@ -58,11 +69,6 @@ class HelpCenterController extends Controller
         }*/
 
 
-        $feedback = Feedback::create([
-            'user_id' => $user->id,
-            'content' => $request->contents,
-            'many_images' => $attributes['many_images'],
-        ]);
 
         $data['message'] = "提交成功！";
         return response()->json($data, 200);

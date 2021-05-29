@@ -26,14 +26,14 @@ class DesignersCommentController extends AdminController
     {
         $grid = new Grid(new Comment());
         $grid->filter(function ($filter) {
-            $filter->like('user.name', __('用户'));
+            $filter->like('user.nickname', __('用户昵称'));
             $filter->like('designer.name', '设计师');
             $filter->between('created_at','创建时间')->datetime();
         });
 
         $grid->column('id', __('Id'))->sortable();
         //$grid->column('type', __('Type'));
-        $grid->column('user.name', __('用户'));
+        $grid->column('user.nickname', __('用户昵称'));
         $grid->column('reserveorder_id', __('预约订单ID'));
         $grid->column('designer.name', __('设计师'));
         $grid->column('rate', __('评分'));

@@ -55,4 +55,5 @@ Route::group([
     $router->post('idle_categories', 'IdleCategoryController@store'); // 新增闲置商品类目管理
     $router->get('idle_categories/{id}/edit', 'IdleCategoryController@edit');// 修改闲置商品类目管理表单
     $router->resource('designer_labels', DesignerLabelController::class); //设计师标签管理
+    $router->resource('communities', CommunityController::class); //社区管理
 });
