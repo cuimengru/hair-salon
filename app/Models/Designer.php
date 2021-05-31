@@ -14,7 +14,7 @@ class Designer extends Model
 
     protected $fillable = [
         'name','description','thumb', 'position', 'rating','many_images','certificate','honor','score','label_id',
-        'is_recommend'
+        'is_recommend','employee_number','is_employee'
     ];
 
     /**

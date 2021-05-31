@@ -74,6 +74,8 @@ class DesignerController extends AdminController
         $show->field('position', __('职位'));
         $show->field('rating', __('评价数量'));
         $show->field('description', __('描述'));
+        $show->field('employee_number', __('员工号'));
+        $show->field('is_employee', '是否是员工')->using(['1' => '是', '0' => '否']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
 
@@ -97,6 +99,8 @@ class DesignerController extends AdminController
         $form->text('position', __('职位'));
         $form->list('certificate',__('证书'));
         $form->list('honor',__('荣誉'));
+        $form->text('employee_number', __('员工号'));
+        $form->radio('is_employee', '是否是员工')->options(['1' => '是', '0' => '否'])->default('0');
         $form->text('score', __('评分'))->default(0.0);
         $form->number('rating', __('评价数量'))->default(0);
 

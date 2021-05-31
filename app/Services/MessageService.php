@@ -19,9 +19,10 @@ class MessageService
     {
         //查询是否有评论符合user_id 和 replyuser_id
         $check = CommunityReview::where('user_id',$user_id)
-            ->where('replyuser_id',$replyuser_id)
             ->where('community_id',$community_id)
+            ->where('replyuser_id',$replyuser_id)
             ->first();
+
         if($check){
             //有的话 附加新留言到原来的留言后面
             $new_message = $check->message + $msg;
@@ -32,9 +33,16 @@ class MessageService
             //没有 新创建评论
             $message = CommunityReview::create([
                 'user_id' => $user_id,
-                ''
+                'replyuser_id' => $replyuser_id,
+                'community_id' => $community_id,
+                'message' => $msg,
             ]);
         }
+
+        $res['message'] = "评论成功！";
+        $res['status'] = 200;
+
+        return $res;
 
     }
 }

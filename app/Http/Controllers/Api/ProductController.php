@@ -10,6 +10,7 @@ use App\Models\ProductLabel;
 use App\Models\ProductSku;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -113,6 +114,22 @@ class ProductController extends Controller
             $product['comments'][$t]['user_name'] = $user->nickname;
             $product['comments'][$t]['user_image'] = $user->avatar_url;
         }
+
+        //用户是否收藏
+        if($request->user_id){
+            $user_product = DB::table('user_favorite_products')
+                ->where('user_id','=',$request->user_id)
+                ->where('product_id','=',$product->id)
+                ->first();
+            if($user_product){
+                $product['favor_product'] = 1; //已收藏
+            }else{
+                $product['favor_product'] = 0; //未收藏
+            }
+        }else{
+            $product['favor_product'] = 0; //未收藏
+        }
+
         return $product;
     }
 
@@ -135,6 +152,56 @@ class ProductController extends Controller
             $product[$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
         }
 
+        return $product;
+    }
+
+    //收藏商品
+    public function favor(Product $product,Request $request)
+    {
+        $user = $request->user();
+        if ($user->favoriteProducts()->find($product->id)) {
+            $data['message'] = " 已经收藏！";
+            return response()->json($data, 403);
+        }
+        $user->favoriteProducts()->attach($product);
+
+        $data['message'] = "收藏成功！";
+        return response()->json($data, 200);
+    }
+
+    //取消收藏商品
+    public function disfavor(Product $product,Request $request)
+    {
+        $user = $request->user();
+        $user->favoriteProducts()->detach($product);
+
+        $data['message'] = "取消成功！";
+        return response()->json($data, 200);
+    }
+
+    //收藏商品列表
+    public function followlist(Request $request)
+    {
+        $product = $request->user()->favoriteProducts()->paginate(8);
+        foreach ($product as $k=>$value){
+            unset($product[$k]['category_id']);
+            unset($product[$k]['selfcategory_id']);
+            unset($product[$k]['idlecategory_id']);
+            unset($product[$k]['country']);
+            unset($product[$k]['description']);
+            unset($product[$k]['many_image']);
+            unset($product[$k]['on_sale']);
+            unset($product[$k]['sold_count']);
+            unset($product[$k]['review_count']);
+            unset($product[$k]['property']);
+            unset($product[$k]['package_mail']);
+            unset($product[$k]['postage']);
+            unset($product[$k]['type']);
+            unset($product[$k]['is_recommend']);
+            unset($product[$k]['created_at']);
+            unset($product[$k]['updated_at']);
+            unset($product[$k]['pivot']);
+        }
         return $product;
     }
 

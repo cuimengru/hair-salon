@@ -110,8 +110,12 @@ Route::prefix('v1')
 
                     Route::post('community', [CommunityController::class, 'store']); //发布社区内容
                     Route::post('message', [CommunityController::class, 'storeMessage']); //创建社区评论
+                    Route::post('community/like', [CommunityController::class, 'storelike']); //创建社区评论点赞
+                    Route::post('community/unlike', [CommunityController::class, 'deletelike']); //取消社区评论点赞
 
-
+                    Route::post('favor/{product}/product', [ProductController::class, 'favor']);//收藏商品
+                    Route::delete('unfavor/{product}/product', [ProductController::class, 'disfavor']);  //取消收藏商品
+                    Route::post('product/followlist', [ProductController::class, 'followlist']);//收藏商品列表
 
                 });
             });

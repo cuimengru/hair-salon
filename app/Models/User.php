@@ -112,4 +112,12 @@ class User extends Authenticatable
             ->select('productions.id','productions.type','productions.title','productions.thumb')
             ->orderBy('user_favorite_productions.created_at','desc');
     }
+
+    //收藏商品
+    public function favoriteProducts()
+    {
+        return $this->belongsToMany(Product::class, 'user_favorite_products')
+            ->withTimestamps()
+            ->orderBy('user_favorite_products.created_at', 'desc');
+    }
 }
