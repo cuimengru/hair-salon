@@ -33,7 +33,13 @@ class ReserveOrderController extends AdminController
         });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('user.name', __('用户姓名'));
-        $grid->column('designer.name', __('设计师'));
+        $grid->column('designer.name', __('设计师'))->display(function ($value) {
+           if($value == null){
+               return '到店分配';
+           }else{
+               return $value;
+           }
+        });
         $grid->column('service_project', __('服务项目'));
         $grid->column('phone',__('手机号'));
         $grid->column('created_at', __('创建时间'));

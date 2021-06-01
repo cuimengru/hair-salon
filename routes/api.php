@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\CultureController;
 use App\Http\Controllers\Api\UserLikeController;
 use App\Http\Controllers\Api\CommunityController;
+use App\Http\Controllers\Api\ReserveInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,6 +117,11 @@ Route::prefix('v1')
                     Route::post('favor/{product}/product', [ProductController::class, 'favor']);//收藏商品
                     Route::delete('unfavor/{product}/product', [ProductController::class, 'disfavor']);  //取消收藏商品
                     Route::post('product/followlist', [ProductController::class, 'followlist']);//收藏商品列表
+
+                    Route::get('worktime', [ReserveInformationController::class, 'worktime']); //工作时间
+                    Route::get('work/day', [ReserveInformationController::class, 'day']); //某个设计师工作时间
+                    Route::get('reserve/designer', [ReserveInformationController::class, 'designerIndex']); //可预约的设计师列表
+                    Route::post('reserve', [ReserveInformationController::class, 'store']);//创建预约
 
                 });
             });

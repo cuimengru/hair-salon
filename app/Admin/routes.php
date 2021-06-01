@@ -56,4 +56,6 @@ Route::group([
     $router->get('idle_categories/{id}/edit', 'IdleCategoryController@edit');// 修改闲置商品类目管理表单
     $router->resource('designer_labels', DesignerLabelController::class); //设计师标签管理
     $router->resource('communities', CommunityController::class); //社区管理
+    $router->resource('worktimes', WorktimeController::class); //工作时间管理
+    $router->resource('leavetimes', LeavetimeController::class); //请假管理
 });

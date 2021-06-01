@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\ServiceProject;
+use App\Models\Worktime;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class ServiceProjectController extends AdminController
+class WorktimeController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '服务项目';
+    protected $title = '工作时间';
 
     /**
      * Make a grid builder.
@@ -24,19 +24,12 @@ class ServiceProjectController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new ServiceProject());
-        $grid->filter(function ($filter) {
-            $filter->like('name', __('用户'));
-            $filter->between('created_at','创建时间')->datetime();
-        });
-        $grid->column('id', __('Id'))->sortable();
-        //$grid->column('type', __('Type'));
-        $grid->column('name', __('名称'));
-        $grid->column('price', __('价格'));
-        $grid->column('created_at', __('创建时间'));
+        $grid = new Grid(new Worktime());
+
+        $grid->column('id', __('Id'));
+        $grid->column('time', __('时间'));
         $grid->actions(function ($actions) {
             $actions->disableView();
-            //$actions->disableEdit();
             //$actions->disableDelete();
         });
         $grid->tools(function ($tools) {
@@ -45,7 +38,6 @@ class ServiceProjectController extends AdminController
                 $batch->disableDelete();
             });
         });
-        $grid->model()->orderBy('id', 'desc');
 
         return $grid;
     }
@@ -58,9 +50,13 @@ class ServiceProjectController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(ServiceProject::findOrFail($id));
+        $show = new Show(Worktime::findOrFail($id));
 
-
+        $show->field('id', __('Id'));
+        $show->field('time', __('Time'));
+        $show->field('order', __('Order'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -72,9 +68,10 @@ class ServiceProjectController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new ServiceProject());
-        $form->text('name', __('名称'))->required();
-        $form->text('price', __('价格'))->required();
+        $form = new Form(new Worktime());
+
+        $form->text('time', __('时间'));
+        $form->number('order', __('排序'))->default(0)->help('越小越靠前');
 
         return $form;
     }

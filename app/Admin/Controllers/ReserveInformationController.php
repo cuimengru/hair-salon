@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Designer;
 use App\Models\ReserveInformation;
+use App\Models\ServiceProject;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -33,10 +34,27 @@ class ReserveInformationController extends AdminController
         });
         $grid->column('id', __('Id'));
         $grid->column('designer.name', __('设计师'));
-        //$grid->column('service_project', __('Service project'));
+        $grid->column('service_project', __('服务项目'))->display(function ($service_project) {
+            $html = '';
+            foreach ($service_project as $k => $value){
+                $service = ServiceProject::where('id','=',$value)->select('name')->first();
+                $html .= "<span class='label label-success' style='margin-left: 10px'>{$service['name']}</span>";
+            }
+            return $html;
+        });
         //$grid->column('time', __('Time'));
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('Updated at'));
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+            //$actions->disableDelete();
+        });
+        $grid->tools(function ($tools) {
+            // 禁用批量删除按钮
+            $tools->batch(function ($batch) {
+                $batch->disableDelete();
+            });
+        });
         $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
@@ -54,7 +72,7 @@ class ReserveInformationController extends AdminController
         $show->field('id', __('Id'));
         $show->field('designer.name', __('设计师'));
         $show->field('service_project', __('服务项目'));
-        $show->field('time', __('可预约时间'));
+        //$show->field('time', __('可预约时间'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
 
@@ -70,16 +88,10 @@ class ReserveInformationController extends AdminController
     {
         $form = new Form(new ReserveInformation());
 
-        $form->select('designer_id',__('设计师'))->options(function ($id) {
-            $user = Designer::find($id);
+        $form->select('designer_id',__('设计师'))->options(Designer::all()->pluck('name', 'id'))->required();
 
-            if ($user) {
-                return [$user->id => $user->name];
-            }
-        })->ajax('/admin/api/designer')->required();
-
-        $form->text('service_project', __('服务项目'));
-        $form->text('time', __('可预约时间'));
+        $form->multipleSelect('service_project', __('服务项目'))->options(ServiceProject::all()->pluck('name','id'));
+        //$form->text('time', __('可预约时间'));
 
         return $form;
     }

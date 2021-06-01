@@ -14,12 +14,22 @@ class ReserveInformation extends Model
         'designer_id','service_project','time'
     ];
 
+    public function getServiceProjectAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function setServiceProjectAttribute($value)
+    {
+        $this->attributes['service_project'] = implode(',', $value);
+    }
+
     public function designer()
     {
         return $this->belongsTo(Designer::class);
     }
     public function service()
     {
-        return $this->hasMany(ServiceProject::class);
+        return $this->belongsToMany(ServiceProject::class);
     }
 }

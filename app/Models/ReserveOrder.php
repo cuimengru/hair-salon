@@ -11,7 +11,7 @@ class ReserveOrder extends Model
     use HasFactory;
     use DefaultDatetimeFormat;
     protected $fillable = [
-        'reserve_id','user_id','service_project','time','num','phone','remark','designer_id'
+        'reserve_id','user_id','service_project','time','num','phone','remark','designer_id','money'
     ];
 
     public function reserve()

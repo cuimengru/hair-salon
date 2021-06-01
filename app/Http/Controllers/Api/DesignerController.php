@@ -90,6 +90,7 @@ class DesignerController extends Controller
                 AllowedFilter::exact('type'), //商品类型 1集品 2自营 3闲置
                 'title'
             ])*/
+            ->where('is_employee','=',1)
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','name','position','thumb','label_id')
