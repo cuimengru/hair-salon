@@ -78,6 +78,12 @@ class DesignerController extends Controller
             $user = User::findOrFail($comment['user_id']);
             $designer['comments'][$c]['user_name'] = $user->nickname;
             $designer['comments'][$c]['user_avatar'] = $user->avatar_url;
+            if ($comment['render_image']) {
+                foreach ($comment['render_image'] as $i => $image) {
+                    $render_imageUrl[$i] = Storage::disk('public')->url($image);
+                }
+                $designer['comments'][$c]['render_imageUrl'] = $render_imageUrl;
+            }
         }
         return $designer;
     }

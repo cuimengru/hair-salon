@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ReserveOrderRequest;
 use App\Models\Designer;
 use App\Models\Leavetime;
 use App\Models\Product;
 use App\Models\ReserveInformation;
 use App\Models\ServiceProject;
 use App\Models\Worktime;
+use App\Services\ReserveOrderService;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -20,6 +22,13 @@ class ReserveInformationController extends Controller
     {
         $worktime = Worktime::orderBy('order', 'asc')->select('id','time')->get();
         return $worktime;
+    }
+
+    //服务项目
+    public function service()
+    {
+        $service = ServiceProject::select('id','name','price')->get();
+        return $service;
     }
 
     //某个设计师工作时间
@@ -79,8 +88,8 @@ class ReserveInformationController extends Controller
         return $designers;
     }
 
-    //创建预约
-    public function store(Request $request)
+    //提交预约订单
+    public function store(ReserveOrderRequest $request,ReserveOrderService $orderService)
     {
 
     }

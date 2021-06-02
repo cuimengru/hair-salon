@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Storage;
 
 class DesignersCommentController extends AdminController
 {
@@ -34,7 +35,7 @@ class DesignersCommentController extends AdminController
         $grid->column('id', __('Id'))->sortable();
         //$grid->column('type', __('Type'));
         $grid->column('user.nickname', __('用户昵称'));
-        $grid->column('reserveorder_id', __('预约订单ID'));
+        $grid->column('reserveorder.no', __('预约订单号'));
         $grid->column('designer.name', __('设计师'));
         $grid->column('rate', __('评分'));
         /*$grid->column('render_content', __('Render content'));
@@ -76,11 +77,25 @@ class DesignersCommentController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('user.name', __('用户'));
-        $show->field('reserveorder_id', __('预约订单ID'));
+        $show->field('reserveorder.no', __('预约订单号'));
         $show->field('designer.name', __('设计师'));
         $show->field('rate', __('评分'));
         $show->field('render_content', __('评论内容'));
-        $show->field('render_image', __('Render image'));
+        $show->field('render_image', __('图片'))->unescape()->as(function ($content) {
+            $images = '';
+            if($content){
+                foreach ($content as $k=>$value){
+                    $image = Storage::disk('public')->url($value);
+                    $images = $images."<div style='margin-top: 25px;float: left; margin-right: 25px'>
+                        <img src='{$image}'  width='200' height='200'/>
+                        </div>";
+                }
+            }else{
+                $images = '';
+            }
+
+            return $images;
+        });
         $show->field('video_url', __('视频'))->unescape()->as(function ($video_url) {
             return "<video width='320' height='320' controls>
                 <source src='{$video_url}' type='video/mp4'>
@@ -90,7 +105,12 @@ class DesignersCommentController extends AdminController
         $show->field('status', __('状态'))->using(['1' => '已审核', '0' => '未审核']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
-
+        $show->panel()
+            ->tools(function ($tools) {
+                //$tools->disableEdit();
+                //$tools->disableList();
+                $tools->disableDelete();
+            });
         return $show;
     }
 

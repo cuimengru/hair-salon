@@ -16,6 +16,102 @@
 CREATE DATABASE IF NOT EXISTS `hair-salon` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `hair-salon`;
 
+-- 导出  表 hair-salon.admin_config 结构
+CREATE TABLE IF NOT EXISTS `admin_config` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_config_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_config 的数据：~11 rows (大约)
+DELETE FROM `admin_config`;
+/*!40000 ALTER TABLE `admin_config` DISABLE KEYS */;
+INSERT INTO `admin_config` (`id`, `name`, `value`, `description`, `created_at`, `updated_at`) VALUES
+	(1, '__configx__', 'do not delete', '{"website.content":{"options":[],"element":"editor","help":null,"name":"\\u54c1\\u724c\\u7406\\u5ff5\\u7ef4\\u62a4","order":20},"website.title":{"options":[],"element":"normal","help":null,"name":"\\u7f51\\u7ad9\\u6807\\u9898","order":5},"website.keyword":{"options":[],"element":"normal","help":null,"name":"\\u7f51\\u7ad9\\u5173\\u952e\\u5b57","order":10},"website.description":{"options":[],"element":"textarea","help":null,"name":"\\u7f51\\u7ad9\\u63cf\\u8ff0","order":15},"website.email":{"options":[],"element":"normal","help":null,"name":"\\u8054\\u7cfb\\u90ae\\u7bb1","order":25},"website.phone":{"options":[],"element":"normal","help":null,"name":"\\u8054\\u7cfb\\u7535\\u8bdd","order":30},"upload.image_ext":{"options":[],"element":"tags","help":"\\u5141\\u8bb8\\u4e0a\\u4f20\\u7684\\u56fe\\u7247\\u540e\\u7f00","name":"\\u5141\\u8bb8\\u56fe\\u7247\\u540e\\u7f00","order":5},"app.android_version":{"options":[],"element":"normal","help":"\\u5b89\\u5353\\u7248\\u672c\\u53f7","name":"\\u5b89\\u5353\\u7248\\u672c\\u53f7","order":5},"app.android_debug":{"options":[],"element":"yes_or_no","help":"\\u5b89\\u5353\\u5f00\\u53d1\\u6a21\\u5f0f","name":"\\u5b89\\u5353\\u5f00\\u53d1\\u6a21\\u5f0f","order":10},"app.ios_version":{"options":[],"element":"normal","help":"iOS \\u7248\\u672c\\u53f7","name":"iOS \\u7248\\u672c\\u53f7","order":15},"app.ios_debug":{"options":[],"element":"yes_or_no","help":"iOS \\u5f00\\u53d1\\u6a21\\u5f0f","name":"iOS \\u5f00\\u53d1\\u6a21\\u5f0f","order":20}}', '2021-05-12 13:36:59', '2021-05-12 14:15:47'),
+	(2, 'website.content', '<p>美发</p>', '品牌理念维护', '2021-05-12 13:56:29', '2021-05-12 14:16:28'),
+	(3, 'website.title', '美发', '网站标题', '2021-05-12 13:58:23', '2021-05-12 14:10:20'),
+	(4, 'website.keyword', '美发', '网站关键字', '2021-05-12 14:02:22', '2021-05-12 14:16:28'),
+	(5, 'website.description', '美发app', '网站描述', '2021-05-12 14:03:52', '2021-05-12 14:16:28'),
+	(6, 'website.email', '123456@qq.com', '邮箱', '2021-05-12 14:04:35', '2021-05-12 14:16:28'),
+	(7, 'website.phone', '123456', '联系电话', '2021-05-12 14:04:56', '2021-05-12 14:16:28'),
+	(8, 'upload.image_ext', 'png,jpg,jpeg,gif,bmp', '允许图片后缀', '2021-05-12 14:07:57', '2021-05-12 14:09:54'),
+	(9, 'app.android_version', '1.0.0', '安卓版本号', '2021-05-12 14:12:24', '2021-05-12 14:16:02'),
+	(10, 'app.android_debug', '0', '安卓开发模式', '2021-05-12 14:14:17', '2021-05-12 14:16:02'),
+	(11, 'app.ios_version', '1.0.0', 'iOS 版本号', '2021-05-12 14:14:55', '2021-05-12 14:16:02'),
+	(12, 'app.ios_debug', '0', 'iOS 开发模式', '2021-05-12 14:15:47', '2021-05-12 14:16:02');
+/*!40000 ALTER TABLE `admin_config` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_menu 结构
+CREATE TABLE IF NOT EXISTS `admin_menu` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `order` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uri` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_menu 的数据：~33 rows (大约)
+DELETE FROM `admin_menu`;
+/*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
+INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `permission`, `created_at`, `updated_at`) VALUES
+	(1, 0, 1, '首页', 'fa-bar-chart', '/', NULL, NULL, '2021-05-08 02:16:32'),
+	(2, 0, 37, '系统管理', 'fa-tasks', NULL, NULL, NULL, '2021-05-31 17:44:51'),
+	(3, 2, 38, '管理员', 'fa-users', 'auth/users', NULL, NULL, '2021-05-31 17:44:51'),
+	(4, 2, 39, '角色', 'fa-user', 'auth/roles', NULL, NULL, '2021-05-31 17:44:51'),
+	(5, 2, 40, '权限', 'fa-ban', 'auth/permissions', NULL, NULL, '2021-05-31 17:44:51'),
+	(6, 2, 41, '菜单', 'fa-bars', 'auth/menu', NULL, NULL, '2021-05-31 17:44:51'),
+	(7, 2, 42, '操作日志', 'fa-history', 'auth/logs', NULL, NULL, '2021-05-31 17:44:51'),
+	(8, 36, 3, '用户管理', 'fa-users', '/users', NULL, '2021-05-08 03:33:59', '2021-05-15 10:46:34'),
+	(9, 0, 14, '商城管理', 'fa-cubes', NULL, NULL, '2021-05-08 17:06:49', '2021-05-31 17:44:51'),
+	(10, 9, 19, '集品类商品管理', 'fa-list-ul', '/products', NULL, '2021-05-08 17:16:19', '2021-05-31 17:44:51'),
+	(11, 9, 20, '自营类商品管理', 'fa-list-ol', '/self_products', NULL, '2021-05-08 17:18:28', '2021-05-31 17:44:51'),
+	(12, 9, 21, '闲置类商品管理', 'fa-align-justify', '/idle_products', NULL, '2021-05-08 17:19:16', '2021-05-31 17:44:51'),
+	(13, 9, 15, '集品类商品类目管理', 'fa-bars', '/categories', NULL, '2021-05-09 10:36:07', '2021-05-31 17:44:51'),
+	(14, 0, 22, '订单管理', 'fa-rmb', '/orders', NULL, '2021-05-10 11:28:59', '2021-05-31 17:44:51'),
+	(15, 0, 23, '文教娱乐管理', 'fa-life-bouy', NULL, NULL, '2021-05-11 10:02:00', '2021-05-31 17:44:51'),
+	(16, 15, 24, '教育、培训、线下活动类产品', 'fa-leanpub', '/education_cultures', NULL, '2021-05-11 10:03:21', '2021-05-31 17:44:51'),
+	(17, 15, 25, '培训类管理', 'fa-camera', '/train_cultures1', NULL, '2021-05-11 10:05:56', '2021-05-31 17:44:51'),
+	(18, 15, 26, '线下活动类管理', 'fa-anchor', '/offline_cultures1', NULL, '2021-05-11 10:07:02', '2021-05-31 17:44:51'),
+	(19, 0, 32, '广告管理', 'fa-picture-o', NULL, NULL, '2021-05-12 10:38:59', '2021-05-31 17:44:51'),
+	(21, 0, 44, '系统设置', 'fa-toggle-on', 'configx/edit', NULL, '2021-05-12 11:49:27', '2021-05-31 17:44:51'),
+	(22, 19, 33, '广告位置', 'fa-camera-retro', '/advert_categories', NULL, '2021-05-12 18:01:27', '2021-05-31 17:44:51'),
+	(23, 19, 34, '广告列表', 'fa-bars', '/adverts', NULL, '2021-05-12 18:01:52', '2021-05-31 17:44:51'),
+	(24, 0, 5, '美业管理', 'fa-crosshairs', NULL, NULL, '2021-05-13 09:24:52', '2021-05-15 10:47:44'),
+	(25, 24, 9, '设计师管理', 'fa-slideshare', '/designers', NULL, '2021-05-13 09:26:24', '2021-05-25 16:18:19'),
+	(26, 24, 8, '作品管理', 'fa-product-hunt', '/productions', NULL, '2021-05-13 10:24:24', '2021-05-25 16:18:19'),
+	(27, 24, 12, '时尚资讯管理', 'fa-american-sign-language-interpreting', '/fashions', NULL, '2021-05-13 11:15:21', '2021-05-25 16:18:19'),
+	(28, 0, 35, '帮助信息管理', 'fa-flag-checkered', '/help_centers', NULL, '2021-05-13 13:51:52', '2021-05-31 17:44:51'),
+	(29, 0, 36, '问题反馈', 'fa-wechat', '/feedback', NULL, '2021-05-13 15:09:39', '2021-05-31 17:44:51'),
+	(30, 45, 10, '预约信息管理', 'fa-commenting', '/reserve_informations', NULL, '2021-05-14 09:09:16', '2021-05-31 17:45:09'),
+	(31, 45, 11, '预约订单管理', 'fa-first-order', '/reserve_orders', NULL, '2021-05-14 09:10:41', '2021-05-31 17:45:20'),
+	(32, 0, 29, '评价管理', 'fa-comments', NULL, NULL, '2021-05-14 16:18:37', '2021-05-31 17:44:51'),
+	(33, 32, 30, '设计师评价管理', 'fa-slideshare', '/designer_comments', NULL, '2021-05-14 16:19:45', '2021-05-31 17:44:51'),
+	(34, 32, 31, '商品评价管理', 'fa-product-hunt', '/product_comments', NULL, '2021-05-14 16:20:13', '2021-05-31 17:44:51'),
+	(35, 24, 6, '服务项目管理', 'fa-server', '/service_projects', NULL, '2021-05-15 09:35:53', '2021-05-15 10:47:44'),
+	(36, 0, 2, '用户基础信息管理', 'fa-user-md', NULL, NULL, '2021-05-15 10:46:13', '2021-05-15 10:46:20'),
+	(37, 36, 4, '余额管理', 'fa-balance-scale', '/balances', NULL, '2021-05-15 10:47:25', '2021-05-15 10:47:44'),
+	(38, 9, 18, '标签管理', 'fa-flag', '/product_labels', NULL, '2021-05-15 16:42:56', '2021-05-31 17:44:51'),
+	(39, 2, 43, '敏感词管理', 'fa-file-word-o', '/sensitive_words', NULL, '2021-05-21 11:33:29', '2021-05-31 17:44:51'),
+	(40, 9, 16, '自营类商品类目管理', 'fa-align-justify', '/self_categories', NULL, '2021-05-22 09:21:10', '2021-05-31 17:44:51'),
+	(41, 9, 17, '闲置类商品类目管理', 'fa-list', '/idle_categories1', NULL, '2021-05-22 09:57:49', '2021-05-31 17:44:51'),
+	(42, 24, 7, '设计师标签管理', 'fa-bars', '/designer_labels', NULL, '2021-05-25 16:18:10', '2021-05-25 16:18:19'),
+	(43, 0, 27, '社区管理', 'fa-commenting', NULL, NULL, '2021-05-29 09:31:41', '2021-05-31 17:44:51'),
+	(44, 43, 28, '晒单管理', 'fa-comment', '/communities', NULL, '2021-05-29 09:32:51', '2021-05-31 17:44:51'),
+	(45, 0, 13, '预约管理', 'fa-american-sign-language-interpreting', NULL, NULL, '2021-05-31 17:44:31', '2021-05-31 17:44:51'),
+	(46, 45, 0, '工作时间管理', 'fa-bars', '/worktimes', NULL, '2021-06-01 10:39:07', '2021-06-01 10:39:07'),
+	(47, 45, 0, '请假管理', 'fa-leaf', '/leavetimes', NULL, '2021-06-01 10:43:25', '2021-06-01 10:43:25');
+/*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
+
 -- 导出  表 hair-salon.admin_operation_log 结构
 CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -28,9 +124,9 @@ CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1686 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2462 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  hair-salon.admin_operation_log 的数据：~1,634 rows (大约)
+-- 正在导出表  hair-salon.admin_operation_log 的数据：~2,380 rows (大约)
 DELETE FROM `admin_operation_log`;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
 INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `input`, `created_at`, `updated_at`) VALUES
@@ -1718,8 +1814,2062 @@ INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `inp
 	(1682, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-19 19:07:45', '2021-05-19 19:07:45'),
 	(1683, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-20 08:42:09', '2021-05-20 08:42:09'),
 	(1684, 1, 'admin/products/4/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-20 08:42:17', '2021-05-20 08:42:17'),
-	(1685, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-20 08:42:40', '2021-05-20 08:42:40');
+	(1685, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-20 08:42:40', '2021-05-20 08:42:40'),
+	(1686, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-20 09:04:54', '2021-05-20 09:04:54'),
+	(1687, 1, 'admin/products/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-20 09:05:02', '2021-05-20 09:05:02'),
+	(1688, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-20 09:05:09', '2021-05-20 09:05:09'),
+	(1689, 1, 'admin/products/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-20 09:13:17', '2021-05-20 09:13:17'),
+	(1690, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-20 09:13:25', '2021-05-20 09:13:25'),
+	(1691, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-21 08:45:52', '2021-05-21 08:45:52'),
+	(1692, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 10:21:54', '2021-05-21 10:21:54'),
+	(1693, 1, 'admin/auth/menu/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 10:22:02', '2021-05-21 10:22:02'),
+	(1694, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 10:22:52', '2021-05-21 10:22:52'),
+	(1695, 1, 'admin/auth/roles', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 11:32:02', '2021-05-21 11:32:02'),
+	(1696, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 11:32:05', '2021-05-21 11:32:05'),
+	(1697, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"2","title":"\\u654f\\u611f\\u8bcd\\u7ba1\\u7406","icon":"fa-file-word-o","uri":"\\/sensitive_words","roles":[null],"permission":null,"_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl"}', '2021-05-21 11:33:29', '2021-05-21 11:33:29'),
+	(1698, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-21 11:33:29', '2021-05-21 11:33:29'),
+	(1699, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl","_order":"[{\\"id\\":1},{\\"id\\":36,\\"children\\":[{\\"id\\":8},{\\"id\\":37}]},{\\"id\\":24,\\"children\\":[{\\"id\\":35},{\\"id\\":26},{\\"id\\":25},{\\"id\\":30},{\\"id\\":31},{\\"id\\":27}]},{\\"id\\":9,\\"children\\":[{\\"id\\":13},{\\"id\\":38},{\\"id\\":10},{\\"id\\":11},{\\"id\\":12}]},{\\"id\\":14},{\\"id\\":15,\\"children\\":[{\\"id\\":16},{\\"id\\":17},{\\"id\\":18}]},{\\"id\\":32,\\"children\\":[{\\"id\\":33},{\\"id\\":34}]},{\\"id\\":19,\\"children\\":[{\\"id\\":22},{\\"id\\":23}]},{\\"id\\":28},{\\"id\\":29},{\\"id\\":2,\\"children\\":[{\\"id\\":3},{\\"id\\":4},{\\"id\\":5},{\\"id\\":6},{\\"id\\":7},{\\"id\\":39}]},{\\"id\\":21}]"}', '2021-05-21 11:33:41', '2021-05-21 11:33:41'),
+	(1700, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 11:33:42', '2021-05-21 11:33:42'),
+	(1701, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-21 11:33:47', '2021-05-21 11:33:47'),
+	(1702, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 11:33:50', '2021-05-21 11:33:50'),
+	(1703, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '[]', '2021-05-21 11:35:35', '2021-05-21 11:35:35'),
+	(1704, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '[]', '2021-05-21 11:35:50', '2021-05-21 11:35:50'),
+	(1705, 1, 'admin/sensitive_words', 'POST', '192.168.10.1', '{"word":"\\u6cd5\\u8f6e\\u529f","_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl"}', '2021-05-21 11:37:35', '2021-05-21 11:37:35'),
+	(1706, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '[]', '2021-05-21 11:38:12', '2021-05-21 11:38:12'),
+	(1707, 1, 'admin/sensitive_words/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 11:38:34', '2021-05-21 11:38:34'),
+	(1708, 1, 'admin/sensitive_words/1', 'PUT', '192.168.10.1', '{"word":"\\u6cd5\\u8f6e\\u529f","_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/sensitive_words"}', '2021-05-21 11:38:37', '2021-05-21 11:38:37'),
+	(1709, 1, 'admin/sensitive_words/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-21 11:38:38', '2021-05-21 11:38:38'),
+	(1710, 1, 'admin/sensitive_words/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-21 11:40:50', '2021-05-21 11:40:50'),
+	(1711, 1, 'admin/sensitive_words/1', 'PUT', '192.168.10.1', '{"word":"\\u6cd5\\u8f6e\\u529f","_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/sensitive_words"}', '2021-05-21 11:40:52', '2021-05-21 11:40:52'),
+	(1712, 1, 'admin/sensitive_words/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-21 11:40:53', '2021-05-21 11:40:53'),
+	(1713, 1, 'admin/sensitive_words/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-21 11:43:54', '2021-05-21 11:43:54'),
+	(1714, 1, 'admin/sensitive_words/1', 'PUT', '192.168.10.1', '{"word":"\\u6cd5\\u8f6e\\u529f","_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl","_method":"PUT"}', '2021-05-21 11:43:56', '2021-05-21 11:43:56'),
+	(1715, 1, 'admin/sensitive_words/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-21 11:43:57', '2021-05-21 11:43:57'),
+	(1716, 1, 'admin/sensitive_words/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-21 13:40:55', '2021-05-21 13:40:55'),
+	(1717, 1, 'admin/sensitive_words/1', 'PUT', '192.168.10.1', '{"word":"\\u6cd5\\u8f6e\\u529f","_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl","_method":"PUT"}', '2021-05-21 13:40:57', '2021-05-21 13:40:57'),
+	(1718, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '[]', '2021-05-21 13:40:58', '2021-05-21 13:40:58'),
+	(1719, 1, 'admin/sensitive_words/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 13:41:09', '2021-05-21 13:41:09'),
+	(1720, 1, 'admin/sensitive_words', 'POST', '192.168.10.1', '{"word":"\\u662fwide","_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl","_previous_":"http:\\/\\/hair.test\\/admin\\/sensitive_words"}', '2021-05-21 13:41:25', '2021-05-21 13:41:25'),
+	(1721, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '[]', '2021-05-21 13:41:25', '2021-05-21 13:41:25'),
+	(1722, 1, 'admin/_handle_action_', 'POST', '192.168.10.1', '{"_key":"2","_model":"App_Models_SensitiveWord","_token":"l8GVGprETCMH4dgbcyI9kSgaRKZv4oFuJbiMbDMl","_action":"Encore_Admin_Grid_Actions_Delete","_input":"true"}', '2021-05-21 13:41:36', '2021-05-21 13:41:36'),
+	(1723, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 13:41:36', '2021-05-21 13:41:36'),
+	(1724, 1, 'admin/sensitive_words/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 13:42:12', '2021-05-21 13:42:12'),
+	(1725, 1, 'admin/sensitive_words', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 13:42:46', '2021-05-21 13:42:46'),
+	(1726, 1, 'admin/users', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 13:48:51', '2021-05-21 13:48:51'),
+	(1727, 1, 'admin/users/3/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 13:48:58', '2021-05-21 13:48:58'),
+	(1728, 1, 'admin/users', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 13:49:07', '2021-05-21 13:49:07'),
+	(1729, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 15:55:25', '2021-05-21 15:55:25'),
+	(1730, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 16:39:08', '2021-05-21 16:39:08'),
+	(1731, 1, 'admin/adverts', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 16:39:26', '2021-05-21 16:39:26'),
+	(1732, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-21 17:43:12', '2021-05-21 17:43:12'),
+	(1733, 1, 'admin', 'GET', '192.168.10.1', '[]', '2021-05-21 18:45:18', '2021-05-21 18:45:18'),
+	(1734, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-21 18:45:23', '2021-05-21 18:45:23'),
+	(1735, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:50:10', '2021-05-22 08:50:10'),
+	(1736, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:50:10', '2021-05-22 08:50:10'),
+	(1737, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:55:44', '2021-05-22 08:55:44'),
+	(1738, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:56:18', '2021-05-22 08:56:18'),
+	(1739, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:57:33', '2021-05-22 08:57:33'),
+	(1740, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:57:41', '2021-05-22 08:57:41'),
+	(1741, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:57:58', '2021-05-22 08:57:58'),
+	(1742, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:58:34', '2021-05-22 08:58:34'),
+	(1743, 1, 'admin/categories/12/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 08:58:43', '2021-05-22 08:58:43'),
+	(1744, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 08:58:51', '2021-05-22 08:58:51'),
+	(1745, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 08:59:46', '2021-05-22 08:59:46'),
+	(1746, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:02:35', '2021-05-22 09:02:35'),
+	(1747, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:07:48', '2021-05-22 09:07:48'),
+	(1748, 1, 'admin/auth/menu/13/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:07:55', '2021-05-22 09:07:55'),
+	(1749, 1, 'admin/auth/menu/13', 'PUT', '192.168.10.1', '{"parent_id":"9","title":"\\u96c6\\u54c1\\u7c7b\\u5546\\u54c1\\u7c7b\\u76ee\\u7ba1\\u7406","icon":"fa-bars","uri":"\\/categories","roles":[null],"permission":null,"_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-22 09:08:14', '2021-05-22 09:08:14'),
+	(1750, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-22 09:08:15', '2021-05-22 09:08:15'),
+	(1751, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-22 09:08:22', '2021-05-22 09:08:22'),
+	(1752, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:08:34', '2021-05-22 09:08:34'),
+	(1753, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:08:55', '2021-05-22 09:08:55'),
+	(1754, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:09:24', '2021-05-22 09:09:24'),
+	(1755, 1, 'admin/categories/10/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:09:34', '2021-05-22 09:09:34'),
+	(1756, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:09:42', '2021-05-22 09:09:42'),
+	(1757, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:18:52', '2021-05-22 09:18:52'),
+	(1758, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"9","title":"\\u81ea\\u8425\\u7c7b\\u5546\\u54c1\\u7c7b\\u76ee\\u7ba1\\u7406","icon":"fa-align-justify","uri":"\\/self_categories","roles":[null],"permission":null,"_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0"}', '2021-05-22 09:21:10', '2021-05-22 09:21:10'),
+	(1759, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-22 09:21:11', '2021-05-22 09:21:11'),
+	(1760, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_order":"[{\\"id\\":1},{\\"id\\":36,\\"children\\":[{\\"id\\":8},{\\"id\\":37}]},{\\"id\\":24,\\"children\\":[{\\"id\\":35},{\\"id\\":26},{\\"id\\":25},{\\"id\\":30},{\\"id\\":31},{\\"id\\":27}]},{\\"id\\":9,\\"children\\":[{\\"id\\":13},{\\"id\\":40},{\\"id\\":38},{\\"id\\":10},{\\"id\\":11},{\\"id\\":12}]},{\\"id\\":14},{\\"id\\":15,\\"children\\":[{\\"id\\":16},{\\"id\\":17},{\\"id\\":18}]},{\\"id\\":32,\\"children\\":[{\\"id\\":33},{\\"id\\":34}]},{\\"id\\":19,\\"children\\":[{\\"id\\":22},{\\"id\\":23}]},{\\"id\\":28},{\\"id\\":29},{\\"id\\":2,\\"children\\":[{\\"id\\":3},{\\"id\\":4},{\\"id\\":5},{\\"id\\":6},{\\"id\\":7},{\\"id\\":39}]},{\\"id\\":21}]"}', '2021-05-22 09:21:17', '2021-05-22 09:21:17'),
+	(1761, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:21:18', '2021-05-22 09:21:18'),
+	(1762, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-22 09:21:20', '2021-05-22 09:21:20'),
+	(1763, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:21:24', '2021-05-22 09:21:24'),
+	(1764, 1, 'admin/self_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:21:27', '2021-05-22 09:21:27'),
+	(1765, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:23:56', '2021-05-22 09:23:56'),
+	(1766, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:27:55', '2021-05-22 09:27:55'),
+	(1767, 1, 'admin/self_categories', 'POST', '192.168.10.1', '{"parent_id":"0","name":"\\u624b\\u673a\\u58f3","order":"0","is_directory":"0","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0"}', '2021-05-22 09:28:14', '2021-05-22 09:28:14'),
+	(1768, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:28:15', '2021-05-22 09:28:15'),
+	(1769, 1, 'admin/self_categories/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:28:19', '2021-05-22 09:28:19'),
+	(1770, 1, 'admin/self_categories/1', 'PUT', '192.168.10.1', '{"parent_id":"0","name":"\\u624b\\u673a\\u58f3\\u914d\\u4ef6","order":"0","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/self_categories"}', '2021-05-22 09:28:26', '2021-05-22 09:28:26'),
+	(1771, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:28:26', '2021-05-22 09:28:26'),
+	(1772, 1, 'admin/self_categories', 'POST', '192.168.10.1', '{"parent_id":"1","name":"\\u624b\\u673a\\u58f3","order":"0","is_directory":"0","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0"}', '2021-05-22 09:28:39', '2021-05-22 09:28:39'),
+	(1773, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 09:28:39', '2021-05-22 09:28:39'),
+	(1774, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:56:29', '2021-05-22 09:56:29'),
+	(1775, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"9","title":"\\u95f2\\u7f6e\\u7c7b\\u5546\\u54c1\\u7c7b\\u76ee\\u7ba1\\u7406","icon":"fa-list","uri":"\\/idle_categories","roles":[null],"permission":null,"_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0"}', '2021-05-22 09:57:48', '2021-05-22 09:57:48'),
+	(1776, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-22 09:57:49', '2021-05-22 09:57:49'),
+	(1777, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_order":"[{\\"id\\":1},{\\"id\\":36,\\"children\\":[{\\"id\\":8},{\\"id\\":37}]},{\\"id\\":24,\\"children\\":[{\\"id\\":35},{\\"id\\":26},{\\"id\\":25},{\\"id\\":30},{\\"id\\":31},{\\"id\\":27}]},{\\"id\\":9,\\"children\\":[{\\"id\\":13},{\\"id\\":40},{\\"id\\":41},{\\"id\\":38},{\\"id\\":10},{\\"id\\":11},{\\"id\\":12}]},{\\"id\\":14},{\\"id\\":15,\\"children\\":[{\\"id\\":16},{\\"id\\":17},{\\"id\\":18}]},{\\"id\\":32,\\"children\\":[{\\"id\\":33},{\\"id\\":34}]},{\\"id\\":19,\\"children\\":[{\\"id\\":22},{\\"id\\":23}]},{\\"id\\":28},{\\"id\\":29},{\\"id\\":2,\\"children\\":[{\\"id\\":3},{\\"id\\":4},{\\"id\\":5},{\\"id\\":6},{\\"id\\":7},{\\"id\\":39}]},{\\"id\\":21}]"}', '2021-05-22 09:57:58', '2021-05-22 09:57:58'),
+	(1778, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:57:59', '2021-05-22 09:57:59'),
+	(1779, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-22 09:58:01', '2021-05-22 09:58:01'),
+	(1780, 1, 'admin/idle_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 09:58:05', '2021-05-22 09:58:05'),
+	(1781, 1, 'admin/idle_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 10:00:06', '2021-05-22 10:00:06'),
+	(1782, 1, 'admin/idle_categories', 'POST', '192.168.10.1', '{"parent_id":"0","name":"\\u8fd0\\u8425","order":"0","is_directory":"0","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0"}', '2021-05-22 10:00:13', '2021-05-22 10:00:13'),
+	(1783, 1, 'admin/idle_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 10:00:14', '2021-05-22 10:00:14'),
+	(1784, 1, 'admin/idle_categories/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:00:16', '2021-05-22 10:00:16'),
+	(1785, 1, 'admin/idle_categories/1', 'PUT', '192.168.10.1', '{"parent_id":"0","name":"\\u8fd0\\u84251","order":"0","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/idle_categories"}', '2021-05-22 10:00:20', '2021-05-22 10:00:20'),
+	(1786, 1, 'admin/idle_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 10:00:20', '2021-05-22 10:00:20'),
+	(1787, 1, 'admin/idle_categories', 'POST', '192.168.10.1', '{"parent_id":"1","name":"\\u8fd0\\u8425","order":"0","is_directory":"0","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0"}', '2021-05-22 10:00:26', '2021-05-22 10:00:26'),
+	(1788, 1, 'admin/idle_categories', 'GET', '192.168.10.1', '[]', '2021-05-22 10:00:27', '2021-05-22 10:00:27'),
+	(1789, 1, 'admin/self_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:00:55', '2021-05-22 10:00:55'),
+	(1790, 1, 'admin/self_products/5/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:00:59', '2021-05-22 10:00:59'),
+	(1791, 1, 'admin/self_products/5', 'PUT', '192.168.10.1', '{"category_id":"1","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"off","type":"2","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/self_products"}', '2021-05-22 10:01:18', '2021-05-22 10:01:18'),
+	(1792, 1, 'admin/self_products/5/edit', 'GET', '192.168.10.1', '[]', '2021-05-22 10:01:19', '2021-05-22 10:01:19'),
+	(1793, 1, 'admin/self_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:01:35', '2021-05-22 10:01:35'),
+	(1794, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:02:06', '2021-05-22 10:02:06'),
+	(1795, 1, 'admin/self_products/5/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:02:09', '2021-05-22 10:02:09'),
+	(1796, 1, 'admin/self_products/5', 'PUT', '192.168.10.1', '{"category_id":"2","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"off","type":"2","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/self_products"}', '2021-05-22 10:02:15', '2021-05-22 10:02:15'),
+	(1797, 1, 'admin/self_products/5/edit', 'GET', '192.168.10.1', '[]', '2021-05-22 10:02:16', '2021-05-22 10:02:16'),
+	(1798, 1, 'admin/self_products/5', 'PUT', '192.168.10.1', '{"category_id":"2","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"off","type":"2","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT"}', '2021-05-22 10:08:00', '2021-05-22 10:08:00'),
+	(1799, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:08:01', '2021-05-22 10:08:01'),
+	(1800, 1, 'admin/self_products/5/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:08:06', '2021-05-22 10:08:06'),
+	(1801, 1, 'admin/self_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:08:14', '2021-05-22 10:08:14'),
+	(1802, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:09:00', '2021-05-22 10:09:00'),
+	(1803, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:09:04', '2021-05-22 10:09:04'),
+	(1804, 1, 'admin/self_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:09:10', '2021-05-22 10:09:10'),
+	(1805, 1, 'admin/idle_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:09:11', '2021-05-22 10:09:11'),
+	(1806, 1, 'admin/self_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:09:15', '2021-05-22 10:09:15'),
+	(1807, 1, 'admin/self_products/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:11:44', '2021-05-22 10:11:44'),
+	(1808, 1, 'admin/self_products/2', 'PUT', '192.168.10.1', '{"category_id":"2","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>111<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"on","skus":{"2":{"title":"\\u5443\\u5443\\u5443","description":"\\u5443\\u5443\\u5443","price":"2223","stock":"22223","id":"2","_remove_":"0"}},"type":"2","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/self_products"}', '2021-05-22 10:11:50', '2021-05-22 10:11:50'),
+	(1809, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:11:51', '2021-05-22 10:11:51'),
+	(1810, 1, 'admin/self_products/5/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:16:56', '2021-05-22 10:16:56'),
+	(1811, 1, 'admin/self_products/5', 'PUT', '192.168.10.1', '{"selfcategory_id":"1","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"off","type":"2","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/self_products"}', '2021-05-22 10:17:02', '2021-05-22 10:17:02'),
+	(1812, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:17:02', '2021-05-22 10:17:02'),
+	(1813, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:17:09', '2021-05-22 10:17:09'),
+	(1814, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:17:13', '2021-05-22 10:17:13'),
+	(1815, 1, 'admin/self_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:17:17', '2021-05-22 10:17:17'),
+	(1816, 1, 'admin/idle_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:17:18', '2021-05-22 10:17:18'),
+	(1817, 1, 'admin/self_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:18:05', '2021-05-22 10:18:05'),
+	(1818, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:18:07', '2021-05-22 10:18:07'),
+	(1819, 1, 'admin/self_products/5/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:18:12', '2021-05-22 10:18:12'),
+	(1820, 1, 'admin/self_products/5', 'PUT', '192.168.10.1', '{"selfcategory_id":"1","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"off","type":"2","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/self_products"}', '2021-05-22 10:18:15', '2021-05-22 10:18:15'),
+	(1821, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:18:16', '2021-05-22 10:18:16'),
+	(1822, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:18:55', '2021-05-22 10:18:55'),
+	(1823, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:19:51', '2021-05-22 10:19:51'),
+	(1824, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:20:22', '2021-05-22 10:20:22'),
+	(1825, 1, 'admin/self_products/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:20:26', '2021-05-22 10:20:26'),
+	(1826, 1, 'admin/self_products/2', 'PUT', '192.168.10.1', '{"selfcategory_id":"2","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>111<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"on","skus":{"2":{"title":"\\u5443\\u5443\\u5443","description":"\\u5443\\u5443\\u5443","price":"2223","stock":"22223","id":"2","_remove_":"0"}},"type":"2","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/self_products"}', '2021-05-22 10:20:31', '2021-05-22 10:20:31'),
+	(1827, 1, 'admin/self_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:20:31', '2021-05-22 10:20:31'),
+	(1828, 1, 'admin/idle_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:20:40', '2021-05-22 10:20:40'),
+	(1829, 1, 'admin/idle_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:21:15', '2021-05-22 10:21:15'),
+	(1830, 1, 'admin/idle_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:21:33', '2021-05-22 10:21:33'),
+	(1831, 1, 'admin/idle_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:21:49', '2021-05-22 10:21:49'),
+	(1832, 1, 'admin/idle_products/7/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:21:54', '2021-05-22 10:21:54'),
+	(1833, 1, 'admin/idle_products/7', 'PUT', '192.168.10.1', '{"idlecategory_id":"1","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"off","type":"3","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/idle_products"}', '2021-05-22 10:21:59', '2021-05-22 10:21:59'),
+	(1834, 1, 'admin/idle_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:21:59', '2021-05-22 10:21:59'),
+	(1835, 1, 'admin/idle_products/6/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:22:02', '2021-05-22 10:22:02'),
+	(1836, 1, 'admin/idle_products/6', 'PUT', '192.168.10.1', '{"idlecategory_id":"2","title":"\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e","country":null,"country_name":null,"label_id":[null],"description":"<p>\\u51c6\\u5988\\u5988\\u5fc5\\u5907\\u5a07\\u97f5\\u8bd7\\u5b55\\u5987\\u4e09\\u4ef6\\u5957\\u5a03\\u5a03\\u8138\\u6297\\u8001\\u7cbe\\u534e<\\/p>","on_sale":"1","rating":"5","price":"0","original_price":"0","package_mail":"1","postage":"0","is_recommend":"on","type":"3","_token":"tsOtj0o973Z8rufXqqHgGrMHDlkJgdCckCwgh6J0","_method":"PUT","_previous_":"http:\\/\\/hair.test\\/admin\\/idle_products"}', '2021-05-22 10:22:06', '2021-05-22 10:22:06'),
+	(1837, 1, 'admin/idle_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:22:07', '2021-05-22 10:22:07'),
+	(1838, 1, 'admin/idle_products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:23:05', '2021-05-22 10:23:05'),
+	(1839, 1, 'admin/idle_products', 'GET', '192.168.10.1', '{"id":null,"idlecategory":{"name":"\\u8fd0\\u8425"},"title":null,"created_at":{"start":null,"end":null},"_pjax":"#pjax-container"}', '2021-05-22 10:23:12', '2021-05-22 10:23:12'),
+	(1840, 1, 'admin/idle_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container","id":null,"idlecategory":{"name":"\\u8fd0\\u84251"},"title":null,"created_at":{"start":null,"end":null}}', '2021-05-22 10:23:16', '2021-05-22 10:23:16'),
+	(1841, 1, 'admin/idle_products', 'GET', '192.168.10.1', '{"id":null,"idlecategory":{"name":"\\u8fd0\\u84251"},"title":null,"created_at":{"start":null,"end":null}}', '2021-05-22 10:23:20', '2021-05-22 10:23:20'),
+	(1842, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:23:25', '2021-05-22 10:23:25'),
+	(1843, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-22 10:23:30', '2021-05-22 10:23:30'),
+	(1844, 1, 'admin/products/4/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:23:33', '2021-05-22 10:23:33'),
+	(1845, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-22 10:23:41', '2021-05-22 10:23:41'),
+	(1846, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-25 09:15:49', '2021-05-25 09:15:49'),
+	(1847, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-25 10:44:49', '2021-05-25 10:44:49'),
+	(1848, 1, 'admin/help_centers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 10:44:55', '2021-05-25 10:44:55'),
+	(1849, 1, 'admin/help_centers', 'GET', '192.168.10.1', '[]', '2021-05-25 10:45:03', '2021-05-25 10:45:03'),
+	(1850, 1, 'admin/auth/logout', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 10:45:15', '2021-05-25 10:45:15'),
+	(1851, 1, 'admin', 'GET', '192.168.10.1', '[]', '2021-05-25 10:58:39', '2021-05-25 10:58:39'),
+	(1852, 1, 'admin', 'GET', '192.168.10.1', '[]', '2021-05-25 10:58:45', '2021-05-25 10:58:45'),
+	(1853, 1, 'admin/help_centers', 'GET', '192.168.10.1', '[]', '2021-05-25 10:59:22', '2021-05-25 10:59:22'),
+	(1854, 1, 'admin/help_centers', 'GET', '192.168.10.1', '[]', '2021-05-25 10:59:28', '2021-05-25 10:59:28'),
+	(1855, 1, 'admin/help_centers', 'GET', '192.168.10.1', '[]', '2021-05-25 10:59:44', '2021-05-25 10:59:44'),
+	(1856, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '[]', '2021-05-25 11:03:47', '2021-05-25 11:03:47'),
+	(1857, 1, 'admin/configx/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 11:03:53', '2021-05-25 11:03:53'),
+	(1858, 1, 'admin/configx/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 11:04:00', '2021-05-25 11:04:00'),
+	(1859, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:04:12', '2021-05-25 11:04:12'),
+	(1860, 1, 'admin/auth/menu/14/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 11:04:23', '2021-05-25 11:04:23'),
+	(1861, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:04:35', '2021-05-25 11:04:35'),
+	(1862, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:13:15', '2021-05-25 11:13:15'),
+	(1863, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:20:36', '2021-05-25 11:20:36'),
+	(1864, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:20:40', '2021-05-25 11:20:40'),
+	(1865, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:23:19', '2021-05-25 11:23:19'),
+	(1866, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:26:47', '2021-05-25 11:26:47'),
+	(1867, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:29:30', '2021-05-25 11:29:30'),
+	(1868, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 11:29:44', '2021-05-25 11:29:44'),
+	(1869, 1, 'admin/users', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 11:29:51', '2021-05-25 11:29:51'),
+	(1870, 1, 'admin', 'GET', '192.168.10.1', '[]', '2021-05-25 11:31:08', '2021-05-25 11:31:08'),
+	(1871, 1, 'admin/help_centers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 11:31:47', '2021-05-25 11:31:47'),
+	(1872, 1, 'admin/help_centers/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:16:55', '2021-05-25 14:16:55'),
+	(1873, 1, 'admin/help_centers', 'POST', '192.168.10.1', '{"title":"\\u53bb\\u7406\\u53d1\\u5e97\\u526a\\u5934\\u600e\\u4e48\\u9884\\u7ea6","description":null,"content":"<p>\\u53bb\\u7406\\u53d1\\u5e97\\u526a\\u5934\\u600e\\u4e48\\u9884\\u7ea6<\\/p>","is_recommend":"on","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_previous_":"https:\\/\\/hair.test\\/admin\\/help_centers"}', '2021-05-25 14:47:14', '2021-05-25 14:47:14'),
+	(1874, 1, 'admin/help_centers', 'GET', '192.168.10.1', '[]', '2021-05-25 14:47:15', '2021-05-25 14:47:15'),
+	(1875, 1, 'admin/productions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:47:19', '2021-05-25 14:47:19'),
+	(1876, 1, 'admin/productions/3/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:47:22', '2021-05-25 14:47:22'),
+	(1877, 1, 'admin/feedback', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:51:06', '2021-05-25 14:51:06'),
+	(1878, 1, 'admin/help_centers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:51:31', '2021-05-25 14:51:31'),
+	(1879, 1, 'admin/help_centers/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:51:35', '2021-05-25 14:51:35'),
+	(1880, 1, 'admin/feedback', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:51:47', '2021-05-25 14:51:47'),
+	(1881, 1, 'admin/help_centers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 14:51:49', '2021-05-25 14:51:49'),
+	(1882, 1, 'admin/productions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:18:45', '2021-05-25 15:18:45'),
+	(1883, 1, 'admin/productions/3/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:18:49', '2021-05-25 15:18:49'),
+	(1884, 1, 'admin/productions/3/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 15:19:26', '2021-05-25 15:19:26'),
+	(1885, 1, 'admin/productions/3/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 15:19:49', '2021-05-25 15:19:49'),
+	(1886, 1, 'admin/productions/3/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 15:21:40', '2021-05-25 15:21:40'),
+	(1887, 1, 'admin/productions/3/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 15:22:02', '2021-05-25 15:22:02'),
+	(1888, 1, 'admin/productions/3/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 15:22:38', '2021-05-25 15:22:38'),
+	(1889, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:26:30', '2021-05-25 15:26:30'),
+	(1890, 1, 'admin/advert_categories/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:26:34', '2021-05-25 15:26:34'),
+	(1891, 1, 'admin/feedback', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:26:39', '2021-05-25 15:26:39'),
+	(1892, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:26:43', '2021-05-25 15:26:43'),
+	(1893, 1, 'admin/advert_categories/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:26:48', '2021-05-25 15:26:48'),
+	(1894, 1, 'admin/advert_categories/create', 'GET', '192.168.10.1', '[]', '2021-05-25 15:27:18', '2021-05-25 15:27:18'),
+	(1895, 1, 'admin/advert_categories', 'POST', '192.168.10.1', '{"name":"\\u4f5c\\u54c1\\u9996\\u9875\\u5904\\u7684\\u9884\\u7ea6\\u9879\\u76ee","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl"}', '2021-05-25 15:27:44', '2021-05-25 15:27:44'),
+	(1896, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '[]', '2021-05-25 15:27:44', '2021-05-25 15:27:44'),
+	(1897, 1, 'admin/advert_categories/6/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:27:52', '2021-05-25 15:27:52'),
+	(1898, 1, 'admin/advert_categories/6', 'PUT', '192.168.10.1', '{"id":"6","name":"\\u4f5c\\u54c1\\u9996\\u9875\\u5904\\u7684\\u9884\\u7ea6\\u9879\\u76eebanner","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/advert_categories"}', '2021-05-25 15:27:57', '2021-05-25 15:27:57'),
+	(1899, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '[]', '2021-05-25 15:27:57', '2021-05-25 15:27:57'),
+	(1900, 1, 'admin/adverts', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:28:00', '2021-05-25 15:28:00'),
+	(1901, 1, 'admin/adverts/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:28:16', '2021-05-25 15:28:16'),
+	(1902, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"zuo"}', '2021-05-25 15:28:20', '2021-05-25 15:28:20'),
+	(1903, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"z"}', '2021-05-25 15:28:22', '2021-05-25 15:28:22'),
+	(1904, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"zu"}', '2021-05-25 15:28:23', '2021-05-25 15:28:23'),
+	(1905, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"\\u4f5c\\u54c1"}', '2021-05-25 15:28:24', '2021-05-25 15:28:24'),
+	(1906, 1, 'admin/adverts', 'POST', '192.168.10.1', '{"category_id":"6","title":"\\u4f5c\\u54c1\\u9996\\u9875\\u5904\\u7684\\u9884\\u7ea6\\u9879\\u76eebanner","description":null,"content":"<p>\\u4f5c\\u54c1\\u9996\\u9875\\u5904\\u7684\\u9884\\u7ea6\\u9879\\u76eebanner<\\/p>","url":null,"order":"0","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_previous_":"https:\\/\\/hair.test\\/admin\\/adverts"}', '2021-05-25 15:29:22', '2021-05-25 15:29:22'),
+	(1907, 1, 'admin/adverts', 'GET', '192.168.10.1', '[]', '2021-05-25 15:29:22', '2021-05-25 15:29:22'),
+	(1908, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:30:27', '2021-05-25 15:30:27'),
+	(1909, 1, 'admin/auth/roles', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:30:42', '2021-05-25 15:30:42'),
+	(1910, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:30:44', '2021-05-25 15:30:44'),
+	(1911, 1, 'admin/auth/menu/22/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:30:51', '2021-05-25 15:30:51'),
+	(1912, 1, 'admin/auth/menu/22', 'PUT', '192.168.10.1', '{"parent_id":"19","title":"\\u5e7f\\u544a\\u4f4d\\u7f6e","icon":"fa-camera-retro","uri":"\\/advert_categories","roles":[null],"permission":null,"_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-25 15:31:00', '2021-05-25 15:31:00'),
+	(1913, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 15:31:01', '2021-05-25 15:31:01'),
+	(1914, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 15:31:03', '2021-05-25 15:31:03'),
+	(1915, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:31:08', '2021-05-25 15:31:08'),
+	(1916, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:37:14', '2021-05-25 15:37:14'),
+	(1917, 1, 'admin/products/4/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:37:17', '2021-05-25 15:37:17'),
+	(1918, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:37:26', '2021-05-25 15:37:26'),
+	(1919, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:45:57', '2021-05-25 15:45:57'),
+	(1920, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 15:46:03', '2021-05-25 15:46:03'),
+	(1921, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:17:35', '2021-05-25 16:17:35'),
+	(1922, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"24","title":"\\u8bbe\\u8ba1\\u5e08\\u6807\\u7b7e\\u7ba1\\u7406","icon":"fa-bars","uri":"\\/designer_labels","roles":[null],"permission":null,"_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl"}', '2021-05-25 16:18:10', '2021-05-25 16:18:10'),
+	(1923, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 16:18:10', '2021-05-25 16:18:10'),
+	(1924, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_order":"[{\\"id\\":1},{\\"id\\":36,\\"children\\":[{\\"id\\":8},{\\"id\\":37}]},{\\"id\\":24,\\"children\\":[{\\"id\\":35},{\\"id\\":42},{\\"id\\":26},{\\"id\\":25},{\\"id\\":30},{\\"id\\":31},{\\"id\\":27}]},{\\"id\\":9,\\"children\\":[{\\"id\\":13},{\\"id\\":40},{\\"id\\":41},{\\"id\\":38},{\\"id\\":10},{\\"id\\":11},{\\"id\\":12}]},{\\"id\\":14},{\\"id\\":15,\\"children\\":[{\\"id\\":16},{\\"id\\":17},{\\"id\\":18}]},{\\"id\\":32,\\"children\\":[{\\"id\\":33},{\\"id\\":34}]},{\\"id\\":19,\\"children\\":[{\\"id\\":22},{\\"id\\":23}]},{\\"id\\":28},{\\"id\\":29},{\\"id\\":2,\\"children\\":[{\\"id\\":3},{\\"id\\":4},{\\"id\\":5},{\\"id\\":6},{\\"id\\":7},{\\"id\\":39}]},{\\"id\\":21}]"}', '2021-05-25 16:18:19', '2021-05-25 16:18:19'),
+	(1925, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:18:19', '2021-05-25 16:18:19'),
+	(1926, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-25 16:18:25', '2021-05-25 16:18:25'),
+	(1927, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:18:30', '2021-05-25 16:18:30'),
+	(1928, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '[]', '2021-05-25 16:19:24', '2021-05-25 16:19:24'),
+	(1929, 1, 'admin/designer_labels/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:19:40', '2021-05-25 16:19:40'),
+	(1930, 1, 'admin/designer_labels/create', 'GET', '192.168.10.1', '[]', '2021-05-25 16:19:55', '2021-05-25 16:19:55'),
+	(1931, 1, 'admin/designer_labels', 'POST', '192.168.10.1', '{"name":"\\u526a\\u53d1","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl"}', '2021-05-25 16:20:13', '2021-05-25 16:20:13'),
+	(1932, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '[]', '2021-05-25 16:20:14', '2021-05-25 16:20:14'),
+	(1933, 1, 'admin/designer_labels/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:20:16', '2021-05-25 16:20:16'),
+	(1934, 1, 'admin/designer_labels', 'POST', '192.168.10.1', '{"name":"\\u70eb\\u53d1","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_previous_":"https:\\/\\/hair.test\\/admin\\/designer_labels"}', '2021-05-25 16:20:22', '2021-05-25 16:20:22'),
+	(1935, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '[]', '2021-05-25 16:20:22', '2021-05-25 16:20:22'),
+	(1936, 1, 'admin/designer_labels/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:20:24', '2021-05-25 16:20:24'),
+	(1937, 1, 'admin/designer_labels', 'POST', '192.168.10.1', '{"name":"\\u6d17\\u526a\\u5439","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_previous_":"https:\\/\\/hair.test\\/admin\\/designer_labels"}', '2021-05-25 16:20:33', '2021-05-25 16:20:33'),
+	(1938, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '[]', '2021-05-25 16:20:33', '2021-05-25 16:20:33'),
+	(1939, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:20:41', '2021-05-25 16:20:41'),
+	(1940, 1, 'admin/designers/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:20:44', '2021-05-25 16:20:44'),
+	(1941, 1, 'admin/designers/create', 'GET', '192.168.10.1', '[]', '2021-05-25 16:22:11', '2021-05-25 16:22:11'),
+	(1942, 1, 'admin/designers/create', 'GET', '192.168.10.1', '[]', '2021-05-25 16:22:42', '2021-05-25 16:22:42'),
+	(1943, 1, 'admin/designers/create', 'GET', '192.168.10.1', '[]', '2021-05-25 16:23:25', '2021-05-25 16:23:25'),
+	(1944, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:23:51', '2021-05-25 16:23:51'),
+	(1945, 1, 'admin/products/4/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:23:54', '2021-05-25 16:23:54'),
+	(1946, 1, 'admin/productions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:24:26', '2021-05-25 16:24:26'),
+	(1947, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:24:32', '2021-05-25 16:24:32'),
+	(1948, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:24:35', '2021-05-25 16:24:35'),
+	(1949, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:38:07', '2021-05-25 16:38:07'),
+	(1950, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:39:02', '2021-05-25 16:39:02'),
+	(1951, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:40:04', '2021-05-25 16:40:04'),
+	(1952, 1, 'admin/designers/1', 'PUT', '192.168.10.1', '{"name":"3am\\u6770\\u514b","description":null,"label_id":["1","2","3",null],"position":"\\u6280\\u672f\\u603b\\u76d1","certificate":{"values":["\\u56fd\\u5bb6\\u4e00\\u7ea7\\u7406\\u53d1\\u5e08","\\u56fd\\u5bb6\\u4e8c\\u7ea7\\u70eb\\u53d1\\u5e08"]},"honor":{"values":["\\u56fd\\u9645\\u7f8e\\u5bb9\\u7f8e\\u53d1\\u9020\\u578b\\u521b\\u610f\\u4e00\\u7b49\\u5956","\\u56fd\\u9645\\u7f8e\\u5bb9\\u7f8e\\u53d1\\u9020\\u578b\\u521b\\u610f\\u4e00\\u7b49\\u5956"]},"score":"0.0","rating":"0","is_recommend":"off","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT"}', '2021-05-25 16:41:21', '2021-05-25 16:41:21'),
+	(1953, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:41:22', '2021-05-25 16:41:22'),
+	(1954, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:47:58', '2021-05-25 16:47:58'),
+	(1955, 1, 'admin/designers/1', 'PUT', '192.168.10.1', '{"name":"3am\\u6770\\u514b","description":null,"label_id":["1","2",null],"position":"\\u6280\\u672f\\u603b\\u76d1","score":"0.0","rating":"0","is_recommend":"on","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT"}', '2021-05-25 16:49:13', '2021-05-25 16:49:13'),
+	(1956, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:49:14', '2021-05-25 16:49:14'),
+	(1957, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:52:16', '2021-05-25 16:52:16'),
+	(1958, 1, 'admin/designers/1', 'PUT', '192.168.10.1', '{"name":"3am\\u6770\\u514b","description":null,"label_id":["1","2",null],"position":"\\u6280\\u672f\\u603b\\u76d1","score":"0.0","rating":"0","is_recommend":"on","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT"}', '2021-05-25 16:52:23', '2021-05-25 16:52:23'),
+	(1959, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:52:24', '2021-05-25 16:52:24'),
+	(1960, 1, 'admin/designers/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-25 16:54:12', '2021-05-25 16:54:12'),
+	(1961, 1, 'admin/designers/1', 'PUT', '192.168.10.1', '{"name":"3am\\u6770\\u514b","description":null,"label_id":["1","2",null],"position":"\\u6280\\u672f\\u603b\\u76d1","certificate":{"values":["\\u56fd\\u5bb6\\u4e00\\u7ea7\\u7406\\u53d1\\u5e08","\\u56fd\\u5bb6\\u4e8c\\u7ea7\\u70eb\\u53d1\\u5e08"]},"honor":{"values":["\\u56fd\\u9645\\u7f8e\\u5bb9\\u7f8e\\u53d1\\u9020\\u578b\\u521b\\u610f\\u4e00\\u7b49\\u5956","\\u56fd\\u9645\\u7f8e\\u5bb9\\u7f8e\\u53d1\\u9020\\u578b\\u521b\\u610f\\u4e00\\u7b49\\u5956"]},"score":"0.0","rating":"0","is_recommend":"off","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT"}', '2021-05-25 16:55:00', '2021-05-25 16:55:00'),
+	(1962, 1, 'admin/designers', 'GET', '192.168.10.1', '[]', '2021-05-25 16:55:00', '2021-05-25 16:55:00'),
+	(1963, 1, 'admin/designers/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:55:06', '2021-05-25 16:55:06'),
+	(1964, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:55:16', '2021-05-25 16:55:16'),
+	(1965, 1, 'admin/designers/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:56:58', '2021-05-25 16:56:58'),
+	(1966, 1, 'admin/designers', 'GET', '192.168.10.1', '[]', '2021-05-25 16:56:59', '2021-05-25 16:56:59'),
+	(1967, 1, 'admin/designers', 'GET', '192.168.10.1', '[]', '2021-05-25 16:57:05', '2021-05-25 16:57:05'),
+	(1968, 1, 'admin/designers/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:57:15', '2021-05-25 16:57:15'),
+	(1969, 1, 'admin/designers', 'GET', '192.168.10.1', '[]', '2021-05-25 16:57:16', '2021-05-25 16:57:16'),
+	(1970, 1, 'admin/designers', 'GET', '192.168.10.1', '[]', '2021-05-25 16:58:28', '2021-05-25 16:58:28'),
+	(1971, 1, 'admin/designers/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 16:58:30', '2021-05-25 16:58:30'),
+	(1972, 1, 'admin/designers/1', 'GET', '192.168.10.1', '[]', '2021-05-25 17:01:23', '2021-05-25 17:01:23'),
+	(1973, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:01:30', '2021-05-25 17:01:30'),
+	(1974, 1, 'admin/designers/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:01:33', '2021-05-25 17:01:33'),
+	(1975, 1, 'admin/designers', 'POST', '192.168.10.1', '{"name":"Tony \\u9020\\u578b\\u5e08","description":null,"label_id":["1","3",null],"position":"\\u521b\\u610f\\u603b\\u76d1","certificate":{"values":["\\u56fd\\u5bb6\\u4e00\\u7ea7\\u7406\\u53d1\\u5e08"]},"honor":{"values":["\\u56fd\\u9645\\u7f8e\\u5bb9\\u7f8e\\u53d1\\u9020\\u578b\\u521b\\u610f\\u4e00\\u7b49\\u5956"]},"score":"5","rating":"0","is_recommend":"off","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_previous_":"https:\\/\\/hair.test\\/admin\\/designers"}', '2021-05-25 17:02:19', '2021-05-25 17:02:19'),
+	(1976, 1, 'admin/designers', 'GET', '192.168.10.1', '[]', '2021-05-25 17:02:20', '2021-05-25 17:02:20'),
+	(1977, 1, 'admin/fashions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:22:28', '2021-05-25 17:22:28'),
+	(1978, 1, 'admin/fashions/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:22:32', '2021-05-25 17:22:32'),
+	(1979, 1, 'admin/fashions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:22:54', '2021-05-25 17:22:54'),
+	(1980, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-25 17:23:26', '2021-05-25 17:23:26'),
+	(1981, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-25 17:23:52', '2021-05-25 17:23:52'),
+	(1982, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-25 17:24:17', '2021-05-25 17:24:17'),
+	(1983, 1, 'admin/fashions/1', 'PUT', '192.168.10.1', '{"is_recommend":"off","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT"}', '2021-05-25 17:24:20', '2021-05-25 17:24:20'),
+	(1984, 1, 'admin/fashions/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:24:28', '2021-05-25 17:24:28'),
+	(1985, 1, 'admin/fashions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:24:35', '2021-05-25 17:24:35'),
+	(1986, 1, 'admin/fashions/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 17:24:37', '2021-05-25 17:24:37'),
+	(1987, 1, 'admin/fashions', 'POST', '192.168.10.1', '{"title":"\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u6570\\u5e74\\uff01","description":"\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u2026","content":"<p>\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u6570\\u5e74\\uff01<\\/p>","order":"0","is_recommend":"off","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_previous_":"https:\\/\\/hair.test\\/admin\\/fashions"}', '2021-05-25 17:25:26', '2021-05-25 17:25:26'),
+	(1988, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-25 17:25:26', '2021-05-25 17:25:26'),
+	(1989, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-25 17:25:47', '2021-05-25 17:25:47'),
+	(1990, 1, 'admin/fashions/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 18:22:06', '2021-05-25 18:22:06'),
+	(1991, 1, 'admin/fashions/2', 'PUT', '192.168.10.1', '{"title":"\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u6570\\u5e74\\uff01","description":"\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u2026","content":"<p>\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u6570\\u5e74\\uff01<\\/p>","order":"0","is_recommend":"off","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/fashions"}', '2021-05-25 18:22:10', '2021-05-25 18:22:10'),
+	(1992, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-25 18:22:10', '2021-05-25 18:22:10'),
+	(1993, 1, 'admin/fashions/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-25 18:22:21', '2021-05-25 18:22:21'),
+	(1994, 1, 'admin/fashions/2', 'PUT', '192.168.10.1', '{"title":"\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u6570\\u5e74\\uff01","description":"\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u2026","content":"<p>\\u7406\\u53d1\\u53ea\\u89815\\u5143\\uff01\\u7edb\\u53bf\\u5357\\u6a0a\\u4e00\\u7406\\u53d1\\u5e97\\u5df2\\u575a\\u6301\\u4e86\\u6570\\u5e74\\uff01<\\/p>","order":"1","is_recommend":"off","_token":"wiUjMORHoWGMONPiI52y2dyvYjPz1fJw6Av1pQBl","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/fashions"}', '2021-05-25 18:22:25', '2021-05-25 18:22:25'),
+	(1995, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-25 18:22:25', '2021-05-25 18:22:25'),
+	(1996, 1, 'admin/fashions', 'GET', '192.168.10.1', '[]', '2021-05-26 08:36:06', '2021-05-26 08:36:06'),
+	(1997, 1, 'admin/productions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-26 09:21:34', '2021-05-26 09:21:34'),
+	(1998, 1, 'admin/productions/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-26 09:21:42', '2021-05-26 09:21:42'),
+	(1999, 1, 'admin/productions/1', 'PUT', '192.168.10.1', '{"designer_id":"1","title":"\\u7f8e\\u4e1a\\u7f8e\\u53d1","description":"\\u7406\\u53d1\\u5e08\\u4e3a\\u60a8\\u7aed\\u8bda\\u670d\\u52a1","content":"<p>\\u7406\\u53d1\\u5e08\\u4e3a\\u60a8\\u7aed\\u8bda\\u670d\\u52a1<\\/p>","type":"0","rating":"0","is_recommend":"off","_token":"kpt8qTdp5wpbjaCQFoZ6TxSQjtqqfZboBr3zKhUu","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/productions"}', '2021-05-26 09:22:36', '2021-05-26 09:22:36'),
+	(2000, 1, 'admin/productions', 'GET', '192.168.10.1', '[]', '2021-05-26 09:22:37', '2021-05-26 09:22:37'),
+	(2001, 1, 'admin/products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-26 14:27:11', '2021-05-26 14:27:11'),
+	(2002, 1, 'admin/products', 'GET', '192.168.10.1', '[]', '2021-05-26 16:20:16', '2021-05-26 16:20:16'),
+	(2003, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-26 16:20:23', '2021-05-26 16:20:23'),
+	(2004, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:20:39', '2021-05-26 16:20:39'),
+	(2005, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:21:05', '2021-05-26 16:21:05'),
+	(2006, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:21:35', '2021-05-26 16:21:35'),
+	(2007, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:24:35', '2021-05-26 16:24:35'),
+	(2008, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:25:23', '2021-05-26 16:25:23'),
+	(2009, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:25:26', '2021-05-26 16:25:26'),
+	(2010, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:26:32', '2021-05-26 16:26:32'),
+	(2011, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-26 16:28:42', '2021-05-26 16:28:42'),
+	(2012, 1, 'admin/designer_comments', 'GET', '192.168.10.1', '[]', '2021-05-27 08:38:05', '2021-05-27 08:38:05'),
+	(2013, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 09:03:27', '2021-05-27 09:03:27'),
+	(2014, 1, 'admin/self_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 09:19:11', '2021-05-27 09:19:11'),
+	(2015, 1, 'admin/self_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 09:24:07', '2021-05-27 09:24:07'),
+	(2016, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 09:24:09', '2021-05-27 09:24:09'),
+	(2017, 1, 'admin/categories/12/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 09:24:17', '2021-05-27 09:24:17'),
+	(2018, 1, 'admin/categories/12', 'PUT', '192.168.10.1', '{"parent_id":"0","name":"\\u9152\\u6c34","order":"0","_token":"4jIGzhWUre0OsPgXKf1AcwvN1ZjzcaHGzf3WKV0Z","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/categories"}', '2021-05-27 09:24:27', '2021-05-27 09:24:27'),
+	(2019, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-27 09:24:28', '2021-05-27 09:24:28'),
+	(2020, 1, 'admin/self_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 09:25:42', '2021-05-27 09:25:42'),
+	(2021, 1, 'admin/idle_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 09:26:04', '2021-05-27 09:26:04'),
+	(2022, 1, 'admin/idle_products', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:36:39', '2021-05-27 15:36:39'),
+	(2023, 1, 'admin/idle_products/7/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:36:43', '2021-05-27 15:36:43'),
+	(2024, 1, 'admin/idle_products/7/edit', 'GET', '192.168.10.1', '[]', '2021-05-27 15:38:03', '2021-05-27 15:38:03'),
+	(2025, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:38:14', '2021-05-27 15:38:14'),
+	(2026, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-27 15:46:50', '2021-05-27 15:46:50'),
+	(2027, 1, 'admin/categories/9/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:47:00', '2021-05-27 15:47:00'),
+	(2028, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:47:07', '2021-05-27 15:47:07'),
+	(2029, 1, 'admin/categories/11/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:47:11', '2021-05-27 15:47:11'),
+	(2030, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:47:15', '2021-05-27 15:47:15'),
+	(2031, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-27 15:47:33', '2021-05-27 15:47:33'),
+	(2032, 1, 'admin/categories/9/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:47:35', '2021-05-27 15:47:35'),
+	(2033, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:47:38', '2021-05-27 15:47:38'),
+	(2034, 1, 'admin/categories', 'POST', '192.168.10.1', '{"parent_id":"0","name":"\\u4fdd\\u5065\\u54c1","order":"0","is_directory":"0","_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn"}', '2021-05-27 15:48:08', '2021-05-27 15:48:08'),
+	(2035, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-27 15:48:08', '2021-05-27 15:48:08'),
+	(2036, 1, 'admin/categories/13/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:48:11', '2021-05-27 15:48:11'),
+	(2037, 1, 'admin/categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:48:19', '2021-05-27 15:48:19'),
+	(2038, 1, 'admin/categories/12/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 15:48:22', '2021-05-27 15:48:22'),
+	(2039, 1, 'admin/categories/12', 'PUT', '192.168.10.1', '{"parent_id":"0","name":"\\u9152\\u6c34","order":"0","_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/categories"}', '2021-05-27 15:48:29', '2021-05-27 15:48:29'),
+	(2040, 1, 'admin/categories', 'GET', '192.168.10.1', '[]', '2021-05-27 15:48:29', '2021-05-27 15:48:29'),
+	(2041, 1, 'admin/self_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 16:20:18', '2021-05-27 16:20:18'),
+	(2042, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-27 16:20:22', '2021-05-27 16:20:22'),
+	(2043, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-27 16:20:37', '2021-05-27 16:20:37'),
+	(2044, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-27 16:21:10', '2021-05-27 16:21:10'),
+	(2045, 1, 'admin/self_categories', 'POST', '192.168.10.1', '{"parent_id":"0","name":"\\u9152\\u6c34","order":"0","is_directory":"0","_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn"}', '2021-05-27 16:21:30', '2021-05-27 16:21:30'),
+	(2046, 1, 'admin/self_categories', 'GET', '192.168.10.1', '[]', '2021-05-27 16:21:30', '2021-05-27 16:21:30'),
+	(2047, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 16:48:21', '2021-05-27 16:48:21'),
+	(2048, 1, 'admin/education_cultures/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 16:49:13', '2021-05-27 16:49:13'),
+	(2049, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 16:49:23', '2021-05-27 16:49:23'),
+	(2050, 1, 'admin/education_cultures/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 16:49:50', '2021-05-27 16:49:50'),
+	(2051, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 16:50:03', '2021-05-27 16:50:03'),
+	(2052, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:14:46', '2021-05-27 17:14:46'),
+	(2053, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:15:05', '2021-05-27 17:15:05'),
+	(2054, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:16:04', '2021-05-27 17:16:04'),
+	(2055, 1, 'admin/auth/menu/41/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:16:11', '2021-05-27 17:16:11'),
+	(2056, 1, 'admin/auth/menu/41', 'PUT', '192.168.10.1', '{"parent_id":"9","title":"\\u95f2\\u7f6e\\u7c7b\\u5546\\u54c1\\u7c7b\\u76ee\\u7ba1\\u7406","icon":"fa-list","uri":"\\/idle_categories1","roles":[null],"permission":null,"_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-27 17:16:45', '2021-05-27 17:16:45'),
+	(2057, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-27 17:16:45', '2021-05-27 17:16:45'),
+	(2058, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-27 17:16:50', '2021-05-27 17:16:50'),
+	(2059, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-27 17:16:57', '2021-05-27 17:16:57'),
+	(2060, 1, 'admin/auth/menu/17/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:17:34', '2021-05-27 17:17:34'),
+	(2061, 1, 'admin/auth/menu/17', 'PUT', '192.168.10.1', '{"parent_id":"15","title":"\\u57f9\\u8bad\\u7c7b\\u7ba1\\u7406","icon":"fa-camera","uri":"\\/train_cultures1","roles":[null],"permission":null,"_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-27 17:17:40', '2021-05-27 17:17:40'),
+	(2062, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-27 17:17:40', '2021-05-27 17:17:40'),
+	(2063, 1, 'admin/auth/menu/18/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:17:45', '2021-05-27 17:17:45'),
+	(2064, 1, 'admin/auth/menu/18', 'PUT', '192.168.10.1', '{"parent_id":"15","title":"\\u7ebf\\u4e0b\\u6d3b\\u52a8\\u7c7b\\u7ba1\\u7406","icon":"fa-anchor","uri":"\\/offline_cultures1","roles":[null],"permission":null,"_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-27 17:17:50', '2021-05-27 17:17:50'),
+	(2065, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-27 17:17:50', '2021-05-27 17:17:50'),
+	(2066, 1, 'admin/auth/menu/16/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:17:58', '2021-05-27 17:17:58'),
+	(2067, 1, 'admin/auth/menu/16', 'PUT', '192.168.10.1', '{"parent_id":"15","title":"\\u6559\\u80b2\\u3001\\u57f9\\u8bad\\u3001\\u7ebf\\u4e0b\\u6d3b\\u52a8\\u7c7b\\u4ea7\\u54c1","icon":"fa-leanpub","uri":"\\/education_cultures","roles":[null],"permission":null,"_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-27 17:18:36', '2021-05-27 17:18:36'),
+	(2068, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-27 17:18:37', '2021-05-27 17:18:37'),
+	(2069, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-27 17:18:39', '2021-05-27 17:18:39'),
+	(2070, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:18:46', '2021-05-27 17:18:46'),
+	(2071, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '[]', '2021-05-27 17:18:50', '2021-05-27 17:18:50'),
+	(2072, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:18:57', '2021-05-27 17:18:57'),
+	(2073, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '[]', '2021-05-27 17:19:25', '2021-05-27 17:19:25'),
+	(2074, 1, 'admin/education_cultures/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:19:41', '2021-05-27 17:19:41'),
+	(2075, 1, 'admin/education_cultures/1/edit', 'GET', '192.168.10.1', '[]', '2021-05-27 17:22:52', '2021-05-27 17:22:52'),
+	(2076, 1, 'admin/education_cultures/1', 'PUT', '192.168.10.1', '{"title":"\\u7cfb\\u7edf\\u7ba1\\u7406","teacher":"\\u4e03\\u5343","description":"111222","content":"<p>111<\\/p>","start_time":"2021-05-27","is_recommend":"on","place_id":"1","_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn","_method":"PUT"}', '2021-05-27 17:23:33', '2021-05-27 17:23:33'),
+	(2077, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '[]', '2021-05-27 17:23:33', '2021-05-27 17:23:33'),
+	(2078, 1, 'admin/education_cultures/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-27 17:23:48', '2021-05-27 17:23:48'),
+	(2079, 1, 'admin/education_cultures', 'POST', '192.168.10.1', '{"title":"\\u7ebf\\u4e0b\\u7406\\u53d1\\u5e08\\u57f9\\u8bad\\u8bfe\\u7a0b","teacher":"Tony\\u9020\\u578b\\u5e08","description":"2020.06.31 \\u4e0a\\u534809:30\\u5728***\\u4e3e\\u884c\\u4e3a\\u671f\\u4e09\\u5929\\u7684\\u7406\\u53d1\\u6280\\u6cd5\\u57f9\\u8bad","content":"<p>\\u5982\\u679c\\u6709\\u7406\\u53d1\\u5e97\\u7684\\u540d\\u7247\\uff0c\\u6216\\u662f\\u7535\\u8bdd\\uff0c\\u53ef\\u4ee5\\u76f4\\u63a5\\u6253\\u7535\\u8bdd\\u7ed9\\u90a3\\u91cc\\u7684\\u7406\\u53d1\\u5e08\\u3002\\u544a\\u8bc9\\u4ed6\\u4f60\\u591a\\u4e45\\u53bb\\uff0c\\u8981\\u54ea\\u4f4d\\u7406\\u53d1\\u5e08\\uff0c\\u5728\\u770b\\u54ea\\u4f4d\\u7406\\u53d1\\u5e08\\u662f\\u5426\\u6709\\u65f6\\u95f4\\uff0c\\u5982\\u679c\\u6ca1\\u6709\\u65f6\\u95f4\\uff0c\\u662f\\u5426\\u6362\\u4e00\\u4f4d\\u7406\\u53d1\\u5e08\\uff0c\\u6216\\u662f\\u53e6\\u7ea6\\u65f6\\u95f4\\u3002<\\/p><p>\\u7b2c\\u4e8c\\u79cd<\\/p><p>\\u5982\\u679c\\u60f3\\u53bb\\u7684\\u7406\\u53d1\\u5e97\\uff0c\\u5728\\u7f51\\u4e0a\\u5f00\\u6709\\u5e97\\u7684\\u8bdd\\u53ef\\u4ee5\\uff0c\\u5230\\u4ed6\\u4eec\\u7684\\u7f51\\u5e97\\u627e\\u5ba2\\u670d\\u4eba\\u5458\\u9884\\u7ea6\\u3002<\\/p>","start_time":"2021-05-27","is_recommend":"on","place_id":"1","_token":"ZrkGsFxfwbebFgScSoymZPZ7QyeeX2f6rXZS9LBn","_previous_":"https:\\/\\/hair.test\\/admin\\/education_cultures"}', '2021-05-27 17:25:15', '2021-05-27 17:25:15'),
+	(2080, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '[]', '2021-05-27 17:25:16', '2021-05-27 17:25:16'),
+	(2081, 1, 'admin/education_cultures', 'GET', '192.168.10.1', '[]', '2021-05-28 08:39:37', '2021-05-28 08:39:37'),
+	(2082, 1, 'admin/feedback', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-28 09:28:44', '2021-05-28 09:28:44'),
+	(2083, 1, 'admin/feedback', 'GET', '192.168.10.1', '[]', '2021-05-28 10:56:03', '2021-05-28 10:56:03'),
+	(2084, 1, 'admin/feedback', 'GET', '192.168.10.1', '[]', '2021-05-28 10:56:39', '2021-05-28 10:56:39'),
+	(2085, 1, 'admin/feedback/10', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-28 10:56:59', '2021-05-28 10:56:59'),
+	(2086, 1, 'admin/feedback/10', 'GET', '192.168.10.1', '[]', '2021-05-28 11:08:57', '2021-05-28 11:08:57'),
+	(2087, 1, 'admin/feedback/10', 'GET', '192.168.10.1', '[]', '2021-05-28 11:11:42', '2021-05-28 11:11:42'),
+	(2088, 1, 'admin/feedback/10', 'GET', '192.168.10.1', '[]', '2021-05-28 11:12:03', '2021-05-28 11:12:03'),
+	(2089, 1, 'admin/feedback/10', 'GET', '192.168.10.1', '[]', '2021-05-28 11:12:22', '2021-05-28 11:12:22'),
+	(2090, 1, 'admin/feedback', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-28 11:13:18', '2021-05-28 11:13:18'),
+	(2091, 1, 'admin/feedback/3', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-28 11:13:22', '2021-05-28 11:13:22'),
+	(2092, 1, 'admin/feedback', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-28 11:13:26', '2021-05-28 11:13:26'),
+	(2093, 1, 'admin/feedback', 'GET', '192.168.10.1', '[]', '2021-05-28 11:14:25', '2021-05-28 11:14:25'),
+	(2094, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-28 11:14:29', '2021-05-28 11:14:29'),
+	(2095, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '[]', '2021-05-28 11:15:47', '2021-05-28 11:15:47'),
+	(2096, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '[]', '2021-05-28 11:16:25', '2021-05-28 11:16:25'),
+	(2097, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '[]', '2021-05-28 11:16:51', '2021-05-28 11:16:51'),
+	(2098, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '[]', '2021-05-28 11:17:09', '2021-05-28 11:17:09'),
+	(2099, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '[]', '2021-05-28 11:17:23', '2021-05-28 11:17:23'),
+	(2100, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '[]', '2021-05-28 11:17:26', '2021-05-28 11:17:26'),
+	(2101, 1, 'admin/feedback/11', 'GET', '192.168.10.1', '[]', '2021-05-28 11:17:39', '2021-05-28 11:17:39'),
+	(2102, 1, 'admin/feedback', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-28 11:17:53', '2021-05-28 11:17:53'),
+	(2103, 1, 'admin/feedback', 'GET', '192.168.10.1', '[]', '2021-05-29 09:15:53', '2021-05-29 09:15:53'),
+	(2104, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:30:26', '2021-05-29 09:30:26'),
+	(2105, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"0","title":"\\u793e\\u533a\\u7ba1\\u7406","icon":"fa-commenting","uri":null,"roles":[null],"permission":null,"_token":"mQwqmtDcYIptVpiD2NeXkxITZUiokfDALZvwhiWJ"}', '2021-05-29 09:31:41', '2021-05-29 09:31:41'),
+	(2106, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-29 09:31:41', '2021-05-29 09:31:41'),
+	(2107, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"_token":"mQwqmtDcYIptVpiD2NeXkxITZUiokfDALZvwhiWJ","_order":"[{\\"id\\":1},{\\"id\\":36,\\"children\\":[{\\"id\\":8},{\\"id\\":37}]},{\\"id\\":24,\\"children\\":[{\\"id\\":35},{\\"id\\":42},{\\"id\\":26},{\\"id\\":25},{\\"id\\":30},{\\"id\\":31},{\\"id\\":27}]},{\\"id\\":9,\\"children\\":[{\\"id\\":13},{\\"id\\":40},{\\"id\\":41},{\\"id\\":38},{\\"id\\":10},{\\"id\\":11},{\\"id\\":12}]},{\\"id\\":14},{\\"id\\":15,\\"children\\":[{\\"id\\":16},{\\"id\\":17},{\\"id\\":18}]},{\\"id\\":43},{\\"id\\":32,\\"children\\":[{\\"id\\":33},{\\"id\\":34}]},{\\"id\\":19,\\"children\\":[{\\"id\\":22},{\\"id\\":23}]},{\\"id\\":28},{\\"id\\":29},{\\"id\\":2,\\"children\\":[{\\"id\\":3},{\\"id\\":4},{\\"id\\":5},{\\"id\\":6},{\\"id\\":7},{\\"id\\":39}]},{\\"id\\":21}]"}', '2021-05-29 09:32:09', '2021-05-29 09:32:09'),
+	(2108, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:32:09', '2021-05-29 09:32:09'),
+	(2109, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-29 09:32:11', '2021-05-29 09:32:11'),
+	(2110, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"43","title":"\\u6652\\u5355\\u7ba1\\u7406","icon":"fa-comment","uri":"\\/communities","roles":[null],"permission":null,"_token":"mQwqmtDcYIptVpiD2NeXkxITZUiokfDALZvwhiWJ"}', '2021-05-29 09:32:51', '2021-05-29 09:32:51'),
+	(2111, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-29 09:32:52', '2021-05-29 09:32:52'),
+	(2112, 1, 'admin/auth/menu/34/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:33:07', '2021-05-29 09:33:07'),
+	(2113, 1, 'admin/auth/menu/34', 'PUT', '192.168.10.1', '{"parent_id":"32","title":"\\u5546\\u54c1\\u8bc4\\u4ef7\\u7ba1\\u7406","icon":"fa-product-hunt","uri":"\\/product_comments","roles":[null],"permission":null,"_token":"mQwqmtDcYIptVpiD2NeXkxITZUiokfDALZvwhiWJ","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-29 09:33:21', '2021-05-29 09:33:21'),
+	(2114, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-29 09:33:22', '2021-05-29 09:33:22'),
+	(2115, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-29 09:33:27', '2021-05-29 09:33:27'),
+	(2116, 1, 'admin/product_comments', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:33:34', '2021-05-29 09:33:34'),
+	(2117, 1, 'admin/communities', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:33:42', '2021-05-29 09:33:42'),
+	(2118, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 09:36:09', '2021-05-29 09:36:09'),
+	(2119, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 09:36:53', '2021-05-29 09:36:53'),
+	(2120, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 09:37:04', '2021-05-29 09:37:04'),
+	(2121, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 09:37:46', '2021-05-29 09:37:46'),
+	(2122, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 09:37:58', '2021-05-29 09:37:58'),
+	(2123, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 09:39:05', '2021-05-29 09:39:05'),
+	(2124, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 09:39:24', '2021-05-29 09:39:24'),
+	(2125, 1, 'admin/communities/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:41:00', '2021-05-29 09:41:00'),
+	(2126, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:41:37', '2021-05-29 09:41:37'),
+	(2127, 1, 'admin/communities', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:41:57', '2021-05-29 09:41:57'),
+	(2128, 1, 'admin/communities/1', 'PUT', '192.168.10.1', '{"status":"off","_token":"mQwqmtDcYIptVpiD2NeXkxITZUiokfDALZvwhiWJ","_method":"PUT"}', '2021-05-29 09:41:59', '2021-05-29 09:41:59'),
+	(2129, 1, 'admin/communities/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 09:42:07', '2021-05-29 09:42:07'),
+	(2130, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:44:53', '2021-05-29 09:44:53'),
+	(2131, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:45:21', '2021-05-29 09:45:21'),
+	(2132, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:45:49', '2021-05-29 09:45:49'),
+	(2133, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:46:45', '2021-05-29 09:46:45'),
+	(2134, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:47:14', '2021-05-29 09:47:14'),
+	(2135, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:48:06', '2021-05-29 09:48:06'),
+	(2136, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:48:21', '2021-05-29 09:48:21'),
+	(2137, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:48:49', '2021-05-29 09:48:49'),
+	(2138, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:48:56', '2021-05-29 09:48:56'),
+	(2139, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:49:17', '2021-05-29 09:49:17'),
+	(2140, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:49:39', '2021-05-29 09:49:39'),
+	(2141, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:49:56', '2021-05-29 09:49:56'),
+	(2142, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:50:11', '2021-05-29 09:50:11'),
+	(2143, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:50:29', '2021-05-29 09:50:29'),
+	(2144, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:51:39', '2021-05-29 09:51:39'),
+	(2145, 1, 'admin/communities/1', 'GET', '192.168.10.1', '[]', '2021-05-29 09:53:19', '2021-05-29 09:53:19'),
+	(2146, 1, 'admin/communities', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:34:12', '2021-05-29 14:34:12'),
+	(2147, 1, 'admin/communities/4', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:34:18', '2021-05-29 14:34:18'),
+	(2148, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 14:34:18', '2021-05-29 14:34:18'),
+	(2149, 1, 'admin/communities/3', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:34:36', '2021-05-29 14:34:36'),
+	(2150, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 14:34:36', '2021-05-29 14:34:36'),
+	(2151, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 14:34:39', '2021-05-29 14:34:39'),
+	(2152, 1, 'admin/communities/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:34:42', '2021-05-29 14:34:42'),
+	(2153, 1, 'admin/communities', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:34:52', '2021-05-29 14:34:52'),
+	(2154, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-29 14:35:44', '2021-05-29 14:35:44'),
+	(2155, 1, 'admin/communities/4', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:35:48', '2021-05-29 14:35:48'),
+	(2156, 1, 'admin/communities/4', 'GET', '192.168.10.1', '[]', '2021-05-29 14:36:27', '2021-05-29 14:36:27'),
+	(2157, 1, 'admin/communities', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:36:37', '2021-05-29 14:36:37'),
+	(2158, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:43:56', '2021-05-29 14:43:56'),
+	(2159, 1, 'admin/advert_categories/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:43:59', '2021-05-29 14:43:59'),
+	(2160, 1, 'admin/advert_categories', 'POST', '192.168.10.1', '{"name":"\\u793e\\u533abanner","_token":"xioaoWaNRnpvDEJgNzELpnERVPOVGWr0y3BQ4dB3","_previous_":"https:\\/\\/hair.test\\/admin\\/advert_categories"}', '2021-05-29 14:44:06', '2021-05-29 14:44:06'),
+	(2161, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '[]', '2021-05-29 14:44:07', '2021-05-29 14:44:07'),
+	(2162, 1, 'admin/adverts', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:44:37', '2021-05-29 14:44:37'),
+	(2163, 1, 'admin/adverts/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:44:40', '2021-05-29 14:44:40'),
+	(2164, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"she"}', '2021-05-29 14:44:44', '2021-05-29 14:44:44'),
+	(2165, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"shequ"}', '2021-05-29 14:44:45', '2021-05-29 14:44:45'),
+	(2166, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"s"}', '2021-05-29 14:44:46', '2021-05-29 14:44:46'),
+	(2167, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":null}', '2021-05-29 14:44:47', '2021-05-29 14:44:47'),
+	(2168, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"\\u793e\\u533a"}', '2021-05-29 14:44:48', '2021-05-29 14:44:48'),
+	(2169, 1, 'admin/adverts', 'POST', '192.168.10.1', '{"category_id":"7","title":"\\u793e\\u533abanner1","description":null,"content":"<p>\\u793e\\u533abanner1<\\/p>","url":null,"order":"0","_token":"xioaoWaNRnpvDEJgNzELpnERVPOVGWr0y3BQ4dB3","_previous_":"https:\\/\\/hair.test\\/admin\\/adverts"}', '2021-05-29 14:45:06', '2021-05-29 14:45:06'),
+	(2170, 1, 'admin/adverts', 'GET', '192.168.10.1', '[]', '2021-05-29 14:45:06', '2021-05-29 14:45:06'),
+	(2171, 1, 'admin/adverts/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:45:09', '2021-05-29 14:45:09'),
+	(2172, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"shequ"}', '2021-05-29 14:45:13', '2021-05-29 14:45:13'),
+	(2173, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"sheq"}', '2021-05-29 14:45:13', '2021-05-29 14:45:13'),
+	(2174, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"s"}', '2021-05-29 14:45:14', '2021-05-29 14:45:14'),
+	(2175, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":null}', '2021-05-29 14:45:14', '2021-05-29 14:45:14'),
+	(2176, 1, 'admin/api/advert_categories', 'GET', '192.168.10.1', '{"q":"\\u793e\\u533a"}', '2021-05-29 14:45:16', '2021-05-29 14:45:16'),
+	(2177, 1, 'admin/adverts', 'POST', '192.168.10.1', '{"category_id":"7","title":"\\u793e\\u533abanner2","description":null,"content":"<p>\\u793e\\u533abanner2<\\/p>","url":null,"order":"0","_token":"xioaoWaNRnpvDEJgNzELpnERVPOVGWr0y3BQ4dB3","_previous_":"https:\\/\\/hair.test\\/admin\\/adverts"}', '2021-05-29 14:45:38', '2021-05-29 14:45:38'),
+	(2178, 1, 'admin/adverts', 'GET', '192.168.10.1', '[]', '2021-05-29 14:45:38', '2021-05-29 14:45:38'),
+	(2179, 1, 'admin/advert_categories', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:46:06', '2021-05-29 14:46:06'),
+	(2180, 1, 'admin/communities', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-29 14:50:23', '2021-05-29 14:50:23'),
+	(2181, 1, 'admin/communities/4', 'PUT', '192.168.10.1', '{"status":"off","_token":"xioaoWaNRnpvDEJgNzELpnERVPOVGWr0y3BQ4dB3","_method":"PUT"}', '2021-05-29 14:50:25', '2021-05-29 14:50:25'),
+	(2182, 1, 'admin/communities/3', 'PUT', '192.168.10.1', '{"status":"off","_token":"xioaoWaNRnpvDEJgNzELpnERVPOVGWr0y3BQ4dB3","_method":"PUT"}', '2021-05-29 14:50:27', '2021-05-29 14:50:27'),
+	(2183, 1, 'admin/communities/2', 'PUT', '192.168.10.1', '{"status":"off","_token":"xioaoWaNRnpvDEJgNzELpnERVPOVGWr0y3BQ4dB3","_method":"PUT"}', '2021-05-29 14:50:28', '2021-05-29 14:50:28'),
+	(2184, 1, 'admin/communities/1', 'PUT', '192.168.10.1', '{"status":"off","_token":"xioaoWaNRnpvDEJgNzELpnERVPOVGWr0y3BQ4dB3","_method":"PUT"}', '2021-05-29 14:50:29', '2021-05-29 14:50:29'),
+	(2185, 1, 'admin/communities', 'GET', '192.168.10.1', '[]', '2021-05-31 09:04:50', '2021-05-31 09:04:50'),
+	(2186, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:02:09', '2021-05-31 11:02:09'),
+	(2187, 1, 'admin/designers/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:02:13', '2021-05-31 11:02:13'),
+	(2188, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:02:30', '2021-05-31 11:02:30'),
+	(2189, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:02:34', '2021-05-31 11:02:34'),
+	(2190, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:04:16', '2021-05-31 11:04:16'),
+	(2191, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:05:45', '2021-05-31 11:05:45'),
+	(2192, 1, 'admin/designers/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:05:50', '2021-05-31 11:05:50'),
+	(2193, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 11:08:17', '2021-05-31 11:08:17'),
+	(2194, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 17:43:34', '2021-05-31 17:43:34'),
+	(2195, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"0","title":"\\u9884\\u7ea6\\u7ba1\\u7406","icon":"fa-american-sign-language-interpreting","uri":null,"roles":[null],"permission":null,"_token":"SiF1a7b9QY5iU0GXWeu3uruAvrRi1agwdGHnl48G"}', '2021-05-31 17:44:31', '2021-05-31 17:44:31'),
+	(2196, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-31 17:44:32', '2021-05-31 17:44:32'),
+	(2197, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-31 17:44:44', '2021-05-31 17:44:44'),
+	(2198, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"_token":"SiF1a7b9QY5iU0GXWeu3uruAvrRi1agwdGHnl48G","_order":"[{\\"id\\":1},{\\"id\\":36,\\"children\\":[{\\"id\\":8},{\\"id\\":37}]},{\\"id\\":24,\\"children\\":[{\\"id\\":35},{\\"id\\":42},{\\"id\\":26},{\\"id\\":25},{\\"id\\":30},{\\"id\\":31},{\\"id\\":27}]},{\\"id\\":45},{\\"id\\":9,\\"children\\":[{\\"id\\":13},{\\"id\\":40},{\\"id\\":41},{\\"id\\":38},{\\"id\\":10},{\\"id\\":11},{\\"id\\":12}]},{\\"id\\":14},{\\"id\\":15,\\"children\\":[{\\"id\\":16},{\\"id\\":17},{\\"id\\":18}]},{\\"id\\":43,\\"children\\":[{\\"id\\":44}]},{\\"id\\":32,\\"children\\":[{\\"id\\":33},{\\"id\\":34}]},{\\"id\\":19,\\"children\\":[{\\"id\\":22},{\\"id\\":23}]},{\\"id\\":28},{\\"id\\":29},{\\"id\\":2,\\"children\\":[{\\"id\\":3},{\\"id\\":4},{\\"id\\":5},{\\"id\\":6},{\\"id\\":7},{\\"id\\":39}]},{\\"id\\":21}]"}', '2021-05-31 17:44:50', '2021-05-31 17:44:50'),
+	(2199, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 17:44:51', '2021-05-31 17:44:51'),
+	(2200, 1, 'admin/auth/menu/30/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 17:45:03', '2021-05-31 17:45:03'),
+	(2201, 1, 'admin/auth/menu/30', 'PUT', '192.168.10.1', '{"parent_id":"45","title":"\\u9884\\u7ea6\\u4fe1\\u606f\\u7ba1\\u7406","icon":"fa-commenting","uri":"\\/reserve_informations","roles":[null],"permission":null,"_token":"SiF1a7b9QY5iU0GXWeu3uruAvrRi1agwdGHnl48G","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-31 17:45:09', '2021-05-31 17:45:09'),
+	(2202, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-31 17:45:09', '2021-05-31 17:45:09'),
+	(2203, 1, 'admin/auth/menu/31/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 17:45:14', '2021-05-31 17:45:14'),
+	(2204, 1, 'admin/auth/menu/31', 'PUT', '192.168.10.1', '{"parent_id":"45","title":"\\u9884\\u7ea6\\u8ba2\\u5355\\u7ba1\\u7406","icon":"fa-first-order","uri":"\\/reserve_orders","roles":[null],"permission":null,"_token":"SiF1a7b9QY5iU0GXWeu3uruAvrRi1agwdGHnl48G","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/auth\\/menu"}', '2021-05-31 17:45:20', '2021-05-31 17:45:20'),
+	(2205, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-31 17:45:20', '2021-05-31 17:45:20'),
+	(2206, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-05-31 17:45:28', '2021-05-31 17:45:28'),
+	(2207, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 17:56:44', '2021-05-31 17:56:44'),
+	(2208, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 17:56:45', '2021-05-31 17:56:45'),
+	(2209, 1, 'admin/designers/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 17:56:51', '2021-05-31 17:56:51'),
+	(2210, 1, 'admin/designers/2/edit', 'GET', '192.168.10.1', '[]', '2021-05-31 17:59:41', '2021-05-31 17:59:41'),
+	(2211, 1, 'admin/designers/2', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 18:00:28', '2021-05-31 18:00:28'),
+	(2212, 1, 'admin/productions', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 18:01:13', '2021-05-31 18:01:13'),
+	(2213, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 18:01:14', '2021-05-31 18:01:14'),
+	(2214, 1, 'admin/designers/2', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 18:01:35', '2021-05-31 18:01:35'),
+	(2215, 1, 'admin/designers/2', 'GET', '192.168.10.1', '[]', '2021-05-31 18:02:23', '2021-05-31 18:02:23'),
+	(2216, 1, 'admin/designers/2', 'GET', '192.168.10.1', '[]', '2021-05-31 18:02:56', '2021-05-31 18:02:56'),
+	(2217, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-05-31 18:03:08', '2021-05-31 18:03:08'),
+	(2218, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 08:36:48', '2021-06-01 08:36:48'),
+	(2219, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:38:46', '2021-06-01 10:38:46'),
+	(2220, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"45","title":"\\u5de5\\u4f5c\\u65f6\\u95f4\\u7ba1\\u7406","icon":"fa-bars","uri":"\\/worktimes","roles":[null],"permission":null,"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK"}', '2021-06-01 10:39:07', '2021-06-01 10:39:07'),
+	(2221, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-06-01 10:39:08', '2021-06-01 10:39:08'),
+	(2222, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-06-01 10:39:23', '2021-06-01 10:39:23'),
+	(2223, 1, 'admin/worktimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:39:28', '2021-06-01 10:39:28'),
+	(2224, 1, 'admin/worktimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:39:52', '2021-06-01 10:39:52'),
+	(2225, 1, 'admin/worktimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:40:16', '2021-06-01 10:40:16'),
+	(2226, 1, 'admin/worktimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:40:40', '2021-06-01 10:40:40'),
+	(2227, 1, 'admin/worktimes/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:40:44', '2021-06-01 10:40:44'),
+	(2228, 1, 'admin/worktimes/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 10:41:15', '2021-06-01 10:41:15'),
+	(2229, 1, 'admin/worktimes/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 10:41:29', '2021-06-01 10:41:29'),
+	(2230, 1, 'admin/worktimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:41:33', '2021-06-01 10:41:33'),
+	(2231, 1, 'admin/worktimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:41:35', '2021-06-01 10:41:35'),
+	(2232, 1, 'admin/worktimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:41:42', '2021-06-01 10:41:42'),
+	(2233, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:42:47', '2021-06-01 10:42:47'),
+	(2234, 1, 'admin/auth/menu', 'POST', '192.168.10.1', '{"parent_id":"45","title":"\\u8bf7\\u5047\\u7ba1\\u7406","icon":"fa-leaf","uri":"\\/leavetimes","roles":[null],"permission":null,"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK"}', '2021-06-01 10:43:25', '2021-06-01 10:43:25'),
+	(2235, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-06-01 10:43:25', '2021-06-01 10:43:25'),
+	(2236, 1, 'admin/auth/menu', 'GET', '192.168.10.1', '[]', '2021-06-01 10:43:35', '2021-06-01 10:43:35'),
+	(2237, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:43:43', '2021-06-01 10:43:43'),
+	(2238, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:44:37', '2021-06-01 10:44:37'),
+	(2239, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:45:42', '2021-06-01 10:45:42'),
+	(2240, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:46:31', '2021-06-01 10:46:31'),
+	(2241, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:46:46', '2021-06-01 10:46:46'),
+	(2242, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:47:13', '2021-06-01 10:47:13'),
+	(2243, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 10:48:12', '2021-06-01 10:48:12'),
+	(2244, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 10:48:14', '2021-06-01 10:48:14'),
+	(2245, 1, 'admin/api/designer', 'GET', '192.168.10.1', '{"q":"t"}', '2021-06-01 10:48:20', '2021-06-01 10:48:20'),
+	(2246, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 10:50:02', '2021-06-01 10:50:02'),
+	(2247, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 10:50:23', '2021-06-01 10:50:23'),
+	(2248, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:44:23', '2021-06-01 11:44:23'),
+	(2249, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:45:03', '2021-06-01 11:45:03'),
+	(2250, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:45:14', '2021-06-01 11:45:14'),
+	(2251, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:45:43', '2021-06-01 11:45:43'),
+	(2252, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:46:01', '2021-06-01 11:46:01'),
+	(2253, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:46:52', '2021-06-01 11:46:52'),
+	(2254, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:46:55', '2021-06-01 11:46:55'),
+	(2255, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:47:19', '2021-06-01 11:47:19'),
+	(2256, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:47:44', '2021-06-01 11:47:44'),
+	(2257, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:48:13', '2021-06-01 11:48:13'),
+	(2258, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 11:49:37', '2021-06-01 11:49:37'),
+	(2259, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 12:09:21', '2021-06-01 12:09:21'),
+	(2260, 1, 'admin/api/designer', 'GET', '192.168.10.1', '{"q":"3"}', '2021-06-01 12:09:29', '2021-06-01 12:09:29'),
+	(2261, 1, 'admin/api/designer', 'GET', '192.168.10.1', '{"q":"v"}', '2021-06-01 12:09:35', '2021-06-01 12:09:35'),
+	(2262, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '[]', '2021-06-01 12:10:45', '2021-06-01 12:10:45'),
+	(2263, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 12:10:55', '2021-06-01 12:10:55'),
+	(2264, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 12:10:59', '2021-06-01 12:10:59'),
+	(2265, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 12:11:11', '2021-06-01 12:11:11'),
+	(2266, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 12:11:14', '2021-06-01 12:11:14'),
+	(2267, 1, 'admin/leavetimes', 'POST', '192.168.10.1', '{"designer_id":"1","type":"0","date":"2021-06-04","time":{"start_time":null,"end_time":null},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 12:11:29', '2021-06-01 12:11:29'),
+	(2268, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 12:11:30', '2021-06-01 12:11:30'),
+	(2269, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 12:11:54', '2021-06-01 12:11:54'),
+	(2270, 1, 'admin/leavetimes/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 12:12:40', '2021-06-01 12:12:40'),
+	(2271, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 12:12:58', '2021-06-01 12:12:58'),
+	(2272, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 12:25:52', '2021-06-01 12:25:52'),
+	(2273, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 12:27:11', '2021-06-01 12:27:11'),
+	(2274, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 12:28:07', '2021-06-01 12:28:07'),
+	(2275, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 12:28:10', '2021-06-01 12:28:10'),
+	(2276, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:01:55', '2021-06-01 14:01:55'),
+	(2277, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:02:25', '2021-06-01 14:02:25'),
+	(2278, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:02:32', '2021-06-01 14:02:32'),
+	(2279, 1, 'admin/leavetimes', 'POST', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-06","time":{"start_time":"1","end_time":"9"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 14:02:48', '2021-06-01 14:02:48'),
+	(2280, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:02:48', '2021-06-01 14:02:48'),
+	(2281, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:04:58', '2021-06-01 14:04:58'),
+	(2282, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:05:15', '2021-06-01 14:05:15'),
+	(2283, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:05:51', '2021-06-01 14:05:51'),
+	(2284, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:06:01', '2021-06-01 14:06:01'),
+	(2285, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:06:56', '2021-06-01 14:06:56'),
+	(2286, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:07:42', '2021-06-01 14:07:42'),
+	(2287, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:07:46', '2021-06-01 14:07:46'),
+	(2288, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:08:01', '2021-06-01 14:08:01'),
+	(2289, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:08:20', '2021-06-01 14:08:20'),
+	(2290, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:08:41', '2021-06-01 14:08:41'),
+	(2291, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:09:20', '2021-06-01 14:09:20'),
+	(2292, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:10:48', '2021-06-01 14:10:48'),
+	(2293, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:14:03', '2021-06-01 14:14:03'),
+	(2294, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:14:14', '2021-06-01 14:14:14'),
+	(2295, 1, 'admin/leavetimes/2', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-06","time":{"start_time":null,"end_time":null},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT"}', '2021-06-01 14:14:20', '2021-06-01 14:14:20'),
+	(2296, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:14:20', '2021-06-01 14:14:20'),
+	(2297, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:14:26', '2021-06-01 14:14:26'),
+	(2298, 1, 'admin/leavetimes/2', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-06","time":{"start_time":"1","end_time":"9"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 14:15:21', '2021-06-01 14:15:21'),
+	(2299, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:15:21', '2021-06-01 14:15:21'),
+	(2300, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:15:45', '2021-06-01 14:15:45'),
+	(2301, 1, 'admin/leavetimes/2', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-06","time":{"start_time":null,"end_time":null},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 14:15:51', '2021-06-01 14:15:51'),
+	(2302, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:15:51', '2021-06-01 14:15:51'),
+	(2303, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:16:20', '2021-06-01 14:16:20'),
+	(2304, 1, 'admin/leavetimes/2', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-06","time":{"start_time":"1","end_time":"9"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 14:16:26', '2021-06-01 14:16:26'),
+	(2305, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:16:27', '2021-06-01 14:16:27'),
+	(2306, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:18:25', '2021-06-01 14:18:25'),
+	(2307, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:18:28', '2021-06-01 14:18:28'),
+	(2308, 1, 'admin/leavetimes', 'POST', '192.168.10.1', '{"designer_id":"1","type":"0","date":"2021-06-04","time":{"start_time":null,"end_time":null},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 14:18:35', '2021-06-01 14:18:35'),
+	(2309, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:18:35', '2021-06-01 14:18:35'),
+	(2310, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:18:38', '2021-06-01 14:18:38'),
+	(2311, 1, 'admin/leavetimes', 'POST', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-11","time":{"start_time":"1","end_time":"9"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 14:18:58', '2021-06-01 14:18:58'),
+	(2312, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:18:59', '2021-06-01 14:18:59'),
+	(2313, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:19:03', '2021-06-01 14:19:03'),
+	(2314, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:19:09', '2021-06-01 14:19:09'),
+	(2315, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:22:48', '2021-06-01 14:22:48'),
+	(2316, 1, 'admin/leavetimes/2', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-11","time":{"start_time":"8:30","end_time":"12:30"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT"}', '2021-06-01 14:22:59', '2021-06-01 14:22:59'),
+	(2317, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:23:00', '2021-06-01 14:23:00'),
+	(2318, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:23:07', '2021-06-01 14:23:07'),
+	(2319, 1, 'admin/leavetimes/2', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-11","time":{"start_time":"8:30","end_time":"12:30"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 14:23:13', '2021-06-01 14:23:13'),
+	(2320, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:23:14', '2021-06-01 14:23:14'),
+	(2321, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:23:39', '2021-06-01 14:23:39'),
+	(2322, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:23:53', '2021-06-01 14:23:53'),
+	(2323, 1, 'admin/leavetimes/2', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-11","time":{"start_time":"1","end_time":"9"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT"}', '2021-06-01 14:24:04', '2021-06-01 14:24:04'),
+	(2324, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 14:24:05', '2021-06-01 14:24:05'),
+	(2325, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:24:10', '2021-06-01 14:24:10'),
+	(2326, 1, 'admin/orders', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:24:25', '2021-06-01 14:24:25'),
+	(2327, 1, 'admin/orders/3/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:24:29', '2021-06-01 14:24:29'),
+	(2328, 1, 'admin/orders/3', 'PUT', '192.168.10.1', '{"no":"5555555","status":"1","ship_data":{"express_company":null,"express_no":null},"extra":{"reason":null,"disagree_reason":"hao"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/orders"}', '2021-06-01 14:24:45', '2021-06-01 14:24:45'),
+	(2329, 1, 'admin/orders/3/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:24:45', '2021-06-01 14:24:45'),
+	(2330, 1, 'admin/orders/3', 'PUT', '192.168.10.1', '{"no":"5555555","status":"1","ship_data":{"express_company":"1111","express_no":"2222"},"extra":{"reason":null,"disagree_reason":"hao"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT"}', '2021-06-01 14:24:51', '2021-06-01 14:24:51'),
+	(2331, 1, 'admin/orders', 'GET', '192.168.10.1', '[]', '2021-06-01 14:24:52', '2021-06-01 14:24:52'),
+	(2332, 1, 'admin/orders/3/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:24:55', '2021-06-01 14:24:55'),
+	(2333, 1, 'admin/orders', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:25:08', '2021-06-01 14:25:08'),
+	(2334, 1, 'admin/orders/3', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:25:11', '2021-06-01 14:25:11'),
+	(2335, 1, 'admin/orders', 'GET', '192.168.10.1', '[]', '2021-06-01 14:25:12', '2021-06-01 14:25:12'),
+	(2336, 1, 'admin/orders/2', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:25:21', '2021-06-01 14:25:21'),
+	(2337, 1, 'admin/orders', 'GET', '192.168.10.1', '[]', '2021-06-01 14:25:25', '2021-06-01 14:25:25'),
+	(2338, 1, 'admin/orders/1', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:25:36', '2021-06-01 14:25:36'),
+	(2339, 1, 'admin/orders', 'GET', '192.168.10.1', '[]', '2021-06-01 14:25:41', '2021-06-01 14:25:41'),
+	(2340, 1, 'admin/orders/3/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:25:49', '2021-06-01 14:25:49'),
+	(2341, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:26:28', '2021-06-01 14:26:28'),
+	(2342, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:26:28', '2021-06-01 14:26:28'),
+	(2343, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:26:35', '2021-06-01 14:26:35'),
+	(2344, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:26:51', '2021-06-01 14:26:51'),
+	(2345, 1, 'admin/leavetimes/2/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 14:27:00', '2021-06-01 14:27:00'),
+	(2346, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:27:13', '2021-06-01 14:27:13'),
+	(2347, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 14:27:23', '2021-06-01 14:27:23'),
+	(2348, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 15:07:31', '2021-06-01 15:07:31'),
+	(2349, 1, 'admin/leavetimes', 'POST', '192.168.10.1', '{"designer_id":"1","type":"0","date":"2021-06-16","time":{"start_time":null,"end_time":null},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 15:07:44', '2021-06-01 15:07:44'),
+	(2350, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 15:07:45', '2021-06-01 15:07:45'),
+	(2351, 1, 'admin/leavetimes/3/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 15:07:58', '2021-06-01 15:07:58'),
+	(2352, 1, 'admin/leavetimes/3', 'PUT', '192.168.10.1', '{"designer_id":"2","type":"0","date":"2021-06-16","time":{"start_time":null,"end_time":null},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 15:08:02', '2021-06-01 15:08:02'),
+	(2353, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 15:08:02', '2021-06-01 15:08:02'),
+	(2354, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 15:36:32', '2021-06-01 15:36:32'),
+	(2355, 1, 'admin/leavetimes/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 15:36:36', '2021-06-01 15:36:36'),
+	(2356, 1, 'admin/leavetimes', 'POST', '192.168.10.1', '{"designer_id":"2","type":"1","date":"2021-06-26","time":{"start_time":"2","end_time":"11"},"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/leavetimes"}', '2021-06-01 15:36:54', '2021-06-01 15:36:54'),
+	(2357, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 15:36:54', '2021-06-01 15:36:54'),
+	(2358, 1, 'admin/service_projects', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 15:54:42', '2021-06-01 15:54:42'),
+	(2359, 1, 'admin/service_projects/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 15:54:47', '2021-06-01 15:54:47'),
+	(2360, 1, 'admin/designer_labels', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 15:55:02', '2021-06-01 15:55:02'),
+	(2361, 1, 'admin/service_projects', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 15:55:04', '2021-06-01 15:55:04'),
+	(2362, 1, 'admin/service_projects/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:00:56', '2021-06-01 16:00:56'),
+	(2363, 1, 'admin/service_projects/1', 'PUT', '192.168.10.1', '{"name":"\\u7406\\u53d1","price":"20","_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/service_projects"}', '2021-06-01 16:01:22', '2021-06-01 16:01:22'),
+	(2364, 1, 'admin/service_projects', 'GET', '192.168.10.1', '[]', '2021-06-01 16:01:23', '2021-06-01 16:01:23'),
+	(2365, 1, 'admin/service_projects', 'GET', '192.168.10.1', '[]', '2021-06-01 16:01:47', '2021-06-01 16:01:47'),
+	(2366, 1, 'admin/service_projects/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:01:52', '2021-06-01 16:01:52'),
+	(2367, 1, 'admin/service_projects', 'POST', '192.168.10.1', '{"name":"\\u70eb\\u53d1","price":"230","_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/service_projects"}', '2021-06-01 16:02:07', '2021-06-01 16:02:07'),
+	(2368, 1, 'admin/service_projects', 'GET', '192.168.10.1', '[]', '2021-06-01 16:02:07', '2021-06-01 16:02:07'),
+	(2369, 1, 'admin/service_projects/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:02:09', '2021-06-01 16:02:09'),
+	(2370, 1, 'admin/service_projects', 'POST', '192.168.10.1', '{"name":"\\u6d17\\u526a\\u5439","price":"100","_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/service_projects"}', '2021-06-01 16:02:21', '2021-06-01 16:02:21'),
+	(2371, 1, 'admin/service_projects', 'GET', '192.168.10.1', '[]', '2021-06-01 16:02:21', '2021-06-01 16:02:21'),
+	(2372, 1, 'admin/service_projects/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:02:28', '2021-06-01 16:02:28'),
+	(2373, 1, 'admin/service_projects', 'POST', '192.168.10.1', '{"name":"\\u62a4\\u7406","price":"50","_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/service_projects"}', '2021-06-01 16:02:39', '2021-06-01 16:02:39'),
+	(2374, 1, 'admin/service_projects', 'GET', '192.168.10.1', '[]', '2021-06-01 16:02:39', '2021-06-01 16:02:39'),
+	(2375, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:02:54', '2021-06-01 16:02:54'),
+	(2376, 1, 'admin/designers/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:02:58', '2021-06-01 16:02:58'),
+	(2377, 1, 'admin/designers', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:03:39', '2021-06-01 16:03:39'),
+	(2378, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:04:43', '2021-06-01 16:04:43'),
+	(2379, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:04:47', '2021-06-01 16:04:47'),
+	(2380, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 16:06:34', '2021-06-01 16:06:34'),
+	(2381, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 16:07:35', '2021-06-01 16:07:35'),
+	(2382, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 16:07:54', '2021-06-01 16:07:54'),
+	(2383, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 16:08:23', '2021-06-01 16:08:23'),
+	(2384, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 16:08:40', '2021-06-01 16:08:40'),
+	(2385, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '[]', '2021-06-01 16:12:10', '2021-06-01 16:12:10'),
+	(2386, 1, 'admin/reserve_informations/1', 'PUT', '192.168.10.1', '{"designer_id":"1","service_project":["1","2",null],"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT"}', '2021-06-01 16:13:05', '2021-06-01 16:13:05'),
+	(2387, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:13:06', '2021-06-01 16:13:06'),
+	(2388, 1, 'admin/reserve_informations/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:14:01', '2021-06-01 16:14:01'),
+	(2389, 1, 'admin/reserve_informations', 'POST', '192.168.10.1', '{"designer_id":"2","service_project":["1","2","3","4",null],"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/reserve_informations"}', '2021-06-01 16:14:10', '2021-06-01 16:14:10'),
+	(2390, 1, 'admin/reserve_informations/create', 'GET', '192.168.10.1', '[]', '2021-06-01 16:14:11', '2021-06-01 16:14:11'),
+	(2391, 1, 'admin/reserve_informations/create', 'GET', '192.168.10.1', '[]', '2021-06-01 16:17:24', '2021-06-01 16:17:24'),
+	(2392, 1, 'admin/reserve_informations', 'POST', '192.168.10.1', '{"designer_id":"2","service_project":["1","2","3","4",null],"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK"}', '2021-06-01 16:17:40', '2021-06-01 16:17:40'),
+	(2393, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:17:41', '2021-06-01 16:17:41'),
+	(2394, 1, 'admin/reserve_informations/1/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:17:47', '2021-06-01 16:17:47'),
+	(2395, 1, 'admin/reserve_informations/1', 'PUT', '192.168.10.1', '{"designer_id":"1","service_project":["1","2",null],"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_method":"PUT","_previous_":"https:\\/\\/hair.test\\/admin\\/reserve_informations"}', '2021-06-01 16:17:52', '2021-06-01 16:17:52'),
+	(2396, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:17:52', '2021-06-01 16:17:52'),
+	(2397, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:18:11', '2021-06-01 16:18:11'),
+	(2398, 1, 'admin/reserve_informations/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:18:13', '2021-06-01 16:18:13'),
+	(2399, 1, 'admin/reserve_informations', 'POST', '192.168.10.1', '{"designer_id":"1","service_project":["1","3",null],"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/reserve_informations"}', '2021-06-01 16:18:22', '2021-06-01 16:18:22'),
+	(2400, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:18:22', '2021-06-01 16:18:22'),
+	(2401, 1, 'admin/reserve_informations/create', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:18:25', '2021-06-01 16:18:25'),
+	(2402, 1, 'admin/reserve_informations', 'POST', '192.168.10.1', '{"designer_id":"2","service_project":["1","2","3","4",null],"_token":"ALO9LENAwSUFZAsOMNO3FytnHBfK2wWcPkSmPOUK","_previous_":"https:\\/\\/hair.test\\/admin\\/reserve_informations"}', '2021-06-01 16:18:33', '2021-06-01 16:18:33'),
+	(2403, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:18:33', '2021-06-01 16:18:33'),
+	(2404, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:19:09', '2021-06-01 16:19:09'),
+	(2405, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:24:16', '2021-06-01 16:24:16'),
+	(2406, 1, 'admin/reserve_informations/2', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:24:22', '2021-06-01 16:24:22'),
+	(2407, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:24:23', '2021-06-01 16:24:23'),
+	(2408, 1, 'admin/reserve_informations/2', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:25:19', '2021-06-01 16:25:19'),
+	(2409, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:25:19', '2021-06-01 16:25:19'),
+	(2410, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:26:31', '2021-06-01 16:26:31'),
+	(2411, 1, 'admin/reserve_informations/2/edit', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:26:36', '2021-06-01 16:26:36'),
+	(2412, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:26:38', '2021-06-01 16:26:38'),
+	(2413, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:27:28', '2021-06-01 16:27:28'),
+	(2414, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:28:12', '2021-06-01 16:28:12'),
+	(2415, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:29:18', '2021-06-01 16:29:18'),
+	(2416, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:29:41', '2021-06-01 16:29:41'),
+	(2417, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:29:44', '2021-06-01 16:29:44'),
+	(2418, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:30:41', '2021-06-01 16:30:41'),
+	(2419, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:31:49', '2021-06-01 16:31:49'),
+	(2420, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:32:04', '2021-06-01 16:32:04'),
+	(2421, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:32:53', '2021-06-01 16:32:53'),
+	(2422, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:33:03', '2021-06-01 16:33:03'),
+	(2423, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:38:39', '2021-06-01 16:38:39'),
+	(2424, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:39:05', '2021-06-01 16:39:05'),
+	(2425, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:39:14', '2021-06-01 16:39:14'),
+	(2426, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:39:29', '2021-06-01 16:39:29'),
+	(2427, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:39:42', '2021-06-01 16:39:42'),
+	(2428, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:39:45', '2021-06-01 16:39:45'),
+	(2429, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:39:53', '2021-06-01 16:39:53'),
+	(2430, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:40:03', '2021-06-01 16:40:03'),
+	(2431, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:40:22', '2021-06-01 16:40:22'),
+	(2432, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:40:34', '2021-06-01 16:40:34'),
+	(2433, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '[]', '2021-06-01 16:40:43', '2021-06-01 16:40:43'),
+	(2434, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:40:54', '2021-06-01 16:40:54'),
+	(2435, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:41:54', '2021-06-01 16:41:54'),
+	(2436, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:43:47', '2021-06-01 16:43:47'),
+	(2437, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:44:04', '2021-06-01 16:44:04'),
+	(2438, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:44:45', '2021-06-01 16:44:45'),
+	(2439, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:45:05', '2021-06-01 16:45:05'),
+	(2440, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:45:16', '2021-06-01 16:45:16'),
+	(2441, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:45:43', '2021-06-01 16:45:43'),
+	(2442, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:46:21', '2021-06-01 16:46:21'),
+	(2443, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:46:35', '2021-06-01 16:46:35'),
+	(2444, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:47:06', '2021-06-01 16:47:06'),
+	(2445, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:47:24', '2021-06-01 16:47:24'),
+	(2446, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:47:47', '2021-06-01 16:47:47'),
+	(2447, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:47:58', '2021-06-01 16:47:58'),
+	(2448, 1, 'admin/leavetimes', 'GET', '192.168.10.1', '[]', '2021-06-01 16:48:06', '2021-06-01 16:48:06'),
+	(2449, 1, 'admin/reserve_informations', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 16:48:14', '2021-06-01 16:48:14'),
+	(2450, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 18:15:45', '2021-06-01 18:15:45'),
+	(2451, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:15:57', '2021-06-01 18:15:57'),
+	(2452, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:16:23', '2021-06-01 18:16:23'),
+	(2453, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:16:30', '2021-06-01 18:16:30'),
+	(2454, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:18:05', '2021-06-01 18:18:05'),
+	(2455, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:18:21', '2021-06-01 18:18:21'),
+	(2456, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:18:39', '2021-06-01 18:18:39'),
+	(2457, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:18:56', '2021-06-01 18:18:56'),
+	(2458, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:19:02', '2021-06-01 18:19:02'),
+	(2459, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '[]', '2021-06-01 18:19:09', '2021-06-01 18:19:09'),
+	(2460, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '{"id":null,"designer":{"name":"\\u5230\\u5e97\\u5206\\u914d"},"service_project":null,"created_at":{"start":null,"end":null},"_pjax":"#pjax-container"}', '2021-06-01 18:19:19', '2021-06-01 18:19:19'),
+	(2461, 1, 'admin/reserve_orders', 'GET', '192.168.10.1', '{"_pjax":"#pjax-container"}', '2021-06-01 18:19:37', '2021-06-01 18:19:37');
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_permissions 结构
+CREATE TABLE IF NOT EXISTS `admin_permissions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `http_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `http_path` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_permissions_name_unique` (`name`),
+  UNIQUE KEY `admin_permissions_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_permissions 的数据：~12 rows (大约)
+DELETE FROM `admin_permissions`;
+/*!40000 ALTER TABLE `admin_permissions` DISABLE KEYS */;
+INSERT INTO `admin_permissions` (`id`, `name`, `slug`, `http_method`, `http_path`, `created_at`, `updated_at`) VALUES
+	(1, 'All permission', '*', '', '*', NULL, NULL),
+	(2, 'Dashboard', 'dashboard', 'GET', '/', NULL, NULL),
+	(3, 'Login', 'auth.login', '', '/auth/login\r\n/auth/logout', NULL, NULL),
+	(4, 'User setting', 'auth.setting', 'GET,PUT', '/auth/setting', NULL, NULL),
+	(5, 'Auth management', 'auth.management', '', '/auth/roles\r\n/auth/permissions\r\n/auth/menu\r\n/auth/logs', NULL, NULL),
+	(6, 'Admin Config', 'ext.config', '', '/config*', '2021-05-12 11:48:04', '2021-05-12 11:48:04'),
+	(7, 'Admin Configx', 'ext.configx', '', '/configx/*', '2021-05-12 11:49:27', '2021-05-12 11:49:27'),
+	(8, '网站设置-基本设置', 'confix.tab.website', NULL, '/configx/tab-website', '2021-05-12 13:41:10', '2021-05-12 13:50:33'),
+	(9, '网站设置-编辑-config', 'confix.tab.new_config', NULL, '/configx/tab-new_config', '2021-05-12 13:41:10', '2021-05-12 13:50:33'),
+	(10, '网站设置-编辑-tabs', 'confix.tab.tabs_config', NULL, '/configx/tab-tabs_config', '2021-05-12 13:41:10', '2021-05-12 13:50:33'),
+	(11, '网站设置-文件上传', 'confix.tab.upload', NULL, '/configx/tab-upload', '2021-05-12 14:06:44', '2021-05-12 14:06:44'),
+	(12, '网站设置-APP', 'confix.tab.app', NULL, '/configx/tab-app', '2021-05-12 14:11:26', '2021-05-12 14:11:26');
+/*!40000 ALTER TABLE `admin_permissions` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_roles 结构
+CREATE TABLE IF NOT EXISTS `admin_roles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_roles_name_unique` (`name`),
+  UNIQUE KEY `admin_roles_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_roles 的数据：~0 rows (大约)
+DELETE FROM `admin_roles`;
+/*!40000 ALTER TABLE `admin_roles` DISABLE KEYS */;
+INSERT INTO `admin_roles` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
+	(1, 'Administrator', 'administrator', '2021-05-08 02:06:06', '2021-05-08 02:06:06');
+/*!40000 ALTER TABLE `admin_roles` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_role_menu 结构
+CREATE TABLE IF NOT EXISTS `admin_role_menu` (
+  `role_id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  KEY `admin_role_menu_role_id_menu_id_index` (`role_id`,`menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_role_menu 的数据：~1 rows (大约)
+DELETE FROM `admin_role_menu`;
+/*!40000 ALTER TABLE `admin_role_menu` DISABLE KEYS */;
+INSERT INTO `admin_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`) VALUES
+	(1, 2, NULL, NULL);
+/*!40000 ALTER TABLE `admin_role_menu` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_role_permissions 结构
+CREATE TABLE IF NOT EXISTS `admin_role_permissions` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  KEY `admin_role_permissions_role_id_permission_id_index` (`role_id`,`permission_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_role_permissions 的数据：~0 rows (大约)
+DELETE FROM `admin_role_permissions`;
+/*!40000 ALTER TABLE `admin_role_permissions` DISABLE KEYS */;
+INSERT INTO `admin_role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
+	(1, 1, NULL, NULL);
+/*!40000 ALTER TABLE `admin_role_permissions` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_role_users 结构
+CREATE TABLE IF NOT EXISTS `admin_role_users` (
+  `role_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  KEY `admin_role_users_role_id_user_id_index` (`role_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_role_users 的数据：~0 rows (大约)
+DELETE FROM `admin_role_users`;
+/*!40000 ALTER TABLE `admin_role_users` DISABLE KEYS */;
+INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`) VALUES
+	(1, 1, NULL, NULL);
+/*!40000 ALTER TABLE `admin_role_users` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_users 结构
+CREATE TABLE IF NOT EXISTS `admin_users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `google_auth` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_open_google_auth` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_users_username_unique` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_users 的数据：~1 rows (大约)
+DELETE FROM `admin_users`;
+/*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
+INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`, `google_auth`, `is_open_google_auth`) VALUES
+	(1, 'admin', '$2y$10$4PRRRb27lsq0VOqOddTHX.t4H0Vm9yX4QBsaTwQmN/1.cE4mnSxSC', 'Administrator', NULL, '26NiIwKf98WcYOTgsFj2y92QFERm2WessgBW8v7i8OgrDv6lnHiJa3HEBjPw', '2021-05-08 02:06:06', '2021-05-08 02:06:06', NULL, NULL);
+/*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.admin_user_permissions 结构
+CREATE TABLE IF NOT EXISTS `admin_user_permissions` (
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  KEY `admin_user_permissions_user_id_permission_id_index` (`user_id`,`permission_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.admin_user_permissions 的数据：~0 rows (大约)
+DELETE FROM `admin_user_permissions`;
+/*!40000 ALTER TABLE `admin_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `admin_user_permissions` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.adverts 结构
+CREATE TABLE IF NOT EXISTS `adverts` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL COMMENT '广告分类id',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '标题',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+  `thumb` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图片',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '跳转链接',
+  `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `is_recommend` int(11) NOT NULL DEFAULT '0' COMMENT '是否推荐 0否1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.adverts 的数据：~10 rows (大约)
+DELETE FROM `adverts`;
+/*!40000 ALTER TABLE `adverts` DISABLE KEYS */;
+INSERT INTO `adverts` (`id`, `category_id`, `title`, `description`, `content`, `thumb`, `url`, `order`, `is_recommend`, `created_at`, `updated_at`) VALUES
+	(1, 1, '首页广告图', NULL, '<p>首页广告图</p>', 'images/9d5f3c1a15263653fc7263d9cfd13316.png', NULL, 0, 0, '2021-05-12 18:14:35', '2021-05-18 18:38:55'),
+	(2, 1, '首页广告图', NULL, '<p>首页顶部</p>', 'images/b6daaf31fff180360981325651cc97c2.png', NULL, 0, 0, '2021-05-18 18:40:53', '2021-05-18 18:41:16'),
+	(3, 2, '美业美发线下课程培训', '线下培训.包教包会', '<p>美业美发线下课程培训</p>', 'images/4e582d9a2b0db3091f9c3abe28507d9f.png', NULL, 0, 0, '2021-05-19 10:22:18', '2021-05-19 10:22:18'),
+	(4, 3, '集品类商品banner', NULL, '<p>集品类商品banner</p>', 'images/82@3x.png', NULL, 0, 0, '2021-05-19 14:28:46', '2021-05-19 14:28:46'),
+	(5, 3, '集品类商品banner', NULL, '<p>集品类商品banner</p>', 'images/img2@3x.png', NULL, 0, 0, '2021-05-19 14:29:39', '2021-05-19 14:29:39'),
+	(6, 4, '转让类商品banner', NULL, '<p>转让类商品banner</p>', 'images/img3@3x.png', NULL, 0, 0, '2021-05-19 14:30:11', '2021-05-19 14:30:11'),
+	(7, 5, '自营类商品banner', NULL, '<p>自营类商品banner</p>', 'images/d208e98d7cb32948ea307c1e609319e8.png', NULL, 0, 0, '2021-05-19 14:30:48', '2021-05-19 14:30:48'),
+	(8, 6, '作品首页处的预约项目banner', NULL, '<p>作品首页处的预约项目banner</p>', 'images/c7bb44d5d217a8db1faebd493fda6b95.png', NULL, 0, 0, '2021-05-25 15:29:22', '2021-05-25 15:29:22'),
+	(9, 7, '社区banner1', NULL, '<p>社区banner1</p>', 'images/ec54930ae44f528ad6ed05a984e27fd9.png', NULL, 0, 0, '2021-05-29 14:45:06', '2021-05-29 14:45:06'),
+	(10, 7, '社区banner2', NULL, '<p>社区banner2</p>', 'images/fb2500f4faa63b3a24ba932d7f2c8964.png', NULL, 0, 0, '2021-05-29 14:45:38', '2021-05-29 14:45:38');
+/*!40000 ALTER TABLE `adverts` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.advert_categories 结构
+CREATE TABLE IF NOT EXISTS `advert_categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '分类名称',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.advert_categories 的数据：~5 rows (大约)
+DELETE FROM `advert_categories`;
+/*!40000 ALTER TABLE `advert_categories` DISABLE KEYS */;
+INSERT INTO `advert_categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+	(1, '猜你喜欢的首页顶部', '2021-05-12 18:06:10', '2021-05-18 18:34:38'),
+	(2, '猜你喜欢的首页底部（文教娱乐）', '2021-05-19 10:19:49', '2021-05-19 10:19:49'),
+	(3, '集品类产品处的banner', '2021-05-19 14:24:00', '2021-05-19 14:25:01'),
+	(4, '转让类产品处的banner', '2021-05-19 14:24:53', '2021-05-19 14:24:53'),
+	(5, '自营类产品处的banner', '2021-05-19 14:25:23', '2021-05-19 14:25:23'),
+	(6, '作品首页处的预约项目banner', '2021-05-25 15:27:44', '2021-05-25 15:27:57'),
+	(7, '社区banner', '2021-05-29 14:44:06', '2021-05-29 14:44:06');
+/*!40000 ALTER TABLE `advert_categories` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.cart_items 结构
+CREATE TABLE IF NOT EXISTS `cart_items` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `product_sku_id` bigint(20) unsigned NOT NULL COMMENT '产品sku所属ID',
+  `amount` int(10) unsigned NOT NULL COMMENT '商品数量',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='购物车';
+
+-- 正在导出表  hair-salon.cart_items 的数据：~2 rows (大约)
+DELETE FROM `cart_items`;
+/*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
+INSERT INTO `cart_items` (`id`, `user_id`, `product_sku_id`, `amount`, `created_at`, `updated_at`) VALUES
+	(1, 1, 3, 1, '2021-05-20 17:02:03', '2021-05-20 17:02:03'),
+	(2, 1, 2, 1, '2021-05-20 17:54:30', '2021-05-20 17:54:31'),
+	(3, 1, 1, 3, '2021-05-24 17:23:46', '2021-05-26 10:04:47');
+/*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.categories 结构
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类目名称',
+  `parent_id` bigint(20) unsigned DEFAULT NULL COMMENT '父类目ID',
+  `is_directory` tinyint(1) DEFAULT NULL COMMENT '是否拥有子类目',
+  `level` int(10) unsigned DEFAULT NULL COMMENT 'level',
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '该类目所有父类目 id',
+  `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `many_images` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '多图',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品类目表';
+
+-- 正在导出表  hair-salon.categories 的数据：~4 rows (大约)
+DELETE FROM `categories`;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` (`id`, `name`, `parent_id`, `is_directory`, `level`, `path`, `order`, `many_images`, `created_at`, `updated_at`) VALUES
+	(9, '化妆品', 0, 0, 1, '-', 0, NULL, '2021-05-09 15:35:42', '2021-05-19 10:01:26'),
+	(10, '水乳套装', 9, 0, 2, '-9-', 0, NULL, '2021-05-09 15:35:56', '2021-05-19 10:01:38'),
+	(11, '精华', 9, 0, 2, '-9-', 0, NULL, '2021-05-09 15:46:55', '2021-05-19 14:32:05'),
+	(12, '酒水', 0, 0, 1, '-', 0, '["images\\/f1269d511a8f5d0277a8ab57c571fc3e.png","images\\/6a8d034061332a61249a28ad54148da2.png"]', '2021-05-09 15:47:03', '2021-05-27 15:48:29'),
+	(13, '保健品', 0, 0, NULL, NULL, 0, '["images\\/327bd281b40c0e58651d38ea89664758.png","images\\/f6cfdd7d27b6de12fde20e253765a4c9.png"]', '2021-05-27 15:48:08', '2021-05-27 15:48:08');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.comments 结构
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) DEFAULT NULL COMMENT '评价类型 1设计师2商品',
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `reserveorder_id` int(11) DEFAULT NULL COMMENT '预约订单id',
+  `designer_id` int(11) DEFAULT NULL COMMENT '所属设计师ID',
+  `product_id` int(11) DEFAULT NULL COMMENT '对应商品ID',
+  `product_sku_id` int(11) DEFAULT NULL COMMENT '对应商品 SKU ID',
+  `rate` int(11) NOT NULL DEFAULT '0' COMMENT '评分',
+  `render_content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '评论内容',
+  `render_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '评论图片',
+  `render_image2` json DEFAULT NULL,
+  `render_video` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '评论视频',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '审核状态：0未审核1已审核',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='评价管理';
+
+-- 正在导出表  hair-salon.comments 的数据：~0 rows (大约)
+DELETE FROM `comments`;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` (`id`, `type`, `user_id`, `order_id`, `reserveorder_id`, `designer_id`, `product_id`, `product_sku_id`, `rate`, `render_content`, `render_image`, `render_image2`, `render_video`, `status`, `created_at`, `updated_at`) VALUES
+	(2, 1, 3, NULL, NULL, 1, 1, 1, 0, '222', '', NULL, NULL, 1, '2021-05-26 16:30:02', NULL),
+	(3, 1, 1, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, '2021-05-26 16:30:03', NULL);
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.communities 结构
+CREATE TABLE IF NOT EXISTS `communities` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '标题',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '内容',
+  `many_images` varchar(600) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '多图',
+  `video` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '视频',
+  `video_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '视频直接链接',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '审核状态:0 否1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `communities_user_id_foreign` (`user_id`),
+  CONSTRAINT `communities_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='社区晒单管理';
+
+-- 正在导出表  hair-salon.communities 的数据：~4 rows (大约)
+DELETE FROM `communities`;
+/*!40000 ALTER TABLE `communities` DISABLE KEYS */;
+INSERT INTO `communities` (`id`, `user_id`, `title`, `content`, `many_images`, `video`, `video_url`, `status`, `created_at`, `updated_at`) VALUES
+	(1, 1, '三件套精华', '必备三件套', '["feedback\\/2021\\/05\\/29\\/dYapAXaK1BDqyr2KvE1oHi3EyhsSX5ZahZmH1VlL.png","feedback\\/2021\\/05\\/29\\/DVk0sm5NN3DFOP9uF10Yt3dgK4SUL3H1I7tUMPhM.png"]', NULL, NULL, 1, '2021-05-29 14:31:48', '2021-05-29 14:50:29'),
+	(2, 3, '三件套精华1', '必备三件套1', '["feedback\\/2021\\/05\\/29\\/SSMGfLqbWO2FfkwDfojAdep3z0HFj8jqEhf7oJYd.png","feedback\\/2021\\/05\\/29\\/vAr6jcFZjnMSr3Mgd8sZHH7VYazAyggzX68xw2Yo.png"]', NULL, NULL, 1, '2021-05-29 14:32:36', '2021-05-29 14:50:28'),
+	(3, 1, '三件套精华1', '必备三件套1', NULL, 'community/2021/05/29/ymNWPiI6V2cjSHnphCyuFMg8zYNuAqUrk3K8LImY.mp4', NULL, 1, '2021-05-29 14:32:53', '2021-05-29 14:50:27'),
+	(4, 1, '三件套精华3', '必备三件套3', '["feedback\\/2021\\/05\\/29\\/SSMGfLqbWO2FfkwDfojAdep3z0HFj8jqEhf7oJYd.png","feedback\\/2021\\/05\\/29\\/vAr6jcFZjnMSr3Mgd8sZHH7VYazAyggzX68xw2Yo.png"]', 'community/2021/05/29/OcFpbAGEAHBp6ZaM967H1V4F1Kxt8Gyq63T8A76Y.mp4', NULL, 1, '2021-05-29 14:33:12', '2021-05-29 14:50:26');
+/*!40000 ALTER TABLE `communities` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.community_likes 结构
+CREATE TABLE IF NOT EXISTS `community_likes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned DEFAULT NULL COMMENT '用户ID',
+  `community_id` bigint(20) unsigned DEFAULT NULL COMMENT '社区id',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='社区评论点赞管理';
+
+-- 正在导出表  hair-salon.community_likes 的数据：~4 rows (大约)
+DELETE FROM `community_likes`;
+/*!40000 ALTER TABLE `community_likes` DISABLE KEYS */;
+INSERT INTO `community_likes` (`id`, `user_id`, `community_id`, `created_at`, `updated_at`) VALUES
+	(1, 3, 1, '2021-05-31 15:10:12', '2021-05-31 15:10:12'),
+	(3, 1, 1, '2021-05-31 15:19:10', '2021-05-31 15:19:10'),
+	(4, 1, 2, '2021-05-31 15:20:38', '2021-05-31 15:20:38'),
+	(5, 1, 3, '2021-05-31 15:20:48', '2021-05-31 15:20:48');
+/*!40000 ALTER TABLE `community_likes` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.community_reviews 结构
+CREATE TABLE IF NOT EXISTS `community_reviews` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned DEFAULT NULL COMMENT '用户ID',
+  `replyuser_id` bigint(20) unsigned DEFAULT NULL COMMENT '回复用户ID',
+  `community_id` bigint(20) unsigned DEFAULT NULL COMMENT '社区id',
+  `message` json NOT NULL COMMENT '消息内容',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='社区评论内容管理';
+
+-- 正在导出表  hair-salon.community_reviews 的数据：~4 rows (大约)
+DELETE FROM `community_reviews`;
+/*!40000 ALTER TABLE `community_reviews` DISABLE KEYS */;
+INSERT INTO `community_reviews` (`id`, `user_id`, `replyuser_id`, `community_id`, `message`, `created_at`, `updated_at`) VALUES
+	(1, 1, 0, 1, '[{"type": 1, "message": "这个真的不错"}, {"type": 1, "message": "这个可以"}]', '2021-05-31 10:39:31', '2021-05-31 10:39:53'),
+	(2, 1, 3, 1, '[{"type": 1, "message": "这个可以"}, {"type": 2, "message": "推荐使用"}, {"type": 2, "message": "真心不错"}]', '2021-05-31 10:40:11', '2021-05-31 10:43:35'),
+	(3, 3, 1, 3, '[{"type": 1, "message": "真心不错"}, {"type": 2, "message": "这个真的好用"}]', '2021-05-31 10:43:01', '2021-05-31 10:45:38'),
+	(4, 1, 0, 3, '[{"type": 1, "message": "这个真的好用"}]', '2021-05-31 10:47:58', '2021-05-31 10:47:58'),
+	(5, 1, 0, 2, '[{"type": 1, "message": "这个真的好用"}]', '2021-05-31 10:48:28', '2021-05-31 10:48:28');
+/*!40000 ALTER TABLE `community_reviews` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.cultures 结构
+CREATE TABLE IF NOT EXISTS `cultures` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `place_id` int(11) DEFAULT NULL COMMENT '位置：1教育2培训3线下活动',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '标题',
+  `teacher` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '讲师',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '内容',
+  `thumb` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '封面图片',
+  `video` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '视频',
+  `video_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '视频链接',
+  `is_recommend` int(11) NOT NULL DEFAULT '0' COMMENT '是否推荐 0否1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文化中心';
+
+-- 正在导出表  hair-salon.cultures 的数据：~2 rows (大约)
+DELETE FROM `cultures`;
+/*!40000 ALTER TABLE `cultures` DISABLE KEYS */;
+INSERT INTO `cultures` (`id`, `place_id`, `title`, `teacher`, `description`, `content`, `thumb`, `video`, `video_url`, `is_recommend`, `created_at`, `updated_at`, `start_time`) VALUES
+	(1, 1, '系统管理', '七千', '111222', '<p>111</p>', 'images/articleimage/73753128f3751c7ad324d190cd25d30a.png', 'files/articlevideo/bbd9f09c1cf696ab60e054cb38ae7baa.mp4', NULL, 0, '2021-05-12 09:50:58', '2021-05-27 17:23:33', '2021-05-29 00:00:00'),
+	(2, 2, '首页', NULL, NULL, '<p>111</p>', NULL, 'files/articlevideo/009eb0c1ba720a01a5a582d471ec7da0.mp4', NULL, 1, '2021-05-12 11:00:27', '2021-05-12 11:00:39', '2021-05-28 17:40:33'),
+	(3, 1, '线下理发师培训课程', 'Tony造型师', '2020.06.31 上午09:30在***举行为期三天的理发技法培训', '<p>如果有理发店的名片，或是电话，可以直接打电话给那里的理发师。告诉他你多久去，要哪位理发师，在看哪位理发师是否有时间，如果没有时间，是否换一位理发师，或是另约时间。</p><p>第二种</p><p>如果想去的理发店，在网上开有店的话可以，到他们的网店找客服人员预约。</p>', 'images/articleimage/1bda69e2dec2792913ee89c2c1549e9e.png', NULL, NULL, 0, '2021-05-27 17:25:15', '2021-05-27 17:25:15', '2021-05-27 00:00:00');
+/*!40000 ALTER TABLE `cultures` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.designers 结构
+CREATE TABLE IF NOT EXISTS `designers` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '姓名',
+  `thumb` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '图片',
+  `many_images` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '多图',
+  `position` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '职位',
+  `rating` int(11) NOT NULL DEFAULT '0' COMMENT '评价数量',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `certificate` json DEFAULT NULL COMMENT '证书',
+  `honor` json DEFAULT NULL COMMENT '荣誉',
+  `score` decimal(2,1) NOT NULL DEFAULT '0.0' COMMENT '评分',
+  `label_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所属设计师标签ID',
+  `is_recommend` int(11) NOT NULL DEFAULT '0' COMMENT '是否推荐0否1是',
+  `employee_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '员工号',
+  `is_employee` int(11) NOT NULL DEFAULT '0' COMMENT '是否是员工 0否 1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='设计师信息管理';
+
+-- 正在导出表  hair-salon.designers 的数据：~2 rows (大约)
+DELETE FROM `designers`;
+/*!40000 ALTER TABLE `designers` DISABLE KEYS */;
+INSERT INTO `designers` (`id`, `name`, `thumb`, `many_images`, `position`, `rating`, `description`, `certificate`, `honor`, `score`, `label_id`, `is_recommend`, `employee_number`, `is_employee`, `created_at`, `updated_at`) VALUES
+	(1, '3am杰克', 'images/df22f874837b16a413a7eea66c04ce93.png', '["images\\/f6867c8e00406a00ec3046930b3759fe.png","images\\/48d376462719d0ee4d717b1ee576c9fb.png"]', '技术总监', 0, NULL, '["国家一级理发师", "国家二级烫发师"]', '["国际美容美发造型创意一等奖", "国际美容美发造型创意一等奖"]', 0.0, '1,2', 1, NULL, 1, '2021-05-13 09:33:22', '2021-05-25 16:55:00'),
+	(2, 'Tony 造型师', 'images/img_1@3x.png', '["images\\/f6361795ae3513a5e7f7d30b6bc77bf1.png","images\\/2957da83d26643ca98d3b16777729089.png"]', '创意总监', 0, NULL, '["国家一级理发师"]', '["国际美容美发造型创意一等奖"]', 5.0, '1,3', 1, NULL, 1, '2021-05-25 17:02:20', '2021-05-25 17:02:20');
+/*!40000 ALTER TABLE `designers` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.designer_labels 结构
+CREATE TABLE IF NOT EXISTS `designer_labels` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='设计师标签管理';
+
+-- 正在导出表  hair-salon.designer_labels 的数据：~2 rows (大约)
+DELETE FROM `designer_labels`;
+/*!40000 ALTER TABLE `designer_labels` DISABLE KEYS */;
+INSERT INTO `designer_labels` (`id`, `name`, `created_at`, `updated_at`) VALUES
+	(1, '剪发', '2021-05-25 16:20:13', '2021-05-25 16:20:13'),
+	(2, '烫发', '2021-05-25 16:20:22', '2021-05-25 16:20:22'),
+	(3, '洗剪吹', '2021-05-25 16:20:33', '2021-05-25 16:20:33');
+/*!40000 ALTER TABLE `designer_labels` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.failed_jobs 结构
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.failed_jobs 的数据：~0 rows (大约)
+DELETE FROM `failed_jobs`;
+/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.fashions 结构
+CREATE TABLE IF NOT EXISTS `fashions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
+  `thumb` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '封面图片',
+  `video` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '视频',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '内容',
+  `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `is_recommend` int(11) NOT NULL DEFAULT '0' COMMENT '是否推荐 0否1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='时尚资讯管理';
+
+-- 正在导出表  hair-salon.fashions 的数据：~0 rows (大约)
+DELETE FROM `fashions`;
+/*!40000 ALTER TABLE `fashions` DISABLE KEYS */;
+INSERT INTO `fashions` (`id`, `title`, `thumb`, `video`, `description`, `content`, `order`, `is_recommend`, `created_at`, `updated_at`) VALUES
+	(1, '系统管理', 'images/6bfd262eaeaf69a8c7b7329b149146d4.png', NULL, NULL, '<p>1111</p>', 0, 1, '2021-05-13 11:21:20', '2021-05-25 17:24:20'),
+	(2, '理发只要5元！绛县南樊一理发店已坚持了数年！', 'images/7d56aa75bfbd47232da359f2f7ce11d9.png', NULL, '理发只要5元！绛县南樊一理发店已坚持了…', '<p>理发只要5元！绛县南樊一理发店已坚持了数年！</p>', 0, 1, '2021-05-25 17:25:26', '2021-05-25 18:22:25');
+/*!40000 ALTER TABLE `fashions` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.feedback 结构
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户ID',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+  `many_images` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '多图',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='问题反馈管理';
+
+-- 正在导出表  hair-salon.feedback 的数据：~9 rows (大约)
+DELETE FROM `feedback`;
+/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+INSERT INTO `feedback` (`id`, `user_id`, `content`, `many_images`, `created_at`, `updated_at`) VALUES
+	(1, 1, '111', NULL, NULL, NULL),
+	(2, 1, '测试', '["feedback\\/2021\\/05\\/28\\/thhK6DLHlkJADHTPfkQmtjTlVWUlVzPVgnCgizfF.png"]', '2021-05-28 10:34:25', '2021-05-28 10:34:25'),
+	(3, 1, '测试', '["feedback\\/2021\\/05\\/28\\/nYWTugMXBIttGZpqRpB4TP8niyvm03k1i076Wg0B.png"]', '2021-05-28 10:36:06', '2021-05-28 10:36:06'),
+	(4, 1, '测试', '["feedback\\/2021\\/05\\/28\\/SJ7xqMWcbnQmVklF6BvQDnjRON91qpb7qQko4QVN.png"]', '2021-05-28 10:37:13', '2021-05-28 10:37:13'),
+	(5, 1, '测试', '["feedback\\/2021\\/05\\/28\\/ZqWNn2wSgHpOZLd0IIpS34lG0SxL1CqxUVi4BIlL.png","feedback\\/2021\\/05\\/28\\/nYc2Aq6Ct7EdDKudaVLlcKOcqVARofrU0NK2vCvl.png"]', '2021-05-28 10:40:57', '2021-05-28 10:40:57'),
+	(6, 1, '0', '["feedback\\/2021\\/05\\/28\\/kMN4gEGGBSa7wgJKA1TotjPdK8vzPFilRG6Fokff.png","feedback\\/2021\\/05\\/28\\/hzgBuQ18kRKz0OrOW88Thr4CtgEHDaN09aYfF6Fp.png","feedback\\/2021\\/05\\/28\\/nscrtaL03ph3HfbL575xXScmrWNIWbSN0cBDjOBP.png"]', '2021-05-28 10:43:39', '2021-05-28 10:43:39'),
+	(7, 1, '0', NULL, '2021-05-28 10:47:55', '2021-05-28 10:47:55'),
+	(8, 1, '测试', NULL, '2021-05-28 10:51:30', '2021-05-28 10:51:30'),
+	(9, 1, '测试', '["feedback\\/2021\\/05\\/28\\/5L0L403cyktmVoC5m271imK5sZq9LTHDLLVljhTk.png","feedback\\/2021\\/05\\/28\\/Rfv0KZKMPRDb4GmnLfRNefedGhj9sd7a2U1sPlo3.png"]', '2021-05-28 10:52:50', '2021-05-28 10:52:50'),
+	(10, 1, '测试', '["feedback\\/2021\\/05\\/28\\/s23ZqByGC6KHVYheUPiLn6a7E9Uytss8ivbAhLaw.png","feedback\\/2021\\/05\\/28\\/lEYYndcQJTzAL1FQSpGkxXkoCVvCKQSuAE9suaum.png"]', '2021-05-28 10:54:15', '2021-05-28 10:54:15'),
+	(11, 1, '测试', '["feedback\\/2021\\/05\\/28\\/0ELcqxooxadU8nE4u5MT1oALWZDwYt45Hrg9VyoE.png","feedback\\/2021\\/05\\/28\\/wl5Ov7r8XKvbS6VW9PwcndGiUgHwPH6NsmIvahHO.png"]', '2021-05-28 11:14:21', '2021-05-28 11:14:21'),
+	(12, 1, '测试', NULL, '2021-05-29 10:03:06', '2021-05-29 10:03:06'),
+	(13, 1, '测试', '["feedback\\/2021\\/05\\/29\\/wiH9p204Z33e5apoT55bQeNv0X9OvFZxlhSvmJ1j.png"]', '2021-05-29 10:03:27', '2021-05-29 10:03:27');
+/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.help_centers 结构
+CREATE TABLE IF NOT EXISTS `help_centers` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '内容',
+  `is_recommend` int(11) NOT NULL DEFAULT '0' COMMENT '是否推荐 0否1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='帮助信息管理';
+
+-- 正在导出表  hair-salon.help_centers 的数据：~0 rows (大约)
+DELETE FROM `help_centers`;
+/*!40000 ALTER TABLE `help_centers` DISABLE KEYS */;
+INSERT INTO `help_centers` (`id`, `title`, `description`, `content`, `is_recommend`, `created_at`, `updated_at`) VALUES
+	(1, '系统管理系统管理系统管理系统管理系统管理系统管理系统管理', NULL, '<p>111</p>', 0, '2021-05-13 13:55:56', '2021-05-13 13:56:26'),
+	(2, '去理发店剪头怎么预约', NULL, '<p>去理发店剪头怎么预约</p>', 0, '2021-05-25 14:47:14', '2021-05-25 14:47:14');
+/*!40000 ALTER TABLE `help_centers` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.idle_categories 结构
+CREATE TABLE IF NOT EXISTS `idle_categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类目名称',
+  `parent_id` bigint(20) unsigned DEFAULT NULL COMMENT '父类目ID',
+  `is_directory` tinyint(1) DEFAULT NULL COMMENT '是否拥有子类目',
+  `level` int(10) unsigned DEFAULT NULL COMMENT 'level',
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '该类目所有父类目 id',
+  `order` int(11) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='闲置商品类目表';
+
+-- 正在导出表  hair-salon.idle_categories 的数据：~2 rows (大约)
+DELETE FROM `idle_categories`;
+/*!40000 ALTER TABLE `idle_categories` DISABLE KEYS */;
+INSERT INTO `idle_categories` (`id`, `name`, `parent_id`, `is_directory`, `level`, `path`, `order`, `created_at`, `updated_at`) VALUES
+	(1, '运营1', 0, 0, 1, '-', 0, '2021-05-22 10:00:14', '2021-05-22 10:00:20'),
+	(2, '运营', 1, 0, NULL, NULL, 0, '2021-05-22 10:00:26', '2021-05-22 10:00:26');
+/*!40000 ALTER TABLE `idle_categories` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.images 结构
+CREATE TABLE IF NOT EXISTS `images` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `disk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size_kb` double NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `images_user_id_index` (`user_id`),
+  KEY `images_type_index` (`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='图片资源';
+
+-- 正在导出表  hair-salon.images 的数据：~11 rows (大约)
+DELETE FROM `images`;
+/*!40000 ALTER TABLE `images` DISABLE KEYS */;
+INSERT INTO `images` (`id`, `user_id`, `type`, `path`, `disk`, `size`, `size_kb`, `created_at`, `updated_at`) VALUES
+	(5, 1, 'avatar', 'avatar/2021/05/25/uFrzD34RQr5gJNoNjdmoAMEWkwSDNZDrm2V1ag5L.png', 'public', '43502', 42.48, '2021-05-25 09:57:43', '2021-05-25 09:57:43'),
+	(33, 1, 'feedback', 'feedback/2021/05/28/lEYYndcQJTzAL1FQSpGkxXkoCVvCKQSuAE9suaum.png', 'public', '68109', 66.51, '2021-05-28 10:54:15', '2021-05-28 10:54:15'),
+	(34, 1, 'feedback', 'feedback/2021/05/28/0ELcqxooxadU8nE4u5MT1oALWZDwYt45Hrg9VyoE.png', 'public', '43502', 42.48, '2021-05-28 11:14:21', '2021-05-28 11:14:21'),
+	(35, 1, 'feedback', 'feedback/2021/05/28/wl5Ov7r8XKvbS6VW9PwcndGiUgHwPH6NsmIvahHO.png', 'public', '68109', 66.51, '2021-05-28 11:14:21', '2021-05-28 11:14:21'),
+	(36, 1, 'feedback', 'feedback/2021/05/29/wiH9p204Z33e5apoT55bQeNv0X9OvFZxlhSvmJ1j.png', 'public', '43502', 42.48, '2021-05-29 10:03:26', '2021-05-29 10:03:26'),
+	(37, 1, 'feedback', 'feedback/2021/05/29/mvAX6u5UdFFwK4LPrbCuenYYZVHVBvU9nLnDIeY7.png', 'public', '63993', 62.49, '2021-05-29 14:31:21', '2021-05-29 14:31:21'),
+	(38, 1, 'feedback', 'feedback/2021/05/29/uyC4LpXCZu6pPfyhs2upsC8lcdYqaOYcZKbYBxCQ.png', 'public', '68109', 66.51, '2021-05-29 14:31:21', '2021-05-29 14:31:21'),
+	(39, 1, 'feedback', 'feedback/2021/05/29/dYapAXaK1BDqyr2KvE1oHi3EyhsSX5ZahZmH1VlL.png', 'public', '63993', 62.49, '2021-05-29 14:31:48', '2021-05-29 14:31:48'),
+	(40, 1, 'feedback', 'feedback/2021/05/29/DVk0sm5NN3DFOP9uF10Yt3dgK4SUL3H1I7tUMPhM.png', 'public', '68109', 66.51, '2021-05-29 14:31:48', '2021-05-29 14:31:48'),
+	(41, 1, 'feedback', 'feedback/2021/05/29/SSMGfLqbWO2FfkwDfojAdep3z0HFj8jqEhf7oJYd.png', 'public', '63600', 62.1, '2021-05-29 14:32:36', '2021-05-29 14:32:36'),
+	(42, 1, 'feedback', 'feedback/2021/05/29/vAr6jcFZjnMSr3Mgd8sZHH7VYazAyggzX68xw2Yo.png', 'public', '71794', 70.11, '2021-05-29 14:32:36', '2021-05-29 14:32:36');
+/*!40000 ALTER TABLE `images` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.leavetimes 结构
+CREATE TABLE IF NOT EXISTS `leavetimes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `designer_id` bigint(20) unsigned DEFAULT NULL COMMENT '设计师id',
+  `type` int(11) NOT NULL DEFAULT '0' COMMENT '请假类型: 0全天 1半天',
+  `date` date DEFAULT NULL COMMENT '日期',
+  `time` json DEFAULT NULL COMMENT '时间段',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `leavetimes_designer_id_foreign` (`designer_id`),
+  CONSTRAINT `leavetimes_designer_id_foreign` FOREIGN KEY (`designer_id`) REFERENCES `designers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='设计师请假时间管理';
+
+-- 正在导出表  hair-salon.leavetimes 的数据：~3 rows (大约)
+DELETE FROM `leavetimes`;
+/*!40000 ALTER TABLE `leavetimes` DISABLE KEYS */;
+INSERT INTO `leavetimes` (`id`, `designer_id`, `type`, `date`, `time`, `created_at`, `updated_at`) VALUES
+	(1, 1, 0, '2021-06-04', '[null, null]', '2021-06-01 14:18:35', '2021-06-01 14:18:35'),
+	(2, 2, 1, '2021-06-11', '["1", "9"]', '2021-06-01 14:18:58', '2021-06-01 14:24:04'),
+	(3, 2, 0, '2021-06-16', '[null, null]', '2021-06-01 15:07:44', '2021-06-01 15:08:02'),
+	(4, 2, 1, '2021-06-26', '["2", "11"]', '2021-06-01 15:36:54', '2021-06-01 15:36:54');
+/*!40000 ALTER TABLE `leavetimes` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.migrations 结构
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.migrations 的数据：~52 rows (大约)
+DELETE FROM `migrations`;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+	(1, '2014_10_12_000000_create_users_table', 1),
+	(2, '2014_10_12_100000_create_password_resets_table', 1),
+	(3, '2016_01_04_173148_create_admin_tables', 1),
+	(4, '2019_08_19_000000_create_failed_jobs_table', 1),
+	(5, '2021_05_08_031519_add_nickname_and_phone_and_introduce_and_integral_and_balance_and_status_to_users_table', 2),
+	(6, '2021_05_08_032706_add_avatar_to_users_table', 2),
+	(7, '2021_05_08_163656_create_categories_table', 3),
+	(8, '2021_05_08_163116_create_products_table', 4),
+	(9, '2021_05_08_163132_create_product_skus_table', 4),
+	(10, '2021_05_09_142510_add_order_to_categories_table', 5),
+	(11, '2021_05_10_095743_create_orders_table', 6),
+	(12, '2021_05_10_101546_create_order_items_table', 6),
+	(13, '2021_05_10_111832_create_user_addresses_table', 7),
+	(14, '2021_05_10_173042_add_refund_status_to_orders_table', 8),
+	(15, '2021_05_10_175052_add_country_to_products_table', 9),
+	(16, '2021_05_11_092419_create_cultures_table', 10),
+	(17, '2017_07_17_040159_create_config_table', 11),
+	(18, '2021_05_12_172042_create_advert_categories_table', 12),
+	(19, '2021_05_12_172305_create_adverts_table', 12),
+	(20, '2021_05_12_181747_add_category_id_and_content_to_adverts_table', 13),
+	(21, '2021_05_13_090925_create_designers_table', 14),
+	(22, '2021_05_13_100951_create_productions_table', 15),
+	(23, '2021_05_13_101919_add_designer_id_to_productions_table', 16),
+	(24, '2021_05_13_110511_create_fashions_table', 17),
+	(25, '2021_05_13_134419_create_help_centers_table', 18),
+	(26, '2021_05_13_144443_create_feedback_table', 19),
+	(27, '2021_05_13_180224_create_reserve_information_table', 20),
+	(28, '2021_05_13_180608_create_reserve_orders_table', 20),
+	(29, '2021_05_14_092654_add_designer_id_to_reserve_orders_table', 21),
+	(30, '2021_05_14_101746_create_comments_table', 22),
+	(31, '2021_05_15_092901_create_service_projects_table', 23),
+	(32, '2021_05_15_160119_create_product_labels_table', 24),
+	(33, '2021_05_17_091415_add_label_id_and_many_image_and_property_and_package_mail_to_products_table', 25),
+	(34, '2021_05_17_093242_add_postage_to_products_table', 25),
+	(35, '2021_05_17_095622_add_image_to_product_skus_table', 26),
+	(36, '2021_05_19_090627_add_country_name_to_products_table', 27),
+	(37, '2021_05_20_103525_add_street_to_user_addresses_table', 28),
+	(38, '2021_05_20_141614_change_zip_to_user_addresses_table', 29),
+	(39, '2021_05_20_155812_create_cart_items_table', 30),
+	(40, '2021_05_21_112549_create_sensitive_words_table', 31),
+	(41, '2021_05_22_085201_add_type_to_categories_table', 32),
+	(42, '2021_05_22_090511_create_self_categories_table', 33),
+	(43, '2021_05_22_091143_create_idle_categories_table', 34),
+	(44, '2021_05_22_100524_change_category_id_to_products_table', 35),
+	(45, '2021_05_22_101320_add_selfcategory_id_and_idlecategory_id_to_products_table', 36),
+	(46, '2021_05_24_095951_change_email_and_phone_to_users_table', 37),
+	(47, '2016_06_01_000001_create_oauth_auth_codes_table', 38),
+	(48, '2016_06_01_000002_create_oauth_access_tokens_table', 38),
+	(49, '2016_06_01_000003_create_oauth_refresh_tokens_table', 38),
+	(50, '2016_06_01_000004_create_oauth_clients_table', 38),
+	(51, '2016_06_01_000005_create_oauth_personal_access_clients_table', 38),
+	(52, '2021_05_24_153333_change_name_to_users_table', 38),
+	(53, '2019_11_21_120702_add_google_auth_to_admin_users_table', 39),
+	(54, '2021_05_24_174734_create_images_table', 40),
+	(55, '2021_05_25_094155_add_gender_to_users_table', 41),
+	(56, '2021_05_25_151713_add_type_to_productions_table', 42),
+	(57, '2021_05_25_153616_add_many_images_to_productions_table', 43),
+	(58, '2021_05_25_155126_add_many_images_and_certificate_and_honor_and_score_and_label_id_to_designers_table', 44),
+	(59, '2021_05_25_160208_create_designer_labels_table', 45),
+	(60, '2021_05_25_162527_add_is_recommend_to_designers_table', 46),
+	(61, '2021_05_26_101231_create_user_favorite_designers_table', 47),
+	(62, '2021_05_26_113859_create_user_favorite_productions_table', 48),
+	(63, '2021_05_27_154052_add_many_images_to_categories_table', 49),
+	(64, '2021_05_27_155909_add_many_images_to_self_categories_table', 50),
+	(65, '2021_05_27_165408_add_teacher_and_start_time_to_cultures_table', 51),
+	(66, '2021_05_28_093014_add_many_images_to_feedback_table', 52),
+	(67, '2021_05_28_141348_create_user_like_designers_table', 53),
+	(68, '2021_05_29_091729_create_communities_table', 54),
+	(69, '2021_05_29_113211_add_video_url_to_communities_table', 55),
+	(70, '2021_05_29_164049_create_community_reviews_table', 56),
+	(71, '2021_05_31_144806_create_community_likes_table', 57),
+	(72, '2021_05_31_154141_create_user_favorite_products_table', 58),
+	(73, '2021_05_31_174308_add_employee_number_and_is_employee_to_designers_table', 59),
+	(74, '2021_06_01_090523_create_worktimes_table', 60),
+	(75, '2021_06_01_092029_seed_worktimes_table', 61),
+	(76, '2021_06_01_101626_create_leavetimes_table', 62),
+	(77, '2021_06_01_155642_add_price_to_service_projects_table', 63),
+	(78, '2021_06_01_180017_add_money_to_reserve_orders_table', 64),
+	(79, '2021_06_01_182408_change_service_project_to_reserve_orders_table', 65);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.oauth_access_tokens 结构
+CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `client_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_access_tokens_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.oauth_access_tokens 的数据：~8 rows (大约)
+DELETE FROM `oauth_access_tokens`;
+/*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+	('065fd95fe2f00e54b8525c4ce67f83f98acdb4586ab667de9d0a6155947903f21fa2a1b071978a4e', 3, 1, NULL, '["*"]', 0, '2021-05-31 10:40:47', '2021-05-31 10:40:47', '2022-05-31 10:40:46'),
+	('1c024b5b699115d4cc4906767c722395a1c7ee440082a63202d21cbc2542714212195f55ebc07fbe', 1, 1, NULL, '["*"]', 0, '2021-05-26 08:49:38', '2021-05-26 08:49:38', '2022-05-26 08:49:37'),
+	('7bffd0fbdf2042c268fbd1737bc20c23903057d8a3f778f90e573303e8a049241994bb946e5d5030', 1, 1, NULL, '["*"]', 0, '2021-05-31 10:44:27', '2021-05-31 10:44:27', '2022-05-31 10:44:27'),
+	('a092d5e276229326e6119d87d1cf550d8884cecf2ef9d0930a41f507cad6949b76deea2330548a5c', 1, 1, NULL, '["*"]', 0, '2021-05-24 17:03:08', '2021-05-24 17:03:08', '2022-05-24 17:03:08'),
+	('a754cc171c9a0f4df373284d024d469bd83e7800b2af03e9a82ebc4f8e0ad4b9b26906aaa5e7718c', 1, 1, NULL, '["*"]', 0, '2021-05-24 17:13:17', '2021-05-24 17:13:17', '2022-05-24 17:13:17'),
+	('b5591c5228ffa1b4a4807374d32cb64cbf0b2ec10a9e7d60076194de6f1e895168b715c885211b2e', 5, 1, NULL, '["*"]', 0, '2021-05-24 16:56:07', '2021-05-24 16:56:07', '2022-05-24 16:56:07'),
+	('e34a38c126ec4a0511660c33e8212392800cbc00dffde4202d119dcb5eb21de545a6981bcf7c0afa', 1, 1, NULL, '["*"]', 0, '2021-05-25 09:35:49', '2021-05-25 09:35:49', '2022-05-25 09:35:49'),
+	('f8ac7e0dc9ea458343cba85ece1caaa5c74edc28d88d6683b9f3b2d394fff74f39c4d2de4293d0b3', 1, 1, NULL, '["*"]', 0, '2021-05-25 09:37:44', '2021-05-25 09:37:44', '2022-05-25 09:37:44');
+/*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.oauth_auth_codes 结构
+CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `client_id` bigint(20) unsigned NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_auth_codes_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.oauth_auth_codes 的数据：~0 rows (大约)
+DELETE FROM `oauth_auth_codes`;
+/*!40000 ALTER TABLE `oauth_auth_codes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oauth_auth_codes` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.oauth_clients 结构
+CREATE TABLE IF NOT EXISTS `oauth_clients` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_clients_user_id_index` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.oauth_clients 的数据：~0 rows (大约)
+DELETE FROM `oauth_clients`;
+/*!40000 ALTER TABLE `oauth_clients` DISABLE KEYS */;
+INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
+	(1, NULL, 'hair-salon', 'Q0VOmTCmI6n8Zgn7uJHnYfwqUwG70KCP96cPF4B8', 'users', 'http://localhost', 0, 1, 0, '2021-05-24 16:50:40', '2021-05-24 16:50:40');
+/*!40000 ALTER TABLE `oauth_clients` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.oauth_personal_access_clients 结构
+CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.oauth_personal_access_clients 的数据：~0 rows (大约)
+DELETE FROM `oauth_personal_access_clients`;
+/*!40000 ALTER TABLE `oauth_personal_access_clients` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oauth_personal_access_clients` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.oauth_refresh_tokens 结构
+CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.oauth_refresh_tokens 的数据：~8 rows (大约)
+DELETE FROM `oauth_refresh_tokens`;
+/*!40000 ALTER TABLE `oauth_refresh_tokens` DISABLE KEYS */;
+INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires_at`) VALUES
+	('03d168547b56037f5279812d95c09b7c11b720b768bd5bf153c4a55f0ec9c05118908c4911e50355', '1c024b5b699115d4cc4906767c722395a1c7ee440082a63202d21cbc2542714212195f55ebc07fbe', 0, '2022-06-30 08:49:37'),
+	('071a8b9736434eef8d29c9604b2b8ccafab50129f1506f1c861cc105482c4e20928be67a2c39851d', 'f8ac7e0dc9ea458343cba85ece1caaa5c74edc28d88d6683b9f3b2d394fff74f39c4d2de4293d0b3', 0, '2022-06-29 09:37:44'),
+	('099ee6c15daac9a291ed5ac0a4d551c1a4092b6f925307ee2ab9b15a27be46945bf5ca89f51d4433', 'e34a38c126ec4a0511660c33e8212392800cbc00dffde4202d119dcb5eb21de545a6981bcf7c0afa', 0, '2022-06-29 09:35:49'),
+	('16aeb1a51dbaaa98fecad3db434ec75883e9b01487d33be9617d450d6bcb328b2dd2ca1016c8349d', 'a092d5e276229326e6119d87d1cf550d8884cecf2ef9d0930a41f507cad6949b76deea2330548a5c', 0, '2022-06-28 17:03:08'),
+	('23f39299e2447453566712c93d8e262d0cf428c7f081952e006561cb2db31c0924771385a8fde5c4', 'b5591c5228ffa1b4a4807374d32cb64cbf0b2ec10a9e7d60076194de6f1e895168b715c885211b2e', 0, '2022-06-28 16:56:07'),
+	('7ee0fbdd00cbb50f0fc46526bd2bb17034dc620ac75712a67f5166e1a7783d9a474aa80f97642302', 'a754cc171c9a0f4df373284d024d469bd83e7800b2af03e9a82ebc4f8e0ad4b9b26906aaa5e7718c', 0, '2022-06-28 17:13:17'),
+	('985d9c49f3ad8d9c0135ea4314c2eef9f744fd262fb219e1999467916c03c50c0cf90f17088ba082', '065fd95fe2f00e54b8525c4ce67f83f98acdb4586ab667de9d0a6155947903f21fa2a1b071978a4e', 0, '2022-07-05 10:40:46'),
+	('ecfc4cfaca7c29800cc4415802627f2197b697630f1067c20dbf9965f4290a2bb354b2ee1643d327', '7bffd0fbdf2042c268fbd1737bc20c23903057d8a3f778f90e573303e8a049241994bb946e5d5030', 0, '2022-07-05 10:44:27');
+/*!40000 ALTER TABLE `oauth_refresh_tokens` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.orders 结构
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订单号',
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `address` text COLLATE utf8mb4_unicode_ci COMMENT '收货地址',
+  `total_amount` decimal(10,2) NOT NULL COMMENT '订单总金额',
+  `remark` text COLLATE utf8mb4_unicode_ci COMMENT '订单备注',
+  `paid_at` datetime DEFAULT NULL COMMENT '支付时间',
+  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '支付方式',
+  `payment_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '支付平台订单号',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订单状态',
+  `refund_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '退款状态',
+  `refund_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '退款单号',
+  `closed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单是否已关闭',
+  `reviewed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单是否已评价',
+  `ship_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '物流状态',
+  `ship_data` text COLLATE utf8mb4_unicode_ci COMMENT '物流数据',
+  `extra` text COLLATE utf8mb4_unicode_ci COMMENT '其他额外的数据',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `orders_no_unique` (`no`),
+  UNIQUE KEY `orders_refund_no_unique` (`refund_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单';
+
+-- 正在导出表  hair-salon.orders 的数据：~2 rows (大约)
+DELETE FROM `orders`;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` (`id`, `no`, `user_id`, `address`, `total_amount`, `remark`, `paid_at`, `payment_method`, `payment_no`, `status`, `refund_status`, `refund_no`, `closed`, `reviewed`, `ship_status`, `ship_data`, `extra`, `created_at`, `updated_at`) VALUES
+	(1, '201920212021', 1, '{"address":"\\u5c71\\u4e1c\\u7701","zip":"\\u70df\\u53f0\\u5e02","contact_name":"cmr11","contact_phone":"12345678222"}', 11.00, '1', '2021-05-10 11:39:59', '1', NULL, '1', '8', NULL, 0, 0, '2', '{"express_company":"1111","express_no":"2222"}', NULL, NULL, '2021-05-10 16:15:11'),
+	(2, '20212021', 3, '{"address":"\\u5c71\\u4e1c\\u7701","zip":"\\u6d4e\\u5b81\\u5e02","contact_name":"\\u50ac\\u50ac","contact_phone":"12345678"}', 0.00, NULL, '2021-05-10 11:40:39', '1', NULL, '3', '8', NULL, 0, 0, '1', '{"express_company":"1111","express_no":"2222"}', '{"reason":null,"disagree_reason":null}', NULL, '2021-05-10 17:49:36'),
+	(3, '5555555', 3, '{"address":"\\u5c71\\u4e1c\\u7701","zip":"\\u6d4e\\u5b81\\u5e02","contact_name":"\\u50ac\\u50ac","contact_phone":"12345678"}', 2222.00, '111', '2021-05-10 17:41:29', '3', NULL, '1', NULL, NULL, 0, 0, '2', '["1111","2222"]', '[null,"hao"]', NULL, '2021-06-01 14:24:52');
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.order_items 结构
+CREATE TABLE IF NOT EXISTS `order_items` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `order_id` bigint(20) unsigned NOT NULL COMMENT '订单ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
+  `product_sku_id` bigint(20) unsigned NOT NULL COMMENT '商品SKU的ID',
+  `amount` int(10) unsigned NOT NULL COMMENT '数量',
+  `price` decimal(10,2) NOT NULL COMMENT '单价',
+  `rating` int(10) unsigned DEFAULT NULL COMMENT '用户打分',
+  `review` text COLLATE utf8mb4_unicode_ci COMMENT '用户评价',
+  `reviewed_at` timestamp NULL DEFAULT NULL COMMENT '评价时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单关联';
+
+-- 正在导出表  hair-salon.order_items 的数据：~3 rows (大约)
+DELETE FROM `order_items`;
+/*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+INSERT INTO `order_items` (`id`, `user_id`, `order_id`, `product_id`, `product_sku_id`, `amount`, `price`, `rating`, `review`, `reviewed_at`) VALUES
+	(1, 3, 2, 1, 2, 2, 5.00, NULL, NULL, NULL),
+	(2, 3, 1, 1, 1, 2, 54.00, NULL, NULL, NULL),
+	(3, 3, 2, 1, 1, 2, 4.00, NULL, NULL, NULL);
+/*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.password_resets 结构
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.password_resets 的数据：~0 rows (大约)
+DELETE FROM `password_resets`;
+/*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.productions 结构
+CREATE TABLE IF NOT EXISTS `productions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL DEFAULT '0' COMMENT '作品类型:0视频1图文',
+  `designer_id` int(11) DEFAULT NULL COMMENT '所属设计师ID',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
+  `thumb` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '封面图片',
+  `many_images` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '多图',
+  `video` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '视频',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '内容',
+  `rating` int(11) NOT NULL DEFAULT '0' COMMENT '浏览次数',
+  `is_recommend` int(11) NOT NULL DEFAULT '0' COMMENT '是否推荐 0否1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='作品管理';
+
+-- 正在导出表  hair-salon.productions 的数据：~3 rows (大约)
+DELETE FROM `productions`;
+/*!40000 ALTER TABLE `productions` DISABLE KEYS */;
+INSERT INTO `productions` (`id`, `type`, `designer_id`, `title`, `thumb`, `many_images`, `video`, `description`, `content`, `rating`, `is_recommend`, `created_at`, `updated_at`) VALUES
+	(1, 0, 1, '美业美发', 'images/articleimage/316fd1a232b4181d171e0a01d66e87af.png', '["images\\/e4e92b9f8a63e1c03c22bca1066c336b.png","images\\/8d009441f7c57e4758da523de8bf7cb4.png"]', 'files/articlevideo/1070e16324b4fdaaa43873d91abbc3c0.mp4', '理发师为您竭诚服务', '<p>理发师为您竭诚服务</p>', 0, 1, '2021-05-13 10:34:28', '2021-05-26 09:22:36'),
+	(2, 1, 1, '美业美发', 'images/articleimage/c5677ed055301f856a083283082eb1fe.png', NULL, NULL, '美业美发专业理发师', NULL, 0, 1, '2021-05-19 09:36:49', '2021-05-19 09:36:52'),
+	(3, 0, 1, '美业美发', 'images/articleimage/ff7d829f97e510a0025649dcb3823010.png', NULL, NULL, '美业美发专业理发师为', NULL, 0, 1, '2021-05-19 09:37:33', '2021-05-19 09:37:35');
+/*!40000 ALTER TABLE `productions` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.products 结构
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` bigint(20) unsigned DEFAULT NULL COMMENT '类目',
+  `selfcategory_id` bigint(20) unsigned DEFAULT NULL COMMENT '自营商品类目',
+  `idlecategory_id` bigint(20) unsigned DEFAULT NULL COMMENT '闲置商品类目',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品名称',
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产地',
+  `country_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '国家名称',
+  `label_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所属标签id',
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品详情',
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '封面图片',
+  `many_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '多图',
+  `on_sale` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品是否正在售卖，default 1',
+  `rating` double(8,2) NOT NULL DEFAULT '5.00' COMMENT '商品平均评分',
+  `sold_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '销量',
+  `review_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评价数量',
+  `price` decimal(10,2) NOT NULL COMMENT 'SKU最低价格',
+  `original_price` decimal(10,2) NOT NULL COMMENT '原价',
+  `property` json DEFAULT NULL COMMENT '商品属性',
+  `package_mail` int(11) DEFAULT NULL COMMENT '是否包邮 0否1是',
+  `postage` decimal(10,2) DEFAULT NULL COMMENT '邮费',
+  `type` int(11) NOT NULL COMMENT '商品类型 1集品 2自营 3闲置',
+  `is_recommend` int(11) NOT NULL DEFAULT '0' COMMENT '是否推荐 0否1是',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品信息表';
+
+-- 正在导出表  hair-salon.products 的数据：~7 rows (大约)
+DELETE FROM `products`;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` (`id`, `category_id`, `selfcategory_id`, `idlecategory_id`, `title`, `country`, `country_name`, `label_id`, `description`, `image`, `many_image`, `on_sale`, `rating`, `sold_count`, `review_count`, `price`, `original_price`, `property`, `package_mail`, `postage`, `type`, `is_recommend`, `created_at`, `updated_at`) VALUES
+	(1, 10, NULL, NULL, '孕妇三件套', '山东烟台', '中国', '1,2', '<p>11</p>', 'images/位图@3x.png', '["images\\/img1.png","images\\/6568d508ecf1b2904344341249bbc286.png","images\\/9b150b775b61e7371300841b593583f2.png"]', 1, 5.00, 0, 0, 237.00, 258.00, '[{"property_name": "qq", "property_content": "QQ群"}]', 1, 10.00, 1, 1, '2021-05-09 10:51:14', '2021-05-19 19:07:45'),
+	(2, 1, 2, NULL, '准妈妈必备娇韵诗孕妇三件套娃娃脸抗老精华', NULL, NULL, '', '<p>111</p>', 'images/img_chanpin@3x.png', NULL, 1, 5.00, 0, 0, 0.00, 0.00, NULL, 1, 0.00, 2, 0, '2021-05-10 09:40:16', '2021-05-22 10:20:31'),
+	(3, 10, NULL, NULL, '孕妇三件套', '山东烟台', '中国', '1,2', '<p>444</p>', 'images/e7190052390b5df3d8e5c8769a412541.png', NULL, 1, 5.00, 0, 0, 258.00, 300.00, '[{"property_name": "qq", "property_content": "QQ群"}]', 0, 1.00, 1, 1, '2021-05-17 10:19:58', '2021-05-19 10:04:49'),
+	(4, 10, NULL, NULL, '孕妇三件套', '山东烟台', '中国', '1', '<p>11</p>', 'images/2a39f243421122223f02f876e8c1c69d.png', NULL, 1, 5.00, 0, 0, 123.00, 158.00, NULL, 1, 0.00, 1, 1, '2021-05-17 11:14:15', '2021-05-19 10:05:03'),
+	(5, 10, 1, NULL, '准妈妈必备娇韵诗孕妇三件套娃娃脸抗老精华', NULL, NULL, '', '<p>准妈妈必备娇韵诗孕妇三件套娃娃脸抗老精华</p>', 'images/6d439f53175d4a22ef7930ba82494aaa.png', NULL, 1, 5.00, 0, 0, 0.00, 0.00, NULL, 1, 0.00, 2, 1, '2021-05-19 14:33:42', '2021-05-22 10:18:15'),
+	(6, 1, NULL, 2, '准妈妈必备娇韵诗孕妇三件套娃娃脸抗老精华', NULL, NULL, '', '<p>准妈妈必备娇韵诗孕妇三件套娃娃脸抗老精华</p>', 'images/efa142b5d9cc91bd11e0dbf372ff253f.png', NULL, 1, 5.00, 0, 0, 0.00, 0.00, NULL, 1, 0.00, 3, 0, '2021-05-19 14:34:10', '2021-05-22 10:22:06'),
+	(7, 11, NULL, 1, '准妈妈必备娇韵诗孕妇三件套娃娃脸抗老精华', NULL, NULL, '', '<p>准妈妈必备娇韵诗孕妇三件套娃娃脸抗老精华</p>', 'images/0e9ef48f09c5d3573acc2481e959289a.png', NULL, 1, 5.00, 0, 0, 0.00, 0.00, NULL, 1, 0.00, 3, 1, '2021-05-19 14:34:29', '2021-05-22 10:21:59');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.product_labels 结构
+CREATE TABLE IF NOT EXISTS `product_labels` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品标签管理';
+
+-- 正在导出表  hair-salon.product_labels 的数据：~0 rows (大约)
+DELETE FROM `product_labels`;
+/*!40000 ALTER TABLE `product_labels` DISABLE KEYS */;
+INSERT INTO `product_labels` (`id`, `name`, `order`, `created_at`, `updated_at`) VALUES
+	(1, 'Hot', 0, '2021-05-15 16:45:41', '2021-05-19 10:02:51'),
+	(2, 'Hot1', 0, '2021-05-17 09:41:15', '2021-05-19 10:03:30');
+/*!40000 ALTER TABLE `product_labels` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.product_skus 结构
+CREATE TABLE IF NOT EXISTS `product_skus` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'SKU名称',
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图片',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'SKU描述',
+  `price` decimal(10,2) NOT NULL COMMENT 'SKU价格',
+  `stock` int(10) unsigned NOT NULL COMMENT '库存',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '所属商品id',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_skus_product_id_foreign` (`product_id`),
+  CONSTRAINT `product_skus_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品的SKU表';
+
+-- 正在导出表  hair-salon.product_skus 的数据：~2 rows (大约)
+DELETE FROM `product_skus`;
+/*!40000 ALTER TABLE `product_skus` DISABLE KEYS */;
+INSERT INTO `product_skus` (`id`, `title`, `image`, `description`, `price`, `stock`, `product_id`, `created_at`, `updated_at`) VALUES
+	(1, '11', 'images/4cefc0600e758ce0f66dd3a298df9a24.jpg', '11', 222.00, 2222, 1, '2021-05-09 10:57:11', '2021-05-17 10:02:22'),
+	(2, '呃呃呃', NULL, '呃呃呃', 2223.00, 22223, 2, '2021-05-10 09:40:16', '2021-05-10 09:40:16'),
+	(3, 'inphone2', 'images/8ff72cf5-6e6e-4286-8542-a1288f823980.jpg', '333', 5000.00, 10, 3, '2021-05-17 10:19:58', '2021-05-17 10:19:58');
+/*!40000 ALTER TABLE `product_skus` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.reserve_information 结构
+CREATE TABLE IF NOT EXISTS `reserve_information` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `designer_id` int(11) NOT NULL COMMENT '所属设计师ID',
+  `service_project` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '服务项目',
+  `time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '预约时间',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='预约信息内容管理';
+
+-- 正在导出表  hair-salon.reserve_information 的数据：~2 rows (大约)
+DELETE FROM `reserve_information`;
+/*!40000 ALTER TABLE `reserve_information` DISABLE KEYS */;
+INSERT INTO `reserve_information` (`id`, `designer_id`, `service_project`, `time`, `created_at`, `updated_at`) VALUES
+	(1, 1, '1,3', NULL, '2021-06-01 16:18:22', '2021-06-01 16:18:22'),
+	(2, 2, '1,2,3,4', NULL, '2021-06-01 16:18:33', '2021-06-01 16:18:33');
+/*!40000 ALTER TABLE `reserve_information` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.reserve_orders 结构
+CREATE TABLE IF NOT EXISTS `reserve_orders` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `reserve_id` int(11) NOT NULL COMMENT '预约信息id',
+  `designer_id` int(11) NOT NULL COMMENT '所属设计师ID',
+  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户id',
+  `service_project` bigint(20) unsigned DEFAULT NULL COMMENT '服务项目id',
+  `time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '预约时间',
+  `num` int(11) NOT NULL DEFAULT '1' COMMENT '预约人数',
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '手机号',
+  `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `money` decimal(10,2) DEFAULT NULL COMMENT '订单总金额',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='预约订单管理';
+
+-- 正在导出表  hair-salon.reserve_orders 的数据：~0 rows (大约)
+DELETE FROM `reserve_orders`;
+/*!40000 ALTER TABLE `reserve_orders` DISABLE KEYS */;
+INSERT INTO `reserve_orders` (`id`, `reserve_id`, `designer_id`, `user_id`, `service_project`, `time`, `num`, `phone`, `remark`, `money`, `created_at`, `updated_at`) VALUES
+	(1, 1, 0, '1', 11, '1', 1, '212', NULL, NULL, NULL, NULL);
+/*!40000 ALTER TABLE `reserve_orders` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.self_categories 结构
+CREATE TABLE IF NOT EXISTS `self_categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类目名称',
+  `parent_id` bigint(20) unsigned DEFAULT NULL COMMENT '父类目ID',
+  `is_directory` tinyint(1) DEFAULT NULL COMMENT '是否拥有子类目',
+  `level` int(10) unsigned DEFAULT NULL COMMENT 'level',
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '该类目所有父类目 id',
+  `order` int(11) DEFAULT '0',
+  `many_images` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '多图',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='自营商品类目表';
+
+-- 正在导出表  hair-salon.self_categories 的数据：~2 rows (大约)
+DELETE FROM `self_categories`;
+/*!40000 ALTER TABLE `self_categories` DISABLE KEYS */;
+INSERT INTO `self_categories` (`id`, `name`, `parent_id`, `is_directory`, `level`, `path`, `order`, `many_images`, `created_at`, `updated_at`) VALUES
+	(1, '手机壳配件', 0, 0, 1, '-', 0, NULL, '2021-05-22 09:28:14', '2021-05-22 09:28:26'),
+	(2, '手机壳', 1, 0, NULL, NULL, 0, NULL, '2021-05-22 09:28:39', '2021-05-22 09:28:39'),
+	(3, '酒水', 0, 0, NULL, NULL, 0, '["images\\/7d811569e14f5933db4faeba26d4df8c.png","images\\/c6776876fe47ba6641c56f49294de661.png"]', '2021-05-27 16:21:30', '2021-05-27 16:21:30');
+/*!40000 ALTER TABLE `self_categories` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.sensitive_words 结构
+CREATE TABLE IF NOT EXISTS `sensitive_words` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `word` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '敏感词',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='敏感词';
+
+-- 正在导出表  hair-salon.sensitive_words 的数据：~2 rows (大约)
+DELETE FROM `sensitive_words`;
+/*!40000 ALTER TABLE `sensitive_words` DISABLE KEYS */;
+INSERT INTO `sensitive_words` (`id`, `word`, `created_at`, `updated_at`) VALUES
+	(1, '法轮功', '2021-05-21 11:37:35', '2021-05-21 11:37:35');
+/*!40000 ALTER TABLE `sensitive_words` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.service_projects 结构
+CREATE TABLE IF NOT EXISTS `service_projects` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '服务项目名称',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '价格',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='服务项目';
+
+-- 正在导出表  hair-salon.service_projects 的数据：~3 rows (大约)
+DELETE FROM `service_projects`;
+/*!40000 ALTER TABLE `service_projects` DISABLE KEYS */;
+INSERT INTO `service_projects` (`id`, `name`, `price`, `created_at`, `updated_at`) VALUES
+	(1, '理发', 20.00, '2021-05-15 09:39:00', '2021-06-01 16:01:22'),
+	(2, '烫发', 230.00, '2021-06-01 16:02:07', '2021-06-01 16:02:07'),
+	(3, '洗剪吹', 100.00, '2021-06-01 16:02:21', '2021-06-01 16:02:21'),
+	(4, '护理', 50.00, '2021-06-01 16:02:39', '2021-06-01 16:02:39');
+/*!40000 ALTER TABLE `service_projects` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.users 结构
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `nickname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '昵称',
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '头像',
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '手机号',
+  `introduce` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '简介',
+  `integral` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT '积分',
+  `balance` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
+  `gender` int(11) NOT NULL DEFAULT '0' COMMENT '性别:0男1女',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '审核状态:0未审核1已审核-1审核中',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `users_phone_unique` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  hair-salon.users 的数据：~5 rows (大约)
+DELETE FROM `users`;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `nickname`, `avatar`, `phone`, `introduce`, `integral`, `balance`, `gender`, `status`) VALUES
+	(1, 'Beginner', '442402330@qq.com', NULL, '$2y$10$wh4NuBx8kD96dHW5XPwyOujK/FWBAWRvmdsnRf.uRlq3dEjnfILBG', NULL, '2021-05-08 06:11:17', '2021-05-25 15:09:08', '温暖的风', 'avatar/2021/05/25/uFrzD34RQr5gJNoNjdmoAMEWkwSDNZDrm2V1ag5L.png', '17862075628', NULL, 0.00, 0.00, 0, 0),
+	(3, 'Beginner', '4424023301@qq.com', NULL, '$2y$10$MxohOTmq81kfs.aaLwer.e.gYotXXlkKn4G315hh5Mh7kWxuOH/2a', NULL, '2021-05-08 14:51:28', '2021-05-10 17:49:36', 'cmrcmrcmr1', 'images/a5491306bfe292454b2ddee77b4bff00.jpg', '13791748755', NULL, 0.00, 1.00, 0, 0),
+	(4, NULL, NULL, NULL, '$2y$10$MxohOTmq81kfs.aaLwer.e.gYotXXlkKn4G315hh5Mh7kWxuOH/2a', NULL, '2021-05-24 15:35:31', '2021-05-24 15:35:31', NULL, NULL, '17862075629', NULL, 0.00, 0.00, 0, 0),
+	(5, NULL, NULL, NULL, '$2y$10$MxohOTmq81kfs.aaLwer.e.gYotXXlkKn4G315hh5Mh7kWxuOH/2a', NULL, '2021-05-24 15:44:54', '2021-05-24 15:44:54', NULL, NULL, '17862075626', NULL, 0.00, 0.00, 0, 0),
+	(6, NULL, NULL, NULL, '$2y$10$W8dGyl2.YSCdIHYOYAZP1eiFVSwAP498UK2LTLSYOWIaj5Jf/LeMa', NULL, '2021-05-25 09:31:49', '2021-05-25 09:31:49', NULL, NULL, '123456', NULL, 0.00, 0.00, 0, 0),
+	(7, NULL, NULL, NULL, '$2y$10$mmYmt3Y/u57Lr7r3aOp.gez0TYdj8KMoSvDnjVfuvcXnfSTUl4JBW', NULL, '2021-05-25 10:38:29', '2021-05-25 10:38:29', NULL, NULL, '17862075658', NULL, 0.00, 0.00, 0, 0);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.user_addresses 结构
+CREATE TABLE IF NOT EXISTS `user_addresses` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '省',
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '市',
+  `district` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '区',
+  `street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '街道',
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '具体地址',
+  `zip` int(10) unsigned DEFAULT NULL COMMENT '邮编',
+  `contact_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '联系人姓名',
+  `contact_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '联系人电话',
+  `last_used_at` datetime DEFAULT NULL COMMENT '最后一次使用时间',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户收货地址';
+
+-- 正在导出表  hair-salon.user_addresses 的数据：~3 rows (大约)
+DELETE FROM `user_addresses`;
+/*!40000 ALTER TABLE `user_addresses` DISABLE KEYS */;
+INSERT INTO `user_addresses` (`id`, `user_id`, `province`, `city`, `district`, `street`, `address`, `zip`, `contact_name`, `contact_phone`, `last_used_at`, `created_at`, `updated_at`) VALUES
+	(1, 1, '山东省', '烟台市', '芝罘区', '某大街', '某小区1号楼', 2, '收货人11', '123456', NULL, '2021-05-20 14:08:32', '2021-05-20 14:54:11'),
+	(2, 1, '山东省', '烟台市', '莱山区', '某大街11', '某小区1号楼', NULL, '收货人', '123456', NULL, '2021-05-20 14:18:11', '2021-05-20 14:52:42'),
+	(9, 33, '333', '33', '333', '333', '333', NULL, '333', '333', NULL, NULL, NULL),
+	(10, 1, '山东省', '烟台市', '芝罘区', '某大街', '某小区1号楼', NULL, '收货人', '123456', NULL, '2021-05-26 09:00:42', '2021-05-26 09:00:42');
+/*!40000 ALTER TABLE `user_addresses` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.user_favorite_designers 结构
+CREATE TABLE IF NOT EXISTS `user_favorite_designers` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `designer_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_favorite_designers_user_id_foreign` (`user_id`),
+  KEY `user_favorite_designers_designer_id_foreign` (`designer_id`),
+  CONSTRAINT `user_favorite_designers_designer_id_foreign` FOREIGN KEY (`designer_id`) REFERENCES `designers` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_favorite_designers_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='收藏设计师管理';
+
+-- 正在导出表  hair-salon.user_favorite_designers 的数据：~2 rows (大约)
+DELETE FROM `user_favorite_designers`;
+/*!40000 ALTER TABLE `user_favorite_designers` DISABLE KEYS */;
+INSERT INTO `user_favorite_designers` (`id`, `user_id`, `designer_id`, `created_at`, `updated_at`) VALUES
+	(2, 1, 2, '2021-05-26 11:08:04', '2021-05-26 11:08:04'),
+	(3, 1, 1, '2021-05-26 11:17:42', '2021-05-26 11:17:42');
+/*!40000 ALTER TABLE `user_favorite_designers` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.user_favorite_productions 结构
+CREATE TABLE IF NOT EXISTS `user_favorite_productions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `production_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_favorite_productions_user_id_foreign` (`user_id`),
+  KEY `user_favorite_productions_production_id_foreign` (`production_id`),
+  CONSTRAINT `user_favorite_productions_production_id_foreign` FOREIGN KEY (`production_id`) REFERENCES `productions` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_favorite_productions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='收藏作品管理';
+
+-- 正在导出表  hair-salon.user_favorite_productions 的数据：~2 rows (大约)
+DELETE FROM `user_favorite_productions`;
+/*!40000 ALTER TABLE `user_favorite_productions` DISABLE KEYS */;
+INSERT INTO `user_favorite_productions` (`id`, `user_id`, `production_id`, `created_at`, `updated_at`) VALUES
+	(2, 1, 2, '2021-05-26 14:35:43', '2021-05-26 14:35:43'),
+	(3, 1, 1, '2021-05-26 14:41:30', '2021-05-26 14:41:30');
+/*!40000 ALTER TABLE `user_favorite_productions` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.user_favorite_products 结构
+CREATE TABLE IF NOT EXISTS `user_favorite_products` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `product_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_favorite_products_user_id_foreign` (`user_id`),
+  KEY `user_favorite_products_product_id_foreign` (`product_id`),
+  CONSTRAINT `user_favorite_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_favorite_products_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户收藏商品管理';
+
+-- 正在导出表  hair-salon.user_favorite_products 的数据：~2 rows (大约)
+DELETE FROM `user_favorite_products`;
+/*!40000 ALTER TABLE `user_favorite_products` DISABLE KEYS */;
+INSERT INTO `user_favorite_products` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
+	(2, 1, 2, '2021-05-31 15:49:54', '2021-05-31 15:49:54'),
+	(3, 1, 1, '2021-05-31 15:52:57', '2021-05-31 15:52:57');
+/*!40000 ALTER TABLE `user_favorite_products` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.user_like_designers 结构
+CREATE TABLE IF NOT EXISTS `user_like_designers` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) DEFAULT NULL COMMENT '浏览类型:1商品2转售3发型师4作品',
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `product_id` bigint(20) unsigned DEFAULT NULL COMMENT '集品商品id',
+  `selfproduct_id` bigint(20) unsigned DEFAULT NULL COMMENT '自营商品id',
+  `idleproduct_id` bigint(20) unsigned DEFAULT NULL COMMENT '转售商品id',
+  `designer_id` bigint(20) unsigned DEFAULT NULL COMMENT '设计师id',
+  `production_id` bigint(20) unsigned DEFAULT NULL COMMENT '作品id',
+  `count` int(11) NOT NULL DEFAULT '1' COMMENT '浏览次数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_like_designers_user_id_foreign` (`user_id`),
+  KEY `user_like_designers_product_id_foreign` (`product_id`),
+  KEY `user_like_designers_selfproduct_id_foreign` (`selfproduct_id`),
+  KEY `user_like_designers_idleproduct_id_foreign` (`idleproduct_id`),
+  KEY `user_like_designers_designer_id_foreign` (`designer_id`),
+  KEY `user_like_designers_production_id_foreign` (`production_id`),
+  CONSTRAINT `user_like_designers_designer_id_foreign` FOREIGN KEY (`designer_id`) REFERENCES `designers` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_like_designers_idleproduct_id_foreign` FOREIGN KEY (`idleproduct_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_like_designers_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_like_designers_production_id_foreign` FOREIGN KEY (`production_id`) REFERENCES `productions` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_like_designers_selfproduct_id_foreign` FOREIGN KEY (`selfproduct_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_like_designers_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='浏览记录管理';
+
+-- 正在导出表  hair-salon.user_like_designers 的数据：~6 rows (大约)
+DELETE FROM `user_like_designers`;
+/*!40000 ALTER TABLE `user_like_designers` DISABLE KEYS */;
+INSERT INTO `user_like_designers` (`id`, `type`, `user_id`, `product_id`, `selfproduct_id`, `idleproduct_id`, `designer_id`, `production_id`, `count`, `created_at`, `updated_at`) VALUES
+	(1, 1, 1, 1, NULL, NULL, NULL, NULL, 3, '2021-05-28 14:54:32', '2021-05-28 15:18:36'),
+	(2, 1, 1, 2, NULL, NULL, NULL, NULL, 3, '2021-05-28 14:58:26', '2021-05-28 15:02:22'),
+	(3, 2, 1, NULL, NULL, 6, NULL, NULL, 3, '2021-05-28 15:03:15', '2021-05-28 15:04:08'),
+	(4, 2, 1, NULL, NULL, 7, NULL, NULL, 1, '2021-05-28 15:03:23', '2021-05-28 15:03:23'),
+	(5, 3, 1, NULL, NULL, NULL, 1, NULL, 2, '2021-05-28 15:04:45', '2021-05-28 15:04:54'),
+	(6, 4, 1, NULL, NULL, NULL, NULL, 1, 2, '2021-05-28 15:07:47', '2021-05-28 15:08:09'),
+	(7, 4, 1, NULL, NULL, NULL, NULL, 2, 1, '2021-05-28 15:44:28', '2021-05-28 15:44:28');
+/*!40000 ALTER TABLE `user_like_designers` ENABLE KEYS */;
+
+-- 导出  表 hair-salon.worktimes 结构
+CREATE TABLE IF NOT EXISTS `worktimes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '时间点',
+  `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='工作时间管理';
+
+-- 正在导出表  hair-salon.worktimes 的数据：~25 rows (大约)
+DELETE FROM `worktimes`;
+/*!40000 ALTER TABLE `worktimes` DISABLE KEYS */;
+INSERT INTO `worktimes` (`id`, `time`, `order`, `created_at`, `updated_at`) VALUES
+	(1, '8:30', 0, NULL, NULL),
+	(2, '9:00', 0, NULL, NULL),
+	(3, '9:30', 0, NULL, NULL),
+	(4, '10:00', 0, NULL, NULL),
+	(5, '10:30', 0, NULL, NULL),
+	(6, '11:00', 0, NULL, NULL),
+	(7, '11:30', 0, NULL, NULL),
+	(8, '12:00', 0, NULL, NULL),
+	(9, '12:30', 0, NULL, NULL),
+	(10, '13:00', 0, NULL, NULL),
+	(11, '13:30', 0, NULL, NULL),
+	(12, '14:00', 0, NULL, NULL),
+	(13, '14:30', 0, NULL, NULL),
+	(14, '15:00', 0, NULL, NULL),
+	(15, '15:30', 0, NULL, NULL),
+	(16, '16:00', 0, NULL, NULL),
+	(17, '16:30', 0, NULL, NULL),
+	(18, '17:00', 0, NULL, NULL),
+	(19, '17:30', 0, NULL, NULL),
+	(20, '18:00', 0, NULL, NULL),
+	(21, '18:30', 0, NULL, NULL),
+	(22, '19:00', 0, NULL, NULL),
+	(23, '19:30', 0, NULL, NULL),
+	(24, '20:00', 0, NULL, NULL),
+	(25, '20:30', 0, NULL, NULL);
+/*!40000 ALTER TABLE `worktimes` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

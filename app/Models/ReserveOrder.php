@@ -10,8 +10,40 @@ class ReserveOrder extends Model
 {
     use HasFactory;
     use DefaultDatetimeFormat;
+
+    const STATUS_UNPAY = 1;// 未支付
+    const STATUS_PAYING = 2;// 支付中
+    const STATUS_PAID = 3;// 已支付
+    const STATUS_CANCELED = 4;// 取消
+    const STATUS_REFUND = 5;// 退款成功
+    const STATUS_UNREFUND = 6;// 退款成功
+
+    public static $statusMap = [
+        self::STATUS_UNPAY => '未支付',
+        self::STATUS_PAYING => '支付中',
+        self::STATUS_PAID => '已支付',
+        self::STATUS_CANCELED => '取消',
+        self::STATUS_REFUND => '退款成功',
+        self::STATUS_UNREFUND => '退款失败',
+    ];
+
+    const PAYMENT_METHOD_BANLANCE = 1;
+    const PAYMENT_METHOD_ALIPAY = 2;
+    const PAYMENT_METHOD_WECHAT = 3;
+
+    public static $paymentMethodMap = [
+        self::PAYMENT_METHOD_BANLANCE  => '余额支付',
+        self::PAYMENT_METHOD_ALIPAY => '支付宝',
+        self::PAYMENT_METHOD_WECHAT  => '微信',
+    ];
+
     protected $fillable = [
-        'reserve_id','user_id','service_project','time','num','phone','remark','designer_id','money'
+        'reserve_id','user_id','service_project','time','num','phone','remark','designer_id','money','no',
+        'payment_method', 'status','reviewed','paid_at','payment_no'
+    ];
+
+    protected $casts = [
+        'reviewed'  => 'boolean',
     ];
 
     public function reserve()

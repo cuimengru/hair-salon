@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\CultureController;
 use App\Http\Controllers\Api\UserLikeController;
 use App\Http\Controllers\Api\CommunityController;
 use App\Http\Controllers\Api\ReserveInformationController;
+use App\Http\Controllers\Api\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +73,8 @@ Route::prefix('v1')
                 Route::get('fashion/{id}', [CultureController::class, 'fashionShow']);//时尚资讯详情
 
                 Route::get('community', [CommunityController::class, 'index']); //社区列表
-
+                Route::get('product/index/{id}', [CommentController::class, 'productIndex']);//某个产品的评价列表
+                Route::get('reserve/index/{id}', [CommentController::class, 'reserveIndex']);//某个设计师的评价列表
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -119,9 +121,14 @@ Route::prefix('v1')
                     Route::post('product/followlist', [ProductController::class, 'followlist']);//收藏商品列表
 
                     Route::get('worktime', [ReserveInformationController::class, 'worktime']); //工作时间
+                    Route::get('service_projects', [ReserveInformationController::class, 'service']); //服务项目
                     Route::get('work/day', [ReserveInformationController::class, 'day']); //某个设计师工作时间
                     Route::get('reserve/designer', [ReserveInformationController::class, 'designerIndex']); //可预约的设计师列表
-                    Route::post('reserve', [ReserveInformationController::class, 'store']);//创建预约
+                    Route::post('reserve/orders', [ReserveInformationController::class, 'store']);//提交预约订单
+
+                    Route::post('product/comment', [CommentController::class, 'productStore']);//商品订单评价
+                    Route::post('reserve/comment', [CommentController::class, 'reserveStore']);//预约订单评价
+
 
                 });
             });

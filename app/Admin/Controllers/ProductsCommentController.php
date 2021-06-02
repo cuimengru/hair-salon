@@ -3,10 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Comment;
+use App\Models\ProductSku;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsCommentController extends AdminController
 {
@@ -35,7 +37,10 @@ class ProductsCommentController extends AdminController
         $grid->column('order.no', __('订单编号'));
         $grid->column('user.name', __('用户'));
         $grid->column('product.title', __('商品'));
-        $grid->column('productsku.title', __('SKU名称'));
+        $grid->column('product_sku_id', __('SKU名称'))->display(function ($value) {
+            $product_sku = ProductSku::where('id','=',$value)->first();
+           return $product_sku['title'];
+        });
         $grid->column('rate', __('评分'));
         $states1 = [
             'on'  => ['value' => 0, 'text' => '未审核', 'color' => 'default'],
@@ -75,10 +80,28 @@ class ProductsCommentController extends AdminController
         $show->field('order.no', __('订单编号'));
         $show->field('user.name', __('用户'));
         $show->field('product.title', __('商品'));
-        $show->field('productsku.title', __('SKU名称'));
+        $show->field('product_sku_id', __('SKU名称'))->as(function ($value) {
+            $product_sku = ProductSku::where('id','=',$value)->first();
+            return $product_sku['title'];
+        });
         $show->field('rate', __('评分'));
         $show->field('render_content', __('评论内容'));
-        $show->field('render_image', __('Render image'));
+        //$show->field('render_image', __('Render image'));
+        $show->field('render_image', __('图片'))->unescape()->as(function ($content) {
+            $images = '';
+            if($content){
+                foreach ($content as $k=>$value){
+                    $image = Storage::disk('public')->url($value);
+                    $images = $images."<div style='margin-top: 25px;float: left; margin-right: 25px'>
+                        <img src='{$image}'  width='200' height='200'/>
+                        </div>";
+                }
+            }else{
+                $images = '';
+            }
+
+            return $images;
+        });
         $show->field('video_url', __('视频'))->unescape()->as(function ($video_url) {
             return "<video width='320' height='320' controls>
                 <source src='{$video_url}' type='video/mp4'>
@@ -88,7 +111,12 @@ class ProductsCommentController extends AdminController
         $show->field('status', __('状态'))->using(['1' => '已审核', '0' => '未审核']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
-
+        $show->panel()
+            ->tools(function ($tools) {
+                //$tools->disableEdit();
+                //$tools->disableList();
+                $tools->disableDelete();
+            });
         return $show;
     }
 
