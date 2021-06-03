@@ -20,7 +20,7 @@ class CreateIdleCategoriesTable extends Migration
             $table->boolean('is_directory')->nullable()->comment('是否拥有子类目');
             $table->unsignedInteger('level')->nullable()->comment('level');
             $table->string('path')->nullable()->comment('该类目所有父类目 id');
-            $table->integer('order')->default(0)->after('path')->comment('排序');
+            $table->integer('order')->default(0)->comment('排序');
             $table->timestamps();
         });
         DB::statement("ALTER TABLE idle_categories comment '闲置商品类目表'");
