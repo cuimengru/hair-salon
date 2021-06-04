@@ -8,6 +8,7 @@ use App\Models\Designer;
 use App\Models\Leavetime;
 use App\Models\Product;
 use App\Models\ReserveInformation;
+use App\Models\ReserveOrder;
 use App\Models\ServiceProject;
 use App\Models\Worktime;
 use App\Services\ReserveOrderService;
@@ -51,7 +52,7 @@ class ReserveInformationController extends Controller
         $year = $request->year ? $request->year : date('Y');// 年
         $day_format = $year . '-' . $month . '-' . $day;
 
-        $leaveTime = Leavetime::where('designer_id','=',$designerId)->where('date','=',$day_format)->first();
+        $leaveTime = Leavetime::where('designer_id','=',$designerId)->where('date','=',$day_format)->first(); //请假管理
         if($leaveTime){
             //半天假期
             if($leaveTime['type'] == 1){
@@ -62,6 +63,21 @@ class ReserveInformationController extends Controller
         }else{
             $workTime = Worktime::orderBy('order', 'asc')->select('id','time')->get();
         }
+
+        //订单管理
+        //$orders = ReserveOrder::where('designer_id','=',$designerId)->where('time','=',$day_format)->where('status','=',3)->get();
+        /*if($orders){
+            foreach ($orders as $k=>$value){
+                $time = date("H:i", strtotime($value['time']));
+                $order[$k]['reserve'] = Worktime::where('time','=',$time)->first();
+                if($order[$k]['reserve']){
+                    $order[$k]['is_reserve'] = 1;
+                }else{
+                    $order[$k]['is_reserve'] = 0;
+                }
+            }
+        }*/
+        //$workTime['is_reserve'] = $order;
 
         return $workTime;
     }
