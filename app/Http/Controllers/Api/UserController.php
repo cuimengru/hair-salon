@@ -77,6 +77,7 @@ class UserController extends Controller
         $user = User::create([
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
+            'nickname' => $verifyData['phone'],
         ]);
 
         // 清除验证码缓存

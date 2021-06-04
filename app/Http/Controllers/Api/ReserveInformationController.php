@@ -66,7 +66,7 @@ class ReserveInformationController extends Controller
 
         //订单管理
         $orders = ReserveOrder::where('designer_id','=',$designerId)->where('date','=',$day_format)->where('status','=',3)->get();
-        if($orders){
+        /*if($orders){
             foreach ($orders as $k=>$value){
 
                 /*$order[$k]['reserve'] = Worktime::where('time','=',$value['time'])->first();
@@ -75,25 +75,34 @@ class ReserveInformationController extends Controller
                 }else{
                     $order[$k]['is_reserve'] = 0;
                 }*/
-                $order[$k]['time'] = $value['time'];
-
+                /*$order[$k]['time'] = $value['time'];
+                if($workTime){
+                    foreach ($workTime as $i=>$item){
+                        $work_time[$i]['time'] = $item['time'];
+                        if( $order[$k]['time'] == $work_time[$i]['time']){
+                            $workTime[$i]['is_reserve'] = 1;
+                        }
+                    }
+                }
             }
-        }
-        if($workTime){
-            foreach ($workTime as $i=>$item){
-               $work_time[$i]['time1'] = $order;
-               /*if($order == $work_time){
-                   $workTime[$i]['is_reserve'] = 1;
-               }*/
-            }
-        }
-       /* if($order == $work_time){
-            $workTime['is_reserve'] = 1;
         }*/
+        if($workTime){
+            foreach ($workTime as $k=>$value){
+                if($orders){
+                    //foreach ($orders as $i=>$item){
+                        if($orders[1]['time'] == $workTime[2]['time']){
+                            $workTime[2]['is_reserve'] = 1;
+                        }
+                   // }
+
+                }
+            }
+        }
+
 
         //$workTime['is_reserve'] = $order;
-        return $work_time;
-        exit();
+        //return $work_time;
+        //exit();
         return $workTime;
     }
 
