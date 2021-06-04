@@ -45,11 +45,11 @@ class UserController extends Controller
             new PhoneNumber($phone)
         )->notify(new VerificationCode($code)); //发送短信验证码
         $key = 'verificationCode_' . $phone;
-        $expiredAt = now()->addMinutes(1);
+        $expiredAt = now()->addMinutes(5);
         $verifyData = \Cache::get($key);
-        if ($verifyData) {
+        /*if ($verifyData) {
             abort(403,'已经发送过验证码了');
-        }
+        }*/
 
         \Cache::put($key, ['phone' => $phone, 'code' => $code], $expiredAt);
 
