@@ -34,7 +34,7 @@ class ReserveOrderController extends AdminController
         });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('no', __('订单号'));
-        $grid->column('user.name', __('用户姓名'));
+        $grid->column('user.nickname', __('用户昵称'));
         $grid->column('designer.name', __('设计师'))->display(function ($value) {
            if($value == null){
                return '到店分配';
@@ -44,11 +44,12 @@ class ReserveOrderController extends AdminController
         });
         $grid->column('service_project', __('服务项目'));
         $grid->column('phone',__('手机号'));
-        $states1 = [
+        $grid->column('reserve_date',__('预约时间'));
+        /*$states1 = [
             'on'  => ['value' => 1, 'text' => '不退款', 'color' => 'default'],
             'off' => ['value' => 5, 'text' => '退款', 'color' => 'primary'],
         ];
-        $grid->column('status', __('是否退款'))->switch($states1);
+        $grid->column('status', __('是否退款'))->switch($states1);*/
         $grid->column('created_at', __('创建时间'));
         $grid->model()->orderBy('id', 'desc');
         // 禁用创建按钮，后台不需要创建订单
@@ -79,9 +80,9 @@ class ReserveOrderController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('no', __('订单号'));
-        $show->field('user.name', __('用户姓名'));
+        $show->field('user.nickname', __('用户昵称'));
         $show->field('service_project', __('服务项目'));
-        $show->field('time', __('预约时间'));
+        $show->field('reserve_date', __('预约时间'));
         $show->field('num', __('预约人数'));
         $show->field('phone', __('手机号'));
         $show->field('remark', __('备注'));
@@ -111,11 +112,11 @@ class ReserveOrderController extends AdminController
         $form = new Form(new ReserveOrder());
 
         $form->select('designer_id',__('设计师'))->options(Designer::all()->pluck('name', 'id'))->required();
-        $states1 = [
+        /*$states1 = [
             'on'  => ['value' => 1, 'text' => '不退款', 'color' => 'default'],
             'off' => ['value' => 5, 'text' => '退款', 'color' => 'primary'],
-        ];
-        $form->switch('status', __('是否退款'))->states($states1);
+        ];*/
+        //$form->switch('status', __('是否退款'))->states($states1);
         $form->tools(function (Form\Tools $tools) {
             // Disable `Delete` btn.
             $tools->disableDelete();

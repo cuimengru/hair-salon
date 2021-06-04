@@ -15,16 +15,16 @@ class ReserveOrder extends Model
     const STATUS_PAYING = 2;// 支付中
     const STATUS_PAID = 3;// 已支付
     const STATUS_CANCELED = 4;// 取消
-    const STATUS_REFUND = 5;// 退款成功
-    const STATUS_UNREFUND = 6;// 退款成功
+    //const STATUS_REFUND = 5;// 退款成功
+    //const STATUS_UNREFUND = 6;// 退款成功
 
     public static $statusMap = [
         self::STATUS_UNPAY => '未支付',
         self::STATUS_PAYING => '支付中',
         self::STATUS_PAID => '已支付',
         self::STATUS_CANCELED => '取消',
-        self::STATUS_REFUND => '退款成功',
-        self::STATUS_UNREFUND => '退款失败',
+        //self::STATUS_REFUND => '退款成功',
+        //self::STATUS_UNREFUND => '退款失败',
     ];
 
     const PAYMENT_METHOD_BANLANCE = 1;
@@ -45,6 +45,19 @@ class ReserveOrder extends Model
     protected $casts = [
         'reviewed'  => 'boolean',
     ];
+
+    protected $appends = [
+        'reserve_date',
+    ];
+
+    //预约时间
+    public function getReserveDateAttribute(){
+        if($this->date && $this->time){
+            return ($this->date).' '.($this->time);
+        }else{
+            return '';
+        }
+    }
 
     public function reserve()
     {
