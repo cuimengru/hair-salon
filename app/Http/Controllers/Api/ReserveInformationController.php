@@ -65,20 +65,28 @@ class ReserveInformationController extends Controller
         }
 
         //订单管理
-        //$orders = ReserveOrder::where('designer_id','=',$designerId)->where('time','=',$day_format)->where('status','=',3)->get();
-        /*if($orders){
+        $orders = ReserveOrder::where('designer_id','=',$designerId)->where('date','=',$day_format)->where('status','=',3)->get();
+        if($orders){
             foreach ($orders as $k=>$value){
-                $time = date("H:i", strtotime($value['time']));
-                $order[$k]['reserve'] = Worktime::where('time','=',$time)->first();
+                /*$order[$k]['reserve'] = Worktime::where('time','=',$value['time'])->first();
                 if($order[$k]['reserve']){
                     $order[$k]['is_reserve'] = 1;
                 }else{
                     $order[$k]['is_reserve'] = 0;
+                }*/
+                foreach ($workTime as $i=>$item){
+                    if($value['time'] == $item['tiem']){
+                        $workTime[$i]['is_reserve'] = 1;
+                    }else{
+                        $workTime[$i]['is_reserve'] = 0;
+                    }
+
                 }
             }
-        }*/
+        }
         //$workTime['is_reserve'] = $order;
-
+        //return $orders;
+        //exit();
         return $workTime;
     }
 
