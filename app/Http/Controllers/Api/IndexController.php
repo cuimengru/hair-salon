@@ -25,7 +25,7 @@ class IndexController extends Controller
         $index['ads'] = $advert;
 
         //推荐作品展示
-        $production = Production::where('is_recommend','=',1)->select('title','thumb','video','description')->limit(3)->get();
+        $production = Production::where('is_recommend','=',1)->select('id','title','thumb','video','description','content')->limit(3)->get();
         $index['production'] = $production;
 
         //锦之选 产品推荐

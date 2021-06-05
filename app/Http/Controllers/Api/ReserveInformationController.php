@@ -112,5 +112,22 @@ class ReserveInformationController extends Controller
 
     }
 
+    //修改预约时间
+    public function updateTime($orderId, Request $request)
+    {
+        $user = $request->user();
+
+        $order = ReserveOrder::where('id','=',$orderId)->where('user_id','=',$user->id)->first();
+        if(!$order){
+            $data['message'] = '订单不存在！';
+            return response()->json($data, 403);
+        }
+        $attributes = $request->only(['date','time']);
+
+        $order->update($attributes);
+
+        $data['message'] = '修改成功！';
+        return response()->json($data, 200);
+    }
 
 }
