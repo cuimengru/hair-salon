@@ -14,6 +14,12 @@ class OrderItem extends Model
     protected $fillable = ['amount', 'price', 'rating', 'review', 'reviewed_at'];
     protected $dates = ['reviewed_at'];
     public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);

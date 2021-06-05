@@ -14,17 +14,21 @@
         <td>买家：</td>
         <td>{{ $order->user->name }}</td>
         <td>支付时间：</td>
+        @if($order->paid_at)
         <td>{{ $order->paid_at->format('Y-m-d H:i:s') }}</td>
+        @endif
       </tr>
       <tr>
         <td>支付方式：</td>
+        @if($order->payment_method)
         <td>{{ \App\Models\Order::$paymentMethodMap[$order->payment_method] }}</td>
+        @endif
         <td>支付渠道单号：</td>
         <td>{{ $order->payment_no }}</td>
       </tr>
       <tr>
         <td>收货地址</td>
-        <td colspan="3">{{ $order->address['address'] }} {{ $order->address['zip'] }} {{ $order->address['contact_name'] }} {{ $order->address['contact_phone'] }}</td>
+        <td colspan="3">{{ $order->address['0'] }} {{ $order->address['1'] }} {{ $order->address['2'] }}</td>
       </tr>
       <tr>
         <td rowspan="{{ $order->items->count() + 1 }}">商品列表</td>

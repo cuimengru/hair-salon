@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\UserLikeController;
 use App\Http\Controllers\Api\CommunityController;
 use App\Http\Controllers\Api\ReserveInformationController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\ProductOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,6 +130,9 @@ Route::prefix('v1')
 
                     Route::post('product/comment', [CommentController::class, 'productStore']);//商品订单评价
                     Route::post('reserve/comment', [CommentController::class, 'reserveStore']);//预约订单评价
+
+                    Route::post('product/order', [ProductOrderController::class, 'store']);//创建商品订单
+                    Route::get('product/orderIndex', [ProductOrderController::class, 'index']);//全部订单
 
 
                 });
