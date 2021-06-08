@@ -106,10 +106,12 @@ class ReserveInformationController extends Controller
         return $designers;
     }
 
-    //提交预约订单
-    public function store(ReserveOrderRequest $request,ReserveOrderService $orderService)
+    //创建预约订单
+    public function store(Request $request,ReserveOrderService $orderService)
     {
+        $user = $request->user();
 
+        return $orderService->store($user,$request);
     }
 
     //修改预约时间

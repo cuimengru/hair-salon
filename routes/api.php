@@ -133,6 +133,7 @@ Route::prefix('v1')
 
                     Route::post('product/order', [ProductOrderController::class, 'store']);//创建商品订单
                     Route::get('product/orderIndex', [ProductOrderController::class, 'index']);//全部订单
+                    Route::get('product/order/{id}', [ProductOrderController::class, 'show']);//某个商品订单详情
 
 
                 });

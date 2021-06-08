@@ -16,7 +16,7 @@ class Order extends Model
     const STATUS_PAID = 3;// 已支付
     const STATUS_CANCELED = 4;// 取消
 
-    const REFUND_STATUS_PENDING = 0;
+    const REFUND_STATUS_PENDING = 5;
     const REFUND_STATUS_APPLIED = 6;
     const REFUND_STATUS_PROCESSING = 7;
     const REFUND_STATUS_SUCCESS = 8;

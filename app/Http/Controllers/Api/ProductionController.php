@@ -47,7 +47,9 @@ class ProductionController extends Controller
          }
 
         //设计师$index['designers']
-        $index['designers'] = Designer::where('is_recommend','=',1)->orderBy('created_at','desc')
+        $index['designers'] = Designer::where('is_recommend','=',1)
+            ->where('is_employee','=',1)
+            ->orderBy('created_at','desc')
             ->select('id','name','thumb','description','position','label_id')->get();
 
 

@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 use Leonis\Notifications\EasySms\Channels\EasySmsChannel;
 use Leonis\Notifications\EasySms\Messages\EasySmsMessage;
 
@@ -44,9 +45,15 @@ class VerificationCode extends Notification implements ShouldQueue
      */
     public function toEasySms($notifiable)
     {
-        return (new EasySmsMessage)
-            ->setTemplate(env('ALIYUN_SMS_TEMPLATE'))
-            ->setData(['code' => $this->code]);
+        try {
+            return (new EasySmsMessage)
+                ->setTemplate(env('ALIYUN_SMS_TEMPLATE'))
+                ->setData(['code' => $this->code]);
+        } catch (\Exception $e) {
+
+            Log::error(__METHOD__ . '|' . __METHOD__ . '执行失败', ['error' => $e]);
+        }
+
     }
 
     /**
