@@ -31,6 +31,7 @@ class UserAddressRequest extends FormRequest
             'address' => 'required', // 具体地址
             'contact_name' => 'required', // 联系人姓名
             'contact_phone' => 'required', // 联系人电话
+            'status' => 'int',
         ];
     }
 }
