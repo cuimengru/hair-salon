@@ -54,7 +54,7 @@ class UserController extends Controller
         \Cache::put($key, ['phone' => $phone, 'code' => $code], $expiredAt);
 
         $data['message'] = "验证码发送成功";
-        //$data['key'] = $key;
+        $data['key'] = $key;
         //$data['code'] = $code;
         //$data['expired_at'] = $expiredAt->toDateTimeString();
         return response()->json($data, 200);

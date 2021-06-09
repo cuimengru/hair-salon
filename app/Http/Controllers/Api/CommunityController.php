@@ -22,7 +22,7 @@ class CommunityController extends Controller
         $user = $request->user();
         //$video = video_ext();
 
-        $request->validate([
+        /*$request->validate([
             'title' => 'required|string|min:4',
             'contents' => 'required|string',
             'many_images' => 'array',
@@ -56,7 +56,8 @@ class CommunityController extends Controller
         }
 
         $data['message'] = "发布成功！";
-        return response()->json($data, 200);
+        return response()->json($data, 200);*/
+        return $request;
     }
 
     //社区列表

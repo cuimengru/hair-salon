@@ -128,8 +128,8 @@ class ProductsController extends AdminController
         // 直接添加一对多的关联模型
         $form->hasMany('skus', 'SKU 列表', function (Form\NestedForm $form) {
             $form->text('title', 'SKU 名称')->rules('required');
-            $form->image('image','SKU图片')->required();
-            $form->text('description', 'SKU 描述')->rules('required');
+            $form->image('image','SKU图片')->uniqueName();
+            $form->text('description', 'SKU 描述');
             $form->text('price', '单价')->rules('required|numeric|min:0.00');
             $form->text('stock', '剩余库存')->rules('required|integer|min:0');
         });
