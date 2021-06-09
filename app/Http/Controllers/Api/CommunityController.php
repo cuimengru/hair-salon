@@ -22,19 +22,20 @@ class CommunityController extends Controller
         $user = $request->user();
         //$video = video_ext();
 
-        /*$request->validate([
+        $request->validate([
             'title' => 'required|string|min:4',
             'contents' => 'required|string',
             'many_images' => 'array',
             //'video' => 'string'.$video,
         ]);
-        if ($request->file('many_images')) {
+        if ($request->file('image-0')) {
 
-            foreach ($request->file('many_images') as $k => $value) {
-                $image = upload_images($value, 'feedback', $user->id);
-                $attributes['many_images'][$k] = $image->path;
+            /*foreach ($request->file('many_images') as $k => $value) {*/
+                $image = upload_images($request->file('image-0'), 'feedback', $user->id);
+                //$attributes['many_images'][$k] = $image->path;
+                $attributes['many_images'] = $image->path;
                 //$avatar_image_id = array($image->id);
-            }
+            /*}*/
 
             $community = Community::create([
                 'user_id' => $user->id,
@@ -56,8 +57,8 @@ class CommunityController extends Controller
         }
 
         $data['message'] = "发布成功！";
-        return response()->json($data, 200);*/
-        return $request->image-0;
+        return response()->json($data, 200);
+        // $request->image-0;
     }
 
     //社区列表
