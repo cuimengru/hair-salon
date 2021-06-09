@@ -28,10 +28,10 @@ class CommunityController extends Controller
             //'many_images' => 'array',
             //'video' => 'string'.$video,
         ]);
-        if ($request->file('image-0')) {
+        /*if ($request->file('image_0')) {*/
 
             /*foreach ($request->file('many_images') as $k => $value) {*/
-                $image = upload_images($request->file('image-0'), 'feedback', $user->id);
+                $image = upload_images($request->file('image_0'), 'feedback', $user->id);
                 //$attributes['many_images'][$k] = $image->path;
                 $attributes['many_images'] = $image->path;
                 //$avatar_image_id = array($image->id);
@@ -41,11 +41,11 @@ class CommunityController extends Controller
                 'user_id' => $user->id,
                 'title' => $request->title,
                 'content' => $request->contents,
-                //'many_images' => $request->image-0,
+                'many_images' => $request->image_0,
                 'video' => $attributes['many_images'],
             ]);
 
-        } else if ($request->file('video')) {
+        /*} else if ($request->file('video')) {
 
             $video = get_vimeo_mp4($request->file('video'), 'community');
 
@@ -55,7 +55,7 @@ class CommunityController extends Controller
                 'content' => $request->contents,
                 'video' => $video,
             ]);
-        }
+        }*/
 
         $data['message'] = "发布成功！";
         return response()->json($data, 200);
