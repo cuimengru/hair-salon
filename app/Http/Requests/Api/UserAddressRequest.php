@@ -27,7 +27,7 @@ class UserAddressRequest extends FormRequest
             'province' => 'required', // 省
             'city' => 'required', // 市
             'district' => 'required', // 区
-            'street' => 'required', // 街道
+            'street' => 'string', // 街道
             'address' => 'required', // 具体地址
             'contact_name' => 'required', // 联系人姓名
             'contact_phone' => 'required', // 联系人电话

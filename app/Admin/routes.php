@@ -58,4 +58,5 @@ Route::group([
     $router->resource('communities', CommunityController::class); //社区管理
     $router->resource('worktimes', WorktimeController::class); //工作时间管理
     $router->resource('leavetimes', LeavetimeController::class); //请假管理
+    $router->resource('offline_users', OfflineUserController::class);//线下用户管理
 });

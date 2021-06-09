@@ -78,6 +78,7 @@ class UserController extends Controller
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
             'nickname' => $verifyData['phone'],
+            'type' => 0,
         ]);
 
         // 清除验证码缓存

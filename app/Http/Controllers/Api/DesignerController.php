@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Designer;
 use App\Models\User;
+use App\Models\UserLikeDesigner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -61,7 +63,7 @@ class DesignerController extends Controller
         $designer = Designer::where('id','=',$Id)
             ->select('id','name','thumb','many_images','position','description','certificate','honor','score','label_id')
             ->first();
-        if($designer['many_images']){
+        if(!empty($designer['many_images'])){
             foreach ($designer['many_images'] as $k=>$value){
                 $many_imageUrl[$k] = Storage::disk('public')->url($value);
             }
@@ -84,6 +86,35 @@ class DesignerController extends Controller
                 }
                 $designer['comments'][$c]['render_imageUrl'] = $render_imageUrl;
             }
+        }
+
+        //用户是否收藏
+        if($request->user_id){
+            $favor = DB::table('user_favorite_designers')
+                ->where('user_id','=',$request->user_id)
+                ->where('designer_id','=',$Id)
+                ->first();
+            if($favor){
+                $designer['favor_designer'] = 1; //已收藏
+            }else{
+                $designer['favor_designer'] = 0; //未收藏
+            }
+
+            //浏览记录
+            $record = UserLikeDesigner::whereUserId($request->user_id)->whereDesignerId($Id)->first();
+            if($record){
+                $record->update([
+                    'count' => $record->count + 1,
+                ]);
+            }else{
+                UserLikeDesigner::create([
+                    'user_id' => $request->user_id,
+                    'designer_id' => $Id,
+                    'type' => 3,
+                ]);
+            }
+        }else{
+            $designer['favor_designer'] = 0; //未收藏
         }
         return $designer;
     }

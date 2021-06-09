@@ -29,7 +29,7 @@ class UserAddressController extends Controller
             $data['message'] = "This action is unauthorized."; // 验证权限
             return response()->json($data, 500);
         }
-        $attributes = $request->only(['contact_name', 'contact_phone','province','city','district','street','address']);// 允许更新的字段
+        $attributes = $request->only(['contact_name', 'contact_phone','province','city','district','street','address','status']);// 允许更新的字段
         $user_address->update($attributes);
         $data['message'] = "Address Updated OK!";
         return response()->json($data, 200);

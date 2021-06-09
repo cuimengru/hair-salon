@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductLabel;
 use App\Models\ProductSku;
 use App\Models\User;
+use App\Models\UserLikeDesigner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -132,6 +133,39 @@ class ProductController extends Controller
             }else{
                 $product['favor_product'] = 0; //未收藏
             }
+            if($product['type'] == 1){
+                $record = UserLikeDesigner::whereUserId($request->user_id)->whereProductId($product['id'])->first();
+                if($record){
+                    $record->update([
+                        'count' => $record->count + 1,
+                    ]);
+                }else{
+                    if($product['type'] == 1){
+                        UserLikeDesigner::create([
+                            'user_id' => $request->user_id,
+                            'product_id' => $product['id'],
+                            'type' => 1,
+                        ]);
+                    }
+                }
+            }
+
+            if($product['type'] == 3){
+                $record3 = UserLikeDesigner::whereUserId($request->user_id)->whereidleproductId($product['id'])->first();
+                if($record3){
+                    $record3->update([
+                        'count' => $record3->count + 1,
+                    ]);
+                }else{
+                    UserLikeDesigner::create([
+                        'user_id' => $request->user_id,
+                        'idleproduct_id' => $product['id'],
+                        'type' => 2,
+                    ]);
+                }
+            }
+
+
         }else{
             $product['favor_product'] = 0; //未收藏
         }

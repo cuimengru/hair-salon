@@ -8,14 +8,14 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class UsersController extends AdminController
+class OfflineUserController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '用户';
+    protected $title = '线下用户';
 
     /**
      * Make a grid builder.
@@ -63,7 +63,7 @@ class UsersController extends AdminController
         $grid->disableExport(); // 禁用导出数据
         $grid->disableColumnSelector();// 禁用行选择器
         $grid->model()->orderBy('id', 'desc');
-        $grid->model()->where('type', '=',0);
+        $grid->model()->where('type', '=',1);
         return $grid;
     }
 
@@ -119,7 +119,7 @@ class UsersController extends AdminController
         $form->text('integral', __('积分'))->default(0.00);
         $form->text('balance', __('余额'))->default(0.00);
         $form->radioCard('status', __('审核状态'))->options(['0' => '未审核', '1' => '已审核','-1'=>'审核中'])->default('0');
-        $form->hidden('type')->default(0);
+        $form->hidden('type')->default(1);
         return $form;
     }
 }

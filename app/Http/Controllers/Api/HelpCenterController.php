@@ -73,4 +73,22 @@ class HelpCenterController extends Controller
         $data['message'] = "提交成功！";
         return response()->json($data, 200);
     }
+
+    //收藏设计师列表
+    public function help(Request $request)
+    {
+        /*$designer = $request->user()->favoriteDesigners()->paginate(6);
+        foreach ($designer as $k=>$value){
+            unset($designer[$k]['many_images']);
+            unset($designer[$k]['rating']);
+            unset($designer[$k]['certificate']);
+            unset($designer[$k]['honor']);
+            unset($designer[$k]['score']);
+            unset($designer[$k]['is_recommend']);
+            unset($designer[$k]['created_at']);
+            unset($designer[$k]['updated_at']);
+            unset($designer[$k]['pivot']);
+        }*/
+        return '111';
+    }
 }

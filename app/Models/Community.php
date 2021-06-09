@@ -17,9 +17,9 @@ class Community extends Model
     protected $appends = [
         'video_play_url'
     ];
-    /*protected $casts = [
+    protected $casts = [
         'many_images'=>'array',
-    ];*/
+    ];
 
 
     public function getVideoPlayUrlAttribute()
@@ -32,7 +32,7 @@ class Community extends Model
     }
 
     //多图
-   /* public function setManyImagesAttribute($value)
+    public function setManyImagesAttribute($value)
     {
         if (is_array($value)) {
             $this->attributes['many_images'] = json_encode($value);
@@ -41,7 +41,7 @@ class Community extends Model
     public function getManyImagesAttribute($value)
     {
         return json_decode($value, true);
-    }*/
+    }
 
     public function user()
     {

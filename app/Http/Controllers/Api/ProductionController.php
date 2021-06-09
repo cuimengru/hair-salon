@@ -7,6 +7,7 @@ use App\Models\Advert;
 use App\Models\Designer;
 use App\Models\Fashion;
 use App\Models\Production;
+use App\Models\UserLikeDesigner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -88,6 +89,18 @@ class ProductionController extends Controller
                 $production['follows_production'] = 0; //未收藏
             }
             unset($production['follows']);
+            $record = UserLikeDesigner::whereUserId($request->user_id)->whereProductionId($Id)->first();
+            if($record){
+                $record->update([
+                    'count' => $record->count + 1,
+                ]);
+            }else{
+                UserLikeDesigner::create([
+                    'user_id' => $request->user_id,
+                    'production_id' => $Id,
+                    'type' => 4,
+                ]);
+            }
         }else{
             $production['follows_production'] = 0; //未收藏
         }

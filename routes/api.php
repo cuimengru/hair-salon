@@ -99,6 +99,7 @@ Route::prefix('v1')
                     Route::post('favor/{designer}/designer', [DesignerController::class, 'favordesigner']);//收藏设计师
                     Route::delete('unfavor/{designer}/designer', [DesignerController::class, 'disfavor']);//取消收藏设计师
                     Route::get('designer/followlist', [DesignerController::class, 'followlist']);//收藏设计师列表
+                    //Route::post('designer/followlist', [HelpCenterController::class, 'followlists']);//收藏设计师
 
 
                     Route::post('favor/{production}/production', [ProductionController::class, 'favor']);  //收藏作品
@@ -134,7 +135,7 @@ Route::prefix('v1')
                     Route::post('product/order', [ProductOrderController::class, 'store']);//创建商品订单
                     Route::get('product/orderIndex', [ProductOrderController::class, 'index']);//全部订单
                     Route::get('product/order/{id}', [ProductOrderController::class, 'show']);//某个商品订单详情
-
+                    //Route::get('designer/followlist', [HelpCenterController::class, 'help']);//收藏设计师
 
                 });
             });

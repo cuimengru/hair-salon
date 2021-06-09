@@ -20,6 +20,7 @@ class UserAddress extends Model
         'contact_name',
         'contact_phone',
         'last_used_at',
+        'status',
     ];
     protected $dates = ['last_used_at'];
 
@@ -35,6 +36,11 @@ class UserAddress extends Model
 
     public function getFullAddressAttribute()
     {
-        return "{$this->province}{$this->city}{$this->district}{$this->street}{$this->address}";
+        if($this->street){
+            return "{$this->province}{$this->city}{$this->district}{$this->street}{$this->address}";
+        }else{
+            return "{$this->province}{$this->city}{$this->district}{$this->address}";
+        }
+
     }
 }
