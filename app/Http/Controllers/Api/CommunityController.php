@@ -57,7 +57,7 @@ class CommunityController extends Controller
 
         $data['message'] = "发布成功！";
         return response()->json($data, 200);*/
-        return $request;
+        return $request->image-0;
     }
 
     //社区列表
