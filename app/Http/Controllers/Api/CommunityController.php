@@ -41,7 +41,7 @@ class CommunityController extends Controller
                 'user_id' => $user->id,
                 'title' => $request->title,
                 'content' => $request->contents,
-                'many_images' => $request->image-0,
+                //'many_images' => $request->image-0,
                 'video' => $attributes['many_images'],
             ]);
 

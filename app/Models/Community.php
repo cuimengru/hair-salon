@@ -21,6 +21,7 @@ class Community extends Model
         'many_images'=>'array',
     ];*/
 
+
     public function getVideoPlayUrlAttribute()
     {
         if ($this->video) {

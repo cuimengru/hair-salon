@@ -32,7 +32,7 @@ class ProductionController extends AdminController
         });
 
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('designer.name', __('设计师'));
+        //$grid->column('designer.name', __('设计师'));
         $grid->column('title', __('标题'))->limit(20);
         $grid->column('thumb_url', __('封面图片'))->display(function ($value) {
             $icon = "";
@@ -97,13 +97,13 @@ class ProductionController extends AdminController
     {
         $form = new Form(new Production());
 
-        $form->select('designer_id',__('设计师'))->options(function ($id) {
+        /*$form->select('designer_id',__('设计师'))->options(function ($id) {
             $designer = Designer::find($id);
 
             if ($designer) {
                 return [$designer->id => $designer->name];
             }
-        })->ajax('/admin/api/designer')->required();
+        })->ajax('/admin/api/designer')->required();*/
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName();
         $form->multipleImage('many_images','多图上传')->uniqueName()->removable();
