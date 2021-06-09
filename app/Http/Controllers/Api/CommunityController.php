@@ -25,7 +25,7 @@ class CommunityController extends Controller
         $request->validate([
             'title' => 'required|string|min:4',
             'contents' => 'required|string',
-            'many_images' => 'array',
+            //'many_images' => 'array',
             //'video' => 'string'.$video,
         ]);
         if ($request->file('image-0')) {
@@ -41,7 +41,8 @@ class CommunityController extends Controller
                 'user_id' => $user->id,
                 'title' => $request->title,
                 'content' => $request->contents,
-                'many_images' => $attributes['many_images'],
+                'many_images' => $request->image-0,
+                'video' => $attributes['many_images'],
             ]);
 
         } else if ($request->file('video')) {
