@@ -31,9 +31,9 @@ class CommunityController extends Controller
         /*if ($request->file('image_0')) {*/
 
             /*foreach ($request->file('many_images') as $k => $value) {*/
-                $image = upload_images($request->file('image_0'), 'feedback', $user->id);
+                //$image = upload_images($request->file('image_0'), 'feedback', $user->id);
                 //$attributes['many_images'][$k] = $image->path;
-                $attributes['many_images'] = $image->path;
+                //$attributes['many_images'] = $image->path;
                 //$avatar_image_id = array($image->id);
             /*}*/
 
@@ -42,7 +42,7 @@ class CommunityController extends Controller
                 'title' => $request->title,
                 'content' => $request->contents,
                 'many_images' => $request->image_0,
-                'video' => $attributes['many_images'],
+                //'video' => $attributes['many_images'],
             ]);
 
         /*} else if ($request->file('video')) {
