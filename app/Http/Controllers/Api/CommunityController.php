@@ -25,27 +25,33 @@ class CommunityController extends Controller
         $request->validate([
             'title' => 'required|string|min:4',
             'contents' => 'required|string',
-            //'many_images' => 'array',
+            'many_images' => 'array',
             //'video' => 'string'.$video,
         ]);
-        /*if ($request->file('image_0')) {*/
 
-            /*foreach ($request->file('many_images') as $k => $value) {*/
-                //$image = upload_images($request->file('image_0'), 'feedback', $user->id);
-                //$attributes['many_images'][$k] = $image->path;
-                //$attributes['many_images'] = $image->path;
-                //$avatar_image_id = array($image->id);
-            /*}*/
+        //合成数组
+        $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
+
+        if (!empty($many_images)) {
+            foreach ($many_images as $k=>$value){
+                if($value){
+                    $image = upload_images($value, 'community', $user->id);
+                    $attributes['many_images'][$k] = $image->path;
+                }else{
+                    $attributes['many_images'][$k] = null;
+                }
+
+            }
 
             $community = Community::create([
                 'user_id' => $user->id,
                 'title' => $request->title,
                 'content' => $request->contents,
-                'many_images' => $request->image_0,
-                //'video' => $attributes['many_images'],
+                'many_images' => array_filter($attributes['many_images']),
             ]);
 
-        /*} else if ($request->file('video')) {
+        }
+        if ($request->file('video')) {
 
             $video = get_vimeo_mp4($request->file('video'), 'community');
 
@@ -55,7 +61,7 @@ class CommunityController extends Controller
                 'content' => $request->contents,
                 'video' => $video,
             ]);
-        }*/
+        }
 
         $data['message'] = "发布成功！";
         return response()->json($data, 200);
@@ -78,9 +84,14 @@ class CommunityController extends Controller
         foreach ($community['community'] as $k => $value) {
             if ($value['many_images']) {
                 foreach ($value['many_images'] as $i => $image) {
-                    $many_imageUrl[$i] = Storage::disk('public')->url($image);
+                    if($image){
+                        $many_imageUrl[$i] = Storage::disk('public')->url($image);
+                    }else{
+                        $many_imageUrl[$i] = null;
+                    }
+
                 }
-                $community['community'][$k]['many_imageUrl'] = $many_imageUrl;
+                $community['community'][$k]['many_imageUrl'] = array_filter($many_imageUrl);
             }
             $user = User::findOrFail($value['user_id']);
             $community['community'][$k]['user_name'] = $user->nickname;

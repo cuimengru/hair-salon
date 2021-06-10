@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\CommunityController;
 use App\Http\Controllers\Api\ReserveInformationController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProductOrderController;
+use App\Http\Controllers\Api\DesignersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,8 +61,8 @@ Route::prefix('v1')
                 Route::get('production', [ProductionController::class, 'index']);  //作品首页
                 Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
                 Route::get('production/{id}', [ProductionController::class, 'show']);  //作品详情
-                Route::get('designer', [DesignerController::class, 'index']);//设计师列表
-                Route::get('designer/{id}', [DesignerController::class, 'show']);//某个设计师详情
+                /*Route::get('designers', [DesignerController::class, 'index']);//设计师列表*/
+                /*Route::get('designer/{id}', [DesignerController::class, 'show']);//某个设计师详情*/
 
                 Route::get('products_category', [CategoriesController::class, 'allcategory']);//集品类商品分类
                 Route::get('self_categories', [CategoriesController::class, 'selfcategory']);//自营类商品分类
@@ -76,6 +77,10 @@ Route::prefix('v1')
                 Route::get('community', [CommunityController::class, 'index']); //社区列表
                 Route::get('product/index/{id}', [CommentController::class, 'productIndex']);//某个产品的评价列表
                 Route::get('reserve/index/{id}', [CommentController::class, 'reserveIndex']);//某个设计师的评价列表
+                Route::get('designers/index', [DesignersController::class,'index']); //发型师列表
+                Route::get('designers/show/{id}', [DesignersController::class, 'show']);//某个设计师详情
+
+
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -96,11 +101,11 @@ Route::prefix('v1')
                     Route::post('cart/destroy', [CartController::class, 'destroy']);//在购物车中删除商品
                     Route::get('cart/index', [CartController::class, 'index']);//购物车列表
 
-                    Route::post('favor/{designer}/designer', [DesignerController::class, 'favordesigner']);//收藏设计师
+                    /*Route::post('favor/{designer}/designer', [DesignerController::class, 'favordesigner']);//收藏设计师
                     Route::delete('unfavor/{designer}/designer', [DesignerController::class, 'disfavor']);//取消收藏设计师
-                    Route::get('designer/followlist', [DesignerController::class, 'followlist']);//收藏设计师列表
+                    Route::get('designer/followlist', [DesignerController::class, 'followlist']);//收藏设计师列表*/
                     //Route::post('designer/followlist', [HelpCenterController::class, 'followlists']);//收藏设计师
-
+                    Route::post('favorite/{designer}/designer',[DesignersController::class,'favordesigner']);//收藏发型师
 
                     Route::post('favor/{production}/production', [ProductionController::class, 'favor']);  //收藏作品
                     Route::delete('unfavor/{production}/production', [ProductionController::class, 'disfavor']);  //取消收藏作品

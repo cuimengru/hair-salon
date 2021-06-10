@@ -17,6 +17,7 @@ class Leavetime extends Model
         'time' => 'json',
     ];
 
+
     public function getTimeAttribute($value)
     {
         return array_values(json_decode($value, true) ?: []);
