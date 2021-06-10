@@ -88,7 +88,7 @@ Route::prefix('v1')
 
                     Route::post('user_addresses', [UserAddressController::class, 'store']);//创建收货地址
                     Route::get('user_addresses', [UserAddressController::class, 'index']);//收货地址列表
-                    Route::post('user_addresses/{id}', [UserAddressController::class, 'update']);//编辑收货地址
+                    Route::patch('user_addresses/{id}', [UserAddressController::class, 'update']);//编辑收货地址
                     Route::post('user_addresses/address', [UserAddressController::class, 'destroy']);//删除收货地址
 
                     Route::post('cart', [CartController::class, 'store']);//添加商品到购物车
