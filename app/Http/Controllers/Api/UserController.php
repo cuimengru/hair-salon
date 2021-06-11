@@ -36,10 +36,10 @@ class UserController extends Controller
         $user = User::where('phone','=',$phone)->first();
 
         $code = str_pad(random_int(1, 999999), 6, 0, STR_PAD_LEFT); // 生成6位随机数，左侧补0
-        if($user){
+        /*if($user){
             $user->notify(new VerificationCode($code));
             Notification::send($user,new VerificationCode($code));
-        }
+        }*/
         Notification::route(
             EasySmsChannel::class,
             new PhoneNumber($phone)

@@ -45,14 +45,14 @@ class VerificationCode extends Notification implements ShouldQueue
      */
     public function toEasySms($notifiable)
     {
-        try {
+        /*try {*/
             return (new EasySmsMessage)
                 ->setTemplate(config('easysms.aliyun_sms_template'))
                 ->setData(['code' => $this->code]);
-        } catch (\Exception $e) {
+        /*}catch (\Exception $e) {
 
             Log::error(__METHOD__ . '|' . __METHOD__ . '执行失败', ['error' => $e]);
-        }
+        }*/
 
     }
 
