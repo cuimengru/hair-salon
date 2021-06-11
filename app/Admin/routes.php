@@ -3,7 +3,6 @@
 use Illuminate\Routing\Router;
 
 Admin::routes();
-
 Route::group([
     'prefix'        => config('admin.route.prefix'),
     'namespace'     => config('admin.route.namespace'),
@@ -59,4 +58,5 @@ Route::group([
     $router->resource('worktimes', WorktimeController::class); //工作时间管理
     $router->resource('leavetimes', LeavetimeController::class); //请假管理
     $router->resource('offline_users', OfflineUserController::class);//线下用户管理
+    $router->resource('offreserve_orders', OffreserveOrderController::class);//线下预约订单管理
 });

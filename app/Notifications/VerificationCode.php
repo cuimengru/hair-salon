@@ -47,7 +47,7 @@ class VerificationCode extends Notification implements ShouldQueue
     {
         try {
             return (new EasySmsMessage)
-                ->setTemplate(env('ALIYUN_SMS_TEMPLATE'))
+                ->setTemplate(config('easysms.aliyun_sms_template'))
                 ->setData(['code' => $this->code]);
         } catch (\Exception $e) {
 

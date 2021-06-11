@@ -33,7 +33,7 @@ class ReserveOrderService
             'phone' => $request->phone,
             'remark' => $request->remark,
             'status'=> 1 ,
-
+            'type'=> 1, //线上
         ]);
 
         $order->save();

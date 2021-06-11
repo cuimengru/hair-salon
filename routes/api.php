@@ -78,7 +78,7 @@ Route::prefix('v1')
                 Route::get('product/index/{id}', [CommentController::class, 'productIndex']);//某个产品的评价列表
                 Route::get('reserve/index/{id}', [CommentController::class, 'reserveIndex']);//某个设计师的评价列表
                 Route::get('designers/index', [DesignersController::class,'index']); //发型师列表
-                Route::get('designers/show/{id}', [DesignersController::class, 'show']);//某个设计师详情
+                Route::get('designers/show/{id}', [DesignersController::class, 'show']);//某个发型师详情
 
 
 

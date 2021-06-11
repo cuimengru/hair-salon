@@ -39,7 +39,7 @@ class ReserveOrder extends Model
 
     protected $fillable = [
         'reserve_id','user_id','service_project','time','num','phone','remark','designer_id','money','no',
-        'payment_method', 'status','reviewed','paid_at','payment_no','date'
+        'payment_method', 'status','reviewed','paid_at','payment_no','date','type'
     ];
 
     protected $casts = [
