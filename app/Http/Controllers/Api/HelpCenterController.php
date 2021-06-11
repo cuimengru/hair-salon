@@ -35,17 +35,22 @@ class HelpCenterController extends Controller
             'contents' => 'required|string',
             'many_images' => 'array',
         ]);
-
-        if ($request->file('many_images')) {
-            foreach ($request->file('many_images') as $k=>$value){
-                $image = upload_images($value, 'feedback', $user->id);
-                $attributes['many_images'][$k] = $image->path;
-                //$avatar_image_id = array($image->id);
+        //合成数组
+        $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
+        if (!empty($many_images)) {
+            foreach ($many_images as $k => $value) {
+                if ($value) {
+                    $image = upload_images($value, 'feedback', $user->id);
+                    $attributes['many_images'][$k] = $image->path;
+                } else {
+                    $attributes['many_images'][$k] = null;
+                }
             }
+
             $feedback = Feedback::create([
                 'user_id' => $user->id,
                 'content' => $request->contents,
-                'many_images' => $attributes['many_images'],
+                'many_images' => array_filter($attributes['many_images']),
             ]);
         }else{
             $feedback = Feedback::create([
@@ -74,21 +79,4 @@ class HelpCenterController extends Controller
         return response()->json($data, 200);
     }
 
-    //收藏设计师列表
-    public function help(Request $request)
-    {
-        /*$designer = $request->user()->favoriteDesigners()->paginate(6);
-        foreach ($designer as $k=>$value){
-            unset($designer[$k]['many_images']);
-            unset($designer[$k]['rating']);
-            unset($designer[$k]['certificate']);
-            unset($designer[$k]['honor']);
-            unset($designer[$k]['score']);
-            unset($designer[$k]['is_recommend']);
-            unset($designer[$k]['created_at']);
-            unset($designer[$k]['updated_at']);
-            unset($designer[$k]['pivot']);
-        }*/
-        return '111';
-    }
 }

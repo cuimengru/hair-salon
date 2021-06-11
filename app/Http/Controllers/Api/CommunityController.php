@@ -104,10 +104,20 @@ class CommunityController extends Controller
                 ->get();
             foreach ($community['community'][$k]['reviews'] as $i=>$item){
                 $user = User::where('id','=',$item['user_id'])->first();
-                $community['community'][$k]['reviews'][$i]['user_name'] = $user->nickname;
+                if($user){
+                    $community['community'][$k]['reviews'][$i]['user_name'] = $user->nickname;
+                }else{
+                    $community['community'][$k]['reviews'][$i]['user_name'] = null;
+                }
+
                 if($item['replyuser_id']){
                     $replyuser = User::where('id','=',$item['replyuser_id'])->first();
-                    $community['community'][$k]['reviews'][$i]['replyuser_name'] = $replyuser->nickname;
+                    if($replyuser){
+                        $community['community'][$k]['reviews'][$i]['replyuser_name'] = $replyuser->nickname;
+                    }else{
+                        $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
+                    }
+
                 }else{
                     $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
                 }
@@ -175,8 +185,8 @@ class CommunityController extends Controller
         $msg['-1']['type'] = $type;
         $msgService = app()->make(MessageService::class);
         $res = $msgService->storeMessage($user_id,$replyuser_id,$community_id,$msg);
-        $data['message'] = $res['message'];
-
+        $data['messages'] = $res['messages'];
+        $data['reviews_number'] = $res['reviews_number'];
         return response()->json($data, $res['status']);
     }
 
@@ -191,7 +201,9 @@ class CommunityController extends Controller
             ->where('community_id','=',$request->community_id)
             ->first();
         if($res){
-            $data['message'] = "已点赞！";
+            $like_number= CommunityLike::where('community_id','=',$request->community_id)->count(); //点赞数量
+            $data['message'] = "已经点过赞！";
+            $data['like_number'] = $like_number;
             return response()->json($data, 403);
         }else{
             $like = CommunityLike::create([
@@ -202,6 +214,8 @@ class CommunityController extends Controller
 
 
         $data['message'] = "点赞成功！";
+        $like_number= CommunityLike::where('community_id','=',$request->community_id)->count(); //点赞数量
+        $data['like_number'] = $like_number;
         return response()->json($data, 200);
     }
 
@@ -218,9 +232,13 @@ class CommunityController extends Controller
         if($res){
             $res->delete();
             $data['message'] = "取消点赞成功！";
+            $like_number= CommunityLike::where('community_id','=',$request->community_id)->count(); //点赞数量
+            $data['like_number'] = $like_number;
             return response()->json($data, 200);
         }else{
             $data['message'] = "取消点赞失败！";
+            $like_number= CommunityLike::where('community_id','=',$request->community_id)->count(); //点赞数量
+            $data['like_number'] = $like_number;
             return response()->json($data, 403);
         }
 

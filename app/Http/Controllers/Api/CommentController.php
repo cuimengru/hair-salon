@@ -50,19 +50,23 @@ class CommentController extends Controller
             $attributes['render_content'] = $request->render_content;
         }
 
-        if ($request->file('render_image')) {
-
-            foreach ($request->file('render_image') as $k => $value) {
-                $image = upload_images($value, 'comment', $user->id);
-                $attributes['render_image'][$k] = $image->path;
-                //$avatar_image_id = array($image->id);
+        //合成数组
+        $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
+        if (!empty($many_images)) {
+            foreach ($many_images as $k => $value) {
+                if ($value) {
+                    $image = upload_images($value, 'comment', $user->id);
+                    $attributes['render_image'][$k] = $image->path;
+                } else {
+                    $attributes['render_image'][$k] = null;
+                }
             }
             $comment = Comment::create([
                 'user_id' => $user->id,
                 'order_id' => $request->order_id,
                 'rate' => $request->rate,
                 'render_content' => $attributes['render_content'],
-                'render_image' => $attributes['render_image'],
+                'render_image' => array_filter($attributes['render_image']),
                 'product_id'=> $orderItem->product_id,
                 'product_sku_id' => $orderItem->product_sku_id,
                 'type' =>2,
@@ -117,13 +121,17 @@ class CommentController extends Controller
         }else{
             $attributes['render_content'] = $request->render_content;
         }
+        //合成数组
+        $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
 
-        if ($request->file('render_image')) {
-
-            foreach ($request->file('render_image') as $k => $value) {
-                $image = upload_images($value, 'comment', $user->id);
-                $attributes['render_image'][$k] = $image->path;
-                //$avatar_image_id = array($image->id);
+        if (!empty($many_images)) {
+            foreach ($many_images as $k => $value) {
+                if ($value) {
+                    $image = upload_images($value, 'comment', $user->id);
+                    $attributes['render_image'][$k] = $image->path;
+                } else {
+                    $attributes['render_image'][$k] = null;
+                }
             }
             $comment = Comment::create([
                 'user_id' => $user->id,
@@ -131,7 +139,7 @@ class CommentController extends Controller
                 'designer_id' => $order->designer_id,
                 'rate' => $request->rate,
                 'render_content' => $attributes['render_content'],
-                'render_image' => $attributes['render_image'],
+                'render_image' => array_filter($attributes['render_image']),
                 'type' =>1,
             ]);
             // 将订单标记为已评价

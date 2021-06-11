@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\CommunityReview;
+use App\Models\User;
 
 
 class MessageService
@@ -39,9 +40,38 @@ class MessageService
             ]);
         }
 
-        $res['message'] = "评论成功！";
-        $res['status'] = 200;
+        //$res['message'] = "评论成功！";
+        //$res['status'] = 200;
+        $res['messages'] = CommunityReview::where('community_id',$community_id)
+            ->orderBy('updated_at','desc')
+            ->get();
+        foreach ($res['messages'] as $k=>$value){
+            $user = User::where('id','=',$value['user_id'])->first();
+            if($user){
+                $res['messages'][$k]['user_name'] = $user->nickname;
+            }else{
+                $res['messages'][$k]['user_name'] = null;
+            }
 
+            if(!empty($value['replyuser_id'])){
+                $replyuser = User::where('id','=',$value['replyuser_id'])->first();
+                if($replyuser){
+                    $res['messages'][$k]['replyuser_name'] = $replyuser->nickname;
+                }else{
+                    $res['messages'][$k]['replyuser_name'] = null;
+                }
+
+            }else{
+                $res['messages'][$k]['replyuser_name'] = null;
+            }
+            $res['messages'][$k]['reviews_total'] = count($value['message']);
+        }
+        //评论数量
+        $reviews = $res['messages']->toArray();
+        $res['reviews_number'] = array_sum(array_column($reviews,'reviews_total'));
+
+        $res['status'] = 200;
+        //$res['message'] = array_values($reviews);
         return $res;
 
     }
