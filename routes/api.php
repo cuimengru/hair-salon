@@ -62,7 +62,7 @@ Route::prefix('v1')
                 Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
                 Route::get('production/{id}', [ProductionController::class, 'show']);  //作品详情
                 /*Route::get('designers', [DesignerController::class, 'index']);//设计师列表*/
-                /*Route::get('designer/{id}', [DesignerController::class, 'show']);//某个设计师详情*/
+                Route::get('designer/{id}', [DesignerController::class, 'show']);//某个设计师详情
 
                 Route::get('products_category', [CategoriesController::class, 'allcategory']);//集品类商品分类
                 Route::get('self_categories', [CategoriesController::class, 'selfcategory']);//自营类商品分类
