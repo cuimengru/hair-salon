@@ -15,7 +15,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class DesignersController extends Controller
 {
     //设计师列表
-    public function index()
+    public function index(Request $request)
     {
         $designer = QueryBuilder::for(Designer::class)
             /*->allowedFilters([
@@ -27,6 +27,23 @@ class DesignersController extends Controller
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','name','position','thumb','label_id')
             ->paginate(6);
+        foreach ($designer as $k=>$value){
+            //收藏发型师
+            if($request->user_id){
+                $designer[$k]['follows'] = DB::table('user_favorite_designers')
+                    ->where('user_id','=',$request->user_id)
+                    ->where('designer_id','=',$value->id)
+                    ->first();
+                if ($designer[$k]['follows']){
+                    $designer[$k]['follows_production'] = 1; //已收藏
+            }else{
+                    $designer[$k]['follows_production'] = 0; //未收藏
+                }
+                unset($designer[$k]['follows']);
+            }else{
+                $designer[$k]['follows_production'] = 0; //未收藏
+            }
+        }
 
         return $designer;
     }
@@ -106,4 +123,33 @@ class DesignersController extends Controller
         $data['message'] = "收藏成功！";
         return response()->json($data, 200);
     }
+
+    //取消收藏设计师
+    public function disdesigner(Designer $designer,Request $request)
+    {
+        $user = $request->user();
+        $user->favoriteDesigners()->detach($designer);
+
+        $data['message'] = "取消成功！";
+        return response()->json($data, 200);
+    }
+
+    //收藏发型师列表
+    public function favorlist(Request $request)
+    {
+        $designers = $request->user()->favoriteDesigners()->paginate(6);
+        foreach ($designers as $k=>$value){
+            unset($designers[$k]['many_images']);
+            unset($designers[$k]['rating']);
+            unset($designers[$k]['certificate']);
+            unset($designers[$k]['honor']);
+            unset($designers[$k]['score']);
+            unset($designers[$k]['is_recommend']);
+            unset($designers[$k]['created_at']);
+            unset($designers[$k]['updated_at']);
+            unset($designers[$k]['pivot']);
+        }
+        return $designers;
+    }
 }
+

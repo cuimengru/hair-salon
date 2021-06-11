@@ -106,6 +106,8 @@ Route::prefix('v1')
                     Route::get('designer/followlist', [DesignerController::class, 'followlist']);//收藏设计师列表*/
                     //Route::post('designer/followlist', [HelpCenterController::class, 'followlists']);//收藏设计师
                     Route::post('favorite/{designer}/designer',[DesignersController::class,'favordesigner']);//收藏发型师
+                    Route::delete('unfavorite/{designer}/designer',[DesignersController::class,'disdesigner']); //取消发型师
+                    Route::get('designers/favorlist',[DesignersController::class,'favorlist']); //收藏发型师列表
 
                     Route::post('favor/{production}/production', [ProductionController::class, 'favor']);  //收藏作品
                     Route::delete('unfavor/{production}/production', [ProductionController::class, 'disfavor']);  //取消收藏作品
