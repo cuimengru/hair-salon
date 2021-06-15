@@ -33,6 +33,7 @@ class CartController extends Controller
         }
 
         $data['message'] = "Product Added OK!";
+        $data['count'] = CartItem::where('user_id','=',$user->id)->count();
         return response()->json($data, 200);
     }
 
@@ -64,10 +65,11 @@ class CartController extends Controller
             ->get();
         foreach ($cart as $k=>$value){
             $cart[$k]['product_sku'] = ProductSku::where('id','=',$value['product_sku_id'])
-                ->select('id','title','image','description','price','product_id')
+                ->select('id','title','image','description','price','product_id','stock')
                 ->first();
             $product = Product::findOrFail($cart[$k]['product_sku']['product_id']);
             $cart[$k]['product_sku']['country_name'] = $product->country_name;
+            $cart[$k]['product_sku']['product_title'] = $product->title;
         }
         return $cart;
     }

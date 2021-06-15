@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\ReserveOrder;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -119,7 +120,7 @@ class OffreserveOrderController extends AdminController
         $form->text('no', __('订单号'));
         $form->select('reserve_id', __('预约信息'));
         $form->number('designer_id', __('Designer id'));
-        $form->number('user_id', __('User id'));
+        $form->select('user_id', __('线下用户'))->options(User::all()->pluck('nickname','id'));
         $form->number('service_project', __('Service project'));
         $form->date('date', __('Date'))->default(date('Y-m-d'));
         $form->text('time', __('Time'));

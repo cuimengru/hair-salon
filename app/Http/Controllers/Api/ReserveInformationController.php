@@ -117,6 +117,7 @@ class ReserveInformationController extends Controller
                         //$workTime['choose'][$day][$k]['can_choose'] = 0; //不能预约
                         $workTime['list'][$day][$k]['can_choose'] = 0;
                         $workTime['list'][$day][$k]['is_reserve'] = 0;//该时间点不能预约
+                        unset($workTime['list'][$day][$k]);
                     }
                 }
 
@@ -124,7 +125,7 @@ class ReserveInformationController extends Controller
 
         }
 
-        $workTime['list'] = array_values($workTime['list']);
+        //$workTime['list'] = array_values($workTime['list']);
         //$workTime['choose'] = array_values($workTime['choose']);
         return $workTime;
     }
