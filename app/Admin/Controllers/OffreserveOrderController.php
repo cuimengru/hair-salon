@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Designer;
+use App\Models\ReserveInformation;
 use App\Models\ReserveOrder;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
@@ -118,9 +120,12 @@ class OffreserveOrderController extends AdminController
         $form = new Form(new ReserveOrder());
 
         $form->text('no', __('订单号'));
-        $form->select('reserve_id', __('预约信息'));
-        $form->number('designer_id', __('Designer id'));
-        $form->select('user_id', __('线下用户'))->options(User::all()->pluck('nickname','id'));
+        $form->select('reserve_id', __('预约信息'))->options(ReserveInformation::all()->pluck('designer.name','id'))
+            ->load('designer_id','/api/designer');
+        $form->select('designer_id', __('发型师'))->options(function ($id) {
+            return $id;
+        })->required();
+        $form->select('user_id', __('线下用户昵称'))->options(User::all()->pluck('nickname','id'));
         $form->number('service_project', __('Service project'));
         $form->date('date', __('Date'))->default(date('Y-m-d'));
         $form->text('time', __('Time'));
@@ -137,4 +142,5 @@ class OffreserveOrderController extends AdminController
 
         return $form;
     }
+
 }

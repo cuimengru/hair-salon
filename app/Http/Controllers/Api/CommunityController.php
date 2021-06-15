@@ -194,6 +194,26 @@ class CommunityController extends Controller
         $data['message'] = CommunityReview::where('community_id','=',$request->community_id)
             ->orderBy('created_at','desc')
             ->get();
+        foreach ($data['message'] as $k=>$value){
+            $user = User::where('id','=',$value['user_id'])->first();
+            if($user){
+                $data['message'][$k]['user_name'] = $user->nickname;
+            }else{
+                $data['message'][$k]['user_name'] = null;
+            }
+
+            if(!empty($value['replyuser_id'])){
+                $replyuser = User::where('id','=',$value['replyuser_id'])->first();
+                if($replyuser){
+                    $data['message'][$k]['replyuser_name'] = $replyuser->nickname;
+                }else{
+                    $data['message'][$k]['replyuser_name'] = null;
+                }
+
+            }else{
+                $data['message'][$k]['replyuser_name'] = null;
+            }
+        }
         $data['reviews_number'] = CommunityReview::where('community_id','=',$request->community_id)->count();
         return response()->json($data, 200);
     }
