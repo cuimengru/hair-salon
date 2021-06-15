@@ -61,7 +61,7 @@ class CartController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $cart = CartItem::where('user_id','=',1)
+        $cart = CartItem::where('user_id','=',$user->id)
             ->orderBy('created_at','desc')
             ->get();
         foreach ($cart as $k=>$value){
