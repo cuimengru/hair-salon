@@ -99,8 +99,8 @@ class CommunityController extends Controller
 
             //评论内容
             $community['community'][$k]['reviews'] = CommunityReview::where('community_id','=',$value['id'])
-                ->orderBy('updated_at','desc')
-                ->select('user_id','replyuser_id','message')
+                ->orderBy('created_at','desc')
+                ->select('id','user_id','replyuser_id','message')
                 ->get();
             foreach ($community['community'][$k]['reviews'] as $i=>$item){
                 $user = User::where('id','=',$item['user_id'])->first();
@@ -121,13 +121,10 @@ class CommunityController extends Controller
                 }else{
                     $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
                 }
-                $community['community'][$k]['reviews'][$i]['reviews_total'] = count($item['message']);
             }
 
             //评论数量
-            $reviews = $community['community'][$k]['reviews']->toArray();
-            $community['community'][$k]['reviews_number'] = array_sum(array_column($reviews,'reviews_total'));
-
+            $community['community'][$k]['reviews_number'] = CommunityReview::where('community_id','=',$value['id'])->count();
             //点赞数量
             $community['community'][$k]['like_number'] = CommunityLike::where('community_id','=',$value['id'])->count();
 
@@ -159,8 +156,9 @@ class CommunityController extends Controller
             'message' => 'required|string', // 消息内容
             'replyuser_id' => 'int', //发送给某用户的id
         ]);
+        $user = $request->user();
         //$replyuser_id = $request->replyuser_id;
-        if($request->replyuser_id){
+        /*if($request->replyuser_id){
             //$replyuser_id = $request->replyuser_id;
             $check_user = CommunityReview::where('replyuser_id','=',$user->id)
                 ->where('user_id','=',$request->replyuser_id)
@@ -186,8 +184,18 @@ class CommunityController extends Controller
         $msgService = app()->make(MessageService::class);
         $res = $msgService->storeMessage($user_id,$replyuser_id,$community_id,$msg);
         $data['messages'] = $res['messages'];
-        $data['reviews_number'] = $res['reviews_number'];
-        return response()->json($data, $res['status']);
+        $data['reviews_number'] = $res['reviews_number'];*/
+        $message = CommunityReview::create([
+            'user_id' => $user->id,
+            'replyuser_id' => $request->replyuser_id,
+            'community_id' => $request->community_id,
+            'message' => $request->message,
+        ]);
+        $data['message'] = CommunityReview::where('community_id','=',$request->community_id)
+            ->orderBy('created_at','desc')
+            ->get();
+        $data['reviews_number'] = CommunityReview::where('community_id','=',$request->community_id)->count();
+        return response()->json($data, 200);
     }
 
     //创建社区评论点赞

@@ -14,11 +14,11 @@ class CommunityReview extends Model
         'user_id','replyuser_id','community_id','message'
     ];
 
-    protected $casts = [
+    /*protected $casts = [
         'message'=>'json',
-    ];
+    ];*/
 
-    public function getMessageAttribute($value)
+    /*public function getMessageAttribute($value)
     {
         return array_values(json_decode($value, true) ?: []);
     }
@@ -26,7 +26,7 @@ class CommunityReview extends Model
     public function setMessageAttribute($value)
     {
         $this->attributes['message'] = json_encode(array_values($value));
-    }
+    }*/
 
     // 关联 用户
     public function user()
