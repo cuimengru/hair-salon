@@ -33,7 +33,8 @@ class CartController extends Controller
         }
 
         $data['message'] = "Product Added OK!";
-        $data['count'] = CartItem::where('user_id','=',$user->id)->count();
+        $data['count']= CartItem::where('user_id','=',$user->id)->count();
+
         return response()->json($data, 200);
     }
 

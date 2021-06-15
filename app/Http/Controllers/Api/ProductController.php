@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advert;
+use App\Models\CartItem;
 use App\Models\Comment;
 use App\Models\Product;
 use App\Models\ProductLabel;
@@ -164,10 +165,11 @@ class ProductController extends Controller
                     ]);
                 }
             }
-
+            $product['count']= CartItem::where('user_id','=',$request->user_id)->count();
 
         }else{
             $product['favor_product'] = 0; //未收藏
+            $product['count'] = 0;
         }
 
         return $product;

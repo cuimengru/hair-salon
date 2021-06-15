@@ -96,10 +96,11 @@ Route::prefix('v1')
                     Route::patch('user_addresses/{id}', [UserAddressController::class, 'update']);//编辑收货地址
                     Route::post('user_addresses/address', [UserAddressController::class, 'destroy']);//删除收货地址
 
+                    Route::get('cart/index', [CartController::class, 'index']);//购物车列表
                     Route::post('cart', [CartController::class, 'store']);//添加商品到购物车
                     Route::patch('cart/{id}', [CartController::class, 'update']); // 减去购物车商品数量
                     Route::post('cart/destroy', [CartController::class, 'destroy']);//在购物车中删除商品
-                    Route::get('cart/index', [CartController::class, 'index']);//购物车列表
+
 
                     /*Route::post('favor/{designer}/designer', [DesignerController::class, 'favordesigner']);//收藏设计师
                     Route::delete('unfavor/{designer}/designer', [DesignerController::class, 'disfavor']);//取消收藏设计师
