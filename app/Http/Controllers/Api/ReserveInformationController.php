@@ -136,7 +136,7 @@ class ReserveInformationController extends Controller
 
         $workTime['list'] = array_values($workTime['list']);
         //$workTime['choose'] = array_values($workTime['choose']);
-        return $workTime;
+        return $workTime['list'];
     }
 
     //可预约的设计师列表
