@@ -80,17 +80,17 @@ class CartController extends Controller
     {
         $cart = CartItem::findOrFail($cartId);
         $amount = $request->amount;
-        if($cart->amount == 1){
-            $data['message'] = "商品数量必须大于等于 1!";
+        /*if($cart->amount == 1){
+            $data['message'] = "该宝贝不能减少了！";
             return response()->json($data, 403);
-        }
+        }*/
         $user = $request->user();
         if($cart = $user->cartItems()->where('product_sku_id',$cart->product_sku_id)->first()){
         //如果存在则直接叠加商品数量
         $cart->update([
-            'amount' => $cart->amount - $amount,
-        ]);
-    }
+            'amount' => $amount,
+            ]);
+        }
         $data['message'] = "Product Updated OK!";
         return response()->json($data, 200);
     }

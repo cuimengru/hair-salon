@@ -2,15 +2,14 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Order;
-use Encore\Admin\Layout\Content;
+use App\Models\ReserveOrder;
 use Encore\Admin\Controllers\AdminController;
-Use Encore\Admin\Widgets\Table;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class BalanceController extends AdminController
+class BalanceReorderController extends AdminController
 {
     /**
      * Title for current resource.
@@ -26,23 +25,24 @@ class BalanceController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Order());
+        $grid = new Grid(new ReserveOrder());
         $grid->filter(function ($filter) {
             $filter->like('user.nickname', __('用户'));
             $filter->like('user.phone', __('手机号'));
             $filter->between('created_at','创建时间')->datetime();
         });
+
         $grid->column('id', __('Id'));
-        //$grid->column('no', __('No'));
         $grid->column('user.nickname', __('用户'));
         $grid->column('user.phone', __('手机号'));
-        $grid->column('total_amount', __('余额变化'))->display(function ($value) {
+        $grid->column('money', __('余额变化'))->display(function ($value) {
             if($value>0){
                 return '-'.$value;
             }else{
                 return $value;
             }
         });
+
         $grid->column('paid_at', __('创建时间'));
         $grid->model()->where('payment_method', '=',1);
         // 禁用创建按钮，后台不需要创建订单
@@ -59,6 +59,7 @@ class BalanceController extends AdminController
             });
         });
         $grid->model()->orderBy('id', 'desc');
+
         return $grid;
     }
 
@@ -73,7 +74,7 @@ class BalanceController extends AdminController
         return $content
             ->header('查看余额')
             // body 方法可以接受 Laravel 的视图作为参数
-            ->body(view('admin.orders.balanceshow', ['order' => Order::find($id)]));
+            ->body(view('admin.orders.balanceReserveshow', ['order' => ReserveOrder::find($id)]));
     }
 
     /**
@@ -83,24 +84,25 @@ class BalanceController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Order());
+        $form = new Form(new ReserveOrder());
 
         $form->text('no', __('No'));
+        $form->number('reserve_id', __('Reserve id'));
+        $form->number('designer_id', __('Designer id'));
         $form->number('user_id', __('User id'));
-        $form->textarea('address', __('Address'));
-        $form->decimal('total_amount', __('Total amount'));
-        $form->textarea('remark', __('Remark'));
-        $form->datetime('paid_at', __('Paid at'))->default(date('Y-m-d H:i:s'));
+        $form->number('service_project', __('Service project'));
+        $form->date('date', __('Date'))->default(date('Y-m-d'));
+        $form->text('time', __('Time'));
+        $form->number('num', __('Num'))->default(1);
+        $form->mobile('phone', __('Phone'));
+        $form->text('remark', __('Remark'));
+        $form->decimal('money', __('Money'));
         $form->text('payment_method', __('Payment method'));
+        $form->datetime('paid_at', __('Paid at'))->default(date('Y-m-d H:i:s'));
         $form->text('payment_no', __('Payment no'));
-        $form->text('status', __('Status'));
-        $form->text('refund_status', __('Refund status'));
-        $form->text('refund_no', __('Refund no'));
-        $form->switch('closed', __('Closed'));
+        $form->number('status', __('Status'));
         $form->switch('reviewed', __('Reviewed'));
-        $form->text('ship_status', __('Ship status'));
-        $form->textarea('ship_data', __('Ship data'));
-        $form->textarea('extra', __('Extra'));
+        $form->number('type', __('Type'));
 
         return $form;
     }

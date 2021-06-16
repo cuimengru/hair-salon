@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Designer;
 use App\Models\ReserveOrder;
+use App\Models\ServiceProject;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -42,7 +43,14 @@ class ReserveOrderController extends AdminController
                return $value;
            }
         });
-        $grid->column('service_project', __('服务项目'));
+        $grid->column('service_project', __('服务项目'))->display(function ($value){
+            $service = ServiceProject::where('id','=',$value)->first();
+            if($service){
+                return $service->name;
+            }else{
+                return ' ';
+            }
+        });
         $grid->column('phone',__('手机号'));
         $grid->column('reserve_date',__('预约时间'));
         /*$states1 = [
@@ -86,7 +94,14 @@ class ReserveOrderController extends AdminController
         $show->field('id', __('Id'));
         $show->field('no', __('订单号'));
         $show->field('user.nickname', __('用户昵称'));
-        $show->field('service_project', __('服务项目'));
+        $show->field('service_project', __('服务项目'))->as(function ($value){
+            $service = ServiceProject::where('id','=',$value)->first();
+            if($service){
+                return $service->name;
+            }else{
+                return ' ';
+            }
+        });;
         $show->field('reserve_date', __('预约时间'));
         $show->field('num', __('预约人数'));
         $show->field('phone', __('手机号'));

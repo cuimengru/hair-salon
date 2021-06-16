@@ -59,4 +59,5 @@ Route::group([
     $router->resource('leavetimes', LeavetimeController::class); //请假管理
     $router->resource('offline_users', OfflineUserController::class);//线下用户管理
     $router->resource('offreserve_orders', OffreserveOrderController::class);//线下预约订单管理
+    $router->resource('balance_orders', BalanceReorderController::class); //预约订单余额管理
 });

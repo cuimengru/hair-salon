@@ -5,11 +5,15 @@ namespace App\Admin\Controllers;
 use App\Models\Designer;
 use App\Models\ReserveInformation;
 use App\Models\ReserveOrder;
+use App\Models\ServiceProject;
 use App\Models\User;
+use App\Models\Worktime;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OffreserveOrderController extends AdminController
 {
@@ -44,7 +48,14 @@ class OffreserveOrderController extends AdminController
                 return $value;
             }
         });
-        $grid->column('service_project', __('服务项目'));
+        $grid->column('service_project', __('服务项目'))->display(function ($value){
+            $service = ServiceProject::where('id','=',$value)->first();
+            if($service){
+                return $service->name;
+            }else{
+                return ' ';
+            }
+        });
         $grid->column('phone',__('手机号'));
         $grid->column('reserve_date',__('预约时间'));
         /*$states1 = [
@@ -63,7 +74,7 @@ class OffreserveOrderController extends AdminController
         $grid->actions(function ($actions) {
             // 禁用删除和编辑按钮
             $actions->disableDelete();
-            $actions->disableEdit();
+            //$actions->disableEdit();
         });
         $grid->tools(function ($tools) {
             // 禁用批量删除按钮
@@ -89,7 +100,14 @@ class OffreserveOrderController extends AdminController
         $show->field('id', __('Id'));
         $show->field('no', __('订单号'));
         $show->field('user.nickname', __('用户昵称'));
-        $show->field('service_project', __('服务项目'));
+        $show->field('service_project', __('服务项目'))->as(function ($value){
+            $service = ServiceProject::where('id','=',$value)->first();
+            if($service){
+                return $service->name;
+            }else{
+                return ' ';
+            }
+        });
         $show->field('reserve_date', __('预约时间'));
         $show->field('num', __('预约人数'));
         $show->field('phone', __('手机号'));
@@ -119,28 +137,46 @@ class OffreserveOrderController extends AdminController
     {
         $form = new Form(new ReserveOrder());
 
-        $form->text('no', __('订单号'));
-        $form->select('reserve_id', __('预约信息'))->options(ReserveInformation::all()->pluck('designer.name','id'))
-            ->load('designer_id','/api/designer');
-        $form->select('designer_id', __('发型师'))->options(function ($id) {
-            return $id;
-        })->required();
+        //$form->text('no', __('订单号'));
+        $form->select('reserve_id', __('预约信息'))->options(ReserveInformation::all()->pluck('designer.name','id'));
+        //$form->select('designer_id', __('发型师'));
+        $form->select('service_project', __('服务项目'))->options(ServiceProject::all()->pluck('name','id'));
         $form->select('user_id', __('线下用户昵称'))->options(User::all()->pluck('nickname','id'));
-        $form->number('service_project', __('Service project'));
-        $form->date('date', __('Date'))->default(date('Y-m-d'));
-        $form->text('time', __('Time'));
-        $form->number('num', __('Num'))->default(1);
-        $form->mobile('phone', __('Phone'));
-        $form->text('remark', __('Remark'));
-        $form->decimal('money', __('Money'));
-        $form->text('payment_method', __('Payment method'));
-        $form->datetime('paid_at', __('Paid at'))->default(date('Y-m-d H:i:s'));
-        $form->text('payment_no', __('Payment no'));
-        $form->number('status', __('Status'));
-        $form->switch('reviewed', __('Reviewed'));
-        $form->number('type', __('Type'));
+        $form->date('date', __('日期'))->default(date('Y-m-d'));
+        $form->select('time', __('时间点'))->options(Worktime::all()->pluck('time','time'));
+        $form->number('num', __('预约人数'))->default(1);
+        $form->mobile('phone', __('预约手机号'));
+        $form->text('remark', __('备注'));
+        $form->decimal('money', __('订单总金额'));
+        $form->select('payment_method', __('支付方式'))->options([
+            '1' => ReserveOrder::$paymentMethodMap['1'],
+            '2' => ReserveOrder::$paymentMethodMap['2'],
+            '3' => ReserveOrder::$paymentMethodMap['3'],
+        ]);
+        $form->datetime('paid_at', __('支付时间'))->default(date('Y-m-d H:i:s'));
+        //$form->text('payment_no', __('Payment no'));
+        $form->select('status', __('订单状态'))->options([
+            '1' => ReserveOrder::$statusMap['1'],
+            '3' => ReserveOrder::$statusMap['3'],
 
+        ]);
+        $form->hidden('type')->default(2);
+        $form->hidden('designer_id');
+
+        $form->saving(function (Form $form) {
+            /*if($form->model()->reserve_id){*/
+                $reserve = ReserveInformation::where('id','=',$form->reserve_id)->first();
+                $designer = Designer::find($reserve->designer_id);
+                $form->designer_id = $designer->id;
+//            }
+        });
         return $form;
     }
 
+    /*public function designer(Request $request)
+    {
+        $q = $request->get('q');
+
+        return Designer::where('id',$q)->get(['id',DB::raw('name as text')]);
+    }*/
 }
