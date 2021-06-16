@@ -15,6 +15,7 @@ use App\Services\ProductOrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductOrderController extends Controller
 {
@@ -31,41 +32,168 @@ class ProductOrderController extends Controller
     //全部订单
     public function index(Request $request)
     {
-        $orders = Order::query()
-            // 使用 with 方法预加载，避免N + 1问题
-            ->with(['items.product','items.productSku'])
-            ->where('user_id', $request->user()->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-        foreach ($orders as $k=>$value){
-            if($value['status'] == 1){
-                $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('H:i:s');
-            }else{
-                $orders[$k]['block_time'] = 0;
+        //全部订单
+        if($request->order_type == 1){
+            $orders = Order::query()
+                // 使用 with 方法预加载，避免N + 1问题
+                ->with(['items.product','items.productSku'])
+                ->where('user_id', $request->user()->id)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            foreach ($orders as $k=>$value){
+                if($value['status'] == 1){
+                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('H:i:s');
+                }else{
+                    $orders[$k]['block_time'] = 0;
+                }
+                $orders[$k]['orderType'] = 1; //商品订单
             }
+
+            $reserveOrder = ReserveOrder::where('user_id','=',$request->user()->id)
+                ->where('type','=',1)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            foreach ($reserveOrder as $i=>$item){
+                $designer = Designer::findOrFail($item['designer_id']);
+                $reserveOrder[$i]['designer_name'] = $designer->name;
+                $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
+                $service_project = ServiceProject::findOrFail($item['service_project']);
+                $reserveOrder[$i]['service_project_name'] = $service_project->name;
+                $reserveOrder[$i]['orderType'] = 2; //预约订单
+            }
+
+            $order_total = array_merge($orders->toArray(),$reserveOrder->toArray());
+            $order_total1 = array_column($order_total,'created_at');
+            array_multisort($order_total1,SORT_DESC,$order_total);
+
+            $count = count($order_total); //总条数
+            $page = $request->page;
+            $pagesize = 4;
+            $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
+            $order_totals['data'] = array_slice($order_total,$start,$pagesize);
+            $order_totals['total'] = $count;
+            $order_totals['current_page'] = $page;
+            return $order_totals;
         }
 
-        $reserveOrder = ReserveOrder::where('user_id','=',$request->user()->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-        foreach ($reserveOrder as $i=>$item){
-            $designer = Designer::findOrFail($item['designer_id']);
-            $reserveOrder[$i]['designer_name'] = $designer->name;
-            $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
-            $service_project = ServiceProject::findOrFail($item['service_project']);
-            $reserveOrder[$i]['service_project_name'] = $service_project->name;
+        //我的预约订单
+        if($request->order_type == 2){
+            $reserveOrder = QueryBuilder::for(ReserveOrder::class)
+                ->where('user_id','=',$request->user()->id)
+                ->where('type','=',1)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate(3);
+            foreach ($reserveOrder as $i=>$item){
+                $designer = Designer::findOrFail($item['designer_id']);
+                $reserveOrder[$i]['designer_name'] = $designer->name;
+                $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
+                $service_project = ServiceProject::findOrFail($item['service_project']);
+                $reserveOrder[$i]['service_project_name'] = $service_project->name;
+                $reserveOrder[$i]['orderType'] = 2; //预约订单
+            }
+
+            return $reserveOrder;
         }
 
-        $order_total = array_merge($orders->toArray(),$reserveOrder->toArray());
+        //待付款订单
+        if($request->order_type == 3){
+            $orders = Order::query()
+                // 使用 with 方法预加载，避免N + 1问题
+                ->with(['items.product','items.productSku'])
+                ->where('user_id', $request->user()->id)
+                ->where('status','=',1)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
+            foreach ($orders as $k=>$value){
+                if($value['status'] == 1){
+                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('H:i:s');
+                }else{
+                    $orders[$k]['block_time'] = 0;
+                }
+                $orders[$k]['orderType'] = 1; //商品订单
+            }
 
-        $count = count($order_total); //总条数
-        $page = $request->page;
-        $pagesize = 4;
-        $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
-        $order_totals['data'] = array_slice($order_total,$start,$pagesize);
-        $order_totals['total'] = $count;
-        $order_totals['current_page'] = $page;
-        return $order_totals;
+            return $orders;
+        }
+
+        //待收货订单
+        if($request->order_type == 4){
+            $orders = Order::query()
+                // 使用 with 方法预加载，避免N + 1问题
+                ->with(['items.product','items.productSku'])
+                ->where('user_id', $request->user()->id)
+                ->where('status','=',3)
+                ->where('ship_status','=',2)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
+            foreach ($orders as $k=>$value){
+                /*if($value['status'] == 1){
+                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('H:i:s');
+                }else{
+                    $orders[$k]['block_time'] = 0;
+                }*/
+                $orders[$k]['orderType'] = 1; //商品订单
+            }
+
+            return $orders;
+        }
+
+        //待评价的订单
+        if($request->order_type == 5){
+            $orders = Order::query()
+                // 使用 with 方法预加载，避免N + 1问题
+                ->with(['items.product','items.productSku'])
+                ->where('user_id', $request->user()->id)
+                ->where('reviewed','=',0)
+                ->where('status','=',3)
+                ->where('ship_status','=',3)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            foreach ($orders as $k=>$value){
+                /*if($value['status'] == 1){
+                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('H:i:s');
+                }else{
+                    $orders[$k]['block_time'] = 0;
+                }*/
+                $orders[$k]['orderType'] = 1; //商品订单
+            }
+
+            $reserveOrder = ReserveOrder::where('user_id','=',$request->user()->id)
+                ->where('type','=',1)
+                ->where('reviewed','=',0)
+                ->where('status','=',3)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            foreach ($reserveOrder as $i=>$item){
+                $designer = Designer::findOrFail($item['designer_id']);
+                $reserveOrder[$i]['designer_name'] = $designer->name;
+                $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
+                $service_project = ServiceProject::findOrFail($item['service_project']);
+                $reserveOrder[$i]['service_project_name'] = $service_project->name;
+                $reserveOrder[$i]['orderType'] = 2; //预约订单
+            }
+
+            $order_total = array_merge($orders->toArray(),$reserveOrder->toArray());
+            $order_total1 = array_column($order_total,'updated_at');
+            array_multisort($order_total1,SORT_DESC,$order_total);
+
+            $count = count($order_total); //总条数
+            $page = $request->page;
+            $pagesize = 4;
+            $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
+            $order_totals['data'] = array_slice($order_total,$start,$pagesize);
+            $order_totals['total'] = $count;
+            $order_totals['current_page'] = $page;
+            return $order_totals;
+        }
+
     }
 
     //某个商品订单详情
@@ -76,5 +204,6 @@ class ProductOrderController extends Controller
         $order->load(['items.productSku', 'items.product']);
         return $order;
     }
+
 
 }

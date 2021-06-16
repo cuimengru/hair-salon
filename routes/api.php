@@ -134,8 +134,9 @@ Route::prefix('v1')
                     Route::get('service_projects', [ReserveInformationController::class, 'service']); //服务项目
                     Route::get('work/day', [ReserveInformationController::class, 'day']); //某个设计师工作时间
                     Route::get('reserve/designer', [ReserveInformationController::class, 'designerIndex']); //可预约的设计师列表
-                    Route::post('reserve/orders', [ReserveInformationController::class, 'store']);//提交预约订单
+                    Route::post('reserve/orders', [ReserveInformationController::class, 'store']);//创建预约订单
                     Route::patch('reserve/time/{id}', [ReserveInformationController::class, 'updateTime']);//修改预约时间
+                    Route::get('reserve/order/{id}', [ReserveInformationController::class, 'show']);//某个预约订单详情
 
                     Route::post('product/comment', [CommentController::class, 'productStore']);//商品订单评价
                     Route::post('reserve/comment', [CommentController::class, 'reserveStore']);//预约订单评价
@@ -143,7 +144,8 @@ Route::prefix('v1')
                     Route::post('product/order', [ProductOrderController::class, 'store']);//创建商品订单
                     Route::get('product/orderIndex', [ProductOrderController::class, 'index']);//全部订单
                     Route::get('product/order/{id}', [ProductOrderController::class, 'show']);//某个商品订单详情
-                    //Route::get('designer/followlist', [HelpCenterController::class, 'help']);//收藏设计师
+
+
 
                 });
             });

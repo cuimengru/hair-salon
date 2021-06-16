@@ -38,7 +38,7 @@ class ReserveOrderService
 
         $order->save();
 
-        $data['message'] = "创建成功！";
+        $data['message'] = $order;
         return response()->json($data, 200);
     }
 }

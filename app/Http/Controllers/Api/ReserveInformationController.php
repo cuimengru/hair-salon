@@ -215,4 +215,18 @@ class ReserveInformationController extends Controller
         return response()->json($data, 200);
     }
 
+    //某个预约订单详情
+    public function show($orderId,Request $request)
+    {
+        $user = $request->user();
+        $order = ReserveOrder::where('id','=',$orderId)
+            ->where('user_id','=',$user->id)
+            ->first();
+        $designer = Designer::findOrFail($order->designer_id);
+        $order['designer_name'] = $designer->name;
+        $order['designer_thumb'] = $designer->thumb_url;
+        $service_project = ServiceProject::findOrFail($order->service_project);
+        $order['service_project_name'] = $service_project->name;
+        return $order;
+    }
 }
