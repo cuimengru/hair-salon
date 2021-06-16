@@ -84,6 +84,8 @@ class ReserveInformationController extends Controller
                     $workTime['list'][$day]['time'] = Worktime::whereNotBetween('id',[$leaveTime[$day]['time'][0],$leaveTime[$day]['time'][1]])->select('id','time')->get();
                 }else{
                     $workTime['list'][$day]['time'] = [];
+                    $workTime['list'][$day]['day'] = $day;
+                    $workTime['list'][$day]['week'] = $week;
                 }
             }else{
                 $workTime['list'][$day]['time'] = Worktime::orderBy('order', 'asc')->select('id','time')->get();
@@ -130,13 +132,39 @@ class ReserveInformationController extends Controller
                 if($day_format < $day_now_format){
                     unset($workTime['list']);
                 }
+                //$workTime['list'][$day]['time1'] = [];
+                //$workTime['list'][$day]['time2'] = [];
+
+                /*if($workTime['list'][$day]['time']){
+                    foreach ($workTime['list'][$day]['time'] as $i=>$item){
+                        if($item->time <= '12:00'){
+                            $workTime['list'][$day]['time1'] = $item;
+                        }
+                    }
+                }*/
             }
 
         }
 
         $workTime['list'] = array_values($workTime['list']);
         //$workTime['choose'] = array_values($workTime['choose']);
-        return $workTime['list'];
+        foreach ($workTime['list'] as $i=>$item){
+            if(!empty($item['time'])){
+                foreach ($item['time'] as $m=>$times){
+                    if($times->time <= '12:00'){
+                        $workTime['list'][$i]['time1'][$m] = $times;
+                    }else{
+                        $workTime['list'][$i]['time2'][$m] = $times;
+                    }
+                }
+            }else{
+                $workTime['list'][$i]['time1'] = [];
+                $workTime['list'][$i]['time2'] = [];
+            }
+            unset($workTime['list'][$i]['time']);
+            $workTime['list'][$i]['time2'] = array_values($workTime['list'][$i]['time2']);
+        }
+        return $workTime;
     }
 
     //可预约的设计师列表
