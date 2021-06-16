@@ -47,13 +47,23 @@ class ReserveOrder extends Model
     ];
 
     protected $appends = [
-        'reserve_date',
+        'reserve_date','service_name'
     ];
 
     //预约时间
     public function getReserveDateAttribute(){
         if($this->date && $this->time){
             return ($this->date).' '.($this->time);
+        }else{
+            return '';
+        }
+    }
+
+    //预约项目
+    public function getServiceNameAttribute(){
+        if($this->service_project){
+           $service_project = ServiceProject::find($this->service_project);
+           return ($service_project->name).'&nbsp;&nbsp;&nbsp;&nbsp;  ¥'.($service_project->price);
         }else{
             return '';
         }

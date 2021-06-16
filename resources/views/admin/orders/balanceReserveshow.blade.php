@@ -11,25 +11,62 @@
     <h3>预约信息</h3>
     <table class="table table-bordered">
       <tbody>
-      <tr>
+      <tr style="color:#000000;font-weight: 900;font-size: 15px">
+        <td rowspan="20" style="line-height: 80px">用户昵称<br/>
+          @if(!empty($order->user_id))
+            {{ $order->user->nickname }}
+          @endif
+        </td>
         <td>发型师</td>
         <td>服务项目</td>
         <td>预约人数</td>
       </tr>
 
       <tr style="height: 50px">
-        <td>{{ $order->designer->name }}</td>
-        <td>{{ $order->service }}</td>
-        <td>{{$order->num}}</td>
-      </tr>
-      <tr>
-        <td>预约手机号:  &nbsp;&nbsp;&nbsp;&nbsp;{{$order->phone}}</td>
-      </tr>
-      <tr>
-        <td></td>
-      </tr>
-     {{-- @endforeach--}}
 
+        <td style="line-height: 50px">{{ $order->designer->name }}</td>
+        <td style="line-height: 50px">{{ $order->service_name}}</td>
+        <td style="line-height: 50px">{{$order->num}}</td>
+      </tr>
+      <tr style="color:#000000;font-weight: 900;font-size: 15px">
+        <td>预约手机号</td>
+        <td>预约时间</td>
+        <td>备注</td>
+      </tr>
+      <tr style="height: 80px">
+        <td style="line-height: 80px">{{$order->phone}}</td>
+        <td style="line-height: 80px">{{$order->reserve_date}}</td>
+        <td style="word-wrap:break-word;word-break:break-all;" width="450px">{{$order->remark}}</td>
+
+      </tr>
+      <tr style="color:#000000;font-weight: 900;font-size: 15px">
+        <td>订单总金额</td>
+        <td>支付方式</td>
+        <td>支付时间</td>
+      </tr>
+      <tr style="height: 50px">
+        <td style="line-height: 50px"> ¥{{$order->money}}</td>
+        <td style="line-height: 50px">
+          @if($order->payment_method == 1)余额支付@endif
+        </td>
+        <td style="line-height: 50px">{{$order->paid_at}}</td>
+      </tr>
+      <tr style="color:#000000;font-weight: 900;font-size: 15px">
+        <td>订单状态</td>
+        <td>订单类型</td>
+        {{--<td>支付时间</td>--}}
+      </tr>
+      <tr style="height: 50px">
+        <td style="line-height: 50px">
+          @if($order->status == 1)未支付@endif
+          @if($order->status == 3)已支付@endif
+        </td>
+        <td style="line-height: 50px">
+          @if($order->type == 1)线上订单@endif
+          @if($order->type == 2)线下订单@endif
+        </td>
+        {{--<td style="line-height: 50px">{{$order->paid_at}}</td>--}}
+      </tr>
       </tbody>
     </table>
   </div>

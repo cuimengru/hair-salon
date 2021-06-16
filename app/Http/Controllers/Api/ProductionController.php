@@ -139,7 +139,7 @@ class ProductionController extends Controller
         $production = $request->user()->favoriteProductions()->paginate(9);
         foreach ($production as $k=>$value){
             unset($production[$k]['many_images']);
-            unset($production[$k]['video']);
+            //unset($production[$k]['video']);
             unset($production[$k]['description']);
             unset($production[$k]['content']);
             unset($production[$k]['rating']);
@@ -161,7 +161,7 @@ class ProductionController extends Controller
             ])*/
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
-            ->select('id','title','thumb','type')
+            ->select('id','title','thumb','type','video')
             ->paginate(9);
         foreach ($productions as $p=>$product){
             //收藏作品

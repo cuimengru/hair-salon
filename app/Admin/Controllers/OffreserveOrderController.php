@@ -146,7 +146,7 @@ class OffreserveOrderController extends AdminController
         $form->select('time', __('时间点'))->options(Worktime::all()->pluck('time','time'));
         $form->number('num', __('预约人数'))->default(1);
         $form->mobile('phone', __('预约手机号'));
-        $form->text('remark', __('备注'));
+        $form->textarea('remark', __('备注'));
         $form->decimal('money', __('订单总金额'));
         $form->select('payment_method', __('支付方式'))->options([
             '1' => ReserveOrder::$paymentMethodMap['1'],
