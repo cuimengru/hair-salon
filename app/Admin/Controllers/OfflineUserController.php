@@ -107,13 +107,13 @@ class OfflineUserController extends AdminController
         $form->text('nickname', __('昵称'));
         if ($form->isEditing()) {
             $form->text('phone', __('手机号'));
-            $form->text('email', __('邮箱'));
-            $form->password('password', __('密码'))->help('不修改密码无需填写 默认密码 123456');
+            //$form->text('email', __('邮箱'));
+            //$form->password('password', __('密码'))->help('不修改密码无需填写 默认密码 123456');
         }
         if ($form->isCreating()) {
             $form->mobile('phone', __('手机号'))->required();
-            $form->text('email', __('邮箱'))->required();
-            $form->password('password', __('密码'))->default('123456')->required()->help('默认密码 123456');
+            //$form->text('email', __('邮箱'))->required();
+            $form->password('password', __('密码'))->default(bcrypt(123456))->required()->help('默认密码 123456');
         }
         $form->textarea('introduce', __('简介'));
         $form->text('integral', __('积分'))->default(0.00);
