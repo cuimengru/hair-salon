@@ -43,7 +43,7 @@ class ProductOrderController extends Controller
                 ->get();
             foreach ($orders as $k=>$value){
                 if($value['status'] == 1){
-                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('H:i:s');
+                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                 }else{
                     $orders[$k]['block_time'] = 0;
                 }
@@ -110,7 +110,7 @@ class ProductOrderController extends Controller
                 ->paginate(4);
             foreach ($orders as $k=>$value){
                 if($value['status'] == 1){
-                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('H:i:s');
+                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                 }else{
                     $orders[$k]['block_time'] = 0;
                 }
@@ -193,6 +193,11 @@ class ProductOrderController extends Controller
             $order_totals['current_page'] = $page;
             return $order_totals;
         }
+
+        //退款售后
+        /*if($request->order_type == 6){
+
+        }*/
 
     }
 
