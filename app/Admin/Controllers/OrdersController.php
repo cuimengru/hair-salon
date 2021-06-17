@@ -148,7 +148,7 @@ class OrdersController extends AdminController
         });
         $form->radioCard('refund_status', __('退款状态'))
             ->options([
-                '6'=>Order::$refundStatusMap['6'],
+                //'6'=>Order::$refundStatusMap['6'],
                 '7'=>Order::$refundStatusMap['7'],
                 '8'=>Order::$refundStatusMap['8'],
                 '9'=>Order::$refundStatusMap['9'],

@@ -27,6 +27,20 @@ class ReserveOrder extends Model
         //self::STATUS_UNREFUND => '退款失败',
     ];
 
+    const REFUND_STATUS_PENDING = 5;
+    const REFUND_STATUS_APPLIED = 6;
+    const REFUND_STATUS_PROCESSING = 7;
+    const REFUND_STATUS_SUCCESS = 8;
+    const REFUND_STATUS_FAILED = 9;
+
+    public static $refundStatusMap = [
+        self::REFUND_STATUS_PENDING    => '未退款',
+        self::REFUND_STATUS_APPLIED    => '已申请退款',
+        self::REFUND_STATUS_PROCESSING => '退款中',
+        self::REFUND_STATUS_SUCCESS    => '退款成功',
+        self::REFUND_STATUS_FAILED     => '退款失败',
+    ];
+
     const PAYMENT_METHOD_BANLANCE = 1;
     const PAYMENT_METHOD_ALIPAY = 2;
     const PAYMENT_METHOD_WECHAT = 3;
@@ -39,11 +53,12 @@ class ReserveOrder extends Model
 
     protected $fillable = [
         'reserve_id','user_id','service_project','time','num','phone','remark','designer_id','money','no',
-        'payment_method', 'status','reviewed','paid_at','payment_no','date','type'
+        'payment_method', 'status','reviewed','paid_at','payment_no','date','type','refund_status','closed'
     ];
 
     protected $casts = [
         'reviewed'  => 'boolean',
+        'closed'    => 'boolean',
     ];
 
     protected $appends = [

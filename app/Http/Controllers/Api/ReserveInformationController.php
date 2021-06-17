@@ -117,7 +117,6 @@ class ReserveInformationController extends Controller
                         }else{
                             $workTime['list'][$day]['time'][$k]['can_choose'] = 0;
                             $workTime['list'][$day]['time'][$k]['is_reserve'] = 0;
-
                         }
                     }else{
                         //$workTime['choose'][$day][$k]['can_choose'] = 0; //不能预约
@@ -129,9 +128,10 @@ class ReserveInformationController extends Controller
 
                 $workTime['list'][$day]['day'] = $day;
                 $workTime['list'][$day]['week'] = $week;
-                if($day_format < $day_now_format){
+                if($day_now_format > $day_format){
                     unset($workTime['list']);
                 }
+
                 //$workTime['list'][$day]['time1'] = [];
                 //$workTime['list'][$day]['time2'] = [];
 
@@ -163,7 +163,12 @@ class ReserveInformationController extends Controller
             }
             unset($workTime['list'][$i]['time']);
             $workTime['list'][$i]['time2'] = array_values($workTime['list'][$i]['time2']);
+
+            if($item['day'] < $day_now){
+                unset($workTime['list'][0]);
+            }
         }
+        $workTime['list'] = array_values($workTime['list']);
         return $workTime;
     }
 

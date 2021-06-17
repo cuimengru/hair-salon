@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Jobs\ReserveCloseOrder;
 use App\Models\ReserveInformation;
 use App\Models\ReserveOrder;
 use App\Models\User;
@@ -37,6 +38,8 @@ class ReserveOrderService
         ]);
 
         $order->save();
+
+        dispatch(new ReserveCloseOrder($order,config('order.order_ttl')));
 
         $data['message'] = $order;
         return response()->json($data, 200);

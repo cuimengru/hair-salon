@@ -43,7 +43,33 @@ class ProductOrderController extends Controller
                 ->get();
             foreach ($orders as $k=>$value){
                 if($value['status'] == 1){
-                    $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
+                    if($value['closed'] == false){
+                        $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
+                        $orders[$k]['status_text'] = "待付款";
+                        $orders[$k]['button_text'] = ['付款'];
+                    }else{
+                        $orders[$k]['block_time'] = 0;
+                        $orders[$k]['status_text'] = "交易关闭";
+                        $orders[$k]['button_text'] = [];
+                    }
+
+
+                }elseif ($value['status'] == 3){
+                    //待发货
+                    if($value['ship_status'] == 1){
+                        $orders[$k]['status_text'] = "待发货";
+                        //判断是否退款
+                        if($value['refund_status'] == 5){
+                            $orders[$k]['button_text'] = ['退款'];
+                        }elseif ($value['refund_status'] == 7){
+                            $orders[$k]['button_text'] = ['退款中','取消退款'];
+                        }elseif ($value['refund_status'] == 8){
+                            $orders[$k]['button_text'] = ['退款成功'];
+                            $orders[$k]['status_text'] = "交易关闭";
+                        }elseif ($value['refund_status'] == 9){
+
+                        }
+                    }
                 }else{
                     $orders[$k]['block_time'] = 0;
                 }
