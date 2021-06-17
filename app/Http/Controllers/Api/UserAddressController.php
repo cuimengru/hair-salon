@@ -25,6 +25,10 @@ class UserAddressController extends Controller
     {
         $user_address = UserAddress::findOrFail($request->id);
         $user = $request->user();
+        $address_status = UserAddress::where('user_id','=',$user->id)->where('status','=',1)->first();
+        if($address_status){
+            $address_status->update(['status'=>0]);
+        }
         if($user->id != $user_address->user_id){
             $data['message'] = "This action is unauthorized."; // 验证权限
             return response()->json($data, 500);

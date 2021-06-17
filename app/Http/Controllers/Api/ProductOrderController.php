@@ -67,9 +67,30 @@ class ProductOrderController extends Controller
                             $orders[$k]['button_text'] = ['退款成功'];
                             $orders[$k]['status_text'] = "交易关闭";
                         }elseif ($value['refund_status'] == 9){
-
+                            $orders[$k]['button_text'] = ['退款失败','查看原因','再次申请'];
+                        }
+                    }elseif ($value['ship_status'] == 2){ //已发货
+                        $orders[$k]['status_text'] = "待收货";
+                        //判断是否退款
+                        if($value['refund_status'] == 5){
+                            $orders[$k]['button_text'] = ['退款','查看物流','确认收货'];
+                        }elseif ($value['refund_status'] == 7){
+                            $orders[$k]['button_text'] = ['退款中','取消退款','查看物流'];
+                        }elseif ($value['refund_status'] == 8){
+                            $orders[$k]['button_text'] = ['退款成功'];
+                            $orders[$k]['status_text'] = "交易关闭";
+                        }elseif ($value['refund_status'] == 9){
+                            $orders[$k]['button_text'] = ['退款失败','查看原因','再次申请'];
+                        }
+                    }elseif ($value['ship_status'] == 3){ //已收货
+                        $orders[$k]['status_text'] = "交易成功";
+                        if($value['reviewed'] == false){
+                            $orders[$k]['button_text'] = ['评价'];
+                        }else{
+                            $orders[$k]['button_text'] = ['已评价'];
                         }
                     }
+
                 }else{
                     $orders[$k]['block_time'] = 0;
                 }
@@ -88,6 +109,27 @@ class ProductOrderController extends Controller
                 $service_project = ServiceProject::findOrFail($item['service_project']);
                 $reserveOrder[$i]['service_project_name'] = $service_project->name;
                 $reserveOrder[$i]['orderType'] = 2; //预约订单
+                if($item['status'] == 1){
+                    if($item['closed'] == false){
+                        $reserveOrder[$i]['block_time'] = $item['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
+                        $reserveOrder[$i]['status_text'] = "待付款";
+                        $reserveOrder[$i]['button_text'] = ['付款'];
+                    }else{
+                        $reserveOrder[$i]['block_time'] = 0;
+                        $reserveOrder[$i]['status_text'] = "交易关闭";
+                        $reserveOrder[$i]['button_text'] = [];
+                    }
+                }elseif ($item['status'] == 3){
+                    $reserveOrder[$i]['status_text'] = "预约成功";
+                    if($item['refund_status'] == 5){
+                        if($item['reviewed'] == false){
+                            $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                        }else{
+                            $reserveOrder[$i]['button_text'] = ['已评价'];
+                        }
+                    }
+
+                }
             }
 
             $order_total = array_merge($orders->toArray(),$reserveOrder->toArray());
