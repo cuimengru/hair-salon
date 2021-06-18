@@ -14,7 +14,7 @@ class AddBalanceToReserveOrdersTable extends Migration
     public function up()
     {
         Schema::table('reserve_orders', function (Blueprint $table) {
-            $table->decimal('balance', 10, 2)->comment('余额金额');
+            $table->decimal('balance', 10, 2)->nullable()->comment('余额金额');
         });
     }
 
