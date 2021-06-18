@@ -32,7 +32,7 @@ class PaymentController extends Controller
 
         }
         //余额支付
-        if($payment_method[0] == Order::PAYMENT_METHOD_BANLANCE){
+        if($payment_method == Order::PAYMENT_METHOD_BANLANCE){
             if($user){
                 //查询用户余额是否足够支付本订单
                 if($user->balance > 0 && $user->balance >= $order->total_amount){
@@ -50,14 +50,12 @@ class PaymentController extends Controller
                     ]);
                 }else{
                     //余额不足，使用支付宝支付剩下的
-                    $payment_total = count($payment_method);
-                    if($payment_total>=2){
-                        if($payment_method[1] == Order::PAYMENT_METHOD_ALIPAY){
+                        if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
                             return '111';
-                        }elseif ($payment_method[1] == Order::PAYMENT_METHOD_WECHAT){
+                        }elseif ($payment_method == Order::PAYMENT_METHOD_WECHAT){
                             return '222';
                         }
-                    }
+
 
                 }
             }
