@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\ReserveInformationController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\Api\DesignersController;
+use App\Http\Controllers\Api\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,6 +145,9 @@ Route::prefix('v1')
                     Route::post('product/order', [ProductOrderController::class, 'store']);//创建商品订单
                     Route::get('product/orderIndex', [ProductOrderController::class, 'index']);//全部订单
                     Route::get('product/order/{id}', [ProductOrderController::class, 'show']);//某个商品订单详情
+
+                    Route::get('product/pay/{id}', [PaymentController::class, 'productStore']);//提交商品订单支付
+                    Route::get('product/re/{id}', [PaymentController::class, 'productStore']);//提交商品订单支付
 
 
 

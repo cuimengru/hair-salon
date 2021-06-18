@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Jobs\ReserveCloseOrder;
 use App\Models\ReserveInformation;
 use App\Models\ReserveOrder;
+use App\Models\ServiceProject;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -38,6 +39,13 @@ class ReserveOrderService
         ]);
 
         $order->save();
+
+        $totalAmount = 0;
+
+        $service_project = ServiceProject::where('id','=',$request->service_project)->first();
+        $totalAmount += $request->num * $service_project->price;
+        //更新订单总金额
+        $order->update(['money' => $totalAmount]);
 
         dispatch(new ReserveCloseOrder($order,config('order.order_ttl')));
 

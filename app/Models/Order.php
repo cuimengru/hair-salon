@@ -36,7 +36,8 @@ class Order extends Model
     public static $refundStatusMap = [
         self::REFUND_STATUS_PENDING    => '未退款',
         self::REFUND_STATUS_APPLIED    => '已申请退款',
-        self::REFUND_STATUS_PROCESSING => '退款中',
+        self::REFUND_STATUS_PROCESSING => '已申请退款',
+        //self::REFUND_STATUS_PROCESSING => '退款中',
         self::REFUND_STATUS_SUCCESS    => '退款成功',
         self::REFUND_STATUS_FAILED     => '退款失败',
     ];
@@ -58,7 +59,7 @@ class Order extends Model
 
     protected $fillable = [
         'no','address','total_amount','remark','paid_at','payment_method','payment_no','status','refund_no',
-        'closed','reviewed','ship_status','ship_data','extra','refund_status'
+        'closed','reviewed','ship_status','ship_data','extra','refund_status','balance'
     ];
     protected $dates = [
         'paid_at',

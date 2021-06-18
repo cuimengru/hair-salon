@@ -136,7 +136,7 @@ class OrdersController extends AdminController
                 '2'=>Order::$statusMap['2'],
                 '3'=>Order::$statusMap['3'],
             ])->readonly();
-        $form->radioCard('status', __('物流状态'))
+        $form->radioCard('ship_status', __('物流状态'))
             ->options([
                 '1'=>Order::$shipStatusMap['1'],
                 '2'=>Order::$shipStatusMap['2'],

@@ -165,11 +165,11 @@ class ProductController extends Controller
                     ]);
                 }
             }
-            $product['count']= CartItem::where('user_id','=',$request->user_id)->count();
+            $product['cart_count']= CartItem::where('user_id','=',$request->user_id)->count();
 
         }else{
             $product['favor_product'] = 0; //未收藏
-            $product['count'] = 0;
+            $product['cart_count'] = 0;
         }
 
         return $product;

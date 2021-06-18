@@ -232,6 +232,27 @@ class ReserveInformationController extends Controller
         $order['designer_thumb'] = $designer->thumb_url;
         $service_project = ServiceProject::findOrFail($order->service_project);
         $order['service_project_name'] = $service_project->name;
+        if($order['status'] == 1){
+            if($order['closed'] == false){
+                $order['block_time'] = $order['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
+                $order['status_text'] = "待付款";
+                $order['button_text'] = ['付款'];
+            }else{
+                $order['block_time'] = 0;
+                $order['status_text'] = "交易关闭";
+                $order['button_text'] = [];
+            }
+        }elseif ($order['status'] == 3){
+            $order['status_text'] = "预约成功";
+            if($order['refund_status'] == 5){
+                if($order['reviewed'] == false){
+                    $order['button_text'] = ['修改时间','评价'];
+                }else{
+                    $order['button_text'] = ['已评价'];
+                }
+            }
+
+        }
         return $order;
     }
 }
