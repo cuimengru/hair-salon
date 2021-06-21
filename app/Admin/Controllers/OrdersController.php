@@ -154,14 +154,14 @@ class OrdersController extends AdminController
                 '9'=>Order::$refundStatusMap['9'],
             ]);
         $form->embeds('extra','退款理由', function ($form) {
-            $form->text('reason',__('理由'))->readonly();
+            $form->text('refund_reason',__('理由'))->readonly();
         });
         $form->radioCard('refund_status', __('是否同意退款'))
             ->options([
                 '8'=>'同意',
                 '9'=>'不同意',
             ]);
-        $form->embeds('extra','拒绝退款', function ($form) {
+        $form->embeds('extra2','拒绝退款', function ($form) {
             $form->text('disagree_reason',__('理由'));
         });
         $form->saved(function (Form $form) {

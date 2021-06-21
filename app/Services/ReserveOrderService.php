@@ -36,6 +36,7 @@ class ReserveOrderService
             'remark' => $request->remark,
             'status'=> 1 ,
             'type'=> 1, //线上
+            'refund_status'=>5,
         ]);
 
         $order->save();

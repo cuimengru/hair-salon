@@ -122,6 +122,7 @@ class ProductOrderController extends Controller
                 }elseif ($item['status'] == 3){
                     $reserveOrder[$i]['status_text'] = "预约成功";
                     if($item['refund_status'] == 5){
+                        $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         if($item['reviewed'] == false){
                             $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         }else{
@@ -453,6 +454,57 @@ class ProductOrderController extends Controller
         return $order;
     }
 
+    //商品退款
+    public function refund($productId, Request $request)
+    {
+        $request->validate([
+            'many_images' => 'array',
+            //'video' => 'string'.$video,
+        ]);
+        $user = $request->user();
+        $order = Order::where('id','=',$productId)->where('user_id','=',$user->id)->first();
+        if(!$order){
+            $data['message'] = "Without permission!";
+            return response()->json($data, 403);
+        }
+        // 判断订单是否已付款
+        if (!$order->paid_at) {
+            $data['message'] = "该订单未支付，不可退款!";
+            return response()->json($data, 403);
+        }
 
+        //判断订单退款状态是否正确
+        if($order->refund_status !== Order::REFUND_STATUS_PENDING){
+            $data['message'] = "该订单已经申请过退款，请勿重复申请!";
+            return response()->json($data, 403);
+        }
+
+        // 将用户输入的退款理由放到订单的 extra 字段中
+        $extra                  = $order->extra ?: [];
+        $extra['refund_reason'] = $request->reason;
+        //合成数组
+        $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
+
+        if (!empty($many_images)) {
+            foreach ($many_images as $k=>$value){
+                if($value){
+                    $image = upload_images($value, 'order', $user->id);
+                    $attributes['many_images'][$k] = $image->path;
+                }else{
+                    $attributes['many_images'][$k] = null;
+                }
+
+            }
+            $extra['many_images'] = array_filter($attributes['many_images']);
+            $order->update([
+                'refund_status' => Order::REFUND_STATUS_PROCESSING,
+                'extra2'         => $extra,
+            ]);
+
+
+        }
+
+        return $order;
+    }
 
 }
