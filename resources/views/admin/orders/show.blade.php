@@ -49,6 +49,7 @@
         <td>发货状态：</td>
         <td>{{ \App\Models\Order::$shipStatusMap[$order->ship_status] }}</td>
       </tr>
+
       <!-- 订单发货开始 -->
       <!-- 如果订单未发货，展示发货表单 -->
       {{--@if($order->ship_status === \App\Models\Order::SHIP_STATUS_PENDING)
@@ -105,5 +106,13 @@
       @endif--}}
       </tbody>
     </table>
+    <div>
+      <h4>退款图片:</h4>
+      @if($order->extra['many_images'])
+        @foreach($order->extra['many_images'] as $image)
+          <img src="https://hair.test/storage/{{$image}}" width="120px" height="120px" style="margin-left: 15px">
+        @endforeach
+      @endif
+    </div>
   </div>
 </div>

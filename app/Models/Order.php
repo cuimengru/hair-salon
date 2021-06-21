@@ -114,7 +114,7 @@ class Order extends Model
     {
         $this->attributes['address'] = json_encode(array_values($value));
     }
-    public function getShipDataAttribute($value)
+    /*public function getShipDataAttribute($value)
     {
         return array_values(json_decode($value, true) ?: []);
     }
@@ -122,8 +122,8 @@ class Order extends Model
     public function setShipDataAttribute($value)
     {
         $this->attributes['ship_data'] = json_encode(array_values($value));
-    }
-    public function getExtraAttribute($value)
+    }*/
+    /*public function getExtraAttribute($value)
     {
         return array_values(json_decode($value, true) ?: []);
     }
@@ -131,7 +131,8 @@ class Order extends Model
     public function setExtraAttribute($value)
     {
         $this->attributes['extra'] = json_encode(array_values($value));
-    }
+    }*/
+
 
     public static function findAvailableNo()
     {

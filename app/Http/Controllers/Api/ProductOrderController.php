@@ -497,7 +497,7 @@ class ProductOrderController extends Controller
             $extra['many_images'] = array_filter($attributes['many_images']);
             $order->update([
                 'refund_status' => Order::REFUND_STATUS_PROCESSING,
-                'extra2'         => $extra,
+                'extra'         => $extra,
             ]);
 
 
