@@ -62,6 +62,11 @@ class ReserveOrderController extends AdminController
             $statusMap = ReserveOrder::$statusMap[$value];
             return "<span class='label label-success'>{$statusMap}</span>";
         });
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '未结束', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '已结束', 'color' => 'primary'],
+        ];
+        $grid->column('ship_status', __('订单是否结束'))->switch($states1)->help('发型师做完结束这个订单内容');
         $grid->column('created_at', __('创建时间'));
         $grid->model()->orderBy('id', 'desc');
         // 禁用创建按钮，后台不需要创建订单
@@ -110,6 +115,7 @@ class ReserveOrderController extends AdminController
         $show->field('payment_method', __('支付方式'))->using(['1' => '余额', '2' => '支付宝','3'=>'微信']);
         $show->field('paid_at', __('支付时间'));
         $show->field('status', __('订单状态'))->using(['1' => '未支付', '2' => '支付中','3'=>'已支付','4'=>'取消','5'=>'退款成功']);
+        $show->field('ship_status', __('订单是否结束'))->using(['1' => '已结束', '0' => '未结束']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
         $show->panel()
@@ -137,6 +143,11 @@ class ReserveOrderController extends AdminController
             'off' => ['value' => 5, 'text' => '退款', 'color' => 'primary'],
         ];*/
         //$form->switch('status', __('是否退款'))->states($states1);
+        $states1 = [
+            'on'  => ['value' => 0, 'text' => '未结束', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '已结束', 'color' => 'primary'],
+        ];
+        $form->switch('ship_status', __('订单是否结束'))->states($states1);
         $form->tools(function (Form\Tools $tools) {
             // Disable `Delete` btn.
             $tools->disableDelete();

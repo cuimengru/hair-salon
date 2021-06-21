@@ -111,7 +111,7 @@ class ProductsController extends AdminController
         $form->editor('description', __('商品描述'))->rules('required');
         $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('1')->required();
         $form->text('rating', __('评分'))->default(5.0);
-        $form->decimal('price', __('商品现价'))->default(0.00);
+        //$form->decimal('price', __('价格'))->default(0.00)->readonly();
         $form->decimal('original_price', __('商品原价'))->default(0.00);
         $form->radio('package_mail', '是否包邮')->options(['1' => '是', '0'=> '否'])->default(1)->required();
         $form->decimal('postage','邮费')->default(0)->required();

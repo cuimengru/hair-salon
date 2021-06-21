@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\OrderPaid;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\ReserveOrder;
@@ -29,9 +30,7 @@ class PaymentController extends Controller
         }
 
         $payment_method = $request->payment_method; //支付方式
-        foreach ($payment_method as $k=>$value){
 
-        }
         //余额支付
         if($payment_method == Order::PAYMENT_METHOD_BANLANCE){
             if($user){
@@ -49,6 +48,7 @@ class PaymentController extends Controller
                         'payment_method' => $payment_id,
                         'paid_at'=>Carbon::now('Asia/shanghai'),
                     ]);
+                    $this->afterPaid($order);
                 }else{
                     //余额不足，使用支付宝支付剩下的
                         if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
@@ -114,5 +114,10 @@ class PaymentController extends Controller
             }
         }
         return $order;
+    }
+
+    protected function afterPaid(Order $order)
+    {
+        event(new OrderPaid($order));
     }
 }
