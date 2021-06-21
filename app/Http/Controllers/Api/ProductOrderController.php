@@ -122,7 +122,6 @@ class ProductOrderController extends Controller
                 }elseif ($item['status'] == 3){
                     $reserveOrder[$i]['status_text'] = "预约成功";
                     if($item['refund_status'] == 5){
-                        $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         if($item['reviewed'] == false){
                             $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         }else{
