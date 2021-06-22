@@ -123,7 +123,14 @@ class ProductOrderController extends Controller
                     $reserveOrder[$i]['status_text'] = "预约成功";
                     if($item['refund_status'] == 5){
                         if($item['reviewed'] == false){
-                            $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                            $now = Carbon::now('Asia/shanghai');
+                            $day_now_time = $now->format('Y-m-d H:s');
+                            if( $item['reserve_date'] <= $day_now_time || $item['ship_status'] == 1){
+                                $reserveOrder[$i]['button_text'] = ['评价'];
+                            }else{
+                                $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                            }
+                            //$reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         }else{
                             $reserveOrder[$i]['button_text'] = ['已评价'];
                         }
@@ -175,7 +182,14 @@ class ProductOrderController extends Controller
                     $reserveOrder[$i]['status_text'] = "预约成功";
                     if($item['refund_status'] == 5){
                         if($item['reviewed'] == false){
-                            $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                            $now = Carbon::now('Asia/shanghai');
+                            $day_now_time = $now->format('Y-m-d H:s');
+                            if( $item['reserve_date'] <= $day_now_time || $item['ship_status'] == 1){
+                                $reserveOrder[$i]['button_text'] = ['评价'];
+                            }else{
+                                $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                            }
+
                         }else{
                             $reserveOrder[$i]['button_text'] = ['已评价'];
                         }
@@ -303,7 +317,14 @@ class ProductOrderController extends Controller
                     $reserveOrder[$i]['status_text'] = "预约成功";
                     if($item['refund_status'] == 5){
                         if($item['reviewed'] == false){
-                            $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                            $now = Carbon::now('Asia/shanghai');
+                            $day_now_time = $now->format('Y-m-d H:s');
+                            if( $item['reserve_date'] <= $day_now_time || $item['ship_status'] == 1){
+                                $reserveOrder[$i]['button_text'] = ['评价'];
+                            }else{
+                                $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                            }
+                            //$reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         }else{
                             $reserveOrder[$i]['button_text'] = ['已评价'];
                         }

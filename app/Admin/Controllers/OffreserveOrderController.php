@@ -74,7 +74,7 @@ class OffreserveOrderController extends AdminController
         //$grid->disableCreateButton();
         $grid->actions(function ($actions) {
             // 禁用删除和编辑按钮
-            $actions->disableDelete();
+            //$actions->disableDelete();
             //$actions->disableEdit();
         });
         $grid->tools(function ($tools) {

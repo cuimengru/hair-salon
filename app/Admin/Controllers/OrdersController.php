@@ -173,7 +173,9 @@ class OrdersController extends AdminController
                 $user->save();
             }
         });
-
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableDelete();
+        });
         return $form;
     }
 }

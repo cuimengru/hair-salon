@@ -114,6 +114,7 @@ class ReserveInformationController extends Controller
                         //$workTime['list'][$day][$k]['is_reserve'] = 1;//该时间点能预约
                         if($day_now_time <= $time){
                             $workTime['list'][$day]['time'][$k]['can_choose'] = 1;
+                            $workTime['list'][$day]['time'][$k]['is_reserve'] = 1;
                         }else{
                             $workTime['list'][$day]['time'][$k]['can_choose'] = 0;
                             $workTime['list'][$day]['time'][$k]['is_reserve'] = 0;
