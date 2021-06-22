@@ -210,7 +210,7 @@ class ProductOrderController extends Controller
                 ->where('status','=',1)
                 ->orderBy('paid_at','desc')
                 ->orderBy('created_at', 'desc')
-                ->paginate(4);
+                ->get();
             foreach ($orders as $k=>$value){
                 if($value['status'] == 1){
                     if($value['closed'] == false){
@@ -226,7 +226,44 @@ class ProductOrderController extends Controller
                 $orders[$k]['orderType'] = 1; //商品订单
             }
 
-            return $orders;
+            $reserveOrder = ReserveOrder::where('user_id','=',$request->user()->id)
+                ->where('type','=',1)
+                ->where('status','=',1)
+                ->orderBy('paid_at','desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            foreach ($reserveOrder as $i=>$item){
+                $designer = Designer::findOrFail($item['designer_id']);
+                $reserveOrder[$i]['designer_name'] = $designer->name;
+                $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
+                $service_project = ServiceProject::findOrFail($item['service_project']);
+                $reserveOrder[$i]['service_project_name'] = $service_project->name;
+                $reserveOrder[$i]['orderType'] = 2; //预约订单
+                if($item['status'] == 1){
+                    if($item['closed'] == false){
+                        $reserveOrder[$i]['block_time'] = $item['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
+                        $reserveOrder[$i]['status_text'] = "待付款";
+                        $reserveOrder[$i]['button_text'] = ['付款'];
+                    }else{
+                        $reserveOrder[$i]['block_time'] = 0;
+                        $reserveOrder[$i]['status_text'] = "交易关闭";
+                        $reserveOrder[$i]['button_text'] = [];
+                    }
+                }
+            }
+
+            $order_total = array_merge($orders->toArray(),$reserveOrder->toArray());
+            $order_total1 = array_column($order_total,'created_at');
+            array_multisort($order_total1,SORT_DESC,$order_total);
+
+            $count = count($order_total); //总条数
+            $page = $request->page;
+            $pagesize = 4;
+            $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
+            $order_totals['data'] = array_slice($order_total,$start,$pagesize);
+            $order_totals['total'] = $count;
+            $order_totals['current_page'] = $page;
+            return $order_totals;
         }
 
         //待收货订单
@@ -527,4 +564,27 @@ class ProductOrderController extends Controller
         return $order;
     }
 
+    //确认收货
+    public function shipOrder($orderId, Request $request)
+    {
+        $user = $request->user();
+
+        $order = Order::where('user_id','=',$user->id)
+            ->where('id','=',$orderId)
+            ->first();
+
+        if(!$order){
+            $data['message'] = "该订单不存在!";
+            return response()->json($data, 403);
+        }
+        if($order->ship_status == 3){
+            $data['message'] = "该订单已经确认过收货，无需重复!";
+            return response()->json($data, 403);
+        }
+        $order->update(['ship_status' => 3]);
+
+        $data['message'] = "确认收货成功!";
+        return response()->json($data, 200);
+        //return $order;
+    }
 }
