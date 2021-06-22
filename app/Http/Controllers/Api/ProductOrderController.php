@@ -495,7 +495,7 @@ class ProductOrderController extends Controller
                 $order['status_text'] = "待收货";
                 //判断是否退款
                 if($order['refund_status'] == 5){
-                    $order['button_text'] = ['退款','确认收货'];
+                    $order['button_text'] = ['退款','查看物流','确认收货'];
                 }elseif ($order['refund_status'] == 7){
                     $order['button_text'] = ['退款中','取消退款'];
                 }elseif ($order['refund_status'] == 8){
