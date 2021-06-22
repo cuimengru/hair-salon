@@ -634,4 +634,72 @@ class ProductOrderController extends Controller
         $data['message'] = "取消退款成功!";
         return response()->json($data, 200);
     }
+
+    //查看物流
+    public function logistics(Request $request)
+    {
+        $express_no = $request->express_no; //物流单号
+        $express_company = $request->express_company; //物流公司
+        error_reporting(E_ALL || ~E_NOTICE);
+        $host = "https://wdexpress.market.alicloudapi.com";
+        $path = "/gxali";
+        $method = "GET";
+        $appcode = "8a7010f3210e423898353b477c243d8c";//开通服务后 买家中心-查看AppCode
+        $headers = array();
+        array_push($headers, "Authorization:APPCODE " . $appcode);
+        $querys = "n=".$express_no."&t=".$express_company;
+
+        $bodys = "";
+        $url = $host . $path . "?" . $querys;
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_FAILONERROR, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, true);
+
+        if (1 == strpos("$" . $host, "https://")) {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        }
+        $out_put = curl_exec($curl);
+
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        list($header, $body) = explode("\r\n\r\n", $out_put, 2);
+        if ($httpCode == 200) {
+            //print("正常请求计费(其他均不计费)<br>");
+            //print($body);
+            return $body;
+        } else {
+            if ($httpCode == 400 && strpos($header, "Invalid Param Location") !== false) {
+                print("参数错误");
+            } elseif ($httpCode == 400 && strpos($header, "Invalid AppCode") !== false) {
+                print("AppCode错误");
+            } elseif ($httpCode == 400 && strpos($header, "Invalid Url") !== false) {
+                print("请求的 Method、Path 或者环境错误");
+            } elseif ($httpCode == 403 && strpos($header, "Unauthorized") !== false) {
+                print("服务未被授权（或URL和Path不正确）");
+            } elseif ($httpCode == 403 && strpos($header, "Quota Exhausted") !== false) {
+                print("套餐包次数用完");
+            } elseif ($httpCode == 500) {
+                print("API网关错误");
+            } elseif ($httpCode == 0) {
+                print("URL错误");
+            } else {
+                print("参数名错误 或 其他错误");
+                print($httpCode);
+                $headers = explode("\r\n", $header);
+                $headList = array();
+                foreach ($headers as $head) {
+                    $value = explode(':', $head);
+                    $headList[$value[0]] = $value[1];
+                }
+                print($headList['x-ca-error-message']);
+            }
+        }
+        //return $querys;
+    }
 }

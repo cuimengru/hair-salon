@@ -153,6 +153,7 @@ Route::prefix('v1')
 
                     Route::post('product/refund/{id}', [ProductOrderController::class, 'refund']);//某个商品订单退款
                     Route::get('balance/list', [PaymentController::class, 'balance']);//我的余额管理
+                    Route::get('product/logistics', [ProductOrderController::class, 'logistics']);//查看物流
 
                 });
             });
