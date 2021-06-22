@@ -67,7 +67,8 @@ class ProductOrderController extends Controller
                             $orders[$k]['button_text'] = ['退款成功'];
                             $orders[$k]['status_text'] = "交易关闭";
                         }elseif ($value['refund_status'] == 9){
-                            $orders[$k]['button_text'] = ['退款失败','查看原因','再次申请'];
+                            $orders[$k]['status_text'] = "退款失败";
+                            $orders[$k]['button_text'] = ['退款失败','再次申请'];
                         }
                     }elseif ($value['ship_status'] == 2){ //已发货
                         $orders[$k]['status_text'] = "待收货";
@@ -75,12 +76,13 @@ class ProductOrderController extends Controller
                         if($value['refund_status'] == 5){
                             $orders[$k]['button_text'] = ['退款','查看物流','确认收货'];
                         }elseif ($value['refund_status'] == 7){
-                            $orders[$k]['button_text'] = ['退款中','取消退款','查看物流'];
+                            $orders[$k]['button_text'] = ['退款中','取消退款'];
                         }elseif ($value['refund_status'] == 8){
                             $orders[$k]['button_text'] = ['退款成功'];
                             $orders[$k]['status_text'] = "交易关闭";
                         }elseif ($value['refund_status'] == 9){
-                            $orders[$k]['button_text'] = ['退款失败','查看原因','再次申请'];
+                            $orders[$k]['status_text'] = "退款失败";
+                            $orders[$k]['button_text'] = ['退款失败','再次申请'];
                         }
                     }elseif ($value['ship_status'] == 3){ //已收货
                         $orders[$k]['status_text'] = "交易成功";
@@ -208,6 +210,7 @@ class ProductOrderController extends Controller
                 ->with(['items.product','items.productSku'])
                 ->where('user_id', $request->user()->id)
                 ->where('status','=',1)
+                ->where('closed','=',false)
                 ->orderBy('paid_at','desc')
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -229,6 +232,7 @@ class ProductOrderController extends Controller
             $reserveOrder = ReserveOrder::where('user_id','=',$request->user()->id)
                 ->where('type','=',1)
                 ->where('status','=',1)
+                ->where('closed','=',false)
                 ->orderBy('paid_at','desc')
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -290,7 +294,8 @@ class ProductOrderController extends Controller
                         $orders[$k]['button_text'] = ['退款成功'];
                         $orders[$k]['status_text'] = "交易关闭";
                     }elseif ($value['refund_status'] == 9){
-                        $orders[$k]['button_text'] = ['退款失败','查看原因','再次申请'];
+                        $orders[$k]['status_text'] = "退款失败";
+                        $orders[$k]['button_text'] = ['退款失败','再次申请'];
                     }
                 }elseif ($value['ship_status'] == 2){ //已发货
                     $orders[$k]['status_text'] = "待收货";
@@ -298,12 +303,13 @@ class ProductOrderController extends Controller
                     if($value['refund_status'] == 5){
                         $orders[$k]['button_text'] = ['退款','查看物流','确认收货'];
                     }elseif ($value['refund_status'] == 7){
-                        $orders[$k]['button_text'] = ['退款中','取消退款','查看物流'];
+                        $orders[$k]['button_text'] = ['退款中','取消退款'];
                     }elseif ($value['refund_status'] == 8){
                         $orders[$k]['button_text'] = ['退款成功'];
                         $orders[$k]['status_text'] = "交易关闭";
                     }elseif ($value['refund_status'] == 9){
-                        $orders[$k]['button_text'] = ['退款失败','查看原因','再次申请'];
+                        $orders[$k]['status_text'] = "退款失败";
+                        $orders[$k]['button_text'] = ['退款失败','再次申请'];
                     }
                 }
                 $orders[$k]['orderType'] = 1; //商品订单
@@ -340,6 +346,7 @@ class ProductOrderController extends Controller
                 ->where('type','=',1)
                 ->where('reviewed','=',0)
                 ->where('status','=',3)
+                ->orwhere('ship_status','=',1)
                 ->orderBy('paid_at','desc')
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -398,13 +405,13 @@ class ProductOrderController extends Controller
             foreach ($orders as $k=>$value){
                 if ($value['refund_status'] == 7){
                     $orders[$k]['status_text'] = "待商家处理";
-                    $orders[$k]['button_text'] = ['退款中','取消退款','查看物流'];
+                    $orders[$k]['button_text'] = ['退款中','取消退款'];
                 }elseif ($value['refund_status'] == 8){
                     $orders[$k]['button_text'] = ['退款成功'];
                     $orders[$k]['status_text'] = "交易关闭";
                 }elseif ($value['refund_status'] == 9){
-                    $orders[$k]['status_text'] = "待商家处理";
-                    $orders[$k]['button_text'] = ['退款失败','查看原因','再次申请'];
+                    $orders[$k]['status_text'] = "退款失败";
+                    $orders[$k]['button_text'] = ['退款失败','再次申请'];
                 }
                 $orders[$k]['orderType'] = 1; //商品订单
             }
@@ -481,20 +488,22 @@ class ProductOrderController extends Controller
                     $order['button_text'] = ['退款成功'];
                     $order['status_text'] = "交易关闭";
                 }elseif ($order['refund_status'] == 9){
-                    $order['button_text'] = ['退款失败','查看原因','再次申请'];
+                    $order['status_text'] = "退款失败";
+                    $order['button_text'] = ['退款失败','再次申请'];
                 }
             }elseif ($order['ship_status'] == 2){ //已发货
                 $order['status_text'] = "待收货";
                 //判断是否退款
                 if($order['refund_status'] == 5){
-                    $order['button_text'] = ['退款','查看物流','确认收货'];
+                    $order['button_text'] = ['退款','确认收货'];
                 }elseif ($order['refund_status'] == 7){
-                    $order['button_text'] = ['退款中','取消退款','查看物流'];
+                    $order['button_text'] = ['退款中','取消退款'];
                 }elseif ($order['refund_status'] == 8){
                     $order['button_text'] = ['退款成功'];
                     $order['status_text'] = "交易关闭";
                 }elseif ($order['refund_status'] == 9){
-                    $order['button_text'] = ['退款失败','查看原因','再次申请'];
+                    $order['status_text'] = "退款失败";
+                    $order['button_text'] = ['退款失败','再次申请'];
                 }
             }elseif ($order['ship_status'] == 3){ //已收货
                 $order['status_text'] = "交易成功";
@@ -531,8 +540,12 @@ class ProductOrderController extends Controller
         }
 
         //判断订单退款状态是否正确
-        if($order->refund_status !== Order::REFUND_STATUS_PENDING){
+        if($order->refund_status == Order::REFUND_STATUS_PROCESSING){
             $data['message'] = "该订单已经申请过退款，请勿重复申请!";
+            return response()->json($data, 403);
+        }
+        if($order->refund_status == Order::REFUND_STATUS_SUCCESS){
+            $data['message'] = "该订单已经退款成功，请勿重复申请!";
             return response()->json($data, 403);
         }
 
@@ -557,7 +570,6 @@ class ProductOrderController extends Controller
                 'refund_status' => Order::REFUND_STATUS_PROCESSING,
                 'extra'         => $extra,
             ]);
-
 
         }
 
