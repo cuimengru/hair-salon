@@ -247,7 +247,13 @@ class ReserveInformationController extends Controller
             $order['status_text'] = "预约成功";
             if($order['refund_status'] == 5){
                 if($order['reviewed'] == false){
-                    $order['button_text'] = ['修改时间','评价'];
+                    $now = Carbon::now('Asia/shanghai');
+                    $day_now_time = $now->format('Y-m-d H:s');
+                    if( $order['reserve_date'] <= $day_now_time || $order['ship_status'] == 1){
+                        $order['button_text'] = ['评价'];
+                    }else{
+                        $order['button_text'] = ['修改时间','评价'];
+                    }
                 }else{
                     $order['button_text'] = ['已评价'];
                 }
