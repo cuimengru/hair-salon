@@ -252,7 +252,7 @@ class ReserveInformationController extends Controller
                     if( $order['reserve_date'] <= $day_now_time || $order['ship_status'] == 1){
                         $order['button_text'] = ['评价'];
                     }else{
-                        $order['button_text'] = ['修改时间','评价'];
+                        $order['button_text'] = ['修改时间'];
                     }
                 }else{
                     $order['button_text'] = ['已评价'];

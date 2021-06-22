@@ -148,6 +148,13 @@ class ReserveOrderController extends AdminController
             'off' => ['value' => 1, 'text' => '已结束', 'color' => 'primary'],
         ];
         $form->switch('ship_status', __('订单是否结束'))->states($states1);
+        $form->radioCard('refund_status', __('退款状态'))
+            ->options([
+                //'6'=>Order::$refundStatusMap['6'],
+                '5'=>ReserveOrder::$refundStatusMap['5'],
+                '8'=>ReserveOrder::$refundStatusMap['8'],
+                //'9'=>ReserveOrder::$refundStatusMap['9'],
+            ])->default(5)->help('这只是一个退款状态，退款金额需要店家自己退给用户');
         $form->tools(function (Form\Tools $tools) {
             // Disable `Delete` btn.
             $tools->disableDelete();

@@ -128,7 +128,7 @@ class ProductOrderController extends Controller
                             if( $item['reserve_date'] <= $day_now_time || $item['ship_status'] == 1){
                                 $reserveOrder[$i]['button_text'] = ['评价'];
                             }else{
-                                $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                                $reserveOrder[$i]['button_text'] = ['修改时间'];
                             }
                             //$reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         }else{
@@ -187,7 +187,7 @@ class ProductOrderController extends Controller
                             if( $item['reserve_date'] <= $day_now_time || $item['ship_status'] == 1){
                                 $reserveOrder[$i]['button_text'] = ['评价'];
                             }else{
-                                $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                                $reserveOrder[$i]['button_text'] = ['修改时间'];
                             }
 
                         }else{
@@ -322,7 +322,7 @@ class ProductOrderController extends Controller
                             if( $item['reserve_date'] <= $day_now_time || $item['ship_status'] == 1){
                                 $reserveOrder[$i]['button_text'] = ['评价'];
                             }else{
-                                $reserveOrder[$i]['button_text'] = ['修改时间','评价'];
+                                $reserveOrder[$i]['button_text'] = ['修改时间'];
                             }
                             //$reserveOrder[$i]['button_text'] = ['修改时间','评价'];
                         }else{

@@ -152,7 +152,7 @@ class OrdersController extends AdminController
                 '7'=>Order::$refundStatusMap['7'],
                 '8'=>Order::$refundStatusMap['8'],
                 '9'=>Order::$refundStatusMap['9'],
-            ]);
+            ])->help('直接退款到用户余额');
         $form->embeds('extra','退款理由', function ($form) {
             $form->text('refund_reason',__('理由'))->readOnly()->help('退款图片请查看订单详情');
         });

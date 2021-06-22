@@ -120,4 +120,22 @@ class PaymentController extends Controller
     {
         event(new OrderPaid($order));
     }
+
+    //我的余额管理
+    public function balance(Request $request)
+    {
+        $user = $request->user();
+
+        //商品订单
+        $products = Order::where('user_id','=',$user->id)
+            ->with(['items.product'])
+            ->where('payment_method','=','1')
+            ->orwhere('refund_status','=',8)
+            ->get();
+        foreach ($products as $k=>$value){
+
+        }
+        return $products;
+    }
+
 }

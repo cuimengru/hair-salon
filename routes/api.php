@@ -150,6 +150,7 @@ Route::prefix('v1')
                     Route::get('reserve/pay/{id}', [PaymentController::class, 'reserveStore']);//提交预约订单支付
 
                     Route::post('product/refund/{id}', [ProductOrderController::class, 'refund']);//某个商品订单退款
+                    Route::get('balance/list', [PaymentController::class, 'balance']);//我的余额管理
 
                 });
             });
