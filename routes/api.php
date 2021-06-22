@@ -146,6 +146,7 @@ Route::prefix('v1')
                     Route::get('product/orderIndex', [ProductOrderController::class, 'index']);//全部订单
                     Route::get('product/order/{id}', [ProductOrderController::class, 'show']);//某个商品订单详情
                     Route::get('product/shipOrder/{id}', [ProductOrderController::class, 'shipOrder']);//某个商品订单确认收货
+                    Route::get('product/refundOrder/{id}', [ProductOrderController::class, 'refundOrder']);//某个商品订单取消退款
 
                     Route::get('product/pay/{id}', [PaymentController::class, 'productStore']);//提交商品订单支付
                     Route::get('reserve/pay/{id}', [PaymentController::class, 'reserveStore']);//提交预约订单支付

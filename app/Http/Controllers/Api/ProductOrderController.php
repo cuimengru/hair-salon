@@ -551,6 +551,11 @@ class ProductOrderController extends Controller
 
         // 将用户输入的退款理由放到订单的 extra 字段中
         $extra                  = $order->extra ?: [];
+        //清空拒绝退款的理由
+        if($order->refund_status == Order::REFUND_STATUS_FAILED){
+            $extra['disagree_reason'] = null;
+        }
+
         $extra['refund_reason'] = $request->reason;
         //合成数组
         $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
@@ -598,5 +603,35 @@ class ProductOrderController extends Controller
         $data['message'] = "确认收货成功!";
         return response()->json($data, 200);
         //return $order;
+    }
+
+    //取消退款
+    public function refundOrder($orderId, Request $request)
+    {
+        $user = $request->user();
+
+        $order = Order::where('user_id','=',$user->id)
+            ->where('id','=',$orderId)
+            ->first();
+
+        if(!$order){
+            $data['message'] = "该订单不存在!";
+            return response()->json($data, 403);
+        }
+
+        if($order->refund_status == 5){
+            $data['message'] = "该订单已经取消过退款，无需重复!";
+            return response()->json($data, 403);
+        }
+
+        if($order->refund_status == 8){
+            $data['message'] = "该订单已经退款成功，不能取消!";
+            return response()->json($data, 403);
+        }
+
+        $order->update(['refund_status' => 5]);
+
+        $data['message'] = "取消退款成功!";
+        return response()->json($data, 200);
     }
 }
