@@ -114,7 +114,7 @@ class ProductController extends Controller
         foreach ($product['comments'] as $t=>$item){
             $user = User::where('id','=',$item['user_id'])->first();
             $product['comments'][$t]['user_name'] = $user->nickname;
-            $product['comments'][$t]['user_image'] = $user->avatar_url;
+            $product['comments'][$t]['user_avatar'] = $user->avatar_url;
             if ($item['render_image']) {
                 foreach ($item['render_image'] as $i => $image) {
                     $render_imageUrl[$i] = Storage::disk('public')->url($image);
