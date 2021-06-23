@@ -217,6 +217,7 @@ class PaymentController extends Controller
                         $product_order[$o][$p]['order_id'] = $product['order_id'];
                         $product_order[$o][$p]['order_created_at'] = $order['created_at'];
                         $product_order[$o][$p]['order_updated_at'] = $order['updated_at'];
+                        $product_order[$o][$p]['paid_at'] = $order['paid_at'];
                     }elseif ($order['payment_method'] == 1 && $order['refund_status'] == 7){
                         $product_order[$o][$p]['status_text'] = "购物";
                         $product_order[$o][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
@@ -224,6 +225,7 @@ class PaymentController extends Controller
                         $product_order[$o][$p]['order_id'] = $product['order_id'];
                         $product_order[$o][$p]['order_created_at'] = $order['created_at'];
                         $product_order[$o][$p]['order_updated_at'] = $order['updated_at'];
+                        $product_order[$o][$p]['paid_at'] = $order['paid_at'];
                     }elseif ($order['payment_method'] == 1 && $order['refund_status'] == 9){
                         $product_order[$o][$p]['status_text'] = "购物";
                         $product_order[$o][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
@@ -231,6 +233,7 @@ class PaymentController extends Controller
                         $product_order[$o][$p]['order_id'] = $product['order_id'];
                         $product_order[$o][$p]['order_created_at'] = $order['created_at'];
                         $product_order[$o][$p]['order_updated_at'] = $order['updated_at'];
+                        $product_order[$o][$p]['paid_at'] = $order['paid_at'];
                     }elseif ($order['refund_status'] == 8){
                         $product_order[$o][$p]['status_text'] = "退款";
                         $product_order[$o][$p]['balance_text'] = "+".$product['price'] * $product['amount'];
@@ -238,6 +241,7 @@ class PaymentController extends Controller
                         $product_order[$o][$p]['order_id'] = $product['order_id'];
                         $product_order[$o][$p]['order_created_at'] = $order['created_at'];
                         $product_order[$o][$p]['order_updated_at'] = $order['updated_at'];
+                        $product_order[$o][$p]['paid_at'] = $order['paid_at'];
                     }
                 }
             }else{
