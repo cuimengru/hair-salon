@@ -180,7 +180,7 @@ class CommentController extends Controller
         foreach ($products as $t=>$item){
             $user = User::where('id','=',$item['user_id'])->first();
             $products[$t]['user_name'] = $user->nickname;
-            $products[$t]['user_image'] = $user->avatar_url;
+            $products[$t]['user_avatar'] = $user->avatar_url;
             if ($item['render_image']) {
                 foreach ($item['render_image'] as $i => $image) {
                     $render_imageUrl[$i] = Storage::disk('public')->url($image);
@@ -211,7 +211,7 @@ class CommentController extends Controller
         foreach ($designers as $t=>$item){
             $user = User::where('id','=',$item['user_id'])->first();
             $designers[$t]['user_name'] = $user->nickname;
-            $designers[$t]['user_image'] = $user->avatar_url;
+            $designers[$t]['user_avatar'] = $user->avatar_url;
             if ($item['render_image']) {
                 foreach ($item['render_image'] as $i => $image) {
                     $render_imageUrl[$i] = Storage::disk('public')->url($image);
