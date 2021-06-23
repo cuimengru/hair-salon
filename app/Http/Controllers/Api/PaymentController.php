@@ -136,8 +136,8 @@ class PaymentController extends Controller
             ->orderBy('updated_at', 'desc')
             ->select('id','total_amount','payment_method','refund_status','paid_at','created_at','updated_at')
             ->get();
-        foreach ($products as $k=>$value){
-            if($value['payment_method'] == 1 && $value['refund_status'] == 5){
+        /*foreach ($products as $k=>$value){*/
+            /*if($value['payment_method'] == 1 && $value['refund_status'] == 5){
                 $products[$k]['status_text'] = "购物";
                 $products[$k]['balance_text'] = "-".$value['total_amount'];
                 $products[$k]['type_order'] = 1;
@@ -153,8 +153,29 @@ class PaymentController extends Controller
                 $products[$k]['status_text'] = "退款";
                 $products[$k]['balance_text'] = "+".$value['total_amount'];
                 $products[$k]['type_order'] = 1;
-            }
-        }
+            }*/
+            /*foreach ($value['items'] as $p=>$product){
+                $product_order[$k][$p] = $product;
+                if($value['payment_method'] == 1 && $value['refund_status'] == 5){
+                    $product_order[$k][$p]['status_text'] = "购物";
+                    $product_order[$k][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
+                    $product_order[$k][$p]['type_order'] = 1;
+                }elseif ($value['payment_method'] == 1 && $value['refund_status'] == 7){
+                    $product_order[$k][$p]['status_text'] = "购物";
+                    $product_order[$k][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
+                    $product_order[$k][$p]['type_order'] = 1;
+                }elseif ($value['payment_method'] == 1 && $value['refund_status'] == 9){
+                    $product_order[$k][$p]['status_text'] = "购物";
+                    $product_order[$k][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
+                    $product_order[$k][$p]['type_order'] = 1;
+                }elseif ($value['refund_status'] == 8){
+                    $product_order[$k][$p]['status_text'] = "退款";
+                    $product_order[$k][$p]['balance_text'] = "+".$product['price'] * $product['amount'];
+                    $product_order[$k][$p]['type_order'] = 1;
+                }
+            }*/
+        //}
+        //$product_orders = array_reduce($product_order,'array_merge',array());
 
         //预约订单
         $reserves = ReserveOrder::where('user_id','=',$user->id)
@@ -175,18 +196,67 @@ class PaymentController extends Controller
         }
 
         $order_total = array_merge($products->toArray(),$reserves->toArray());
+        //$order_total1 = array_merge($products->toArray(),$reserves->toArray());
         $order_total1 = array_column($order_total,'updated_at');
-        //array_multisort($order_total1,SORT_DESC,$order_total);
         array_multisort($order_total1,SORT_DESC,$order_total);
+        //array_multisort($order_total1,SORT_DESC,$order_total);
 
-        $count = count($order_total); //总条数
+
+        $order_totals['data'] = $order_total;
+
+        $product_order = [];
+        foreach ($order_totals['data'] as $o=>$order){
+            if(!empty($order['items'])){
+                foreach ($order['items'] as $p=>$product){
+                    $product_order[$o][$p] = $product['product'];
+
+                    if($order['payment_method'] == 1 && $order['refund_status'] == 5){
+                        $product_order[$o][$p]['status_text'] = "购物";
+                        $product_order[$o][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
+                        $product_order[$o][$p]['type_order'] = 1;
+                        $product_order[$o][$p]['order_id'] = $product['order_id'];
+                    }elseif ($order['payment_method'] == 1 && $order['refund_status'] == 7){
+                        $product_order[$o][$p]['status_text'] = "购物";
+                        $product_order[$o][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
+                        $product_order[$o][$p]['type_order'] = 1;
+                        $product_order[$o][$p]['order_id'] = $product['order_id'];
+                    }elseif ($order['payment_method'] == 1 && $order['refund_status'] == 9){
+                        $product_order[$o][$p]['status_text'] = "购物";
+                        $product_order[$o][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
+                        $product_order[$o][$p]['type_order'] = 1;
+                        $product_order[$o][$p]['order_id'] = $product['order_id'];
+                    }elseif ($order['refund_status'] == 8){
+                        $product_order[$o][$p]['status_text'] = "退款";
+                        $product_order[$o][$p]['balance_text'] = "+".$product['price'] * $product['amount'];
+                        $product_order[$o][$p]['type_order'] = 1;
+                        $product_order[$o][$p]['order_id'] = $product['order_id'];
+                    }
+                }
+            }else{
+                $product_order[$o] = $order;
+            }
+
+        }
+
+        $product_orders = [];
+        foreach ($product_order as $e=> $erwei){
+            if(count($erwei) == count($erwei, 1)){
+                $product_orders[] = $erwei;
+            }else{
+                foreach ($erwei as $m=>$mer){
+                    $product_orders[] = $mer;
+                }
+            }
+        }
+        $count = count($product_orders); //总条数
         $page = $request->page;
         $pagesize = 5;
         $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
-        $order_totals['data'] = array_slice($order_total,$start,$pagesize);
-        $order_totals['total'] = $count;
-        $order_totals['current_page'] = $page;
-        return $order_totals;
+        $product_orders1['data'] = array_slice($product_orders,$start,$pagesize);
+        $product_orders1['total'] = $count;
+        $product_orders1['current_page'] = $page;
+
+        return $product_orders1;
     }
 
 }
