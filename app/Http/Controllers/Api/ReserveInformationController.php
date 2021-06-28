@@ -237,7 +237,7 @@ class ReserveInformationController extends Controller
             if($order['closed'] == false){
                 $order['block_time'] = $order['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                 $order['status_text'] = "待付款";
-                $order['button_text'] = ['付款'];
+                $order['button_text'] = ['付款','取消订单'];
             }else{
                 $order['block_time'] = 0;
                 $order['status_text'] = "交易关闭";
@@ -261,5 +261,28 @@ class ReserveInformationController extends Controller
 
         }
         return $order;
+    }
+
+    //取消预约订单
+    public function delete($orderId,Request $request)
+    {
+        $user = $request->user();
+
+        $order = ReserveOrder::where('id','=',$orderId)
+            ->where('user_id','=',$user->id)
+            ->first();
+        if(!$order){
+            $data['message'] = "该订单不存在!";
+            return response()->json($data, 403);
+        }
+
+        if($order->status !=1){
+            $data['message'] = "该订单无法取消!";
+            return response()->json($data, 403);
+        }
+
+        $order->delete();
+        $data['message'] = "该订单取消成功!";
+        return response()->json($data, 200);
     }
 }

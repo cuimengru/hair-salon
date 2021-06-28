@@ -46,7 +46,7 @@ class ProductOrderController extends Controller
                     if($value['closed'] == false){
                         $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                         $orders[$k]['status_text'] = "待付款";
-                        $orders[$k]['button_text'] = ['付款'];
+                        $orders[$k]['button_text'] = ['付款','取消订单'];
                     }else{
                         $orders[$k]['block_time'] = 0;
                         $orders[$k]['status_text'] = "交易关闭";
@@ -115,7 +115,7 @@ class ProductOrderController extends Controller
                     if($item['closed'] == false){
                         $reserveOrder[$i]['block_time'] = $item['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                         $reserveOrder[$i]['status_text'] = "待付款";
-                        $reserveOrder[$i]['button_text'] = ['付款'];
+                        $reserveOrder[$i]['button_text'] = ['付款','取消订单'];
                     }else{
                         $reserveOrder[$i]['block_time'] = 0;
                         $reserveOrder[$i]['status_text'] = "交易关闭";
@@ -174,7 +174,7 @@ class ProductOrderController extends Controller
                     if($item['closed'] == false){
                         $reserveOrder[$i]['block_time'] = $item['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                         $reserveOrder[$i]['status_text'] = "待付款";
-                        $reserveOrder[$i]['button_text'] = ['付款'];
+                        $reserveOrder[$i]['button_text'] = ['付款','取消订单'];
                     }else{
                         $reserveOrder[$i]['block_time'] = 0;
                         $reserveOrder[$i]['status_text'] = "交易关闭";
@@ -219,7 +219,7 @@ class ProductOrderController extends Controller
                     if($value['closed'] == false){
                         $orders[$k]['block_time'] = $value['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                         $orders[$k]['status_text'] = "待付款";
-                        $orders[$k]['button_text'] = ['付款'];
+                        $orders[$k]['button_text'] = ['付款','取消订单'];
                     }else{
                         $orders[$k]['block_time'] = 0;
                         $orders[$k]['status_text'] = "交易关闭";
@@ -247,7 +247,7 @@ class ProductOrderController extends Controller
                     if($item['closed'] == false){
                         $reserveOrder[$i]['block_time'] = $item['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                         $reserveOrder[$i]['status_text'] = "待付款";
-                        $reserveOrder[$i]['button_text'] = ['付款'];
+                        $reserveOrder[$i]['button_text'] = ['付款','取消订单'];
                     }else{
                         $reserveOrder[$i]['block_time'] = 0;
                         $reserveOrder[$i]['status_text'] = "交易关闭";
@@ -467,7 +467,7 @@ class ProductOrderController extends Controller
             if($order['closed'] == false){
                 $order['block_time'] = $order['created_at']->addSeconds(config('order.order_ttl'))->format('Y-m-d H:i:s');
                 $order['status_text'] = "待付款";
-                $order['button_text'] = ['付款'];
+                $order['button_text'] = ['付款','取消订单'];
             }else{
                 $order['block_time'] = 0;
                 $order['status_text'] = "交易关闭";
@@ -701,5 +701,28 @@ class ProductOrderController extends Controller
             }
         }
         //return $querys;
+    }
+
+    //取消商品订单
+    public function delete($orderId, Request $request)
+    {
+        $user = $request->user();
+
+        $order = Order::where('id','=',$orderId)
+            ->where('user_id','=',$user->id)
+            ->first();
+        if(!$order){
+            $data['message'] = "该订单不存在!";
+            return response()->json($data, 403);
+        }
+
+        if($order->status !=1){
+            $data['message'] = "该订单无法取消!";
+            return response()->json($data, 403);
+        }
+
+        $order->delete();
+        $data['message'] = "该订单取消成功!";
+        return response()->json($data, 200);
     }
 }

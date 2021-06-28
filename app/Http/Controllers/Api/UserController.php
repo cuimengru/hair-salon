@@ -193,11 +193,13 @@ class UserController extends Controller
         $user = $request->user();
 
         $attributes = $request->only(['phone','nickname','gender']);
-        $bad_nickname = SensitiveWords::getBadWord($request->nickname);
-        if(!empty($bad_nickname)){
-            $attributes['nickname'] = SensitiveWords::replace($request->nickname,"***"); //替换敏感词为 ***
-        }else{
-            $attributes['nickname'] = $request->nickname;
+        if($request->nickname){
+            $bad_nickname = SensitiveWords::getBadWord($request->nickname);
+            if(!empty($bad_nickname)){
+                $attributes['nickname'] = SensitiveWords::replace($request->nickname,"***"); //替换敏感词为 ***
+            }else{
+                $attributes['nickname'] = $request->nickname;
+            }
         }
 
         $user->update($attributes);
