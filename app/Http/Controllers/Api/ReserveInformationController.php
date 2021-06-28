@@ -180,7 +180,7 @@ class ReserveInformationController extends Controller
             ->allowedFilters([
                 AllowedFilter::exact('designer_id'), //设计师id
             ])
-            ->defaultSort('-created_at') //按照创建时间排序
+            ->defaultSort('id') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','designer_id','service_project')
             ->paginate(3);

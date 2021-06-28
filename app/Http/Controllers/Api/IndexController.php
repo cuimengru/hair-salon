@@ -38,4 +38,14 @@ class IndexController extends Controller
         $index['product'] = $product;
         return $index;
     }
+
+    //关于锦之都
+    public function jinzhido()
+    {
+        $jinzhido['description'] = config('website.description');
+        $jinzhido['content'] = config('website.content');
+        $jinzhido['email'] = config('website.email');
+        $jinzhido['phone'] = config('website.phone');
+        return $jinzhido;
+    }
 }

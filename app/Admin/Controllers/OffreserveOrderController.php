@@ -114,7 +114,7 @@ class OffreserveOrderController extends AdminController
         $show->field('phone', __('手机号'));
         $show->field('remark', __('备注'));
         $show->field('money', __('订单总金额'));
-        $show->field('payment_method', __('支付方式'))->using(['1' => '余额', '2' => '支付宝','3'=>'微信']);
+        $show->field('payment_method', __('支付方式'))->using(['1' => '余额', '2' => '支付宝','3'=>'微信','4'=>'现金']);
         $show->field('paid_at', __('支付时间'));
         $show->field('status', __('订单状态'))->using(['1' => '未支付', '2' => '支付中','3'=>'已支付','4'=>'取消','5'=>'退款成功']);
         $show->field('ship_status', __('订单是否结束'))->using(['1' => '已结束', '0' => '未结束']);
@@ -154,6 +154,7 @@ class OffreserveOrderController extends AdminController
             '1' => ReserveOrder::$paymentMethodMap['1'],
             '2' => ReserveOrder::$paymentMethodMap['2'],
             '3' => ReserveOrder::$paymentMethodMap['3'],
+            '4' => ReserveOrder::$paymentMethodMap['4'],
         ]);
         $form->datetime('paid_at', __('支付时间'))->default(date('Y-m-d H:i:s'));
         //$form->text('payment_no', __('Payment no'));

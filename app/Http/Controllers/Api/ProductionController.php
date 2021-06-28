@@ -52,6 +52,24 @@ class ProductionController extends Controller
             ->where('is_employee','=',1)
             ->orderBy('created_at','desc')
             ->select('id','name','thumb','description','position','label_id')->get();
+         //收藏设计师
+        foreach ($index['designers'] as $d=>$designer){
+            //收藏设计师
+            if($request->user_id){
+                $index['designers'][$d]['follows'] = DB::table('user_favorite_designers')
+                    ->where('user_id','=',$request->user_id)
+                    ->where('designer_id','=',$designer->id)
+                    ->first();
+                if($index['designers'][$d]['follows']){
+                    $index['designers'][$d]['follows_designer'] = 1; //已收藏
+                }else{
+                    $index['designers'][$d]['follows_designer'] = 0; //未收藏
+                }
+                unset($index['designers'][$d]['follows']);
+            }else{
+                $index['designers'][$d]['follows_designer'] = 0; //未收藏
+            }
+        }
 
 
         $index['fashions'] = Fashion::where('is_recommend','=',1)

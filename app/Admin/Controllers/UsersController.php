@@ -51,7 +51,7 @@ class UsersController extends AdminController
         $grid->status('审核状态')->radio([
             0 => '未审核',
             1 => '已审核',
-            -1 => '审核中',
+            //-1 => '审核中',
         ])->help('可编辑');
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('更新时间'));
@@ -118,7 +118,7 @@ class UsersController extends AdminController
         $form->textarea('introduce', __('简介'));
         $form->text('integral', __('积分'))->default(0.00);
         $form->text('balance', __('余额'))->default(0.00);
-        $form->radioCard('status', __('审核状态'))->options(['0' => '未审核', '1' => '已审核','-1'=>'审核中'])->default('0');
+        $form->radioCard('status', __('审核状态'))->options(['0' => '未审核', '1' => '已审核'])->default('0');
         $form->hidden('type')->default(0);
         return $form;
     }

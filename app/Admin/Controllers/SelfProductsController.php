@@ -133,6 +133,10 @@ class SelfProductsController extends AdminController
             $form->text('price', '单价')->rules('required|numeric|min:0.01');
             $form->text('stock', '剩余库存')->rules('required|integer|min:0');
         });
+        // 定义事件回调，当模型即将保存时会触发这个回调
+        $form->saving(function (Form $form) {
+            $form->model()->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: 0;
+        });
         $form->hidden('type')->default(2);
         $form->tools(function (Form\Tools $tools) {
             //$tools->disableList();  // 去掉`列表`按钮
