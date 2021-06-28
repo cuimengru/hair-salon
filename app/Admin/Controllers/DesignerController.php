@@ -100,7 +100,7 @@ class DesignerController extends AdminController
         $form->list('certificate',__('证书'));
         $form->list('honor',__('荣誉'));
         $form->text('employee_number', __('员工号'));
-        $form->radio('is_employee', '是否是员工')->options(['1' => '是', '0' => '否'])->default('0');
+        $form->radio('is_employee', '是否是员工')->options(['1' => '是', '0' => '否'])->default(1);
         $form->text('score', __('评分'))->default(0.0);
         $form->number('rating', __('评价数量'))->default(0);
 
