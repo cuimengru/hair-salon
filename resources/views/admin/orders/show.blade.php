@@ -12,7 +12,7 @@
       <tbody>
       <tr>
         <td>买家：</td>
-        <td>{{ $order->user->name }}</td>
+        <td>{{ $order->user->nickname}}<br/>手机号：{{ $order->user->phone}}</td>
         <td>支付时间：</td>
         @if($order->paid_at)
         <td>{{ $order->paid_at->format('Y-m-d H:i:s') }}</td>
