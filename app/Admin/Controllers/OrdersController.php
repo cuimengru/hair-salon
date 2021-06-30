@@ -44,7 +44,7 @@ class OrdersController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('no', __('订单流水号'));
-        $grid->column('user.name', __('买家'));
+        $grid->column('user.nickname', __('买家'));
         $grid->column('total_amount', __('总金额'));
         $grid->column('paid_at', __('支付时间'));
         $grid->ship_status('物流')->display(function($value) {

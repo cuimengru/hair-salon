@@ -107,9 +107,10 @@
       </tbody>
     </table>
     <div>
-      <h4>退款图片:</h4>
-      @if($order->extra['many_images'])
+
+      @if(!empty($order->extra['many_images']))
         @foreach($order->extra['many_images'] as $image)
+          <h4>退款图片:</h4>
           <img src="https://hair.test/storage/{{$image}}" width="120px" height="120px" style="margin-left: 15px">
         @endforeach
       @endif
