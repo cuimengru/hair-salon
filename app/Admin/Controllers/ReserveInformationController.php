@@ -38,7 +38,9 @@ class ReserveInformationController extends AdminController
             $html = '';
             foreach ($service_project as $k => $value){
                 $service = ServiceProject::where('id','=',$value)->select('name')->first();
-                $html .= "<span class='label label-success' style='margin-left: 10px'>{$service['name']}</span>";
+                if($service){
+                    $html .= "<span class='label label-success' style='margin-left: 10px'>{$service['name']}</span>";
+                }
             }
             return $html;
         });
