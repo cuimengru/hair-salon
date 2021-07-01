@@ -95,7 +95,7 @@ class FashionController extends AdminController
 
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->required();
-        $form->file('video', __('视频'));
+        //$form->file('video', __('视频'));
         $form->textarea('description', __('描述'));
         $form->editor('content', __('内容'))->required();
         $form->number('order', __('排序'))->default(0)->help('越小越靠前');

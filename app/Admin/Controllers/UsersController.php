@@ -59,7 +59,7 @@ class UsersController extends AdminController
             $actions->disableDelete();
             //$actions->disableEdit();// 去掉删除
         });
-
+        $grid->disableCreateButton();
         $grid->disableExport(); // 禁用导出数据
         $grid->disableColumnSelector();// 禁用行选择器
         $grid->model()->orderBy('id', 'desc');

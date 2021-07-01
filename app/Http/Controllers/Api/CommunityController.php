@@ -271,4 +271,16 @@ class CommunityController extends Controller
         }
 
     }
+
+    //社区活动详情
+    public function activeShow($activeId, Request $request)
+    {
+        $active = Advert::where('category_id', '=', 7)->where('id','=',$activeId)->select('id','description','content','url')->first();
+
+        if(!$active){
+            $data['message'] = "该活动不存在！";
+            return response()->json($data, 403);
+        }
+        return $active;
+    }
 }

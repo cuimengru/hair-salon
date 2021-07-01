@@ -81,7 +81,7 @@ Route::prefix('v1')
                 Route::get('designers/index', [DesignersController::class,'index']); //发型师列表
                 Route::get('designers/show/{id}', [DesignersController::class, 'show']);//某个发型师详情
                 Route::get('jinzhi/about', [IndexController::class, 'jinzhido']);//关于锦之都
-
+                Route::get('community/active/{id}', [CommunityController::class, 'activeShow']); //社区活动详情
 
 
                 // 登录后可以访问的接口
