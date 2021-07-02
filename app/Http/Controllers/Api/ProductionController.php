@@ -26,7 +26,7 @@ class ProductionController extends Controller
 
         //作品$index['production']
          $productions= Production::where('is_recommend','=',1)->orderBy('created_at','desc')
-            ->select('id','title','thumb','type')
+            ->select('id','title','thumb','type','video')
             ->get();
          foreach ($productions as $p=>$product){
              //收藏作品
