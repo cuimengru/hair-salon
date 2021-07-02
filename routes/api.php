@@ -158,6 +158,9 @@ Route::prefix('v1')
                     Route::delete('products/orders/{id}', [ProductOrderController::class, 'delete']);//取消商品订单
                     Route::delete('reserves/orders/{id}', [ReserveInformationController::class, 'delete']);//取消预约订单
 
+                    Route::get('payment/alipay/return', [PaymentController::class, 'alipayReturn'])->name('payment.alipay.return');
+                    Route::post('payment/alipay/notify', [PaymentController::class, 'alipayNotify'])->name('payment.alipay.notify');
+
                 });
             });
     });

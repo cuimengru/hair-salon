@@ -54,7 +54,11 @@ class PaymentController extends Controller
                 }else{
                     //余额不足，使用支付宝支付剩下的
                         if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
-                            return '111';
+                            return app('alipay')->app([
+                                'out_trade_no'=>$order->no, //订单编号，需保证在商户端不重复
+                                'total_amount' => $order->total_amount, // 订单金额，单位元，支持小数点后两位
+                                'subject' => '支付商品的订单：'.$order->no,// 订单标题
+                            ]);
                         }elseif ($payment_method == Order::PAYMENT_METHOD_WECHAT){
                             return '222';
                         }
@@ -62,6 +66,14 @@ class PaymentController extends Controller
 
                 }
             }
+        }
+        if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
+            return app('alipay')->app([
+                'out_trade_no'=>$order->no, //订单编号，需保证在商户端不重复
+                'total_amount' => $order->total_amount, // 订单金额，单位元，支持小数点后两位
+                'subject' => '支付商品的订单：'.$order->no,// 订单标题
+            ]);
+
         }
         return $order;
     }
@@ -121,6 +133,49 @@ class PaymentController extends Controller
     protected function afterPaid(Order $order)
     {
         event(new OrderPaid($order));
+    }
+
+    // 前端回调页面
+    public function alipayReturn()
+    {
+        // 校验提交的参数是否合法
+        try {
+            app('alipay')->verify();
+        } catch (\Exception $e){
+            $e->getMessage();
+        }
+    }
+
+    //服务器端回调
+    public function alipayNotify()
+    {
+        // 校验输入参数
+        $data = app('alipay')->verify();
+        // 如果订单状态不是成功或者结束，则不走后续的逻辑
+        // 所有交易状态：https://docs.open.alipay.com/59/103672
+        if(!in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+            return app('alipay')->success();
+        }
+        // $data->out_trade_no 拿到订单流水号，并在数据库中查询
+        $order = Order::where('no', $data->out_trade_no)->first();
+        // 正常来说不太可能出现支付了一笔不存在的订单，这个判断只是加强系统健壮性。
+        if (!$order) {
+            return 'fail';
+        }
+        // 如果这笔订单的状态已经是已支付
+        if ($order->paid_at) {
+            // 返回数据给支付宝
+            return app('alipay')->success();
+        }
+
+        $order->update([
+            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+            'payment_method' => 2, // 支付方式
+            'payment_no'     => $data->trade_no, // 支付宝订单号
+            'status' => Order::STATUS_PAID,// 更新订单状态
+        ]);
+
+        return app('alipay')->success();
     }
 
     //我的余额管理
