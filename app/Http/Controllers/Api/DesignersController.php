@@ -60,7 +60,13 @@ class DesignersController extends Controller
             }
             $designer['many_imageUrl'] = $many_imageUrl;
         }
-
+        if($designer['certificate'] == [null]){
+            $designer['certificate'] = [];
+        }
+        
+        if($designer['honor'] == [null]){
+            $designer['honor'] = [];
+        }
         $designer['comments'] = Comment::where('designer_id','=',$Id)
             ->where('type','=',1)
             ->where('status','=',1)
