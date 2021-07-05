@@ -83,6 +83,8 @@ Route::prefix('v1')
                 Route::get('jinzhi/about', [IndexController::class, 'jinzhido']);//关于锦之都
                 Route::get('community/active/{id}', [CommunityController::class, 'activeShow']); //社区活动详情
 
+                Route::get('payment/alipay/return', [PaymentController::class, 'alipayReturn'])->name('payment.alipay.return');
+                Route::post('payment/alipay/notify', [PaymentController::class, 'alipayNotify'])->name('payment.alipay.notify');
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -158,8 +160,6 @@ Route::prefix('v1')
                     Route::delete('products/orders/{id}', [ProductOrderController::class, 'delete']);//取消商品订单
                     Route::delete('reserves/orders/{id}', [ReserveInformationController::class, 'delete']);//取消预约订单
 
-                    Route::get('payment/alipay/return', [PaymentController::class, 'alipayReturn'])->name('payment.alipay.return');
-                    Route::post('payment/alipay/notify', [PaymentController::class, 'alipayNotify'])->name('payment.alipay.notify');
 
                 });
             });
