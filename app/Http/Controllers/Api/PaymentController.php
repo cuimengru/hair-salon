@@ -51,31 +51,46 @@ class PaymentController extends Controller
                         'paid_at'=>Carbon::now('Asia/shanghai'),
                     ]);
                     $this->afterPaid($order);
+                    return $order;
                 }else{
                     //余额不足，使用支付宝支付剩下的
-                        if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
-                            return app('alipay')->app([
+                       /* if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
+                            $order['alipay'] = app('alipay')->app([
                                 'out_trade_no'=>$order->no, //订单编号，需保证在商户端不重复
                                 'total_amount' => $order->total_amount, // 订单金额，单位元，支持小数点后两位
                                 'subject' => '支付商品的订单：'.$order->no,// 订单标题
                             ]);
                         }elseif ($payment_method == Order::PAYMENT_METHOD_WECHAT){
                             return '222';
-                        }
-
+                        }*/
+                    $data['message'] = "余额不足，请选择其他支付方式!";
+                    return response()->json($data, 403);
 
                 }
             }
+
         }
+        //支付宝支付
         if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
-            return app('alipay')->app([
+            /*$order['alipay'] = app('alipay')->app([
                 'out_trade_no'=>$order->no, //订单编号，需保证在商户端不重复
                 'total_amount' => $order->total_amount, // 订单金额，单位元，支持小数点后两位
                 'subject' => '支付商品的订单：'.$order->no,// 订单标题
-            ]);
+            ]);*/
+            $alipayorder = [
+                'out_trade_no' => $order->no,
+                'total_amount' => $order->total_amount,
+                'subject'      => '支付商品的订单：'.$order->no,
+            ];
+            $order['datas'] = app('alipay')->app($alipayorder);
+            //$out = json_decode($datas->getContent());
+            /*echo $out;*/
+
+            $order['alipay_id'] =$order['datas']->getContent();
+            return $order;
 
         }
-        return $order;
+        //return $order;
     }
 
     //预约订单支付
@@ -174,6 +189,7 @@ class PaymentController extends Controller
             'payment_no'     => $data->trade_no, // 支付宝订单号
             'status' => Order::STATUS_PAID,// 更新订单状态
         ]);
+        $this->afterPaid($order);
 
         return app('alipay')->success();
     }
