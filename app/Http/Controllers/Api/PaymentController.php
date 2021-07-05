@@ -145,11 +145,6 @@ class PaymentController extends Controller
         return $order;
     }
 
-    protected function afterPaid(Order $order)
-    {
-        event(new OrderPaid($order));
-    }
-
     // 前端回调页面
     public function alipayReturn()
     {
@@ -226,6 +221,11 @@ class PaymentController extends Controller
         }
 
         return app('alipay')->success();
+    }
+
+    protected function afterPaid(Order $order)
+    {
+        event(new OrderPaid($order));
     }
 
     //我的余额管理
