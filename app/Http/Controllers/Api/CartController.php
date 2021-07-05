@@ -32,7 +32,7 @@ class CartController extends Controller
             $cart->save();
         }
 
-        $data['message'] = "Product Added OK!";
+        $data['message'] = "加入购物车成功!";
         $data['count']= CartItem::where('user_id','=',$user->id)->count();
 
         return response()->json($data, 200);
@@ -53,7 +53,7 @@ class CartController extends Controller
             $cart[$k]->delete();
         }
 
-        $data['message'] = "Cart Deleted OK!";
+        $data['message'] = "删除成功!";
         return response()->json($data, 200);
     }
 
@@ -91,7 +91,7 @@ class CartController extends Controller
             'amount' => $amount,
             ]);
         }
-        $data['message'] = "Product Updated OK!";
+        $data['message'] = "减去成功!";
         return response()->json($data, 200);
     }
 }

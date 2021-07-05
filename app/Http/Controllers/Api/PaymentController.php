@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\OrderPaid;
+use App\Events\ReserveOrderPaid;
+use App\Events\UserOrderPaid;
 use App\Http\Controllers\Controller;
 use App\Models\Designer;
 use App\Models\Order;
 use App\Models\ReserveOrder;
 use App\Models\ServiceProject;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -130,22 +133,35 @@ class PaymentController extends Controller
                         'payment_method' => $payment_id,
                         'paid_at'=>Carbon::now('Asia/shanghai'),
                     ]);
+                    return $order;
                 }else{
-                    //余额不足，使用支付宝支付剩下的
-                    if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
-                        return '111';
-                    }elseif ($payment_method == Order::PAYMENT_METHOD_WECHAT){
-                        return '222';
-                    }
-
-
+                    //余额不足
+                    $data['message'] = "余额不足，请选择其他支付方式!";
+                    return response()->json($data, 403);
                 }
             }
         }
-        return $order;
+        //支付宝支付
+        if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
+            $alipayorder = [
+                'out_trade_no' => $order->no,
+                'total_amount' => $order->money,
+                'subject'      => '支付预约的订单：'.$order->no,
+            ];
+            $order['datas'] = app('reservealipay')->app($alipayorder);
+            //$out = json_decode($datas->getContent());
+            /*echo $out;*/
+
+            $order['alipay_id'] =$order['datas']->getContent();
+            return $order;
+        }
+        if ($payment_method == Order::PAYMENT_METHOD_WECHAT){
+            return '222';
+        }
+
     }
 
-    // 前端回调页面
+    // 商品前端回调页面
     public function alipayReturn()
     {
         // 校验提交的参数是否合法
@@ -161,35 +177,10 @@ class PaymentController extends Controller
         // 订单总金额：$data->total_amount
     }
 
-    //服务器端回调
+    //商品服务器端回调
     public function alipayNotify()
     {
-       /* // 校验输入参数
-        $data = app('alipay')->verify();
-        // 如果订单状态不是成功或者结束，则不走后续的逻辑
-        // 所有交易状态：https://docs.open.alipay.com/59/103672
-        if(!in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
-            return app('alipay')->success();
-        }
-        // $data->out_trade_no 拿到订单流水号，并在数据库中查询
-        $order = Order::where('no', $data->out_trade_no)->first();
-        // 正常来说不太可能出现支付了一笔不存在的订单，这个判断只是加强系统健壮性。
-        if (!$order) {
-            return 'fail';
-        }
-        // 如果这笔订单的状态已经是已支付
-        if ($order->paid_at) {
-            // 返回数据给支付宝
-            return app('alipay')->success();
-        }
-
-        $order->update([
-            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
-            'payment_method' => 2, // 支付方式
-            'payment_no'     => $data->trade_no, // 支付宝订单号
-            'status' => Order::STATUS_PAID,// 更新订单状态
-        ]);
-        $this->afterPaid($order);*/
+        // 校验输入参数
         $alipay = app('alipay');
         try {
             $data = $alipay->verify();
@@ -228,6 +219,52 @@ class PaymentController extends Controller
         event(new OrderPaid($order));
     }
 
+    //预约订单支付宝前端回调
+    public function reserveReturn()
+    {
+        $data = app('reservealipay')->verify();
+    }
+
+    //预约订单支付宝前端回调
+    public function reserveNotify()
+    {
+        $alipay = app('reservealipay');
+        try {
+            $data = $alipay->verify();
+            if(!in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+                return app('reservealipay')->success();
+            }
+            // $data->out_trade_no 拿到订单流水号，并在数据库中查询
+            $order = ReserveOrder::where('no', $data->out_trade_no)->first();
+            // 正常来说不太可能出现支付了一笔不存在的订单，这个判断只是加强系统健壮性。
+            if (!$order) {
+                return 'fail';
+            }
+            // 如果这笔订单的状态已经是已支付
+            if ($order->paid_at) {
+                // 返回数据给支付宝
+                return app('reservealipay')->success();
+            }
+
+            $order->update([
+                'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+                'payment_method' => 2, // 支付方式
+                'payment_no'     => $data->trade_no, // 支付宝订单号
+                'status' => ReserveOrder::STATUS_PAID,// 更新订单状态
+            ]);
+            $this->reserveAfterPaid($order);
+
+        }catch (\Exception $e) {
+            // $e->getMessage();
+        }
+
+        return app('alipay')->success();
+    }
+
+    protected function reserveAfterPaid(ReserveOrder $order)
+    {
+        event(new ReserveOrderPaid($order));
+    }
     //我的余额管理
     public function balance(Request $request)
     {
@@ -241,46 +278,6 @@ class PaymentController extends Controller
             ->orderBy('updated_at', 'desc')
             ->select('id','total_amount','payment_method','refund_status','paid_at','created_at','updated_at')
             ->get();
-        /*foreach ($products as $k=>$value){*/
-            /*if($value['payment_method'] == 1 && $value['refund_status'] == 5){
-                $products[$k]['status_text'] = "购物";
-                $products[$k]['balance_text'] = "-".$value['total_amount'];
-                $products[$k]['type_order'] = 1;
-            }elseif ($value['payment_method'] == 1 && $value['refund_status'] == 7){
-                $products[$k]['status_text'] = "购物";
-                $products[$k]['balance_text'] = "-".$value['total_amount'];
-                $products[$k]['type_order'] = 1;
-            }elseif ($value['payment_method'] == 1 && $value['refund_status'] == 9){
-                $products[$k]['status_text'] = "购物";
-                $products[$k]['balance_text'] = "-".$value['total_amount'];
-                $products[$k]['type_order'] = 1;
-            }elseif ($value['refund_status'] == 8){
-                $products[$k]['status_text'] = "退款";
-                $products[$k]['balance_text'] = "+".$value['total_amount'];
-                $products[$k]['type_order'] = 1;
-            }*/
-            /*foreach ($value['items'] as $p=>$product){
-                $product_order[$k][$p] = $product;
-                if($value['payment_method'] == 1 && $value['refund_status'] == 5){
-                    $product_order[$k][$p]['status_text'] = "购物";
-                    $product_order[$k][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
-                    $product_order[$k][$p]['type_order'] = 1;
-                }elseif ($value['payment_method'] == 1 && $value['refund_status'] == 7){
-                    $product_order[$k][$p]['status_text'] = "购物";
-                    $product_order[$k][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
-                    $product_order[$k][$p]['type_order'] = 1;
-                }elseif ($value['payment_method'] == 1 && $value['refund_status'] == 9){
-                    $product_order[$k][$p]['status_text'] = "购物";
-                    $product_order[$k][$p]['balance_text'] = "-".$product['price'] * $product['amount'];
-                    $product_order[$k][$p]['type_order'] = 1;
-                }elseif ($value['refund_status'] == 8){
-                    $product_order[$k][$p]['status_text'] = "退款";
-                    $product_order[$k][$p]['balance_text'] = "+".$product['price'] * $product['amount'];
-                    $product_order[$k][$p]['type_order'] = 1;
-                }
-            }*/
-        //}
-        //$product_orders = array_reduce($product_order,'array_merge',array());
 
         //预约订单
         $reserves = ReserveOrder::where('user_id','=',$user->id)
@@ -381,4 +378,69 @@ class PaymentController extends Controller
         return $product_orders1;
     }
 
+    //充值
+    public function balanceStore(Request $request)
+    {
+        $user = $request->user();
+
+        $payment_method = $request->payment_method; //支付方式
+
+        //支付宝支付
+        if($payment_method == User::PAYMENT_METHOD_ALIPAY){
+            $alipayorder = [
+                'out_trade_no' => $user->phone.time(),
+                'total_amount' => $request->balance,
+                'subject'      => '充值余额的订单：'.$user->no,
+            ];
+            $user['datas'] = app('balancealipay')->app($alipayorder);
+
+            $user['alipay_id'] =$user['datas']->getContent();
+            return $user;
+        }
+    }
+
+    //余额充值支付宝前端回调
+    public function balanceReturn()
+    {
+        $data = app('balancealipay')->verify();
+    }
+
+    //余额充值支付宝服务器回调
+    public function balanceNotify()
+    {
+        $alipay = app('balancealipay');
+        try {
+            $data = $alipay->verify();
+            if(!in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+                return app('balancealipay')->success();
+            }
+            // $data->out_trade_no 拿到订单流水号，并在数据库中查询
+            $phone = substr($data->out_trade_no,0,11);
+            $user = User::where('phone', $phone)->first();
+            // 正常来说不太可能出现支付了一笔不存在的订单，这个判断只是加强系统健壮性。
+            if (!$user) {
+                return 'fail';
+            }
+            // 如果这笔订单的状态已经是已支付
+            /*if ($user->paid_at) {
+                // 返回数据给支付宝
+                return app('reservealipay')->success();
+            }*/
+            $balance = $data->total_amount + $user->balance;
+            $user->update([
+                'balance' => $balance,
+            ]);
+            $this->balanceAfterPaid($user);
+
+        }catch (\Exception $e) {
+            // $e->getMessage();
+        }
+
+        return app('alipay')->success();
+    }
+
+    public function balanceAfterPaid(User $user)
+    {
+        event(new UserOrderPaid($user));
+    }
 }

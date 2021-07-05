@@ -18,6 +18,14 @@ class User extends Authenticatable
     use DefaultDatetimeFormat;
     use Notifiable;
 
+    const PAYMENT_METHOD_ALIPAY = 2;
+    const PAYMENT_METHOD_WECHAT = 3;
+
+    public static $paymentMethodMap = [
+        self::PAYMENT_METHOD_ALIPAY => '支付宝',
+        self::PAYMENT_METHOD_WECHAT  => '微信',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -82,9 +82,16 @@ Route::prefix('v1')
                 Route::get('designers/show/{id}', [DesignersController::class, 'show']);//某个发型师详情
                 Route::get('jinzhi/about', [IndexController::class, 'jinzhido']);//关于锦之都
                 Route::get('community/active/{id}', [CommunityController::class, 'activeShow']); //社区活动详情
-
+                //商品订单支付宝回调
                 Route::get('payment/alipay/return', [PaymentController::class, 'alipayReturn'])->name('payment.alipay.return');
                 Route::post('payment/alipay/notify', [PaymentController::class, 'alipayNotify'])->name('payment.alipay.notify');
+                //预约订单支付宝回调
+                Route::get('payment/reservealipay/return', [PaymentController::class, 'reserveReturn'])->name('payment.reservealipay.return');
+                Route::post('payment/reservealipay/notify', [PaymentController::class, 'reserveNotify'])->name('payment.reservealipay.notify');
+                //余额充值支付宝回调
+                Route::get('payment/balancealipay/return', [PaymentController::class, 'balanceReturn'])->name('payment.balancealipay.return');
+                Route::post('payment/balancealipay/notify', [PaymentController::class, 'balanceNotify'])->name('payment.balancealipay.notify');
+
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -159,6 +166,7 @@ Route::prefix('v1')
                     Route::get('product/logistics', [ProductOrderController::class, 'logistics']);//查看物流
                     Route::delete('products/orders/{id}', [ProductOrderController::class, 'delete']);//取消商品订单
                     Route::delete('reserves/orders/{id}', [ReserveInformationController::class, 'delete']);//取消预约订单
+                    Route::get('balance', [PaymentController::class, 'balanceStore']);//充值余额
 
 
                 });
