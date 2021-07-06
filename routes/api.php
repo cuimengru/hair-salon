@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\Api\DesignersController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\VersionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,8 @@ Route::prefix('v1')
                 Route::get('payment/balancealipay/return', [PaymentController::class, 'balanceReturn'])->name('payment.balancealipay.return');
                 Route::post('payment/balancealipay/notify', [PaymentController::class, 'balanceNotify'])->name('payment.balancealipay.notify');
 
+                Route::get('version',[VersionsController::class ,'index']); //检测最新版本
+                Route::post('checkversion',[VersionsController::class,'check']); //比较版本号
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {

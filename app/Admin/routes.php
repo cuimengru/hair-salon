@@ -60,4 +60,5 @@ Route::group([
     $router->resource('offline_users', OfflineUserController::class);//线下用户管理
     $router->resource('offreserve_orders', OffreserveOrderController::class);//线下预约订单管理
     $router->resource('balance_orders', BalanceReorderController::class); //预约订单余额管理
+    $router->resource('versions', VersionsController::class);//客户端版本
 });
