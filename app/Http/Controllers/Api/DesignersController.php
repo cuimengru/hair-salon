@@ -56,14 +56,14 @@ class DesignersController extends Controller
             ->first();
         if(!empty($designer['many_images'])){
             foreach ($designer['many_images'] as $k=>$value){
-                $many_imageUrl[$k] = Storage::disk('public')->url($value);
+                $many_imageUrl[$k] = Storage::disk('oss')->url($value);
             }
             $designer['many_imageUrl'] = $many_imageUrl;
         }
         if($designer['certificate'] == [null]){
             $designer['certificate'] = [];
         }
-        
+
         if($designer['honor'] == [null]){
             $designer['honor'] = [];
         }
@@ -79,7 +79,7 @@ class DesignersController extends Controller
             $designer['comments'][$c]['user_avatar'] = $user->avatar_url;
             if ($comment['render_image']) {
                 foreach ($comment['render_image'] as $i => $image) {
-                    $render_imageUrl[$i] = Storage::disk('public')->url($image);
+                    $render_imageUrl[$i] = Storage::disk('oss')->url($image);
                 }
                 $designer['comments'][$c]['render_imageUrl'] = $render_imageUrl;
             }

@@ -127,7 +127,7 @@ class Category extends Model
                 ];
                 if($category->many_images){
                     foreach ($category->many_images as $k=>$value){
-                        $many_imageUrl[$k] = Storage::disk('public')->url($value);
+                        $many_imageUrl[$k] = Storage::disk('oss')->url($value);
                     }
                     $data['many_imageUrl'] = $many_imageUrl;
                 }

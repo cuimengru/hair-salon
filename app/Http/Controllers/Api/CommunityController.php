@@ -85,7 +85,7 @@ class CommunityController extends Controller
             if ($value['many_images']) {
                 foreach ($value['many_images'] as $i => $image) {
                     if($image){
-                        $many_imageUrl[$i] = Storage::disk('public')->url($image);
+                        $many_imageUrl[$i] = Storage::disk('oss')->url($image);
                     }else{
                         $many_imageUrl[$i] = null;
                     }

@@ -19,7 +19,7 @@ class ProductSku extends Model
     public function getImageUrlAttribute()
     {
         if ($this->image) {
-            return Storage::disk('public')->url($this->image);
+            return Storage::disk('oss')->url($this->image);
         } else {
             return '';
         }

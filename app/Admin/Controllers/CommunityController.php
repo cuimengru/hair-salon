@@ -78,7 +78,7 @@ class CommunityController extends AdminController
             $images = '';
             if($content){
                 foreach ($content as $k=>$value){
-                    $image = Storage::disk('public')->url($value);
+                    $image = Storage::disk('oss')->url($value);
                     $images = $images."<div style='margin-top: 25px;float: left; margin-right: 25px'>
                         <img src='{$image}'  width='200' height='200'/>
                         </div>";

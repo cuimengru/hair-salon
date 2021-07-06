@@ -183,7 +183,7 @@ class CommentController extends Controller
             $products[$t]['user_avatar'] = $user->avatar_url;
             if ($item['render_image']) {
                 foreach ($item['render_image'] as $i => $image) {
-                    $render_imageUrl[$i] = Storage::disk('public')->url($image);
+                    $render_imageUrl[$i] = Storage::disk('oss')->url($image);
                 }
                 $products[$t]['render_imageUrl'] = $render_imageUrl;
             }
@@ -214,7 +214,7 @@ class CommentController extends Controller
             $designers[$t]['user_avatar'] = $user->avatar_url;
             if ($item['render_image']) {
                 foreach ($item['render_image'] as $i => $image) {
-                    $render_imageUrl[$i] = Storage::disk('public')->url($image);
+                    $render_imageUrl[$i] = Storage::disk('oss')->url($image);
                 }
                 $designers[$t]['render_imageUrl'] = $render_imageUrl;
             }

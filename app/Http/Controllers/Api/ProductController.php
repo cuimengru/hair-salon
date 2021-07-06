@@ -95,7 +95,7 @@ class ProductController extends Controller
         $product['label_name'] = ProductLabel::all()->whereIn('id',$product['label_id'])->pluck('name')->toArray();
         if($product['many_image']){
             foreach ($product['many_image'] as $k=>$value){
-                $many_imageUrl[$k] = Storage::disk('public')->url($value);
+                $many_imageUrl[$k] = Storage::disk('oss')->url($value);
             }
             $product['many_imageUrl'] = $many_imageUrl;
         }
@@ -117,7 +117,7 @@ class ProductController extends Controller
             $product['comments'][$t]['user_avatar'] = $user->avatar_url;
             if ($item['render_image']) {
                 foreach ($item['render_image'] as $i => $image) {
-                    $render_imageUrl[$i] = Storage::disk('public')->url($image);
+                    $render_imageUrl[$i] = Storage::disk('oss')->url($image);
                 }
                 $product['comments'][$t]['render_imageUrl'] = $render_imageUrl;
             }

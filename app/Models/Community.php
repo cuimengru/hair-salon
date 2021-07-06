@@ -25,7 +25,7 @@ class Community extends Model
     public function getVideoPlayUrlAttribute()
     {
         if ($this->video) {
-            return Storage::disk('public')->url($this->video);
+            return Storage::disk('oss')->url($this->video);
         } else {
             return '';
         }

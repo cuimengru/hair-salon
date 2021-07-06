@@ -46,7 +46,7 @@ class Comment extends Model
     public function getVideoUrlAttribute()
     {
         if ($this->render_video) {
-            return Storage::disk('public')->url($this->render_video);
+            return Storage::disk('oss')->url($this->render_video);
         } else {
             return '';
         }

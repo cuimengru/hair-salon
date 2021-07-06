@@ -26,7 +26,7 @@ class Production extends Model
     public function getThumbUrlAttribute()
     {
         if ($this->thumb) {
-            return Storage::disk('public')->url($this->thumb);
+            return Storage::disk('oss')->url($this->thumb);
         } else {
             return '';
         }
@@ -35,7 +35,7 @@ class Production extends Model
     public function getVideoUrlAttribute()
     {
         if ($this->video) {
-            return Storage::disk('public')->url($this->video);
+            return Storage::disk('oss')->url($this->video);
         } else {
             return "";
         }

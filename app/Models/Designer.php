@@ -36,7 +36,7 @@ class Designer extends Model
     public function getThumbUrlAttribute()
     {
         if ($this->thumb) {
-            return Storage::disk('public')->url($this->thumb);
+            return Storage::disk('oss')->url($this->thumb);
         } else {
             return '';
         }

@@ -26,7 +26,7 @@ class SensitiveWords
             if (!file_exists(storage_path('dict/words.txt'))) {
                 self::getfile();// 如果本地不存在敏感词词库 下载到本地
             } else {
-                $time = Storage::disk('public')->lastModified('dict/words.txt');// public上的文件时间戳
+                $time = Storage::disk('oss')->lastModified('dict/words.txt');// public上的文件时间戳
                 $time2 = Storage::disk('dict')->lastModified('dict/words.txt');// 本地文件时间戳
                 if ($time2 < $time) {
                     self::getfile();// 如果本地文件时间 < 云存储上文件时间,下载文件到本地
@@ -87,7 +87,7 @@ class SensitiveWords
      */
     public static function getfile()
     {
-        $contents = Storage::disk('public')->get('dict/words.txt');// 获取public的敏感词词库
+        $contents = Storage::disk('oss')->get('dict/words.txt');// 获取public的敏感词词库
         Storage::disk('dict')->put('dict/words.txt', $contents, 'public');// 写入本地
     }
 }

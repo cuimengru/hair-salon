@@ -92,7 +92,7 @@ class ProductionController extends Controller
             ->first();
         if($production['many_images']){
             foreach ($production['many_images'] as $k=>$value){
-                $many_imageUrl[$k] = Storage::disk('public')->url($value);
+                $many_imageUrl[$k] = Storage::disk('oss')->url($value);
             }
             $production['many_imageUrl'] = $many_imageUrl;
         }

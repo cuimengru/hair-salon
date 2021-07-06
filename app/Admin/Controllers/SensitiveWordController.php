@@ -88,7 +88,7 @@ class SensitiveWordController extends AdminController
             $words = SensitiveWord::all();
             $words = collect($words)->pluck('word')->flatten()->toArray();
             $str = implode("\n", $words);
-            Storage::disk('public')->put('dict/words.txt', $str, 'public');//上传到public
+            Storage::disk('oss')->put('dict/words.txt', $str, 'public');//上传到public
             Storage::disk('dict')->put('dict/words.txt', $str, 'public');//写入本地
         });
 

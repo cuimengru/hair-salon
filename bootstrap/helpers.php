@@ -12,7 +12,7 @@
  * @param string $disk 磁盘名称
  * @return \App\Http\Resources\ImageResource
  */
-function upload_images($file, $type, $user_id, $disk = "public")
+function upload_images($file, $type, $user_id, $disk = "oss")
 {
     $path = Storage::disk($disk)->putFile($type . '/' . date('Y/m/d'), $file);
     $image = new App\Models\Image();
@@ -91,7 +91,7 @@ function get_array_ids(array $data, string $key = 'id'): array
  */
 function get_vimeo_mp4($video,$type)
 {
-    $path = Storage::disk('public')->putFile($type . '/' . date('Y/m/d'), $video);
+    $path = Storage::disk('oss')->putFile($type . '/' . date('Y/m/d'), $video);
 
     return $path;
 }
