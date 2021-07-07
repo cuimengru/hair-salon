@@ -92,8 +92,8 @@ class DesignerController extends AdminController
         $form = new Form(new Designer());
 
         $form->text('name', __('姓名'))->required();
-        $form->image('thumb', __('封面图片'))->required();
-        $form->multipleImage('many_images','多图上传')->uniqueName()->removable();
+        $form->image('thumb', __('封面图片'))->required()->help('图片尺寸 142*80');
+        $form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*375');
         $form->textarea('description', __('描述'));
         $form->multipleSelect('label_id','设计师标签')->options(DesignerLabel::all()->pluck('name','id'));
         $form->text('position', __('职位'));

@@ -87,7 +87,7 @@ class AdvertController extends AdminController
             }
         })->ajax('/admin/api/advert_categories')->required();
         $form->text('title', __('标题'))->required();
-        $form->image('thumb', __('图片'))->uniqueName()->required();
+        $form->image('thumb', __('图片'))->uniqueName()->required()->help('图片尺寸 345*136');
         $form->textarea('description', __('描述'));
         $form->editor('content', __('内容'))->required();
         $form->url('url', __('跳转链接'));

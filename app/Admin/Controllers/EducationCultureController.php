@@ -94,7 +94,7 @@ class EducationCultureController extends AdminController
         $form = new Form(new Culture());
 
         $form->text('title', __('标题'))->required();
-        $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName();
+        $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片尺寸 345*157');
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName();// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->text('teacher', __('讲师'));
         $form->textarea('description', __('描述'));
