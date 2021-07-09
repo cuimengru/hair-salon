@@ -16,7 +16,7 @@ class UserAddressController extends Controller
         $userAddress->fill($request->all());
         $userAddress->user_id = $request->user()->id;
         $userAddress->save();
-        $data['message'] = "Address Created OK!";
+        $data['message'] = "添加地址成功";
         return response()->json($data, 200);
     }
 
@@ -25,17 +25,22 @@ class UserAddressController extends Controller
     {
         $user_address = UserAddress::findOrFail($request->id);
         $user = $request->user();
-        $address_status = UserAddress::where('user_id','=',$user->id)->where('status','=',1)->first();
-        if($address_status){
-            $address_status->update(['status'=>0]);
-        }
+
         if($user->id != $user_address->user_id){
-            $data['message'] = "This action is unauthorized."; // 验证权限
+            $data['message'] = "此操作是未经授权的."; // 验证权限
             return response()->json($data, 500);
         }
         $attributes = $request->only(['contact_name', 'contact_phone','province','city','district','street','address','status']);// 允许更新的字段
         $user_address->update($attributes);
-        $data['message'] = "Address Updated OK!";
+        $data['message'] = "地址修改成功!";
+        $address_count = UserAddress::where('user_id','=',$user->id)->where('status','=',1)->count();
+        if($address_count > 1){
+            $address_status = UserAddress::where('user_id','=',$user->id)->orderBy('updated_at','asc')->where('status','=',1)->first();
+            //if($address_status){
+            $address_status->update(['status'=>0]);
+            //}
+
+        }
         return response()->json($data, 200);
     }
 
@@ -47,7 +52,7 @@ class UserAddressController extends Controller
             $user_address[$k] = UserAddress::findOrFail($value);
 
             if($user->id != $user_address[$k]->user_id){
-                $data['message'] = "This action is unauthorized."; // 验证权限
+                $data['message'] = "此操作是未经授权的."; // 验证权限
                 return response()->json($data, 500);
             }
 

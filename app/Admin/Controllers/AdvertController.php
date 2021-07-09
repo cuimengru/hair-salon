@@ -79,13 +79,14 @@ class AdvertController extends AdminController
     {
         $form = new Form(new Advert());
 
-        $form->select('category_id',__('广告位置'))->options(function ($id) {
+        /*$form->select('category_id',__('广告位置'))->options(function ($id) {
             $user = AdvertCategory::find($id);
 
             if ($user) {
                 return [$user->id => $user->name];
             }
-        })->ajax('/admin/api/advert_categories')->required();
+        })->ajax('/admin/api/advert_categories')->required();*/
+        $form->select('category_id', __('广告位置'))->options(AdvertCategory::all()->pluck('name','id'))->required();
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('图片'))->uniqueName()->required()->help('图片尺寸 345*136');
         $form->textarea('description', __('描述'));

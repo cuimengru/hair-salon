@@ -24,7 +24,7 @@ class PaymentController extends Controller
         $order = Order::where('user_id','=',$user->id)
             ->where('id','=',$orderId)->first();
         if(!$order){
-            $data['message'] = "Without permission!";
+            $data['message'] = "未经许可!";
             return response()->json($data, 403);
         }
 

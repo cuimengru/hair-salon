@@ -77,7 +77,7 @@ class UserController extends Controller
         $user = User::create([
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
-            'nickname' => $verifyData['phone'],
+            'nickname' => substr_replace($verifyData['phone'],'****',3,4),
             'type' => 0,
         ]);
 

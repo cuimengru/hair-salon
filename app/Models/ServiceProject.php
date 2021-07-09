@@ -13,4 +13,13 @@ class ServiceProject extends Model
     protected $fillable = [
         'name','price'
     ];
+
+    protected $appends = [
+        'service_name'
+    ];
+
+    public function getServiceNameAttribute()
+    {
+        return "{$this->name} {$this->price}";
+    }
 }

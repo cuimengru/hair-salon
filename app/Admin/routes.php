@@ -22,6 +22,8 @@ Route::group([
     $router->resource('idle_products', IdleProductsController::class);//商品信息管理(闲置类型)
     $router->resource('orders', OrdersController::class);//订单管理
     $router->get('orders/{order}', 'OrdersController@show')->name('admin.orders.show');//订单详情
+    //$router->get('orders/{order}/edit', 'OrdersController@edit')->name('admin.orders.edit');//
+    //$router->patch('orders/{order}', 'OrdersController@update')->name('admin.orders.update');//
     $router->post('orders/{order}/ship', 'OrdersController@ship')->name('admin.orders.ship');//订单物流
     $router->post('orders/{order}/refund', 'OrdersController@handleRefund')->name('admin.orders.handle_refund');
     $router->resource('education_cultures', EducationCultureController::class);//教育类文化中心
@@ -61,4 +63,5 @@ Route::group([
     $router->resource('offreserve_orders', OffreserveOrderController::class);//线下预约订单管理
     $router->resource('balance_orders', BalanceReorderController::class); //预约订单余额管理
     $router->resource('versions', VersionsController::class);//客户端版本
+
 });

@@ -5,6 +5,9 @@
       <div class="btn-group float-right" style="margin-right: 10px">
         <a href="{{route('admin.orders.index') }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 列表</a>
       </div>
+      <div class="btn-group pull-right" style="margin-right: 5px">
+        <a href="/admin/orders/{{$order->id}}/edit" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> 编辑</a>
+      </div>
     </div>
   </div>
   <div class="box-body">
@@ -55,7 +58,7 @@
       {{--@if($order->ship_status === \App\Models\Order::SHIP_STATUS_PENDING)
         <tr>
           <td colspan="4">
-            <form action="{{ route('admin.orders.ship', [$order->id]) }}" method="post" class="form-inline">
+            <form action="{{route('admin.orders.ship', [$order->id]) }}" method="post" class="form-inline">
               <!-- 别忘了 csrf token 字段 -->
               {{ csrf_field() }}
               <div class="form-group {{ $errors->has('express_company') ? 'has-error' : '' }}">
@@ -82,7 +85,7 @@
         </tr>
       @else--}}
         <!-- 否则展示物流公司和物流单号 -->
-       {{-- <tr>
+     {{--  <tr>
           <td>物流公司：</td>
           <td>{{ $order->ship_data['express_company'] }}</td>
           <td>物流单号：</td>

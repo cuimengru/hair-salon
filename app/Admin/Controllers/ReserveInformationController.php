@@ -92,7 +92,7 @@ class ReserveInformationController extends AdminController
 
         $form->select('designer_id',__('设计师'))->options(Designer::all()->pluck('name', 'id'))->required();
 
-        $form->multipleSelect('service_project', __('服务项目'))->options(ServiceProject::all()->pluck('name','id'));
+        $form->multipleSelect('service_project', __('服务项目'))->options(ServiceProject::all()->pluck('service_name','id'));
         //$form->text('time', __('可预约时间'));
 
         return $form;

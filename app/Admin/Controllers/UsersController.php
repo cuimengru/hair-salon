@@ -41,7 +41,7 @@ class UsersController extends AdminController
             }
             return $icon; // 标题添加strong标签
         });
-        $grid->column('name', __('姓名'));
+        //$grid->column('name', __('姓名'));
         $grid->column('nickname', __('昵称'));
         $grid->column('phone', __('手机号'));
         //$grid->column('email', __('邮箱'));
@@ -79,7 +79,7 @@ class UsersController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('avatar_url', __('头像'))->image();
-        $show->field('name', __('姓名'));
+        //$show->field('name', __('姓名'));
         $show->field('nickname', __('昵称'));
         $show->field('phone', __('手机号'));
         //$show->field('email', __('邮箱'));
@@ -90,7 +90,12 @@ class UsersController extends AdminController
         $show->field('status', __('审核状态'))->using(['1' => '已审核', '0' => '未审核','-1'=>'审核中']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
-
+        $show->panel()
+            ->tools(function ($tools) {
+                //$tools->disableEdit();
+                //$tools->disableList();
+                $tools->disableDelete();
+            });
         return $show;
     }
 
@@ -103,7 +108,7 @@ class UsersController extends AdminController
     {
         $form = new Form(new User());
         $form->image('avatar', __('头像'));
-        $form->text('name', __('姓名'));
+        //$form->text('name', __('姓名'));
         $form->text('nickname', __('昵称'));
        /* if ($form->isEditing()) {
             $form->text('phone', __('手机号'));
@@ -120,6 +125,12 @@ class UsersController extends AdminController
         $form->text('balance', __('余额'))->default(0.00);
         $form->radioCard('status', __('审核状态'))->options(['0' => '未审核', '1' => '已审核'])->default('0');
         $form->hidden('type')->default(0);
+
+        $form->tools(function (Form\Tools $tools) {
+            //$tools->disableList();  // 去掉`列表`按钮
+            $tools->disableDelete();  // 去掉`删除`按钮
+            //$tools->disableView();  // 去掉`查看`按钮
+        });
         return $form;
     }
 }
