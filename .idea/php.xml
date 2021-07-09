@@ -167,6 +167,7 @@
       <path value="$PROJECT_DIR$/vendor/vimeo/laravel" />
       <path value="$PROJECT_DIR$/vendor/yansongda/supports" />
       <path value="$PROJECT_DIR$/vendor/yansongda/pay" />
+      <path value="$PROJECT_DIR$/vendor/ichynul/iframe-tabs" />
     </include_path>
   </component>
   <component name="PhpUnit">

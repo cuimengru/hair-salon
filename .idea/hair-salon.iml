@@ -46,6 +46,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/hamcrest/hamcrest-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ichynul/configx" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ichynul/iframe-tabs" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ichynul/row-table" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/imnpc/flysystem-aliyun-oss" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image" />

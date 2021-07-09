@@ -24,3 +24,10 @@ Encore\Admin\Form::forget(['map']);
     $navbar->right(new Actions\ClearCache());
     $navbar->left(new Nav\Dropdown());
 });*/
+/*Encore\Admin\Form::init(function ($form) {
+    $form->tools(function ($tools) {
+        $tools->disableDelete();
+        $tools->disableView();
+        $tools->disableList();
+    });
+});*/

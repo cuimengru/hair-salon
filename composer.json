@@ -14,6 +14,8 @@
         "ghost/google-authenticator": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "ichynul/configx": "^1.4",
+        "ichynul/iframe-tabs": "^1.3",
+        "ichynul/row-table": "^1.1",
         "imnpc/flysystem-aliyun-oss": "^1.3",
         "kra8/laravel-snowflake": "^2.0",
         "laminas/laminas-diactoros": "^2.6",
