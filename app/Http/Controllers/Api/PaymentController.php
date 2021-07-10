@@ -420,7 +420,7 @@ class PaymentController extends Controller
             $user = User::where('phone', $phone)->first();
 
             //创建充值记录
-            $balanceRecord = BalanceRecord::create([
+            BalanceRecord::create([
                 'user_id' => $user->id,
                 'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
                 'payment_method' => 2, // 支付方式
@@ -440,7 +440,7 @@ class PaymentController extends Controller
                 return app('reservealipay')->success();
             }
 
-            $balance = $data->total_amount + $user->balance;
+            $balance = $balance_jilu->total_amount + $user->balance;
 
             $user->update([
                 'balance' => $balance,

@@ -66,18 +66,29 @@ class UserController extends Controller
         $verifyData = \Cache::get($request->verification_key);
 
         if (!$verifyData) {
-            abort(403, '验证码已失效');
+            $data['message'] = '验证码已失效！';
+            return response()->json($data, 403);
+            //abort(403, '验证码已失效');
         }
 
         if(!hash_equals($verifyData['code'], $request->verification_code)){
             // 返回401
             throw new AuthenticationException('验证码错误');
         }
+
+        if (strlen($request->password)<6){
+            $data['message'] = '密码最低6位！';
+            return response()->json($data, 403);
+        }
+
         $user1 = User::where('phone','=',$verifyData['phone'])->first();
         if($user1){
             $data['message'] = '用户已注册过！';
             return response()->json($data, 403);
         }
+
+
+
         $user = User::create([
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
@@ -169,7 +180,10 @@ class UserController extends Controller
             'password' => 'required|string|min:6|confirmed', // 需要字段 password_confirmation
         ]);
         $user = $request->user();
-
+        if (strlen($request->password) < 6){
+            $data['message'] = '密码最低6位！';
+            return response()->json($data, 403);
+        }
         $verifyData = \Cache::get($request->verification_key);
 
         if (!$verifyData) {

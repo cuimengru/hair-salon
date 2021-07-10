@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Designer;
+use App\Models\ReserveInformation;
 use App\Models\User;
 use App\Models\UserLikeDesigner;
 use Illuminate\Http\Request;
@@ -113,6 +114,14 @@ class DesignersController extends Controller
         }else{
             $designer['favor_designer'] = 0; //未收藏
         }
+
+        $reserve = ReserveInformation::where('designer_id','=',$Id)->first();
+        if($reserve){
+            $designer['is_reserve'] = 1; //可以预约
+        }else{
+            $designer['is_reserve'] = 0; //不能预约
+        }
+
         return $designer;
     }
 
