@@ -435,10 +435,10 @@ class PaymentController extends Controller
             }
             $balance_jilu = BalanceRecord::where('no', $data->out_trade_no)->first();
             // 如果这笔订单的状态已经是已支付
-            if ($balance_jilu->paid_at) {
+            /*if ($balance_jilu->paid_at) {
                 // 返回数据给支付宝
                 return app('reservealipay')->success();
-            }
+            }*/
 
             $balance = $balance_jilu->total_amount + $user->balance;
 
