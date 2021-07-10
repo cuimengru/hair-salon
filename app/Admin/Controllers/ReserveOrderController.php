@@ -30,7 +30,7 @@ class ReserveOrderController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->like('designer.name', '设计师');
-            $filter->like('service_project', '服务项目');
+            $filter->like('service.name', '服务项目');
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();

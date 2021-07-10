@@ -109,9 +109,9 @@ class ProductionController extends AdminController
         $form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*668');
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName();// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->textarea('description', __('描述'));
-        $form->editor('content', __('内容'))->required();
+        $form->editor('content', __('内容'));
         $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0');
-        $form->number('rating', __('浏览次数'))->default(0);
+        //$form->number('rating', __('浏览次数'))->default(0);
         $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],

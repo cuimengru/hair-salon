@@ -120,7 +120,7 @@ class ReserveOrder extends Model
     }
     public function service()
     {
-        return $this->belongsTo(ServiceProject::class);
+        return $this->belongsTo(ServiceProject::class,'service_project');
     }
 
     public static function findAvailableNo()

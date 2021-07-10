@@ -6,6 +6,7 @@ use App\Events\OrderPaid;
 use App\Events\ReserveOrderPaid;
 use App\Events\UserOrderPaid;
 use App\Http\Controllers\Controller;
+use App\Models\BalanceRecord;
 use App\Models\Designer;
 use App\Models\Order;
 use App\Models\ReserveOrder;
@@ -390,7 +391,7 @@ class PaymentController extends Controller
             $alipayorder = [
                 'out_trade_no' => $user->phone.time(),
                 'total_amount' => $request->balance,
-                'subject'      => '充值余额的订单：'.$user->no,
+                'subject'      => '充值余额的订单：'.$user->phone.time(),
             ];
             $user['datas'] = app('balancealipay')->app($alipayorder);
 
@@ -417,19 +418,35 @@ class PaymentController extends Controller
             // $data->out_trade_no 拿到订单流水号，并在数据库中查询
             $phone = substr($data->out_trade_no,0,11);
             $user = User::where('phone', $phone)->first();
+
+            //创建充值记录
+            $balanceRecord = BalanceRecord::create([
+                'user_id' => $user->id,
+                'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+                'payment_method' => 2, // 支付方式
+                'payment_no'     => $data->trade_no, // 支付宝订单号
+                'total_amount' => $data->total_amount,
+                'original_balance' => $user->balance,
+                'no' => $data->out_trade_no,
+            ]);
             // 正常来说不太可能出现支付了一笔不存在的订单，这个判断只是加强系统健壮性。
             if (!$user) {
                 return 'fail';
             }
+            $balance_jilu = BalanceRecord::where('no', $data->out_trade_no)->first();
             // 如果这笔订单的状态已经是已支付
-            /*if ($user->paid_at) {
+            if ($balance_jilu->paid_at) {
                 // 返回数据给支付宝
                 return app('reservealipay')->success();
-            }*/
+            }
+
             $balance = $data->total_amount + $user->balance;
+
             $user->update([
                 'balance' => $balance,
+                //'original_balance' => $balance,
             ]);
+
             $this->balanceAfterPaid($user);
 
         }catch (\Exception $e) {

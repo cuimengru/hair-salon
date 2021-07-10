@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Designer;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\ReserveOrder;
 use App\Models\User;
 use App\Services\SensitiveWords;
@@ -87,6 +88,11 @@ class CommentController extends Controller
             // 将订单标记为已评价
             $order->update(['reviewed' => true]);
         }
+        $productId = Comment::where('product_id','=',$orderItem->product_id)->count();
+        $product = Product::where('id','=',$orderItem->product_id)->first();
+        $product->update([
+            'review_count' => $productId,
+        ]);
         $data['message'] = "评价成功！";
         return response()->json($data, 200);
     }
@@ -157,6 +163,12 @@ class CommentController extends Controller
             // 将订单标记为已评价
             $order->update(['reviewed' => true]);
         }
+        $designer_id = Comment::where('designer_id','=',$order->designer_id)->count();
+        $designer = Designer::where('id','=',$order->designer_id)->first();
+        $designer->update([
+            'rating' => $designer_id,
+        ]);
+
         $data['message'] = "评价成功！";
         return response()->json($data, 200);
     }

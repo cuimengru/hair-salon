@@ -94,16 +94,17 @@ class ReserveInformationController extends Controller
             //订单管理
             if($workTime['list'][$day]['time']){
                 foreach ($workTime['list'][$day]['time'] as $k=>$value){
-                    $workTime['list'][$day]['time'][$k]['order'] = ReserveOrder::where('designer_id','=',$designerId)
+                    /*$workTime['list'][$day]['time'][$k]['order'] = ReserveOrder::where('designer_id','=',$designerId)
                         ->where('date','=',$day_format)
                         ->where('time','=',$value['time'])
-                        ->where('status','=',3)->first();
-                    if($workTime['list'][$day]['time'][$k]['order']){
+                        ->where('status','=',3)->first();*/
+
+                    /*if(!empty($workTime['list'][$day]['time'][$k]['order'])){
                         $workTime['list'][$day]['time'][$k]['is_reserve'] = 0;//该时间点不能预约
                     }else{
                         $workTime['list'][$day]['time'][$k]['is_reserve'] = 1;//该时间点能预约
-                    }
-                    unset($workTime['list'][$day]['time'][$k]['order']);
+                    }*/
+                    //unset($workTime['list'][$day]['time'][$k]['order']);
                     //时间
                     $time = $day_format . ' ' . $value['time'];
 
@@ -113,8 +114,20 @@ class ReserveInformationController extends Controller
 
                         //$workTime['list'][$day][$k]['is_reserve'] = 1;//该时间点能预约
                         if($day_now_time <= $time){
-                            $workTime['list'][$day]['time'][$k]['can_choose'] = 1;
-                            $workTime['list'][$day]['time'][$k]['is_reserve'] = 1;
+                            $workTime['list'][$day]['time'][$k]['order'] = ReserveOrder::where('designer_id','=',$designerId)
+                                ->where('date','=',$day_format)
+                                ->where('time','=',$value['time'])
+                                ->where('status','=',3)->first();
+                            //$workTime['list'][$day]['time'][$k]['can_choose'] = 1;
+                            //$workTime['list'][$day]['time'][$k]['is_reserve'] = 1;
+                            if(!empty($workTime['list'][$day]['time'][$k]['order'])){
+                                $workTime['list'][$day]['time'][$k]['is_reserve'] = 0;//该时间点不能预约
+                                $workTime['list'][$day]['time'][$k]['can_choose'] = 0;
+                            }else{
+                                $workTime['list'][$day]['time'][$k]['is_reserve'] = 1;//该时间点能预约
+                                $workTime['list'][$day]['time'][$k]['can_choose'] = 1;
+                            }
+                            unset($workTime['list'][$day]['time'][$k]['order']);
                         }else{
                             $workTime['list'][$day]['time'][$k]['can_choose'] = 0;
                             $workTime['list'][$day]['time'][$k]['is_reserve'] = 0;

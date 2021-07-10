@@ -119,10 +119,17 @@ class ProductionController extends Controller
                     'type' => 4,
                 ]);
             }
+
+
         }else{
             $production['follows_production'] = 0; //未收藏
         }
-
+        //浏览次数
+        $record = UserLikeDesigner::where('production_id','=',$Id)->count();
+        $production_total = Production::where('id','=',$Id)->first();
+        $production_total->update([
+            'rating' => $record,
+        ]);
 
         return $production;
     }

@@ -97,7 +97,7 @@ class FashionController extends AdminController
         $form->image('thumb', __('封面图片'))->uniqueName()->required()->help('图片尺寸 90*90');
         //$form->file('video', __('视频'));
         $form->textarea('description', __('描述'));
-        $form->editor('content', __('内容'))->required();
+        $form->editor('content', __('内容'));
         $form->number('order', __('排序'))->default(0)->help('越小越靠前');
         $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],

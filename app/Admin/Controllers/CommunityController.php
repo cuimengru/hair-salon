@@ -97,7 +97,12 @@ class CommunityController extends AdminController
         $show->field('status', __('状态'))->using(['1' => '已审核', '0' => '未审核']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
-
+        $show->panel()
+            ->tools(function ($tools) {
+                //$tools->disableEdit();
+                //$tools->disableList();
+                $tools->disableDelete();
+            });
         return $show;
     }
 

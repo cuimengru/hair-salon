@@ -411,7 +411,7 @@ return [
             'tabs' => [
                 'website' => '基本设置',
                 'upload' => '文件上传',
-                'app' => 'APP',
+                //'app' => 'APP',
                 'order' => '设置未支付订单的关闭时间'
             ],
             // Whether check group permissions.

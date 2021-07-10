@@ -122,7 +122,8 @@ class UsersController extends AdminController
         }*/
         $form->textarea('introduce', __('简介'));
         $form->text('integral', __('积分'))->default(0.00);
-        $form->text('balance', __('余额'))->default(0.00);
+        //$form->text('original_balance', __('原始余额'))->readonly();
+        $form->text('balance', __('余额'))->readonly();
         $form->radioCard('status', __('审核状态'))->options(['0' => '未审核', '1' => '已审核'])->default('0');
         $form->hidden('type')->default(0);
 

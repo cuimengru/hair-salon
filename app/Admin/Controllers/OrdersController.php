@@ -33,11 +33,18 @@ class OrdersController extends AdminController
         $grid = new Grid(new Order());
 
         $grid->filter(function ($filter) {
+            $filter->like('user.nickname', '用户昵称');
+            $filter->like('user.phone', '用户手机号');
             $filter->like('no', '订单流水号');
             $filter->in('ship_status','物流')->checkbox([
                 '1'    => '未发货',
                 '2'    => '已发货',
                 '3'    => '已收货',
+            ]);
+            $filter->in('payment_method','支付方式')->checkbox([
+                '1'    => '余额',
+                '2'    => '支付宝',
+                '3'    => '微信',
             ]);
             $filter->between('paid_at','支付时间')->datetime();
         });

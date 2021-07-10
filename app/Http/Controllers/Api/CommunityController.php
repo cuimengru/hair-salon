@@ -85,13 +85,13 @@ class CommunityController extends Controller
             if ($value['many_images']) {
                 foreach ($value['many_images'] as $i => $image) {
                     if($image){
-                        $many_imageUrl[$i] = Storage::disk('oss')->url($image);
+                        $many_imageUrl[$k][$i] = Storage::disk('oss')->url($image);
                     }else{
-                        $many_imageUrl[$i] = null;
+                        $many_imageUrl[$k][$i] = null;
                     }
 
                 }
-                $community['community'][$k]['many_imageUrl'] = array_filter($many_imageUrl);
+                $community['community'][$k]['many_imageUrl'] = array_filter($many_imageUrl[$k]);
             }
             $user = User::findOrFail($value['user_id']);
             $community['community'][$k]['user_name'] = $user->nickname;

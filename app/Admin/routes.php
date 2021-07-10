@@ -63,5 +63,5 @@ Route::group([
     $router->resource('offreserve_orders', OffreserveOrderController::class);//线下预约订单管理
     $router->resource('balance_orders', BalanceReorderController::class); //预约订单余额管理
     $router->resource('versions', VersionsController::class);//客户端版本
-
+    $router->resource('balance_records', BalanceRecordController::class); //余额充值管理
 });

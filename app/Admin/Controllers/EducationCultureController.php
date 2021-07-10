@@ -98,7 +98,7 @@ class EducationCultureController extends AdminController
         //$form->file('video', __('视频'))->move('files/articlevideo')->uniqueName();// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->text('teacher', __('讲师'));
         $form->textarea('description', __('描述'));
-        $form->editor('content', __('内容'))->required();
+        $form->editor('content', __('内容'));
         $form->datetime('start_time',__('开始时间'))->format('YYYY-MM-DD');
         $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],

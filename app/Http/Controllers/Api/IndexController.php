@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdvertResource;
 use App\Models\Advert;
+use App\Models\BalanceRecord;
 use App\Models\Product;
 use App\Models\Production;
 use App\Models\ProductLabel;
@@ -47,5 +48,24 @@ class IndexController extends Controller
         $jinzhido['email'] = config('website.email');
         $jinzhido['phone'] = config('website.phone');
         return $jinzhido;
+    }
+
+    //充值记录列表
+    public function balancelist(Request $request)
+    {
+        $user = $request->user();
+        $balance = BalanceRecord::where('user_id','=',$user->id)
+            ->orderBy('paid_at','desc')
+            ->whereIn('payment_method',[2,3])
+            ->paginate(5);
+        foreach ($balance as $k=>$value){
+            if($value['payment_method'] == 2){
+                $balance[$k]['payment_name'] = '支付宝';
+            }elseif ($value['payment_method'] == 3){
+                $balance[$k]['payment_name'] = '微信';
+            }
+            $balance[$k]['status'] = '充值';
+        }
+        return $balance;
     }
 }

@@ -170,7 +170,7 @@ Route::prefix('v1')
                     Route::delete('products/orders/{id}', [ProductOrderController::class, 'delete']);//取消商品订单
                     Route::delete('reserves/orders/{id}', [ReserveInformationController::class, 'delete']);//取消预约订单
                     Route::get('balance', [PaymentController::class, 'balanceStore']);//充值余额
-
+                    Route::get('balance/records/list', [IndexController::class, 'balancelist']);//充值记录列表
 
                 });
             });

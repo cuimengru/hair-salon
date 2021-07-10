@@ -20,10 +20,19 @@ class CartController extends Controller
 
         // 从数据库中查询该商品是否已经在购物车中
         if($cart = $user->cartItems()->where('product_sku_id',$skuId)->first()){
-            //如果存在则直接叠加商品数量
-            $cart->update([
-                'amount' => $cart->amount + $amount,
-            ]);
+            $productSku = ProductSku::where('id','=',$skuId)->first();
+            if($productSku->stock == 1 ){
+                if($cart){
+                    $data['message'] = "库存为1，已经添加，不能再添加了!";
+                    return response()->json($data, 403);
+                }
+            }else{
+                //如果存在则直接叠加商品数量
+                $cart->update([
+                    'amount' => $cart->amount + $amount,
+                ]);
+            }
+
         }else{
             // 否则创建一个新的购物车记录
             $cart = new CartItem(['amount' => $amount]);
