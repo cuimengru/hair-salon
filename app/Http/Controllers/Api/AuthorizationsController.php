@@ -22,7 +22,9 @@ class AuthorizationsController extends Controller
         try {
             return $server->respondToAccessTokenRequest($serverRequest,new Psr7Response)->withStatus(201);
         }catch (OAuthServerException $e){
-            throw new AuthenticationException($e->getMessage());
+            //throw new AuthenticationException($e->getMessage());
+            $data['message'] = "账户名或登录密码不正确，请重新输入。";
+            return response()->json($data, 403);
         }
     }
 

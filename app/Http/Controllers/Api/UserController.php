@@ -73,7 +73,11 @@ class UserController extends Controller
             // 返回401
             throw new AuthenticationException('验证码错误');
         }
-
+        $user1 = User::where('phone','=',$verifyData['phone'])->first();
+        if($user1){
+            $data['message'] = '用户已注册过！';
+            return response()->json($data, 403);
+        }
         $user = User::create([
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),

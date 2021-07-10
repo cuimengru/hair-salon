@@ -76,7 +76,7 @@ class DesignersCommentController extends AdminController
         $show = new Show(Comment::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('user.name', __('用户'));
+        $show->field('user.nickname', __('用户'));
         $show->field('reserveorder.no', __('预约订单号'));
         $show->field('designer.name', __('设计师'));
         $show->field('rate', __('评分'));

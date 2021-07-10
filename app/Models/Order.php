@@ -59,7 +59,7 @@ class Order extends Model
 
     protected $fillable = [
         'no','address','total_amount','remark','paid_at','payment_method','payment_no','status','refund_no',
-        'closed','reviewed','ship_status','ship_data','extra','refund_status','balance'
+        'closed','reviewed','ship_status','ship_data','extra','refund_status','balance','refund_number'
     ];
     protected $dates = [
         'paid_at',

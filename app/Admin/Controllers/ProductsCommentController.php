@@ -28,14 +28,14 @@ class ProductsCommentController extends AdminController
     {
         $grid = new Grid(new Comment());
         $grid->filter(function ($filter) {
-            $filter->like('user.name', __('用户'));
+            $filter->like('user.nickname', __('用户'));
             $filter->like('order.no', '订单编号');
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();
         //$grid->column('type', __('Type'));
         $grid->column('order.no', __('订单编号'));
-        $grid->column('user.name', __('用户'));
+        $grid->column('user.nickname', __('用户'));
         $grid->column('product.title', __('商品'));
         $grid->column('product_sku_id', __('SKU名称'))->display(function ($value) {
             $product_sku = ProductSku::where('id','=',$value)->first();
@@ -78,7 +78,7 @@ class ProductsCommentController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('order.no', __('订单编号'));
-        $show->field('user.name', __('用户'));
+        $show->field('user.nickname', __('用户'));
         $show->field('product.title', __('商品'));
         $show->field('product_sku_id', __('SKU名称'))->as(function ($value) {
             $product_sku = ProductSku::where('id','=',$value)->first();
