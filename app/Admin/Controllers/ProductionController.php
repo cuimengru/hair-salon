@@ -106,7 +106,7 @@ class ProductionController extends AdminController
         })->ajax('/admin/api/designer')->required();*/
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片尺寸 108*108');
-        $form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*668');
+        //$form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*668');
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName();// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->textarea('description', __('描述'));
         $form->editor('content', __('内容'));
