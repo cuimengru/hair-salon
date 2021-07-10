@@ -107,9 +107,9 @@ class ProductionController extends AdminController
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片尺寸 108*108');
         //$form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*668');
-        $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName();// 使用随机生成文件名 (md5(uniqid()).extension)
+        $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName()->help('选择视频类型，只需在此处添加视频即可');// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->textarea('description', __('描述'));
-        $form->editor('content', __('内容'));
+        $form->editor('content', __('图文类型的内容'))->help('选择图文类型，只需在此处添加图片和视频即可');
         $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0');
         //$form->number('rating', __('浏览次数'))->default(0);
         $states1 = [
