@@ -61,7 +61,7 @@ class UserController extends Controller
     }
 
     //用户注册
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
         $verifyData = \Cache::get($request->verification_key);
 
@@ -77,7 +77,12 @@ class UserController extends Controller
         }
 
         if (strlen($request->password)<6){
-            $data['message'] = '密码最低6位！';
+            $data['message'] = '密码至少为6个字符。';
+            return response()->json($data, 403);
+        }
+
+        if (empty($request->verification_key)){
+            $data['message'] = '短信验证码 key 不能为空。';
             return response()->json($data, 403);
         }
 
