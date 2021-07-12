@@ -136,6 +136,12 @@ class ProductOrderController extends Controller
                         }else{
                             $reserveOrder[$i]['button_text'] = ['已评价'];
                         }
+                    }elseif($item['refund_status'] == 8){
+                        $reserveOrder[$i]['status_text'] = "交易关闭";
+                        $reserveOrder[$i]['button_text'] = ['退款成功'];
+                    }elseif($item['refund_status'] == 9){
+                        $reserveOrder[$i]['status_text'] = "交易关闭";
+                        $reserveOrder[$i]['button_text'] = ['退款失败'];
                     }
 
                 }
@@ -195,6 +201,12 @@ class ProductOrderController extends Controller
                         }else{
                             $reserveOrder[$i]['button_text'] = ['已评价'];
                         }
+                    }elseif($item['refund_status'] == 8){
+                        $reserveOrder[$i]['status_text'] = "交易关闭";
+                        $reserveOrder[$i]['button_text'] = ['退款成功'];
+                    }elseif($item['refund_status'] == 9){
+                        $reserveOrder[$i]['status_text'] = "交易关闭";
+                        $reserveOrder[$i]['button_text'] = ['退款失败'];
                     }
 
                 }

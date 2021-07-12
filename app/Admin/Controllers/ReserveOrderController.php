@@ -3,8 +3,10 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Designer;
+use App\Models\Order;
 use App\Models\ReserveOrder;
 use App\Models\ServiceProject;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -31,6 +33,11 @@ class ReserveOrderController extends AdminController
         $grid->filter(function ($filter) {
             $filter->like('designer.name', '设计师');
             $filter->like('service.name', '服务项目');
+            $filter->in('refund_status','退款状态')->checkbox([
+                '5'    => '未退款',
+                '8'    => '退款成功',
+                '9'    => '退款失败',
+            ]);
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();
@@ -115,6 +122,7 @@ class ReserveOrderController extends AdminController
         $show->field('payment_method', __('支付方式'))->using(['1' => '余额', '2' => '支付宝','3'=>'微信']);
         $show->field('paid_at', __('支付时间'));
         $show->field('status', __('订单状态'))->using(['1' => '未支付', '2' => '支付中','3'=>'已支付','4'=>'取消','5'=>'退款成功']);
+        $show->field('refund_status', __('退款状态'))->using(['5' => '未退款', '8' => '退款成功', '9'=> '退款失败',]);
         $show->field('ship_status', __('订单是否结束'))->using(['1' => '已结束', '0' => '未结束']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
@@ -153,8 +161,31 @@ class ReserveOrderController extends AdminController
                 //'6'=>Order::$refundStatusMap['6'],
                 '5'=>ReserveOrder::$refundStatusMap['5'],
                 '8'=>ReserveOrder::$refundStatusMap['8'],
-                //'9'=>ReserveOrder::$refundStatusMap['9'],
-            ])->default(5)->help('这只是一个退款状态，退款金额需要店家自己退给用户');
+                '9'=>ReserveOrder::$refundStatusMap['9'],
+            ])->default(5)->help('直接退款到用户余额');
+        $form->radioCard('refund_status', __('是否同意退款'))
+            ->options([
+                '8'=>'同意',
+                '9'=>'不同意',
+            ]);
+
+        $form->hidden('refund_number');
+        $form->saved(function (Form $form) {
+            if($form->model()->refund_number == 0){
+                if($form->model()->refund_status==8){
+                    $order = ReserveOrder::find($form->model()->id);
+                    //退款到用户余额
+                    $user = User::find($order->user_id);
+                    $user->balance = $user->balance + $order->money;
+                    $user->save();
+                    $order->update([
+                        'refund_number' => 1,
+                    ]);
+                }
+            }
+
+        });
+
         $form->tools(function (Form\Tools $tools) {
             // Disable `Delete` btn.
             $tools->disableDelete();
