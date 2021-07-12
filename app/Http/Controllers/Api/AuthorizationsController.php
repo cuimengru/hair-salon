@@ -17,7 +17,7 @@ class AuthorizationsController extends Controller
     use PassportToken;
 
     //登陆
-    public function store(AuthorizationRequest $originRequest, AuthorizationServer $server, ServerRequestInterface $serverRequest)
+    public function store(AuthorizationServer $server, ServerRequestInterface $serverRequest)
     {
         try {
             return $server->respondToAccessTokenRequest($serverRequest,new Psr7Response)->withStatus(201);
