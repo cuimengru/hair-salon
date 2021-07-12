@@ -64,7 +64,9 @@ class Order extends Model
     protected $dates = [
         'paid_at',
     ];
-
+    protected $appends = [
+        'remaining_balance',
+    ];
     /**
      * The attributes that should be cast to native types.
      *
@@ -77,6 +79,16 @@ class Order extends Model
         'ship_data' => 'json',
         'extra'=>'json',
     ];
+
+    // 返回剩下余额
+    public function getRemainingBalanceAttribute()
+    {
+        if ($this->balance) {
+            return number_format(($this->balance) - ($this->total_amount),2);
+        } else {
+            return '';
+        }
+    }
 
     protected static function boot()
     {

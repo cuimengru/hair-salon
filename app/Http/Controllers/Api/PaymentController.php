@@ -45,10 +45,11 @@ class PaymentController extends Controller
                     $payment_id = Order::PAYMENT_METHOD_BANLANCE;
                     $balance = $order->total_amount;// 使用余额支付本订单
                     $user->balance = $user->balance - $balance;
+                    //$user->original_balance = $user->balance;
                     $user->update();
                     // 更新订单付款信息
                     $order->update([
-                        'balance'=>$balance,
+                        'balance'=>$user->balance, //原余额
                         'total_amount' => $balance,
                         'status' => Order::STATUS_PAID,// 更新订单状态
                         'payment_method' => $payment_id,
@@ -128,7 +129,7 @@ class PaymentController extends Controller
                     $user->update();
                     // 更新订单付款信息
                     $order->update([
-                        'balance'=>$balance,
+                        'balance'=>$user->balance, //原余额
                         'total_amount' => $balance,
                         'status' => ReserveOrder::STATUS_PAID,// 更新订单状态
                         'payment_method' => $payment_id,

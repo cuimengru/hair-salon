@@ -17,7 +17,7 @@ class BalanceController extends AdminController
      *
      * @var string
      */
-    protected $title = '余额管理';
+    protected $title = '商品余额变化';
 
     /**
      * Make a grid builder.
@@ -36,6 +36,7 @@ class BalanceController extends AdminController
         //$grid->column('no', __('No'));
         $grid->column('user.nickname', __('用户'));
         $grid->column('user.phone', __('手机号'));
+        $grid->column('balance', __('原余额'));
         $grid->column('total_amount', __('余额变化'))->display(function ($value) {
             if($value>0){
                 return '-'.$value;
@@ -43,6 +44,7 @@ class BalanceController extends AdminController
                 return $value;
             }
         });
+        $grid->column('remaining_balance', __('变化后余额'));
         $grid->column('paid_at', __('创建时间'));
         $grid->model()->where('payment_method', '=',1);
         // 禁用创建按钮，后台不需要创建订单

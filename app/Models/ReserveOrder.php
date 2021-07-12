@@ -65,7 +65,7 @@ class ReserveOrder extends Model
     ];
 
     protected $appends = [
-        'reserve_date','service_name'
+        'reserve_date','service_name','remaining_balance'
     ];
 
     //预约时间
@@ -83,6 +83,16 @@ class ReserveOrder extends Model
            $service_project = ServiceProject::find($this->service_project);
            return ($service_project->name).'&nbsp;&nbsp;&nbsp;&nbsp;  ¥'.($service_project->price);
         }else{
+            return '';
+        }
+    }
+
+    // 返回剩下余额
+    public function getRemainingBalanceAttribute()
+    {
+        if ($this->balance) {
+            return number_format(($this->balance) - ($this->money),2);
+        } else {
             return '';
         }
     }
