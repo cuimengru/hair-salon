@@ -84,7 +84,7 @@ class RefundOrderController extends AdminController
                 $batch->disableDelete();
             });
         });
-        $grid->model()->where('refund_status', '=',8);
+        $grid->model()->where('refund_status', '=',7);
 
         return $grid;
     }

@@ -186,7 +186,7 @@ class UserController extends Controller
         ]);
         $user = $request->user();
         if (strlen($request->password) < 6){
-            $data['message'] = '密码最低6位！';
+            $data['message'] = '密码至少为6个字符。';
             return response()->json($data, 403);
         }
         $verifyData = \Cache::get($request->verification_key);
@@ -211,11 +211,24 @@ class UserController extends Controller
     }
 
     //编辑用户
-    public function update(UserRequest $request)
+    public function update(Request $request)
     {
         $user = $request->user();
 
         $attributes = $request->only(['phone','nickname','gender']);
+        if($user->phone == $request->phone){
+            $data['message'] = "手机号已经存在";
+            return response()->json($data, 403);
+        }
+        if (strlen($request->nickname) < 3 || strlen($request->nickname) >25){
+            $data['message'] = "昵称必须介于 3 - 25 个字符之间。";
+            return response()->json($data, 403);
+        }
+
+        if($user->nickname == $request->nickname){
+            $data['message'] = "昵称已被占用，请重新填写。";
+            return response()->json($data, 403);
+        }
         if($request->nickname){
             $bad_nickname = SensitiveWords::getBadWord($request->nickname);
             if(!empty($bad_nickname)){
