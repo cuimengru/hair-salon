@@ -48,6 +48,10 @@ class ProductController extends Controller
                 ->get();
             foreach ($product['recommend_product'] as $k=>$value){
                 $product['recommend_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+                if($value['original_price'] == 0.00){
+                    $product['recommend_product'][$k]['original_price'] = null;
+                }
+                $product['recommend_product'][$k]['product_sku'] = ProductSku::where('product_id','=',$value['id'])->count();
             }
         }
 
@@ -64,6 +68,10 @@ class ProductController extends Controller
             ->paginate(8);
         foreach ($product['choice_product'] as $k=>$value){
             $product['choice_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+            if($value['original_price'] == 0.00){
+                $product['choice_product'][$k]['original_price'] = null;
+            }
+            $product['choice_product'][$k]['product_sku'] = ProductSku::where('product_id','=',$value['id'])->count();
         }
 
         return $product;
@@ -84,6 +92,10 @@ class ProductController extends Controller
             ->paginate(8);
         foreach ($product as $k=>$value){
             $product[$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+            if($value['original_price'] == 0.00){
+                $product[$k]['original_price'] = null;
+            }
+            $product[$k]['product_sku'] = ProductSku::where('product_id','=',$value['id'])->count();
         }
 
         return $product;
@@ -192,6 +204,10 @@ class ProductController extends Controller
             ->paginate(8);
         foreach ($product as $k=>$value){
             $product[$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+            if($value['original_price'] == 0.00){
+                $product[$k]['original_price'] = null;
+            }
+            $product[$k]['product_sku'] = ProductSku::where('product_id','=',$value['id'])->count();
         }
 
         return $product;

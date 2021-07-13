@@ -9,6 +9,7 @@ use App\Models\BalanceRecord;
 use App\Models\Product;
 use App\Models\Production;
 use App\Models\ProductLabel;
+use App\Models\ProductSku;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -35,6 +36,10 @@ class IndexController extends Controller
             ->get();
         foreach ($product as $k=>$value){
             $product[$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+            if($value['original_price'] == 0.00){
+                $product[$k]['original_price'] = null;
+            }
+            $product[$k]['product_sku'] = ProductSku::where('product_id','=',$value['id'])->count();
         }
         $index['product'] = $product;
         return $index;
