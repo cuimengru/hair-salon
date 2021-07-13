@@ -308,6 +308,11 @@ class UserController extends Controller
             // 返回401
             throw new AuthenticationException('验证码错误');
         }
+
+        if($verifyData['phone'] != $request->phone){
+            $data['message'] = '收到的验证码与手机号不匹配！';
+            return response()->json($data, 403);
+        }
         if ($user) {
             $user->update(['phone' => $verifyData['phone']]);
             $data['message'] = "手机号修改成功";

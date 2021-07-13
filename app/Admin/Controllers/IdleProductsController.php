@@ -114,7 +114,7 @@ class IdleProductsController extends AdminController
         $form->editor('description', __('商品描述'))->rules('required');
         $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('1')->required();
         $form->text('rating', __('评分'))->default(5.0);
-        $form->decimal('price', __('商品现价'))->default(0.00);
+        //$form->decimal('price', __('商品现价'))->default(0.00);
         $form->decimal('original_price', __('商品原价'))->default(0.00);
         $form->radio('package_mail', '是否包邮')->options(['1' => '是', '0'=> '否'])->default(1)->required();
         $form->decimal('postage','邮费')->default(0)->required();
@@ -134,6 +134,10 @@ class IdleProductsController extends AdminController
             $form->text('description', '颜色分类 描述');
             $form->text('price', '单价')->rules('required|numeric|min:0.01');
             $form->text('stock', '剩余库存')->rules('required|integer|min:0');
+        });
+        // 定义事件回调，当模型即将保存时会触发这个回调
+        $form->saving(function (Form $form) {
+            $form->model()->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: 0;
         });
         $form->hidden('type')->default(3);
         $form->tools(function (Form\Tools $tools) {
