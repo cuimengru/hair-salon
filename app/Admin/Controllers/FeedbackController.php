@@ -77,7 +77,7 @@ class FeedbackController extends AdminController
 
             return $images;
         });
-
+        $show->field('created_at', __('创建时间'));
         return $show;
     }
 
