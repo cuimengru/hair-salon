@@ -120,7 +120,7 @@ class ProductionController extends AdminController
             0 => '否',
             1 => '是'
         ])->required()->help('如果选择 是，下面的封面长图必须填上，否则页面报错');
-        $form->image('rectangle_image','封面长图')->rules('image')->uniqueName()->help('图片参考尺寸 175*75 比例 7:3，如果需要推荐到首页，需要上传封面长图');
+        $form->image('rectangle_image','封面长图')->rules('image')->uniqueName()->help('前端首页右边的长方形图片参考尺寸 175*75 比例 7:3，如果需要推荐到首页，需要上传封面长图，前端首页左边的正方形的图片参考尺寸还是108*108');
         //$form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*668');
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName()->help('选择视频类型，只需在此处添加视频即可');// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->textarea('description', __('描述'));
