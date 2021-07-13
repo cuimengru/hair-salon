@@ -105,6 +105,9 @@ class ProductController extends Controller
     public function show(Product $product,Request $request)
     {
         $product['label_name'] = ProductLabel::all()->whereIn('id',$product['label_id'])->pluck('name')->toArray();
+        if($product['original_price'] == 0.00){
+            $product['original_price'] = null;
+        }
         if($product['many_image']){
             foreach ($product['many_image'] as $k=>$value){
                 $many_imageUrl[$k] = Storage::disk('oss')->url($value);

@@ -116,12 +116,14 @@ class ProductionController extends AdminController
         $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0')->required();
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片参考尺寸至少 108*108 比例1:1')->required();
+
         $form->radio('is_recommend','是否推荐')->options([
             0 => '否',
             1 => '是'
         ])->when(1,function (Form $form){
             $form->image('rectangle_image','封面长图')->rules('image')->uniqueName()->help('如果需要推荐到首页，需要上传封面长图，前端首页右边的长方形图片参考尺寸 175*75 比例 7:3，前端首页左边的正方形的图片参考尺寸还是108*108');
         })->required()->help('如果选择 是，下面的封面长图必须填上，否则页面报错');
+
         //$form->image('rectangle_image','封面长图')->rules('image')->uniqueName()->help('如果需要推荐到首页，需要上传封面长图，前端首页右边的长方形图片参考尺寸 175*75 比例 7:3，前端首页左边的正方形的图片参考尺寸还是108*108');
         //$form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*668');
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName()->help('选择视频类型，只需在此处添加视频即可');// 使用随机生成文件名 (md5(uniqid()).extension)
