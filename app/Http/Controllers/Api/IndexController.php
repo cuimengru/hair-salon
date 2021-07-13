@@ -39,7 +39,7 @@ class IndexController extends Controller
             if($value['original_price'] == 0.00){
                 $product[$k]['original_price'] = null;
             }
-            $product[$k]['product_sku'] = ProductSku::where('product_id','=',$value['id'])->count();
+            $product[$k]['product_sku_count'] = ProductSku::where('product_id','=',$value['id'])->count();
         }
         $index['product'] = $product;
         return $index;
