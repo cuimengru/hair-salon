@@ -43,11 +43,20 @@ class ProductionController extends AdminController
         });
 
         $grid->column('rating', __('浏览次数'));
-        $states1 = [
+        $grid->column('is_recommend', __('是否推荐'))->display(function ($value) {
+            $html = '';
+            if ($value == 1) {
+                $html .= "<span class='label label-success' style='margin-left: 10px'>是</span>";
+            }else{
+                $html .= "<span class='label label-success' style='margin-left: 10px'>否</span>";
+            }
+            return $html; // 标题添加strong标签
+        });
+        /*$states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
-        $grid->column('is_recommend', __('是否推荐'))->switch($states1);
+        $grid->column('is_recommend', __('是否推荐'))->switch($states1);*/
         $grid->column('created_at', __('创建时间'));
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -104,20 +113,33 @@ class ProductionController extends AdminController
                 return [$designer->id => $designer->name];
             }
         })->ajax('/admin/api/designer')->required();*/
+        $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0')->required();
         $form->text('title', __('标题'))->required();
-        $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片参考尺寸至少 108*108 比例1:1');
+        $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片参考尺寸至少 108*108 比例1:1')->required();
+        $form->radio('is_recommend','是否推荐')->options([
+            0 => '否',
+            1 => '是'
+        ])->required()->help('如果选择 是，下面的封面长图必须填上，否则页面报错');
+        $form->image('rectangle_image','封面长图')->rules('image')->uniqueName()->help('图片参考尺寸 175*75 比例 7:3，如果需要推荐到首页，需要上传封面长图');
         //$form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*668');
         $form->file('video', __('视频'))->move('files/articlevideo')->uniqueName()->help('选择视频类型，只需在此处添加视频即可');// 使用随机生成文件名 (md5(uniqid()).extension)
         $form->textarea('description', __('描述'));
         $form->editor('content', __('图文类型的内容'))->help('选择图文类型，只需在此处添加图片和视频即可');
-        $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0');
         //$form->number('rating', __('浏览次数'))->default(0);
-        $states1 = [
+        /*$states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
-        $form->switch('is_recommend', __('是否推荐'))->states($states1);
+        $form->switch('is_recommend', __('是否推荐'))->states($states1);*/
+        $form->saved(function (Form $form) {
+            if($form->model()->is_recommend == 0){
+                    $production = Production::find($form->model()->id);
 
+                    $production->update([
+                        'rectangle_image' => null,
+                    ]);
+                }
+        });
         return $form;
     }
 }

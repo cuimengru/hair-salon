@@ -12,7 +12,8 @@ class Production extends Model
     use HasFactory;
     use DefaultDatetimeFormat;
     protected $fillable = [
-        'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend','type','many_images'
+        'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend','type','many_images',
+        'rectangle_image','order'
     ];
 
     protected $casts = [
@@ -20,7 +21,7 @@ class Production extends Model
     ];
 
     protected $appends = [
-        'thumb_url','video_url'
+        'thumb_url','video_url','image_url'
     ];
     // 返回图片链接
     public function getThumbUrlAttribute()
@@ -38,6 +39,15 @@ class Production extends Model
             return Storage::disk('oss')->url($this->video);
         } else {
             return "";
+        }
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->rectangle_image) {
+            return Storage::disk('oss')->url($this->rectangle_image);
+        } else {
+            return '';
         }
     }
 

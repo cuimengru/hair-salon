@@ -128,10 +128,10 @@ class IdleProductsController extends AdminController
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
         $form->switch('is_recommend', __('是否推荐'))->states($states1);
-        $form->hasMany('skus', 'SKU 列表', function (Form\NestedForm $form) {
-            $form->text('title', 'SKU 名称')->rules('required');
-            $form->image('image','SKU图片')->uniqueName();
-            $form->text('description', 'SKU 描述');
+        $form->hasMany('skus', '* 颜色分类 列表  (商品规格 必填)', function (Form\NestedForm $form) {
+            $form->text('title', '颜色分类 名称')->rules('required');
+            $form->image('image','颜色分类 图片')->uniqueName();
+            $form->text('description', '颜色分类 描述');
             $form->text('price', '单价')->rules('required|numeric|min:0.01');
             $form->text('stock', '剩余库存')->rules('required|integer|min:0');
         });

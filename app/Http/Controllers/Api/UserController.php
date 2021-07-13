@@ -215,21 +215,27 @@ class UserController extends Controller
     {
         $user = $request->user();
 
-        $attributes = $request->only(['phone','nickname','gender']);
-        if($user->phone == $request->phone){
-            $data['message'] = "手机号已经存在";
-            return response()->json($data, 403);
-        }
-        if (strlen($request->nickname) < 3 || strlen($request->nickname) >25){
-            $data['message'] = "昵称必须介于 3 - 25 个字符之间。";
-            return response()->json($data, 403);
-        }
+        $attributes = $request->only(['nickname','gender']);
+        /*if($request->phone){
+            if($user->phone == $request->phone){
+                $data['message'] = "手机号已经存在";
+                return response()->json($data, 403);
+            }
+        }*/
 
-        if($user->nickname == $request->nickname){
-            $data['message'] = "昵称已被占用，请重新填写。";
-            return response()->json($data, 403);
-        }
         if($request->nickname){
+
+            if (strlen($request->nickname) < 3 || strlen($request->nickname) >25){
+                $data['message'] = "昵称必须介于 3 - 25 个字符之间。";
+                return response()->json($data, 403);
+            }
+            $nickname = User::where('nickname','=',$request->nickname)->first();
+
+            if($nickname){
+                $data['message'] = "昵称已被占用，请重新填写。";
+                return response()->json($data, 403);
+            }
+
             $bad_nickname = SensitiveWords::getBadWord($request->nickname);
             if(!empty($bad_nickname)){
                 $attributes['nickname'] = SensitiveWords::replace($request->nickname,"***"); //替换敏感词为 ***
@@ -256,7 +262,8 @@ class UserController extends Controller
         $verifyData = \Cache::get($request->verification_key);
 
         if (!$verifyData) {
-            abort(403, '验证码已失效');
+            $data['message'] = '验证码已失效！';
+            return response()->json($data, 403);
         }
 
         if(!hash_equals($verifyData['code'], $request->verification_code)){
@@ -272,5 +279,44 @@ class UserController extends Controller
             $data['message'] = "用户不存在";
             return response()->json($data, 404);
         }
+    }
+
+    //修改手机号
+    public function ResetPhone(Request $request)
+    {
+        /*$this->validate($request, [
+            'phone' => 'required|numeric|unique:users',
+        ]);*/
+        $user = $request->user();
+
+        if($request->phone){
+            $phone = User::where('phone','=',$request->phone)->first();
+            if($phone){
+                $data['message'] = "手机号已经存在";
+                return response()->json($data, 403);
+            }
+        }
+
+        $verifyData = \Cache::get($request->verification_key);
+
+        if (!$verifyData) {
+            $data['message'] = '验证码已失效！';
+            return response()->json($data, 403);
+        }
+
+        if(!hash_equals($verifyData['code'], $request->verification_code)){
+            // 返回401
+            throw new AuthenticationException('验证码错误');
+        }
+        if ($user) {
+            $user->update(['phone' => $verifyData['phone']]);
+            $data['message'] = "手机号修改成功";
+            return response()->json($data, 200);
+        } else {
+            $data['message'] = "用户不存在";
+            return response()->json($data, 404);
+        }
+
+        //return $user;
     }
 }

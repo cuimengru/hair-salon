@@ -22,7 +22,7 @@ class BalanceRecord extends Model
     ];
 
     protected $fillable = [
-        'user_id', 'paid_at','payment_method', 'payment_no', 'total_amount','admin_id','original_balance','no'
+        'user_id', 'paid_at','payment_method', 'payment_no', 'total_amount','admin_id','original_balance','no','remark'
     ];
 
     protected $dates = [

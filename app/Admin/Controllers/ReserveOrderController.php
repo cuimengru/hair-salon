@@ -146,6 +146,7 @@ class ReserveOrderController extends AdminController
         $form = new Form(new ReserveOrder());
 
         $form->select('designer_id',__('设计师'))->options(Designer::all()->pluck('name', 'id'))->required();
+        $form->text('money',__('订单金额'))->readonly();
         /*$states1 = [
             'on'  => ['value' => 1, 'text' => '不退款', 'color' => 'default'],
             'off' => ['value' => 5, 'text' => '退款', 'color' => 'primary'],
@@ -162,14 +163,14 @@ class ReserveOrderController extends AdminController
                 '5'=>ReserveOrder::$refundStatusMap['5'],
                 '8'=>ReserveOrder::$refundStatusMap['8'],
                 '9'=>ReserveOrder::$refundStatusMap['9'],
-            ])->default(5)->help('直接退款到用户余额');
+            ])->default(5)->help('退款方式：去充值管理用充值的方式加回去');
         $form->radioCard('refund_status', __('是否同意退款'))
             ->options([
                 '8'=>'同意',
                 '9'=>'不同意',
             ]);
 
-        $form->hidden('refund_number');
+        /*$form->hidden('refund_number');
         $form->saved(function (Form $form) {
             if($form->model()->refund_number == 0){
                 if($form->model()->refund_status==8){
@@ -184,7 +185,7 @@ class ReserveOrderController extends AdminController
                 }
             }
 
-        });
+        });*/
 
         $form->tools(function (Form\Tools $tools) {
             // Disable `Delete` btn.

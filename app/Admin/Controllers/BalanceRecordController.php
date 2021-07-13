@@ -121,6 +121,7 @@ class BalanceRecordController extends AdminController
         //$form->text('payment_no', __('Payment no'));
         //$form->text('user.balace',__('余额'));
         $form->decimal('total_amount', __('充值金额'));
+        $form->textarea('remark',__('备注'));
         $form->select('admin_id',__('管理员'))->options(DB::table('admin_users')->pluck('name','id'))->required();
         $form->hidden('payment_method')->default(1);
         $form->hidden('original_balance');

@@ -103,6 +103,7 @@ Route::prefix('v1')
                     Route::post('avatar', [UserController::class, 'avatar']); // 修改用户头像
                     Route::post('reset', [UserController::class, 'resetPassword']); // 修改密码
                     Route::patch('user', [UserController::class, 'update']); // 编辑用户
+                    Route::post('phone', [UserController::class,'ResetPhone']); // 修改手机号
                     Route::post('images', [ImagesController::class,'store']); // 上传图片
 
                     Route::post('user_addresses', [UserAddressController::class, 'store']);//创建收货地址
