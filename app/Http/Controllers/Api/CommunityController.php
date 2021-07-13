@@ -23,11 +23,16 @@ class CommunityController extends Controller
         //$video = video_ext();
 
         $request->validate([
-            'title' => 'required|string|min:4',
+            //'title' => 'required|string|min:4',
             'contents' => 'required|string',
             'many_images' => 'array',
             //'video' => 'string'.$video,
         ]);
+
+        if(strlen($request->title) < 4){
+            $data['message'] = "标题不能少于4个字符。";
+            return response()->json($data, 403);
+        }
 
         //合成数组
         $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
