@@ -79,7 +79,7 @@ class CommunityController extends AdminController
             if($content){
                 foreach ($content as $k=>$value){
                     $image = Storage::disk('oss')->url($value);
-                    $images = $images."<div style='margin-top: 25px;float: left; margin-right: 25px'>
+                    $images = $images."<div style='margin-top: 25px;float: left; margin-right: 15px'>
                         <img src='{$image}'  width='100%'/>
                         </div>";
                 }
@@ -89,11 +89,11 @@ class CommunityController extends AdminController
 
             return $images;
         });
-        $show->video_play_url()->unescape()->as(function ($video_url) {
+        /*$show->video_play_url()->unescape()->as(function ($video_url) {
             return "<video width='320' height='320' controls>
                 <source src='{$video_url}' type='video/mp4'>
             </video>";
-        });
+        });*/
         $show->field('status', __('状态'))->using(['1' => '已审核', '0' => '未审核']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));

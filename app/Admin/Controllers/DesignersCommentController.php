@@ -86,8 +86,8 @@ class DesignersCommentController extends AdminController
             if($content){
                 foreach ($content as $k=>$value){
                     $image = Storage::disk('oss')->url($value);
-                    $images = $images."<div style='margin-top: 25px;float: left; margin-right: 25px'>
-                        <img src='{$image}'  width='200' height='200'/>
+                    $images = $images."<div style='margin-top: 25px;float: left; margin-right: 15px'>
+                        <img src='{$image}'  width='100%'/>
                         </div>";
                 }
             }else{
