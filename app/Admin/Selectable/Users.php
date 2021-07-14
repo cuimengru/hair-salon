@@ -27,8 +27,8 @@ class Users extends Selectable
         //$this->column('created_at');
 
         $this->filter(function (Filter $filter) {
-            $filter->like('用户昵称');
-            $filter->like('用户手机号');
+            $filter->like('nickname',__('用户昵称'));
+            $filter->like('phone',__('手机号'));
         });
     }
 }
