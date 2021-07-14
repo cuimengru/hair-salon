@@ -80,7 +80,7 @@ class CommunityController extends AdminController
                 foreach ($content as $k=>$value){
                     $image = Storage::disk('oss')->url($value);
                     $images = $images."<div style='margin-top: 25px;float: left; margin-right: 15px'>
-                        <img src='{$image}'  width='100%'/>
+                        <img src='{$image}'  style='width: 100%;'/>
                         </div>";
                 }
             }else{
