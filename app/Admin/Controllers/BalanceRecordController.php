@@ -114,7 +114,7 @@ class BalanceRecordController extends AdminController
     protected function form()
     {
         $form = new Form(new BalanceRecord());
-
+        $admin_user = Auth::guard('admin')->user();
         $form->belongsTo('user_id', Users::class,'用户信息')->required();
         //$form->datetime('paid_at', __('Paid at'))->default(date('Y-m-d H:i:s'));
         //$form->number('payment_method', __('Payment method'));
@@ -122,7 +122,8 @@ class BalanceRecordController extends AdminController
         //$form->text('user.balace',__('余额'));
         $form->decimal('total_amount', __('充值金额'));
         $form->textarea('remark',__('备注'));
-        $form->select('admin_id',__('管理员'))->options(DB::table('admin_users')->pluck('name','id'))->required();
+        $form->select('admin_id',__('管理员'))->options(DB::table('admin_users')->where('id','=',$admin_user->id)->pluck('name','id'))->required();
+        //$form->text('admin_id',__('管理员'))->default(DB::table('admin_users')->where('id','=',$admin_user->id)->pluck('name','id'));
         $form->hidden('payment_method')->default(1);
         $form->hidden('original_balance');
         $form->hidden('paid_at');
