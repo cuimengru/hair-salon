@@ -290,6 +290,7 @@ class ProductOrderController extends Controller
                 ->where('user_id', $request->user()->id)
                 ->where('status','=',3)
                 ->whereIn('ship_status',[1,2])
+                ->where('refund_status','=',5)
                 ->orderBy('paid_at','desc')
                 ->orderBy('created_at', 'desc')
                 ->paginate(4);
@@ -300,7 +301,7 @@ class ProductOrderController extends Controller
                     //判断是否退款
                     if($value['refund_status'] == 5){
                         $orders[$k]['button_text'] = ['退款'];
-                    }elseif ($value['refund_status'] == 7){
+                    }/*elseif ($value['refund_status'] == 7){
                         $orders[$k]['button_text'] = ['退款中','取消退款'];
                     }elseif ($value['refund_status'] == 8){
                         $orders[$k]['button_text'] = ['退款成功'];
@@ -308,13 +309,13 @@ class ProductOrderController extends Controller
                     }elseif ($value['refund_status'] == 9){
                         $orders[$k]['status_text'] = "退款失败";
                         $orders[$k]['button_text'] = ['退款失败','再次申请'];
-                    }
+                    }*/
                 }elseif ($value['ship_status'] == 2){ //已发货
                     $orders[$k]['status_text'] = "待收货";
                     //判断是否退款
                     if($value['refund_status'] == 5){
                         $orders[$k]['button_text'] = ['退款','查看物流','确认收货'];
-                    }elseif ($value['refund_status'] == 7){
+                    }/*elseif ($value['refund_status'] == 7){
                         $orders[$k]['button_text'] = ['退款中','取消退款'];
                     }elseif ($value['refund_status'] == 8){
                         $orders[$k]['button_text'] = ['退款成功'];
@@ -322,7 +323,7 @@ class ProductOrderController extends Controller
                     }elseif ($value['refund_status'] == 9){
                         $orders[$k]['status_text'] = "退款失败";
                         $orders[$k]['button_text'] = ['退款失败','再次申请'];
-                    }
+                    }*/
                 }
                 $orders[$k]['orderType'] = 1; //商品订单
             }
