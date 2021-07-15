@@ -35,7 +35,7 @@ class BalanceReorderController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('user.nickname', __('用户'));
         $grid->column('user.phone', __('手机号'));
-        $grid->column('balance', __('原余额'));
+        $grid->column('remaining_balance', __('原余额'));
         $grid->column('money', __('余额变化'))->display(function ($value) {
             if($value>0){
                 return '-'.$value;
@@ -43,7 +43,7 @@ class BalanceReorderController extends AdminController
                 return $value;
             }
         });
-        $grid->column('remaining_balance', __('变化后余额'));
+        $grid->column('balance', __('变化后余额'));
         $grid->column('paid_at', __('创建时间'));
         $grid->model()->where('payment_method', '=',1);
         // 禁用创建按钮，后台不需要创建订单
@@ -59,7 +59,7 @@ class BalanceReorderController extends AdminController
                 $batch->disableDelete();
             });
         });
-        $grid->model()->orderBy('id', 'desc');
+        $grid->model()->orderBy('paid_at', 'desc');
 
         return $grid;
     }

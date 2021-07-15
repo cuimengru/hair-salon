@@ -80,11 +80,11 @@ class Order extends Model
         'extra'=>'json',
     ];
 
-    // 返回剩下余额
+    // 返回原余额
     public function getRemainingBalanceAttribute()
     {
         if ($this->balance) {
-            return number_format(($this->balance) - ($this->total_amount),2);
+            return number_format(($this->balance) + ($this->total_amount),2);
         } else {
             return '';
         }

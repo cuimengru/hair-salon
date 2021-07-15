@@ -91,7 +91,7 @@ class ReserveOrder extends Model
     public function getRemainingBalanceAttribute()
     {
         if ($this->balance) {
-            return number_format(($this->balance) - ($this->money),2);
+            return number_format(($this->balance) + ($this->money),2);
         } else {
             return '';
         }
