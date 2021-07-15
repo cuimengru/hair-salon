@@ -141,7 +141,7 @@ Route::prefix('v1')
                     Route::post('community/like', [CommunityController::class, 'storelike']); //创建社区评论点赞
                     Route::post('community/unlike', [CommunityController::class, 'deletelike']); //取消社区评论点赞
                     Route::post('community/report', [CommunityController::class, 'report']); //创建社区举报功能
-
+                    Route::post('community/shield', [CommunityController::class, 'shield']); //创建社区拉黑功能
 
                     Route::post('favor/{product}/product', [ProductController::class, 'favor']);//收藏商品
                     Route::delete('unfavor/{product}/product', [ProductController::class, 'disfavor']);  //取消收藏商品

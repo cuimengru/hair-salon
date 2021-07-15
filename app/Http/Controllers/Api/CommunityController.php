@@ -7,6 +7,7 @@ use App\Models\Advert;
 use App\Models\Community;
 use App\Models\CommunityLike;
 use App\Models\CommunityReview;
+use App\Models\CommunityShield;
 use App\Models\Report;
 use App\Models\User;
 use App\Services\MessageService;
@@ -78,79 +79,157 @@ class CommunityController extends Controller
     public function index(Request $request)
     {
         $community['banner'] = Advert::where('category_id', '=', 7)->orderBy('order', 'asc')->select('id', 'thumb', 'url')->get();
-        $community['community'] = QueryBuilder::for(Community::class)
-            /*->allowedFilters([
-                AllowedFilter::exact('type') //商品类型 1集品 2自营 3闲置
-            ])*/
-            ->defaultSort('-created_at') //按照创建时间排序
-            ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
-            ->where('status', '=', 1)
-            ->select('id', 'user_id', 'title', 'content', 'many_images', 'video', 'created_at')
-            ->paginate(3);
-        foreach ($community['community'] as $k => $value) {
-            if ($value['many_images']) {
-                foreach ($value['many_images'] as $i => $image) {
-                    if($image){
-                        $many_imageUrl[$k][$i] = Storage::disk('oss')->url($image);
+        if($request->user_id){
+            $shield = CommunityShield::where('user_id','=',$request->user_id)
+                ->pluck('community_id')->toArray(); //拉黑
+
+            $community['community'] = QueryBuilder::for(Community::class)
+                /*->allowedFilters([
+                    AllowedFilter::exact('type') //商品类型 1集品 2自营 3闲置
+                ])*/
+                ->defaultSort('-created_at') //按照创建时间排序
+                ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
+                ->where('status', '=', 1)
+                ->whereNotIn('id',$shield)
+                ->select('id', 'user_id', 'title', 'content', 'many_images', 'video', 'created_at')
+                ->paginate(3);
+
+            foreach ($community['community'] as $k => $value) {
+                if ($value['many_images']) {
+                    foreach ($value['many_images'] as $i => $image) {
+                        if($image){
+                            $many_imageUrl[$k][$i] = Storage::disk('oss')->url($image);
+                        }else{
+                            $many_imageUrl[$k][$i] = null;
+                        }
+
+                    }
+                    $community['community'][$k]['many_imageUrl'] = array_filter($many_imageUrl[$k]);
+                }
+                $user = User::findOrFail($value['user_id']);
+                $community['community'][$k]['user_name'] = $user->nickname;
+                $community['community'][$k]['user_avatar'] = $user->avatar_url;
+
+                //评论内容
+                $community['community'][$k]['reviews'] = CommunityReview::where('community_id','=',$value['id'])
+                    ->orderBy('created_at','desc')
+                    ->select('id','user_id','replyuser_id','message')
+                    ->get();
+                foreach ($community['community'][$k]['reviews'] as $i=>$item){
+                    $user = User::where('id','=',$item['user_id'])->first();
+                    if($user){
+                        $community['community'][$k]['reviews'][$i]['user_name'] = $user->nickname;
                     }else{
-                        $many_imageUrl[$k][$i] = null;
+                        $community['community'][$k]['reviews'][$i]['user_name'] = null;
                     }
 
-                }
-                $community['community'][$k]['many_imageUrl'] = array_filter($many_imageUrl[$k]);
-            }
-            $user = User::findOrFail($value['user_id']);
-            $community['community'][$k]['user_name'] = $user->nickname;
-            $community['community'][$k]['user_avatar'] = $user->avatar_url;
+                    if($item['replyuser_id']){
+                        $replyuser = User::where('id','=',$item['replyuser_id'])->first();
+                        if($replyuser){
+                            $community['community'][$k]['reviews'][$i]['replyuser_name'] = $replyuser->nickname;
+                        }else{
+                            $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
+                        }
 
-            //评论内容
-            $community['community'][$k]['reviews'] = CommunityReview::where('community_id','=',$value['id'])
-                ->orderBy('created_at','desc')
-                ->select('id','user_id','replyuser_id','message')
-                ->get();
-            foreach ($community['community'][$k]['reviews'] as $i=>$item){
-                $user = User::where('id','=',$item['user_id'])->first();
-                if($user){
-                    $community['community'][$k]['reviews'][$i]['user_name'] = $user->nickname;
-                }else{
-                    $community['community'][$k]['reviews'][$i]['user_name'] = null;
-                }
-
-                if($item['replyuser_id']){
-                    $replyuser = User::where('id','=',$item['replyuser_id'])->first();
-                    if($replyuser){
-                        $community['community'][$k]['reviews'][$i]['replyuser_name'] = $replyuser->nickname;
                     }else{
                         $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
                     }
-
-                }else{
-                    $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
                 }
-            }
 
-            //评论数量
-            $community['community'][$k]['reviews_number'] = CommunityReview::where('community_id','=',$value['id'])->count();
-            //点赞数量
-            $community['community'][$k]['like_number'] = CommunityLike::where('community_id','=',$value['id'])->count();
+                //评论数量
+                $community['community'][$k]['reviews_number'] = CommunityReview::where('community_id','=',$value['id'])->count();
+                //点赞数量
+                $community['community'][$k]['like_number'] = CommunityLike::where('community_id','=',$value['id'])->count();
 
-            //用户是否点赞
-            if($request->user_id){
-                $like = CommunityLike::where('community_id','=',$value['id'])
-                    ->where('user_id','=',$request->user_id)->first();
-                if($like){
-                    $community['community'][$k]['user_like'] = 1; //已点赞
+                //用户是否点赞
+                if($request->user_id){
+                    $like = CommunityLike::where('community_id','=',$value['id'])
+                        ->where('user_id','=',$request->user_id)->first();
+                    if($like){
+                        $community['community'][$k]['user_like'] = 1; //已点赞
+                    }else{
+                        $community['community'][$k]['user_like'] = 0; //未点赞
+                    }
                 }else{
                     $community['community'][$k]['user_like'] = 0; //未点赞
                 }
-            }else{
-                $community['community'][$k]['user_like'] = 0; //未点赞
             }
+            
+            return $community;
+        }else{
+            $community['community'] = QueryBuilder::for(Community::class)
+                /*->allowedFilters([
+                    AllowedFilter::exact('type') //商品类型 1集品 2自营 3闲置
+                ])*/
+                ->defaultSort('-created_at') //按照创建时间排序
+                ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
+                ->where('status', '=', 1)
+                ->select('id', 'user_id', 'title', 'content', 'many_images', 'video', 'created_at')
+                ->paginate(3);
+            foreach ($community['community'] as $k => $value) {
+                if ($value['many_images']) {
+                    foreach ($value['many_images'] as $i => $image) {
+                        if($image){
+                            $many_imageUrl[$k][$i] = Storage::disk('oss')->url($image);
+                        }else{
+                            $many_imageUrl[$k][$i] = null;
+                        }
+
+                    }
+                    $community['community'][$k]['many_imageUrl'] = array_filter($many_imageUrl[$k]);
+                }
+                $user = User::findOrFail($value['user_id']);
+                $community['community'][$k]['user_name'] = $user->nickname;
+                $community['community'][$k]['user_avatar'] = $user->avatar_url;
+
+                //评论内容
+                $community['community'][$k]['reviews'] = CommunityReview::where('community_id','=',$value['id'])
+                    ->orderBy('created_at','desc')
+                    ->select('id','user_id','replyuser_id','message')
+                    ->get();
+                foreach ($community['community'][$k]['reviews'] as $i=>$item){
+                    $user = User::where('id','=',$item['user_id'])->first();
+                    if($user){
+                        $community['community'][$k]['reviews'][$i]['user_name'] = $user->nickname;
+                    }else{
+                        $community['community'][$k]['reviews'][$i]['user_name'] = null;
+                    }
+
+                    if($item['replyuser_id']){
+                        $replyuser = User::where('id','=',$item['replyuser_id'])->first();
+                        if($replyuser){
+                            $community['community'][$k]['reviews'][$i]['replyuser_name'] = $replyuser->nickname;
+                        }else{
+                            $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
+                        }
+
+                    }else{
+                        $community['community'][$k]['reviews'][$i]['replyuser_name'] = null;
+                    }
+                }
+
+                //评论数量
+                $community['community'][$k]['reviews_number'] = CommunityReview::where('community_id','=',$value['id'])->count();
+                //点赞数量
+                $community['community'][$k]['like_number'] = CommunityLike::where('community_id','=',$value['id'])->count();
+
+                //用户是否点赞
+                if($request->user_id){
+                    $like = CommunityLike::where('community_id','=',$value['id'])
+                        ->where('user_id','=',$request->user_id)->first();
+                    if($like){
+                        $community['community'][$k]['user_like'] = 1; //已点赞
+                    }else{
+                        $community['community'][$k]['user_like'] = 0; //未点赞
+                    }
+                }else{
+                    $community['community'][$k]['user_like'] = 0; //未点赞
+                }
+            }
+
+            return $community;
         }
 
-
-
-        return $community;
     }
 
     //创建社区评论
@@ -317,6 +396,35 @@ class CommunityController extends Controller
             ]);
 
             $data['message'] = "举报成功！";
+            return response()->json($data, 200);
+        }
+
+    }
+
+    //创建社区拉黑功能
+    public function shield(Request $request)
+    {
+        $user = $request->user();
+        $community = Community::where('id','=',$request->community_id)->first();
+
+        if(!$community){
+            $data['message'] = "没有该社区。";
+            return response()->json($data, 403);
+        }
+        $shield = CommunityShield::where('user_id','=',$user->id)
+            ->where('community_id','=',$request->community_id)
+            ->first();
+
+        if($shield){
+            $data['message'] = "已经拉黑过。";
+            return response()->json($data, 403);
+        }else{
+            $shields = CommunityShield::create([
+                'user_id' => $user->id,
+                'community_id' => $request->community_id,
+            ]);
+
+            $data['message'] = "拉黑成功！";
             return response()->json($data, 200);
         }
 
