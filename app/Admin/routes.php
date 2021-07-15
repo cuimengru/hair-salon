@@ -66,4 +66,5 @@ Route::group([
     $router->resource('balance_records', BalanceRecordController::class); //余额充值管理
     $router->resource('ship_orders', ShipOrderController::class); //未发货的订单
     $router->resource('refund_orders', RefundOrderController::class); //退款订单
+    $router->resource('reports', ReportsController::class); //举报管理
 });
