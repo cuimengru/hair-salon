@@ -54,6 +54,7 @@
       <tr style="color:#000000;font-weight: 900;font-size: 15px">
         <td>订单状态</td>
         <td>订单类型</td>
+        <td>退款状态</td>
         {{--<td>支付时间</td>--}}
       </tr>
       <tr style="height: 50px">
@@ -65,6 +66,7 @@
           @if($order->type == 1)线上订单@endif
           @if($order->type == 2)线下订单@endif
         </td>
+        <td>{{ \App\Models\ReserveOrder::$refundStatusMap[$order->refund_status] }}</td>
         {{--<td style="line-height: 50px">{{$order->paid_at}}</td>--}}
       </tr>
       </tbody>

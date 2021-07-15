@@ -10,6 +10,7 @@
   <div class="box-body">
     <table class="table table-bordered">
       <tbody>
+      <tr>
         <td rowspan="{{ $order->items->count() + 1 }}">商品列表</td>
         <td>商品名称</td>
         <td>单价</td>
@@ -22,7 +23,10 @@
           <td>{{ $item->amount }}</td>
         </tr>
       @endforeach
-
+      <tr>
+        <td>退款状态</td>
+        <td>{{ \App\Models\Order::$refundStatusMap[$order->refund_status] }}</td>
+      </tr>
       </tbody>
     </table>
   </div>
