@@ -30,7 +30,7 @@ class BalanceController extends AdminController
         $grid->filter(function ($filter) {
             $filter->like('user.nickname', __('用户'));
             $filter->like('user.phone', __('手机号'));
-            $filter->between('created_at','创建时间')->datetime();
+            $filter->between('paid_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'));
         //$grid->column('no', __('No'));
