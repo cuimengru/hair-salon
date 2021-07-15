@@ -82,6 +82,7 @@ class CommunityController extends Controller
         if($request->user_id){
             $shield = CommunityShield::where('user_id','=',$request->user_id)
                 ->pluck('community_id')->toArray(); //拉黑
+            $shield_user = Community::whereIn('id',$shield)->distinct()->pluck('user_id')->toArray();
 
             $community['community'] = QueryBuilder::for(Community::class)
                 /*->allowedFilters([
@@ -90,7 +91,7 @@ class CommunityController extends Controller
                 ->defaultSort('-created_at') //按照创建时间排序
                 ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
                 ->where('status', '=', 1)
-                ->whereNotIn('id',$shield)
+                ->whereNotIn('user_id',$shield_user)
                 ->select('id', 'user_id', 'title', 'content', 'many_images', 'video', 'created_at')
                 ->paginate(3);
 
@@ -154,7 +155,7 @@ class CommunityController extends Controller
                     $community['community'][$k]['user_like'] = 0; //未点赞
                 }
             }
-            
+
             return $community;
         }else{
             $community['community'] = QueryBuilder::for(Community::class)
@@ -375,7 +376,10 @@ class CommunityController extends Controller
         $user = $request->user();
 
         $community = Community::where('id','=',$request->community_id)->first();
-
+        if($community->user_id == $user->id){
+            $data['message'] = "不能举报自己。";
+            return response()->json($data, 403);
+        }
         if(!$community){
             $data['message'] = "没有该社区。";
             return response()->json($data, 403);
@@ -407,6 +411,10 @@ class CommunityController extends Controller
         $user = $request->user();
         $community = Community::where('id','=',$request->community_id)->first();
 
+        if($community->user_id == $user->id){
+            $data['message'] = "不能拉黑自己。";
+            return response()->json($data, 403);
+        }
         if(!$community){
             $data['message'] = "没有该社区。";
             return response()->json($data, 403);
