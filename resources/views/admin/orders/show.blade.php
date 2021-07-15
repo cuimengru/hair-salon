@@ -114,7 +114,7 @@
       @if(!empty($order->extra['many_images']))
         @foreach($order->extra['many_images'] as $image)
           <h4>退款图片:</h4>
-          <img src="https://hair.test/storage/{{$image}}" width="100%" style="margin-left: 15px">
+          <img src="https://oss.dosofort.vip/{{$image}}" width="100%" style="margin-left: 15px">
         @endforeach
       @endif
     </div>
