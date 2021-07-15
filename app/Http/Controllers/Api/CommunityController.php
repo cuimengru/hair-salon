@@ -288,4 +288,10 @@ class CommunityController extends Controller
         }
         return $active;
     }
+
+    //创建社区举报功能
+    public function report(Request $request)
+    {
+        return $request;
+    }
 }
