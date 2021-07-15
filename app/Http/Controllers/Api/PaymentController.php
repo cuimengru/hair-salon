@@ -282,7 +282,7 @@ class PaymentController extends Controller
             ->orderBy('updated_at', 'desc')
             ->select('id','total_amount','payment_method','refund_status','paid_at','created_at','updated_at')
             ->get();
-        
+
         //预约订单
         $reserves = ReserveOrder::where('user_id','=',$user->id)
             ->where('payment_method','=',1)

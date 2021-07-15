@@ -7,6 +7,7 @@ use App\Models\Advert;
 use App\Models\Community;
 use App\Models\CommunityLike;
 use App\Models\CommunityReview;
+use App\Models\Report;
 use App\Models\User;
 use App\Services\MessageService;
 use Illuminate\Http\Request;
@@ -292,6 +293,32 @@ class CommunityController extends Controller
     //创建社区举报功能
     public function report(Request $request)
     {
-        return $request;
+        $user = $request->user();
+
+        $community = Community::where('id','=',$request->community_id)->first();
+
+        if(!$community){
+            $data['message'] = "没有该社区。";
+            return response()->json($data, 403);
+        }
+
+        $report = Report::where('user_id','=',$user->id)
+            ->where('community_id','=',$request->community_id)
+            ->first();
+
+        if($report){
+            $data['message'] = "已经举报过。";
+            return response()->json($data, 403);
+        }else{
+            $reports = Report::create([
+                'user_id' => $user->id,
+                'community_id' => $request->community_id,
+                'reason' => $request->reason,
+            ]);
+
+            $data['message'] = "举报成功！";
+            return response()->json($data, 200);
+        }
+
     }
 }
