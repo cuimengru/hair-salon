@@ -275,12 +275,14 @@ class PaymentController extends Controller
         //商品订单
         $products = Order::where('user_id','=',$user->id)
             ->with(['items.product'])
-            ->whereOr('payment_method','=',1)
-            ->whereOr('refund_status','=',8)
+            //->whereOr('payment_method','=',1)
+            //->whereOr('refund_status','=',8)
+            ->whereNotIn('payment_method',['2,3,null'])
+            ->whereNotIn('refund_status',['6','7','9'])
             ->orderBy('updated_at', 'desc')
             ->select('id','total_amount','payment_method','refund_status','paid_at','created_at','updated_at')
             ->get();
-
+        
         //预约订单
         $reserves = ReserveOrder::where('user_id','=',$user->id)
             ->where('payment_method','=',1)
