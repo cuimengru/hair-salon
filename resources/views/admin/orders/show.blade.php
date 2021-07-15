@@ -112,9 +112,11 @@
     <div>
 
       @if(!empty($order->extra['many_images']))
+        <h4>退款图片:</h4>
         @foreach($order->extra['many_images'] as $image)
-          <h4>退款图片:</h4>
-          <img src="https://oss.dosofort.vip/{{$image}}" width="100%" style="margin-left: 15px">
+          <div style='margin-top: 25px;float: left; margin-right: 15px;width: 100%'>
+            <img src="https://oss.dosofort.vip/{{$image}}" width="50%">
+          </div>
         @endforeach
       @endif
     </div>
