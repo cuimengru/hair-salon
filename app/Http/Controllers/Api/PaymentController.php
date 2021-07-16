@@ -279,7 +279,7 @@ class PaymentController extends Controller
             //->whereOr('refund_status','=',8)
             ->where('payment_method','=',1)
             //->whereNotIn('refund_status',['6','7','9'])
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('paid_at', 'desc')
             ->select('id','total_amount','payment_method','refund_status','paid_at','created_at','updated_at')
             ->get();
 
@@ -287,7 +287,7 @@ class PaymentController extends Controller
         $reserves = ReserveOrder::where('user_id','=',$user->id)
             ->where('payment_method','=',1)
             ->where('type','=',1)
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('paid_at', 'desc')
             ->select('id','designer_id','service_project','money','payment_method','paid_at','created_at','updated_at')
             ->get();
         foreach ($reserves as $i=>$item){
