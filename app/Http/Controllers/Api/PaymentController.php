@@ -305,7 +305,7 @@ class PaymentController extends Controller
 
         $order_total = array_merge($products->toArray(),$reserves->toArray());
         //$order_total1 = array_merge($products->toArray(),$reserves->toArray());
-        $order_total1 = array_column($order_total,'updated_at');
+        $order_total1 = array_column($order_total,'paid_at');
         array_multisort($order_total1,SORT_DESC,$order_total);
         //array_multisort($order_total1,SORT_DESC,$order_total);
 
