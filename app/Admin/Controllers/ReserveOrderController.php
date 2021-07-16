@@ -33,6 +33,7 @@ class ReserveOrderController extends AdminController
         $grid->filter(function ($filter) {
             $filter->like('designer.name', '设计师');
             $filter->like('service.name', '服务项目');
+            $filter->like('phone', '手机号');
             $filter->in('refund_status','退款状态')->checkbox([
                 '5'    => '未退款',
                 '8'    => '退款成功',
