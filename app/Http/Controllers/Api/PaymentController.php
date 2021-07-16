@@ -374,7 +374,7 @@ class PaymentController extends Controller
         }
         $count = count($product_orders); //总条数
         $page = $request->page;
-        $pagesize = 5;
+        $pagesize = 10;
         $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
         $product_orders1['data'] = array_slice($product_orders,$start,$pagesize);
         $product_orders1['total'] = $count;
