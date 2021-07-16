@@ -277,7 +277,7 @@ class PaymentController extends Controller
             ->with(['items.product'])
             //->whereOr('payment_method','=',1)
             //->whereOr('refund_status','=',8)
-            ->whereNotIn('payment_method',['2,3,null'])
+            ->where('payment_method','=',1)
             //->whereNotIn('refund_status',['6','7','9'])
             ->orderBy('updated_at', 'desc')
             ->select('id','total_amount','payment_method','refund_status','paid_at','created_at','updated_at')
@@ -294,6 +294,7 @@ class PaymentController extends Controller
             $reserves[$i]['status_text'] = "预约";
             $reserves[$i]['balance_text'] = "-¥".$item['money'];
             $reserves[$i]['type_order'] = 2;
+            $reserves[$i]['order_id'] = $item['id'];
             $designer = Designer::findOrFail($item['designer_id']);
             $reserves[$i]['designer_name'] = $designer->name;
             //$reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
