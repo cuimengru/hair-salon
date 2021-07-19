@@ -85,13 +85,22 @@
         </tr>
       @else--}}
         <!-- 否则展示物流公司和物流单号 -->
-     {{--  <tr>
+     @if($order->ship_status === \App\Models\Order::SHIP_STATUS_DELIVERED)
+      <tr>
           <td>物流公司：</td>
-          <td>{{ $order->ship_data['express_company'] }}</td>
+          <td>
+            @if($order->ship_data['express_company'] == 'ZTO')
+              中通快递
+            @elseif($order->ship_data['express_company'] == 'YTO')
+              圆通快递
+            @elseif($order->ship_data['express_company'] == 'HTKY')
+              百世快递
+            @endif
+          </td>
           <td>物流单号：</td>
           <td>{{ $order->ship_data['express_no'] }}</td>
         </tr>
-      @endif--}}
+      @endif
       <!-- 订单发货结束 -->
 
       {{--@if($order->status !== \App\Models\Order::STATUS_PENDING)

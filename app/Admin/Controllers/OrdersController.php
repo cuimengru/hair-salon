@@ -186,7 +186,7 @@ class OrdersController extends AdminController
                 '3'=>Order::$shipStatusMap['3'],
             ])->required();
         $form->embeds('ship_data','物流数据', function ($form) {
-            $form->text('express_company',__('物流公司'))->rules('required');
+            $form->select('express_company',__('物流公司'))->options(['YTO' => '圆通快递', 'ZTO' => '中通快递', 'HTKY' => '百世快递'])->rules('required');
             $form->text('express_no',__('物流单号'))->rules('required');
         });
         $form->radioCard('refund_status', __('退款状态'))

@@ -70,7 +70,7 @@ class CommunityController extends Controller
             ]);
         }
 
-        $data['message'] = "发布成功！";
+        $data['message'] = "审核中！";
         return response()->json($data, 200);
         // $request->image-0;
     }

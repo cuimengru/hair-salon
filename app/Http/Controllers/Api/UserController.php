@@ -180,10 +180,19 @@ class UserController extends Controller
     //修改密码
     public function resetPassword(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             //'phone' => 'required|numeric|exists:users',
             'password' => 'required|string|min:6|confirmed', // 需要字段 password_confirmation
-        ]);
+        ]);*/
+        if (strlen($request->password) < 6){
+            $data['message'] = '密码至少为6个字符。';
+            return response()->json($data, 403);
+        }
+        if ($request->password != $request->password_confirmation){
+            $data['message'] = '密码两次输入不一致。';
+            return response()->json($data, 403);
+        }
+
         $user = $request->user();
         if (strlen($request->password) < 6){
             $data['message'] = '密码至少为6个字符。';
@@ -253,10 +262,20 @@ class UserController extends Controller
     //忘记密码
     public function forgetPassword(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             //'phone' => 'required|numeric|exists:users',
             'password' => 'required|string|min:6|confirmed', // 需要字段 password_confirmation
-        ]);
+        ]);*/
+
+        if (strlen($request->password) < 6){
+            $data['message'] = '密码至少为6个字符。';
+            return response()->json($data, 403);
+        }
+        if ($request->password != $request->password_confirmation){
+            $data['message'] = '密码两次输入不一致。';
+            return response()->json($data, 403);
+        }
+
         $user = User::where('phone','=',$request->phone)->first();
 
         $verifyData = \Cache::get($request->verification_key);
