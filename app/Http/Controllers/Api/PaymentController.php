@@ -95,6 +95,19 @@ class PaymentController extends Controller
             return $order;
 
         }
+
+        //微信支付
+        if ($payment_method == Order::PAYMENT_METHOD_WECHAT){
+            $wechatorder = [
+                'out_trade_no' => $order->no,
+                'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
+                'body'      => '支付商品的订单：'.$order->no, // 订单描述
+            ];
+
+            $datas = app('wechat_pay')->app($wechatorder);
+            $order['datas'] = json_decode($datas->getContent());
+            return $order;
+        }
         //return $order;
     }
 
@@ -144,7 +157,7 @@ class PaymentController extends Controller
             }
         }
         //支付宝支付
-        if($payment_method == Order::PAYMENT_METHOD_ALIPAY){
+        if($payment_method == ReserveOrder::PAYMENT_METHOD_ALIPAY){
             $alipayorder = [
                 'out_trade_no' => $order->no,
                 'total_amount' => $order->money,
@@ -157,8 +170,17 @@ class PaymentController extends Controller
             $order['alipay_id'] =$order['datas']->getContent();
             return $order;
         }
-        if ($payment_method == Order::PAYMENT_METHOD_WECHAT){
-            return '222';
+        //微信支付
+        if ($payment_method == ReserveOrder::PAYMENT_METHOD_WECHAT){
+            $wechatorder = [
+                'out_trade_no' => $order->no,
+                'total_fee' => $order->money * 100, //与支付宝不同，微信支付的金额单位是分。
+                'body'      => '支付预约的订单：'.$order->no, // 订单描述
+            ];
+
+            $datas = app('reservewechat_pay')->app($wechatorder);
+            $order['datas'] = json_decode($datas->getContent());
+            return $order;
         }
 
     }
@@ -216,6 +238,37 @@ class PaymentController extends Controller
         return app('alipay')->success();
     }
 
+    //商品微信回调
+    public function wechatNotify()
+    {
+        // 校验回调参数是否正确
+        $data  = app('wechat_pay')->verify();
+        // 找到对应的订单
+        $order = Order::where('no', $data->out_trade_no)->first();
+        // 订单不存在则告知微信支付
+        if (!$order) {
+            return 'fail';
+        }
+        // 订单已支付
+        if ($order->paid_at) {
+            // 告知微信支付此订单已处理
+            return app('wechat_pay')->success();
+        }
+
+        // 将订单标记为已支付
+        $order->update([
+            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+            'payment_method' => 3, //支付方式
+            'payment_no'     => $data->transaction_id,
+            'status' => Order::STATUS_PAID,// 更新订单状态
+        ]);
+
+        $this->afterPaid($order);
+
+        return app('wechat_pay')->success();
+
+    }
+
     protected function afterPaid(Order $order)
     {
         event(new OrderPaid($order));
@@ -260,13 +313,44 @@ class PaymentController extends Controller
             // $e->getMessage();
         }
 
-        return app('alipay')->success();
+        return app('reservealipay')->success();
+    }
+
+    //预约微信回调
+    public function rewechatNotify()
+    {
+        // 校验回调参数是否正确
+        $data  = app('reservewechat_pay')->verify();
+        // 找到对应的订单
+        $order = ReserveOrder::where('no', $data->out_trade_no)->first();
+        // 订单不存在则告知微信支付
+        if (!$order) {
+            return 'fail';
+        }
+        // 订单已支付
+        if ($order->paid_at) {
+            // 告知微信支付此订单已处理
+            return app('reservewechat_pay')->success();
+        }
+
+        // 将订单标记为已支付
+        $order->update([
+            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+            'payment_method' => 3, //支付方式
+            'payment_no'     => $data->transaction_id,
+            'status' => ReserveOrder::STATUS_PAID,// 更新订单状态
+        ]);
+
+        $this->reserveAfterPaid($order);
+
+        return app('reservewechat_pay')->success();
     }
 
     protected function reserveAfterPaid(ReserveOrder $order)
     {
         event(new ReserveOrderPaid($order));
     }
+
     //我的余额管理
     public function balance(Request $request)
     {
@@ -402,6 +486,19 @@ class PaymentController extends Controller
             $user['alipay_id'] =$user['datas']->getContent();
             return $user;
         }
+
+        //微信支付
+        if($payment_method == User::PAYMENT_METHOD_WECHAT){
+            $wechatorder = [
+                'out_trade_no' => $user->phone.time(),
+                'total_fee' => $request->balance * 100, //与支付宝不同，微信支付的金额单位是分。
+                'body'      => '充值余额的订单：'.$user->phone.time(), // 订单描述
+            ];
+
+            $datas = app('balancewechat_pay')->app($wechatorder);
+            $user['datas'] = json_decode($datas->getContent());
+            return $user;
+        }
     }
 
     //余额充值支付宝前端回调
@@ -457,7 +554,45 @@ class PaymentController extends Controller
             // $e->getMessage();
         }
 
-        return app('alipay')->success();
+        return app('balancealipay')->success();
+    }
+
+    //充值微信回调
+    public function bawechatNotify()
+    {
+        // 校验回调参数是否正确
+        $data  = app('balancewechat_pay')->verify();
+        // 找到对应的订单
+        $phone = substr($data->out_trade_no,0,11);
+        $user = User::where('phone', $phone)->first();
+
+        //创建充值记录
+        BalanceRecord::create([
+            'user_id' => $user->id,
+            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+            'payment_method' => 3, // 支付方式
+            'payment_no'     => $data->transaction_id, // 微信订单号
+            'total_amount' => $data->total_fee,
+            'original_balance' => $user->balance,
+            'no' => $data->out_trade_no,
+        ]);
+        // 正常来说不太可能出现支付了一笔不存在的订单，这个判断只是加强系统健壮性。
+        if (!$user) {
+            return 'fail';
+        }
+
+        $balance_jilu = BalanceRecord::where('no', $data->out_trade_no)->first();
+
+        $balance = $balance_jilu->total_amount + $user->balance;
+
+        // 将订单标记为已支付
+        $user->update([
+            'balance' => $balance,
+        ]);
+
+        $this->balanceAfterPaid($user);
+
+        return app('balancewechat_pay')->success();
     }
 
     public function balanceAfterPaid(User $user)

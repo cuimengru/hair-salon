@@ -93,6 +93,13 @@ Route::prefix('v1')
                 Route::get('payment/balancealipay/return', [PaymentController::class, 'balanceReturn'])->name('payment.balancealipay.return');
                 Route::post('payment/balancealipay/notify', [PaymentController::class, 'balanceNotify'])->name('payment.balancealipay.notify');
 
+                //商品订单微信回调
+                Route::post('payment/wechat/notify', [PaymentController::class, 'wechatNotify'])->name('payment.wechat.notify');
+                //预约订单微信回调
+                Route::post('payment/reservewechat/notify', [PaymentController::class, 'rewechatNotify'])->name('payment.reservewechat.notify');
+                //余额充值微信回调
+                Route::post('payment/balancewechat/notify', [PaymentController::class, 'bawechatNotify'])->name('payment.balancewechat.notify');
+
                 Route::get('version',[VersionsController::class ,'index']); //检测最新版本
                 Route::post('checkversion',[VersionsController::class,'check']); //比较版本号
 

@@ -35,17 +35,6 @@ class AppServiceProvider extends ServiceProvider
             return Pay::alipay($config);
         });
 
-        $this->app->singleton('wechat_pay', function () {
-            $config = config('pay.wechat');
-            if (app()->environment() !== 'production') {
-                $config['log']['level'] = Logger::DEBUG;
-            } else {
-                $config['log']['level'] = Logger::WARNING;
-            }
-            // 调用 Yansongda\Pay 来创建一个微信支付对象
-            return Pay::wechat($config);
-        });
-
         //预约订单支付宝
         $this->app->singleton('reservealipay',function (){
             $config = config('pay.alipay');
@@ -76,6 +65,45 @@ class AppServiceProvider extends ServiceProvider
             }
             // 调用 Yansongda\Pay 来创建一个支付宝支付对象
             return Pay::alipay($config);
+        });
+
+        //商品微信支付
+        $this->app->singleton('wechat_pay', function () {
+            $config = config('pay.wechat');
+            $config['notify_url'] = route('api.v1.payment.wechat.notify');
+            if (app()->environment() !== 'production') {
+                $config['log']['level'] = Logger::DEBUG;
+            } else {
+                $config['log']['level'] = Logger::WARNING;
+            }
+            // 调用 Yansongda\Pay 来创建一个微信支付对象
+            return Pay::wechat($config);
+        });
+
+        //预约微信支付
+        $this->app->singleton('reservewechat_pay', function () {
+            $config = config('pay.wechat');
+            $config['notify_url'] = route('api.v1.payment.reservewechat.notify');
+            if (app()->environment() !== 'production') {
+                $config['log']['level'] = Logger::DEBUG;
+            } else {
+                $config['log']['level'] = Logger::WARNING;
+            }
+            // 调用 Yansongda\Pay 来创建一个微信支付对象
+            return Pay::wechat($config);
+        });
+
+        //充值微信
+        $this->app->singleton('balancewechat_pay', function () {
+            $config = config('pay.wechat');
+            $config['notify_url'] = route('api.v1.payment.balancewechat.notify');
+            if (app()->environment() !== 'production') {
+                $config['log']['level'] = Logger::DEBUG;
+            } else {
+                $config['log']['level'] = Logger::WARNING;
+            }
+            // 调用 Yansongda\Pay 来创建一个微信支付对象
+            return Pay::wechat($config);
         });
     }
 
