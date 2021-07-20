@@ -572,7 +572,7 @@ class PaymentController extends Controller
             'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
             'payment_method' => 3, // 支付方式
             'payment_no'     => $data->transaction_id, // 微信订单号
-            'total_amount' => $data->total_fee,
+            'total_amount' => $data->total_fee / 100,
             'original_balance' => $user->balance,
             'no' => $data->out_trade_no,
         ]);
