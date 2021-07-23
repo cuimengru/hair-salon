@@ -84,21 +84,21 @@ class ShowOrder implements Renderable
                }elseif ($body_array['State'] == 6){
                    $body_array['State_text'] = "退件签收";
                }
-               $body_kuai[] = [$body_array['LogisticCode'],$body_array['Name'],$body_array['Courier'],$body_array['CourierPhone'],$body_array['State_text']];
+               $body_kuai[] = [$order->id,$body_array['LogisticCode'],$body_array['Name'],$body_array['Courier'],$body_array['CourierPhone'],$body_array['State_text']];
                 //$data[] = [$body_array['Courier'], $body_array['Reason']];
                 foreach ($body_array['Traces'] as $k=>$v){
                     $data[$k] = [$v['AcceptStation'], $v['AcceptTime']];
                 }
 
-                $html .= new Table(['物流单号','快递公司','快递员或快递站','快递员电话','快递状态'],$body_kuai);
+                $html .= new Table(['Id','物流单号','快递公司','快递员或快递站','快递员电话','快递状态'],$body_kuai);
                 $html .= new Table(['物流地点', '物流时间'], $data);
                 return <<<HTML
 {$html}
 HTML;
             }else{
-                $body_kuai = [];
+                $body_kuai[] = [$order->id,null,null,null,null,null];
                 $data = [];
-                $html .= new Table(['物流单号','快递公司','快递员或快递站','快递员电话','快递状态'],$body_kuai);
+                $html .= new Table(['Id','物流单号','快递公司','快递员或快递站','快递员电话','快递状态'],$body_kuai);
                 $html .= new Table(['物流地点', '物流时间'], $data);
                 return <<<HTML
 {$html}
