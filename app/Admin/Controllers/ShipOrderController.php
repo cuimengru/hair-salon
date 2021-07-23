@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Extensions\ShowOrder;
 use App\Models\Order;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
@@ -52,7 +53,7 @@ class ShipOrderController extends AdminController
         });
 
         $grid->column('id', __('Id'));
-        $grid->column('no', __('订单流水号'));
+        $grid->column('no', __('订单流水号'))->modal('订单物流详情', ShowOrder::class);
         $grid->column('user.nickname', __('买家'));
         $grid->column('total_amount', __('总金额'));
         $grid->column('paid_at', __('支付时间'));

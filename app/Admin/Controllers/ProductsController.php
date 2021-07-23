@@ -113,8 +113,14 @@ class ProductsController extends AdminController
         $form->text('rating', __('评分'))->default(5.0);
         //$form->decimal('price', __('商品现价'));
         $form->decimal('original_price', __('商品原价'))->default(0.00);
-        //$form->radio('package_mail', '是否包邮')->options(['1' => '是', '0'=> '否'])->default(1)->required();
-        //$form->decimal('postage','邮费')->default(0)->required();
+        //$form->radio('package_mail', '是否包邮')->options(['1' => '是', '0'=> '否'])->default(1);
+        //$form->decimal('postage','邮费')->default(0);
+        /*$form->radio('package_mail','是否包邮')->options([
+            '1' => '是',
+            '0'=> '否'
+        ])->when(0,function (Form $form){
+            $form->decimal('postage','邮费')->default(0);
+        })->required()->help('如果选择 否，下面的邮费必须填上');*/
         $form->hidden('postage')->default(0)->required();
         $form->table('property', __('属性'), function ($table) {
             $table->text('property_name','属性名称');
