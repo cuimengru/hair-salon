@@ -23,6 +23,9 @@ class ShowOrder implements Renderable
 //                $product_name = $product ? $product->name : "";
 //                $data[$k] = [$v['id'], $v['order_sn'], $v['number'], $v['created_at'], $v['paid_text'], $product_name];
 //            }
+            $html = '';
+            if(!empty($order->ship_data['express_no'])){
+
             $express_no = $order->ship_data['express_no']; //物流单号
             $express_company = $order->ship_data['express_company']; //物流公司
             error_reporting(E_ALL || ~E_NOTICE);
@@ -63,9 +66,7 @@ class ShowOrder implements Renderable
                     $data[$k] = [$v['AcceptStation'], $v['AcceptTime']];
                 }*/
                 $body_array = json_decode($body,ture);
-               foreach ($body_array['Traces'] as $k=>$v){
-                   $data[$k] = [$v['AcceptStation'], $v['AcceptTime']];
-               }
+
                if($body_array['State'] == -1){
                     $body_array['State_text'] = "单号或快递公司代码错误";
                }elseif ($body_array['State'] == 0){
@@ -85,12 +86,24 @@ class ShowOrder implements Renderable
                }
                $body_kuai[] = [$body_array['LogisticCode'],$body_array['Name'],$body_array['Courier'],$body_array['CourierPhone'],$body_array['State_text']];
                 //$data[] = [$body_array['Courier'], $body_array['Reason']];
-                $html = '';
+                foreach ($body_array['Traces'] as $k=>$v){
+                    $data[$k] = [$v['AcceptStation'], $v['AcceptTime']];
+                }
+
                 $html .= new Table(['物流单号','快递公司','快递员或快递站','快递员电话','快递状态'],$body_kuai);
                 $html .= new Table(['物流地点', '物流时间'], $data);
                 return <<<HTML
 {$html}
 HTML;
+            }else{
+                $body_kuai = [];
+                $data = [];
+                $html .= new Table(['物流单号','快递公司','快递员或快递站','快递员电话','快递状态'],$body_kuai);
+                $html .= new Table(['物流地点', '物流时间'], $data);
+                return <<<HTML
+{$html}
+HTML;
+            }
             /*} else {
                 if ($httpCode == 400 && strpos($header, "Invalid Param Location") !== false) {
                     print("参数错误");
