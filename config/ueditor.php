@@ -11,13 +11,14 @@
 
 return [
     // 存储引擎: config/filesystem.php 中 disks， public 或 qiniu
-    'disk' => 'public',
+    'disk' => 'oss',
     'route' => [
         'name' => '/ueditor/server',
         'options' => [
             // middleware => 'auth',
         ],
     ],
+    'hash_filename' => true,
 
     // 上传 配置
     'upload' => [
