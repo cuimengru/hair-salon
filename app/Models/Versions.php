@@ -28,6 +28,6 @@ class Versions extends Model
      * @var array
      */
     protected $fillable = [
-        'platform', 'version', 'description', 'url', 'status',
+        'platform', 'version', 'description', 'url', 'status','ios_url','ios_version'
     ];
 }

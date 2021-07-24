@@ -27,9 +27,9 @@ class VersionsController extends AdminController
         $grid = new Grid(new Versions());
 
         $grid->column('id', __('Id'));
-        $grid->column('platform', __('平台'))->display(function ($value) {
+       /* $grid->column('platform', __('平台'))->display(function ($value) {
             return Versions::$platformMap[$value];
-        });
+        });*/
         $grid->column('version', __('版本号'));
         $grid->column('description', __('描述'))->limit(20);
         $grid->column('url', __('下载地址'));
@@ -87,10 +87,13 @@ class VersionsController extends AdminController
     {
         $form = new Form(new Versions());
 
-        $form->radioCard('platform', __('平台'))->default(1)->options(['1' => 'Android', '2' => 'iOS'])->default('1')->required();
-        $form->text('version', __('版本号'));
-        $form->textarea('description', __('描述'));
-        $form->url('url', __('下载地址'));
+        //$form->radioCard('platform', __('平台'))->default(1)->options(['1' => 'Android', '2' => 'iOS'])->default('1')->required();
+        $form->hidden('platform')->default(1);
+        $form->text('version', __('Android 版本号'));
+        $form->url('url', __('Android 下载地址'));
+        $form->text('ios_version', __('iOS 版本号'));
+        $form->url('ios_url', __('iOS 下载地址'))->default('https://apps.apple.com/cn/app/%E9%94%A6%E4%B9%8Bdo/id1575899926');
+        $form->textarea('description', __('描述'))->required();
         $states = [
             'on'  => ['value' => 0, 'text' => '不启用', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '启用', 'color' => 'primary'],
