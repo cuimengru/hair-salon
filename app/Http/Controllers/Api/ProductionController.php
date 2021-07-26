@@ -215,15 +215,4 @@ class ProductionController extends Controller
         return $productions;
     }
 
-    //作品年龄段
-    public function agelist()
-    {
-        //$age = ProductionAge::get();
-        return '111';
-    }
-
-    public function lengthlist()
-    {
-        return '111';
-    }
 }
