@@ -4,6 +4,10 @@ namespace App\Admin\Controllers;
 
 use App\Models\Designer;
 use App\Models\Production;
+use App\Models\ProductionAge;
+use App\Models\ProductionColor;
+use App\Models\ProductionLength;
+use App\Models\ProductionStyle;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -135,6 +139,14 @@ class ProductionController extends AdminController
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
         $form->switch('is_recommend', __('是否推荐'))->states($states1);*/
+        $form->select('gender','性别')->options([
+            '0'=>'男',
+            '1'=> '女'
+        ])->default(0);
+        $form->select('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
+        $form->select('length_id','长度')->options(ProductionLength::all()->pluck('name','id'));
+        $form->select('color_id','色系')->options(ProductionColor::all()->pluck('name','id'));
+        $form->multipleSelect('style_id','风格')->options(ProductionStyle::all()->pluck('name','id'));
         $form->saved(function (Form $form) {
             if($form->model()->is_recommend == 0){
                     $production = Production::find($form->model()->id);

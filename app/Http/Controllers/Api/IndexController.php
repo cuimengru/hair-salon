@@ -75,4 +75,5 @@ class IndexController extends Controller
         }
         return $balance;
     }
+
 }

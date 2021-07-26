@@ -7,6 +7,7 @@ use App\Models\Advert;
 use App\Models\Designer;
 use App\Models\Fashion;
 use App\Models\Production;
+use App\Models\ProductionAge;
 use App\Models\UserLikeDesigner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -180,10 +181,14 @@ class ProductionController extends Controller
     public function allIndex(Request $request)
     {
         $productions = QueryBuilder::for(Production::class)
-            /*->allowedFilters([
-                AllowedFilter::exact('type'), //商品类型 1集品 2自营 3闲置
-                'title'
-            ])*/
+            ->allowedFilters([
+                AllowedFilter::exact('gender'), //性别
+                AllowedFilter::exact('age_id'), //年龄段
+                AllowedFilter::exact('length_id'), //长度
+                AllowedFilter::exact('color_id'), //色系
+                //AllowedFilter::exact('style_id'), //风格
+                'style_id'
+            ])
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','title','thumb','type','video')
@@ -208,5 +213,17 @@ class ProductionController extends Controller
         }
 
         return $productions;
+    }
+
+    //作品年龄段
+    public function agelist()
+    {
+        //$age = ProductionAge::get();
+        return '111';
+    }
+
+    public function lengthlist()
+    {
+        return '111';
     }
 }

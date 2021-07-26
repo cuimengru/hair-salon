@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\Api\DesignersController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\VersionsController;
+use App\Http\Controllers\Api\PropertyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +103,10 @@ Route::prefix('v1')
 
                 Route::get('version',[VersionsController::class ,'index']); //检测最新版本
                 Route::post('checkversion',[VersionsController::class,'check']); //比较版本号
+                Route::get('product/agelist', [PropertyController::class, 'agelist']);  //作品年龄段列表
+                Route::get('product/lengthlist', [PropertyController::class, 'lengthlist']);  //作品长度列表
+                Route::get('product/colorlist', [PropertyController::class, 'colorlist']);  //作品色系列表
+                Route::get('product/stylelist', [PropertyController::class, 'stylelist']);  //作品风格列表
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {

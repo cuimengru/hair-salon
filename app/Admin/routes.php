@@ -67,4 +67,8 @@ Route::group([
     $router->resource('ship_orders', ShipOrderController::class); //未发货的订单
     $router->resource('refund_orders', RefundOrderController::class); //退款订单
     $router->resource('reports', ReportsController::class); //举报管理
+    $router->resource('production_ages', ProductionAgeController::class); //作品年龄段
+    $router->resource('production_lengths', ProductionLengthController::class); //作品长度
+    $router->resource('production_colors', ProductionColorController::class); //作品色系
+    $router->resource('production_styles', ProductionStyleController::class); //作品风格
 });

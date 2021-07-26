@@ -13,11 +13,12 @@ class Production extends Model
     use DefaultDatetimeFormat;
     protected $fillable = [
         'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend','type','many_images',
-        'rectangle_image','order'
+        'rectangle_image','order','gender','age_id','length_id','color_id','style_id'
     ];
 
     protected $casts = [
         'many_images'=>'array',
+        'style_id' => 'array'
     ];
 
     protected $appends = [
@@ -63,8 +64,40 @@ class Production extends Model
         return json_decode($value, true);
     }
 
+    public function setStyleIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['style_id'] = json_encode($value);
+        }
+    }
+
+    public function getStyleIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
     public function designer()
     {
         return $this->belongsTo(Designer::class);
+    }
+
+    public function age()
+    {
+        return $this->belongsTo(ProductionAge::class);
+    }
+
+    public function color()
+    {
+        return $this->belongsTo(ProductionColor::class);
+    }
+
+    public function length()
+    {
+        return $this->belongsTo(ProductionLength::class);
+    }
+
+    public function style()
+    {
+        return $this->hasMany(ProductionStyle::class);
     }
 }
