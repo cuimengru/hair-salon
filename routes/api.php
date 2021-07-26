@@ -107,6 +107,7 @@ Route::prefix('v1')
                 Route::get('product/lengthlist', [PropertyController::class, 'lengthlist']);  //作品长度列表
                 Route::get('product/colorlist', [PropertyController::class, 'colorlist']);  //作品色系列表
                 Route::get('product/stylelist', [PropertyController::class, 'stylelist']);  //作品风格列表
+                Route::get('sensitive_words', [PropertyController::class, 'sensitiveWords']);  //敏感词管理
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -154,6 +155,7 @@ Route::prefix('v1')
                     Route::post('community/unlike', [CommunityController::class, 'deletelike']); //取消社区评论点赞
                     Route::post('community/report', [CommunityController::class, 'report']); //创建社区举报功能
                     Route::post('community/shield', [CommunityController::class, 'shield']); //创建社区拉黑功能
+                    Route::delete('community/{id}', [CommunityController::class, 'delete']);//删除自己发布的内容
 
                     Route::post('favor/{product}/product', [ProductController::class, 'favor']);//收藏商品
                     Route::delete('unfavor/{product}/product', [ProductController::class, 'disfavor']);  //取消收藏商品
@@ -186,6 +188,7 @@ Route::prefix('v1')
                     Route::delete('reserves/orders/{id}', [ReserveInformationController::class, 'delete']);//取消预约订单
                     Route::get('balance', [PaymentController::class, 'balanceStore']);//充值余额
                     Route::get('balance/records/list', [IndexController::class, 'balancelist']);//充值记录列表
+
 
                 });
             });

@@ -437,4 +437,24 @@ class CommunityController extends Controller
         }
 
     }
+
+    //删除自己发布的内容
+    public function delete($Id, Request $request)
+    {
+       $user = $request->user();
+
+        $community = Community::where('id','=',$Id)
+            ->where('user_id','=',$user->id)->first();
+
+        if($community){
+            $community->delete();
+            $data['message'] = "删除成功！";
+            return response()->json($data, 200);
+        }else{
+            $data['message'] = "删除失败！";
+            return response()->json($data, 403);
+        }
+       //return $user;
+    }
+
 }

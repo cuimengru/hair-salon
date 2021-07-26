@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\BatchProductonSale;
+use App\Admin\Actions\Post\BatchProductSale;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductLabel;
@@ -36,9 +38,11 @@ class SelfProductsController extends AdminController
         $grid->column('id', __('Id'))->sortable();
         $grid->column('selfcategory.name', __('商品类目'));
         $grid->column('title', __('商品名称'));
-        $grid->on_sale('已上架')->display(function ($value) {
-            return $value ? '是' : '否';
-        });
+        $states = [
+            'on'  => ['value' => 0, 'text' => '否', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+        ];
+        $grid->column('on_sale', __('是否上架'))->switch($states);
         $grid->price('价格');
         $grid->rating('评分');
         $grid->sold_count('销量');
@@ -58,6 +62,8 @@ class SelfProductsController extends AdminController
             $tools->batch(function ($batch) {
                 $batch->disableDelete();
             });
+            $tools->append(new BatchProductSale());
+            $tools->append(new BatchProductonSale());
         });
         $grid->model()->where('type', '=',2);
         $grid->model()->orderBy('id', 'desc');
@@ -110,7 +116,12 @@ class SelfProductsController extends AdminController
         $form->image('image', __('封面图片'))->uniqueName()->rules('required|image')->help('图片尺寸 167*167');
         $form->multipleImage('many_image','多图上传')->uniqueName()->removable()->help('图片尺寸 375*375');
         $form->editor('description', __('商品描述'))->rules('required');
-        $form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('1')->required();
+        //$form->radio('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('1')->required();
+        $states = [
+            'on'  => ['value' => 0, 'text' => '否', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+        ];
+        $form->switch('on_sale', __('是否上架'))->states($states);
         $form->text('rating', __('评分'))->default(5.0);
         //$form->decimal('price', __('商品现价'));
         $form->decimal('original_price', __('商品原价'))->default(0.00);

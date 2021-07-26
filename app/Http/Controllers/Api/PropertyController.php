@@ -7,6 +7,8 @@ use App\Models\ProductionAge;
 use App\Models\ProductionColor;
 use App\Models\ProductionLength;
 use App\Models\ProductionStyle;
+use App\Models\SensitiveWord;
+use App\Services\SensitiveWords;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
@@ -36,5 +38,21 @@ class PropertyController extends Controller
     {
         $style = ProductionStyle::select('id','name','created_at')->get();
         return $style;
+    }
+
+    //敏感词
+    public function sensitiveWords(Request $request)
+    {
+        $words = SensitiveWord::where('word','=',$request->words)->first();
+        if($words){
+            $data['message'] = " 存在敏感词，请重新输入。";
+            return response()->json($data, 403);
+        }
+
+        /*$words2 = $sensitiveWords->getInstance($request->words);
+        if($words2){
+            $data['message'] = " 存在敏感词，请重新输入。";
+            return response()->json($data, 403);
+        }*/
     }
 }

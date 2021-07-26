@@ -32,6 +32,7 @@ class FeedbackController extends AdminController
         });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('user.nickname', __('用户昵称'));
+        $grid->column('user.phone', __('用户手机号'));
         $grid->column('content', __('内容'))->limit(20);
         $grid->actions(function ($actions) {
             //$actions->disableView();
@@ -61,6 +62,7 @@ class FeedbackController extends AdminController
         $show = new Show(Feedback::findOrFail($id));
         $show->field('id', __('Id'));
         $show->field('user.name', __('用户姓名'));
+        $show->field('user.phone', __('用户手机号'));
         $show->field('content', __('内容'));
         $show->field('many_images', __('图片'))->unescape()->as(function ($content) {
             $images = '';
