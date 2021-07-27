@@ -21,9 +21,9 @@ class IndexController extends Controller
         $index = [];
 
         $advert = [];
-        $advert['top'] = Advert::where('category_id','=',1)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
+        $advert['top'] = Advert::where('category_id','=',1)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         //文教娱乐
-        $advert['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
+        $advert['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         $index['ads'] = $advert;
 
         //推荐作品展示

@@ -24,13 +24,13 @@ class ProductController extends Controller
     {
         if($request->filter['type'] == 1){
             //集品类处的banner
-            $product['banner'] = Advert::where('category_id','=',3)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
+            $product['banner'] = Advert::where('category_id','=',3)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         }elseif ($request->filter['type'] == 2){
             //自营类处的banner
-            $product['banner'] = Advert::where('category_id','=',5)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
+            $product['banner'] = Advert::where('category_id','=',5)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         }elseif ($request->filter['type'] == 3){
             //闲置类处的banner
-            $product['banner'] = Advert::where('category_id','=',4)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
+            $product['banner'] = Advert::where('category_id','=',4)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         }
 
         //推荐产品

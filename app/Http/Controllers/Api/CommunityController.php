@@ -94,7 +94,7 @@ class CommunityController extends Controller
     //社区列表
     public function index(Request $request)
     {
-        $community['banner'] = Advert::where('category_id', '=', 7)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
+        $community['banner'] = Advert::where('category_id', '=', 7)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         if($request->user_id){
             $shield = CommunityShield::where('user_id','=',$request->user_id)
                 ->pluck('community_id')->toArray(); //拉黑
@@ -383,10 +383,10 @@ class CommunityController extends Controller
     //社区活动详情
     public function activeShow($activeId, Request $request)
     {
-        $active = Advert::where('category_id', '=', 7)->where('id','=',$activeId)->select('id','title','description','content','url')->first();
+        $active = Advert::where('id','=',$activeId)->select('id','title','description','content','url','product_id')->first();
 
         if(!$active){
-            $data['message'] = "该活动不存在！";
+            $data['message'] = "该广告位不存在！";
             return response()->json($data, 403);
         }
         return $active;
