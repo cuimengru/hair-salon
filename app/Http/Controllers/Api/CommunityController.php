@@ -289,7 +289,9 @@ class CommunityController extends Controller
         $data['reviews_number'] = $res['reviews_number'];*/
         $bad_nickname = SensitiveWords::getBadWord($request->message);
         if(!empty($bad_nickname)){
-            $attributes['message'] = SensitiveWords::replace($request->message,"***"); //替换敏感词为 ***
+            //$attributes['message'] = SensitiveWords::replace($request->message,"***"); //替换敏感词为 ***
+            $data['message'] = " 存在敏感词，请重新输入。";
+            return response()->json($data, 403);
         }else{
             $attributes['message'] = $request->message;
         }

@@ -156,13 +156,11 @@ class ProductController extends Controller
                         'count' => $record->count + 1,
                     ]);
                 }else{
-                    if($product['type'] == 1){
                         UserLikeDesigner::create([
                             'user_id' => $request->user_id,
                             'product_id' => $product['id'],
                             'type' => 1,
                         ]);
-                    }
                 }
             }
 
