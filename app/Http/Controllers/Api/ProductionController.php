@@ -192,7 +192,7 @@ class ProductionController extends Controller
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','title','thumb','type','video')
-            ->paginate(9);
+            ->paginate(15);
         foreach ($productions as $p=>$product){
             //收藏作品
             if($request->user_id){
