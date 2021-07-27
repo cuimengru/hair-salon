@@ -54,6 +54,7 @@ class UsersController extends AdminController
             1 => '已审核',
             //-1 => '审核中',
         ])->help('可编辑');
+        $grid->column('is_binding', __('是否绑定贵宾卡'))->bool(['0' => false, '1' => true]);
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('更新时间'));
         $grid->actions(function ($actions) {
@@ -91,6 +92,8 @@ class UsersController extends AdminController
         $show->field('introduce', __('简介'));
         $show->field('integral', __('积分'));
         $show->field('balance', __('余额'));
+        $show->field('vip_coding', __('贵宾卡编码'));
+        $show->field('vip_balance', __('贵宾卡余额'));
         $show->field('status', __('审核状态'))->using(['1' => '已审核', '0' => '未审核','-1'=>'审核中']);
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));

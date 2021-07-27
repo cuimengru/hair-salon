@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\BatchVipUser;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -53,13 +54,16 @@ class OfflineUserController extends AdminController
             1 => '已审核',
             -1 => '审核中',
         ])->help('可编辑');
+        $grid->column('is_binding', __('是否绑定贵宾卡'))->bool(['0' => false, '1' => true]);
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('更新时间'));
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             //$actions->disableEdit();// 去掉删除
         });
-
+        $grid->tools(function (Grid\Tools $tools) {
+            $tools->append(new BatchVipUser());
+        });
         $grid->disableExport(); // 禁用导出数据
         $grid->disableColumnSelector();// 禁用行选择器
         $grid->model()->orderBy('id', 'desc');

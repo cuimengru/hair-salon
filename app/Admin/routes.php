@@ -71,4 +71,5 @@ Route::group([
     $router->resource('production_lengths', ProductionLengthController::class); //作品长度
     $router->resource('production_colors', ProductionColorController::class); //作品色系
     $router->resource('production_styles', ProductionStyleController::class); //作品风格
+    $router->resource('vip_records', VipRecordController::class); //贵宾卡充值列表
 });

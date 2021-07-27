@@ -15,9 +15,14 @@ class BatchVipUser extends BatchAction
         // 获取到表单中的`issue`值
         $request->get('vip_coding');
         $request->get('vip_balance');
+        $request->get('is_binding');
 
         foreach ($collection as $model) {
-            $model->update(['vip_coding'=> $request->get('vip_coding'),'vip_balance'=> $request->get('vip_balance')]);
+            $model->update([
+                'vip_coding'=> $request->get('vip_coding'),
+                'vip_balance'=> $request->get('vip_balance'),
+                'is_binding' => 1,
+            ]);
         }
 
         return $this->response()->success('绑定成功')->refresh();
@@ -26,7 +31,7 @@ class BatchVipUser extends BatchAction
     public function form()
     {
         $this->text('vip_coding', '贵宾卡编码');
-        $this->decimal('vip_balance', '贵宾卡余额');
+        $this->text('vip_balance', '贵宾卡余额');
     }
 
     public function html()
