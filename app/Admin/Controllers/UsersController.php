@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\BatchVipUser;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -58,6 +59,9 @@ class UsersController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             //$actions->disableEdit();// 去掉删除
+        });
+        $grid->tools(function (Grid\Tools $tools) {
+            $tools->append(new BatchVipUser());
         });
         $grid->disableCreateButton();
         $grid->disableExport(); // 禁用导出数据

@@ -124,7 +124,10 @@ class UserLikeController extends Controller
                     ->where('on_sale','=',1)
                     ->select('id','title','country_name','label_id','image','price','original_price')
                     ->first();
-                $record[$k]['label_name'] = ProductLabel::all()->whereIn('id',$record[$k]['label_id'])->pluck('name')->toArray();
+                /*if($record[$k]['label_id']){
+                    $record[$k]['label_name'] = ProductLabel::all()->whereIn('id',$record[$k]['label_id'])->pluck('name')->toArray();
+                }*/
+
             }
         }
 
@@ -139,7 +142,11 @@ class UserLikeController extends Controller
                     ->where('on_sale','=',1)
                     ->select('id','title','country_name','label_id','image','price','original_price')
                     ->first();
-                $record[$k]['label_name'] = ProductLabel::all()->whereIn('id',$record[$k]['label_id'])->pluck('name')->toArray();
+                /*if($record[$k]['label_id']){
+                    $record[$k]['label_name'] = ProductLabel::all()->whereIn('id',$record[$k]['label_id'])->pluck('name')->toArray();
+                }else{
+                    $record[$k]['label_name'] = null;
+                }*/
             }
         }
 
