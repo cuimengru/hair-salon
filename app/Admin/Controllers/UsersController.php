@@ -55,6 +55,13 @@ class UsersController extends AdminController
             //-1 => '审核中',
         ])->help('可编辑');
         $grid->column('is_binding', __('是否绑定贵宾卡'))->bool(['0' => false, '1' => true]);
+        $grid->column('vip_balance', __('贵宾卡余额'))->display(function ($value){
+            if ($value == 0){
+                return '0';
+            }else{
+                return $value;
+            }
+        });
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('更新时间'));
         $grid->actions(function ($actions) {

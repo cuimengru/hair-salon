@@ -25,6 +25,7 @@ class VipUsers extends Selectable
                 return '线上';
             }
         });
+        $this->model()->where('is_binding', '=',1);
         //$this->column('created_at');
 
         $this->filter(function (Filter $filter) {
