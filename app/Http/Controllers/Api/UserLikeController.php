@@ -175,7 +175,7 @@ class UserLikeController extends Controller
             $record = UserLikeDesigner::where('user_id','=',$user->id)
                 ->where('type','=',3)
                 ->orderBy('updated_at', 'desc')
-                ->paginate(6);
+                ->paginate(10);
             foreach ($record as $k=>$value){
                 $record[$k] = Designer::where('id','=',$value->designer_id)
                     ->select('id','name','position','thumb','label_id')
@@ -190,7 +190,7 @@ class UserLikeController extends Controller
             $record = UserLikeDesigner::where('user_id','=',$user->id)
                 ->where('type','=',4)
                 ->orderBy('updated_at', 'desc')
-                ->paginate(9);
+                ->paginate(15);
             foreach ($record as $k=>$value){
                 $record[$k] = Production::where('id','=',$value->production_id)
                     ->select('id','type','title','thumb','video')
