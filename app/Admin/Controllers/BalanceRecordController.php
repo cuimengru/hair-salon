@@ -84,7 +84,7 @@ class BalanceRecordController extends AdminController
         $show->field('user.phone', __('用户手机号'));
         $show->field('original_balance',__('充值前的金额'));
         $show->field('total_amount', __('充值金额'));
-        $show->field('user.original_balance', __('充值后金额'));
+        $show->field('top_balance', __('充值后金额'));
         $show->field('paid_at', __('充值时间'));
         $show->field('payment_method', __('充值方式'))->using(['1' => '后台充值', '2' => '支付宝','3'=>'微信']);;
         $show->field('payment_no', __('支付平台订单号'));

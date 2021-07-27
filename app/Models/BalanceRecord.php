@@ -29,6 +29,16 @@ class BalanceRecord extends Model
         'paid_at',
     ];
 
+    protected $appends = [
+        'top_balance'
+    ];
+    public function getTopBalanceAttribute()
+    {
+        $vip_balance = number_format($this->original_balance + $this->total_amount,2);
+
+        return $vip_balance;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

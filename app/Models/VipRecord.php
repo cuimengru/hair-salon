@@ -17,6 +17,15 @@ class VipRecord extends Model
     protected $dates = [
         'paid_at',
     ];
+    protected $appends = [
+        'vip_balance'
+    ];
+    public function getVipBalanceAttribute()
+    {
+        $vip_balance = number_format($this->original_balance + $this->total_amount,2);
+
+        return $vip_balance;
+    }
 
     public function user()
     {

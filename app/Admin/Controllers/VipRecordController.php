@@ -73,7 +73,7 @@ class VipRecordController extends AdminController
         $show->field('user.phone', __('用户手机号'));
         $show->field('original_balance',__('充值前的金额'));
         $show->field('total_amount', __('充值金额'));
-        $show->field('user.viporiginal_balance', __('充值后金额'));
+        $show->field('vip_balance', __('充值后金额'));
         $show->field('payment_method', __('充值方式'))->using(['1' => '后台充值']);;
         $show->field('admin_id', __('管理员'))->unescape()->as(function ($value) {
             if($value){
