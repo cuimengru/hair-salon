@@ -11,6 +11,7 @@ use App\Models\CommunityShield;
 use App\Models\Report;
 use App\Models\User;
 use App\Services\MessageService;
+use App\Services\SensitiveWords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -35,7 +36,22 @@ class CommunityController extends Controller
             $data['message'] = "标题不能少于4个字符。";
             return response()->json($data, 403);
         }
-
+        $bad_nickname = SensitiveWords::getBadWord($request->title);
+        if(!empty($bad_nickname)){
+            //$attributes['title'] = SensitiveWords::replace($request->title,"***"); //替换敏感词为 ***
+            $data['message'] = " 存在敏感词，请重新输入。";
+            return response()->json($data, 403);
+        }else{
+            $attributes['title'] = $request->title;
+        }
+        $bad_nickname1 = SensitiveWords::getBadWord($request->contents);
+        if(!empty($bad_nickname1)){
+            //$attributes['contents'] = SensitiveWords::replace($request->contents,"***"); //替换敏感词为 ***
+            $data['message'] = " 存在敏感词，请重新输入。";
+            return response()->json($data, 403);
+        }else{
+            $attributes['contents'] = $request->contents;
+        }
         //合成数组
         $many_images = array($request->file('image_0'),$request->file('image_1'),$request->file('image_2'),$request->file('image_3'),$request->file('image_4'),$request->file('image_5'),$request->file('image_6'),$request->file('image_7'),$request->file('image_8'),$request->file('image_9'));
 
@@ -52,8 +68,8 @@ class CommunityController extends Controller
 
             $community = Community::create([
                 'user_id' => $user->id,
-                'title' => $request->title,
-                'content' => $request->contents,
+                'title' => $attributes['title'],
+                'content' => $attributes['contents'],
                 'many_images' => array_filter($attributes['many_images']),
             ]);
 
@@ -64,8 +80,8 @@ class CommunityController extends Controller
 
             $community = Community::create([
                 'user_id' => $user->id,
-                'title' => $request->title,
-                'content' => $request->contents,
+                'title' => $attributes['title'],
+                'content' => $attributes['contents'],
                 'video' => $video,
             ]);
         }
@@ -78,7 +94,7 @@ class CommunityController extends Controller
     //社区列表
     public function index(Request $request)
     {
-        $community['banner'] = Advert::where('category_id', '=', 7)->orderBy('order', 'asc')->select('id', 'thumb', 'url')->get();
+        $community['banner'] = Advert::where('category_id', '=', 7)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
         if($request->user_id){
             $shield = CommunityShield::where('user_id','=',$request->user_id)
                 ->pluck('community_id')->toArray(); //拉黑
@@ -271,11 +287,17 @@ class CommunityController extends Controller
         $res = $msgService->storeMessage($user_id,$replyuser_id,$community_id,$msg);
         $data['messages'] = $res['messages'];
         $data['reviews_number'] = $res['reviews_number'];*/
+        $bad_nickname = SensitiveWords::getBadWord($request->message);
+        if(!empty($bad_nickname)){
+            $attributes['message'] = SensitiveWords::replace($request->message,"***"); //替换敏感词为 ***
+        }else{
+            $attributes['message'] = $request->message;
+        }
         $message = CommunityReview::create([
             'user_id' => $user->id,
             'replyuser_id' => $request->replyuser_id,
             'community_id' => $request->community_id,
-            'message' => $request->message,
+            'message' => $attributes['message'],
         ]);
         $data['message'] = CommunityReview::where('community_id','=',$request->community_id)
             ->orderBy('created_at','desc')

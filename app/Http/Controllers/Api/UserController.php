@@ -247,7 +247,9 @@ class UserController extends Controller
 
             $bad_nickname = SensitiveWords::getBadWord($request->nickname);
             if(!empty($bad_nickname)){
-                $attributes['nickname'] = SensitiveWords::replace($request->nickname,"***"); //替换敏感词为 ***
+                //$attributes['nickname'] = SensitiveWords::replace($request->nickname,"***"); //替换敏感词为 ***
+                $data['message'] = " 存在敏感词，请重新输入。";
+                return response()->json($data, 403);
             }else{
                 $attributes['nickname'] = $request->nickname;
             }

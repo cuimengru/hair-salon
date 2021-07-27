@@ -28,11 +28,13 @@ class CommunityController extends AdminController
         $grid = new Grid(new Community());
         $grid->filter(function ($filter) {
             $filter->like('user.nickname', __('用户昵称'));
+            $filter->like('user.phone', __('用户手机号'));
             $filter->like('title', '标题');
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'));
         $grid->column('user.nickname', __('用户昵称'));
+        $grid->column('user.phone', __('用户手机号'));
         $grid->column('title', __('标题'))->limit(20);
         $states1 = [
             'on'  => ['value' => 0, 'text' => '未审核', 'color' => 'default'],
@@ -69,6 +71,7 @@ class CommunityController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('user.nickname', __('用户昵称'));
+        $show->field('user.phone', __('用户手机号'));
         $show->field('title', __('标题'));
         $show->field('content', __('内容'));
         /*$show->field('many_images', __('Many images'));

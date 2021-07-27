@@ -21,9 +21,9 @@ class IndexController extends Controller
         $index = [];
 
         $advert = [];
-        $advert['top'] = Advert::where('category_id','=',1)->orderBy('order', 'asc')->select('id','thumb', 'url')->get();
+        $advert['top'] = Advert::where('category_id','=',1)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
         //文教娱乐
-        $advert['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','thumb', 'url')->get();
+        $advert['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','content','url','product_id')->get();
         $index['ads'] = $advert;
 
         //推荐作品展示
@@ -32,7 +32,8 @@ class IndexController extends Controller
 
         //锦之选 产品推荐
         $product = Product::where('is_recommend','=',1)->where('on_sale','=',1)
-            ->select('id','title','country_name','label_id','image','price','original_price')
+            ->orderBy('order','asc')
+            ->select('id','title','country_name','label_id','image','price','original_price','order')
             ->get();
         foreach ($product as $k=>$value){
             $product[$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();

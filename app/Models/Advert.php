@@ -12,7 +12,7 @@ class Advert extends Model
     use HasFactory;
     use DefaultDatetimeFormat;
     protected $fillable = [
-        'title', 'description','thumb', 'video', 'video_url', 'is_recommend','category_id','content'
+        'title', 'description','thumb', 'video', 'video_url', 'is_recommend','category_id','content','type','product_id'
     ];
     protected $appends = [
         'thumb_url'

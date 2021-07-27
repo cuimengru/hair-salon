@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Advert;
 use App\Models\AdvertCategory;
+use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -90,8 +91,18 @@ class AdvertController extends AdminController
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('图片'))->uniqueName()->required()->help('图片参考尺寸至少 345*136 比例1:0.3');
         $form->textarea('description', __('描述'));
-        $form->editor('content', __('内容'))->required();
-        $form->url('url', __('跳转链接'));
+        //$form->editor('content', __('内容'))->required();
+        //$form->url('url', __('跳转链接'));
+        $form->radio('type','类型')->options([
+            0 => '编辑内容',
+            1 => '跳转站内产品',
+            2 => '接外部广告'
+        ])->when(1,function (Form $form){
+            $form->select('product_id', __('站内产品链接'))->options(Product::all()->pluck('title', 'id'));
+        })->when(2,function (Form $form){
+            $form->url('url', __('外部广告链接'));
+        })->required()->help('广告位展示的内容及跳转的链接');
+        $form->editor('content', __('内容'));
         $form->number('order', __('排序'))->default(0)->help('越小越靠前');
         //$form->radio('is_recommend', '是否推荐')->options(['1' => '是', '0'=> '否'])->default('0');
 

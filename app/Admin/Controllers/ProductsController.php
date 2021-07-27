@@ -146,11 +146,13 @@ class ProductsController extends AdminController
             $table->text('property_name','属性名称');
             $table->text('property_content','属性内容');
         });
+        $form->number('order',__('排序'))->default(0)->help('数字越小，排序越靠前');
         $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
         $form->switch('is_recommend', __('是否推荐'))->states($states1);
+
         // 直接添加一对多的关联模型
         $form->hasMany('skus', '* 颜色分类 列表  (商品规格 必填)', function (Form\NestedForm $form) {
             $form->text('title', '颜色分类 名称')->rules('required');

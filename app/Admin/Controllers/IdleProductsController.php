@@ -133,6 +133,7 @@ class IdleProductsController extends AdminController
             $table->text('property_name','属性名称');
             $table->text('property_content','属性内容');
         });
+        $form->number('order',__('排序'))->default(0)->help('数字越小，排序越靠前');
         $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],

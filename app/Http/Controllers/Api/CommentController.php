@@ -46,7 +46,9 @@ class CommentController extends Controller
 
         $bad_content = SensitiveWords::getBadWord($request->render_content);
         if(!empty($bad_content)){
-            $attributes['render_content'] = SensitiveWords::replace($request->render_content,"***"); //替换敏感词为 ***
+            //$attributes['render_content'] = SensitiveWords::replace($request->render_content,"***"); //替换敏感词为 ***
+            $data['message'] = " 存在敏感词，请重新输入。";
+            return response()->json($data, 403);
         }else{
             $attributes['render_content'] = $request->render_content;
         }
@@ -123,7 +125,9 @@ class CommentController extends Controller
 
         $bad_content = SensitiveWords::getBadWord($request->render_content);
         if(!empty($bad_content)){
-            $attributes['render_content'] = SensitiveWords::replace($request->render_content,"***"); //替换敏感词为 ***
+            //$attributes['render_content'] = SensitiveWords::replace($request->render_content,"***"); //替换敏感词为 ***
+            $data['message'] = " 存在敏感词，请重新输入。";
+            return response()->json($data, 403);
         }else{
             $attributes['render_content'] = $request->render_content;
         }

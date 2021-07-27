@@ -27,6 +27,7 @@ class ReportsController extends AdminController
         $grid = new Grid(new Report());
         $grid->filter(function ($filter) {
             $filter->like('user.nickname', __('举报用户昵称'));
+            $filter->like('user.phone', __('举报用户手机号'));
             $filter->like('community_id', '晒单id');
             $filter->like('community.title', '晒单标题');
             $filter->between('created_at','创建时间')->datetime();
@@ -36,8 +37,10 @@ class ReportsController extends AdminController
         $grid->column('community_id', __('晒单id'));
         $grid->column('community.title', __('晒单标题'));
         $grid->column('user.nickname', __('举报用户昵称'));
+        $grid->column('user.phone', __('用户手机号'));
         $grid->column('reason', __('理由'))->limit(20);
         $grid->column('created_at', __('创建时间'));
+        $grid->disableCreateButton();
         $grid->actions(function ($actions) {
             //$actions->disableView();
             $actions->disableEdit();
