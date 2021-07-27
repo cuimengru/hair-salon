@@ -149,7 +149,7 @@ class ProductController extends Controller
             }else{
                 $product['favor_product'] = 0; //未收藏
             }
-            $record = UserLikeDesigner::whereUserId($request->user_id)->whereProductId($product['id'])->first();
+            $record = UserLikeDesigner::whereUserId($request->user_id)->where('product_id','=',$product['id'])->first();
                 if($record){
                     $record->update([
                         'count' => $record->count + 1,
@@ -161,7 +161,16 @@ class ProductController extends Controller
                             'product_id' => $product['id'],
                             'type' => 1,
                         ]);
-                    }elseif ($product['type'] == 3){
+                    }
+                }
+
+            $record3 = UserLikeDesigner::whereUserId($request->user_id)->where('idleproduct_id','=',$product['id'])->first();
+                if($record3){
+                    $record3->update([
+                        'count' => $record3->count + 1,
+                    ]);
+                }else{
+                    if($product['type'] == 3){
                         UserLikeDesigner::create([
                             'user_id' => $request->user_id,
                             'idleproduct_id' => $product['id'],
@@ -169,22 +178,6 @@ class ProductController extends Controller
                         ]);
                     }
                 }
-
-
-            /*if($product['type'] == 3){
-                $record3 = UserLikeDesigner::whereUserId($request->user_id)->whereidleproductId($product['id'])->first();
-                if($record3){
-                    $record3->update([
-                        'count' => $record3->count + 1,
-                    ]);
-                }else{
-                    UserLikeDesigner::create([
-                        'user_id' => $request->user_id,
-                        'idleproduct_id' => $product['id'],
-                        'type' => 2,
-                    ]);
-                }
-            }*/
             $product['cart_count']= CartItem::where('user_id','=',$request->user_id)->count();
 
         }else{
