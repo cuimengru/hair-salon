@@ -118,7 +118,7 @@ class UserLikeController extends Controller
             $record = UserLikeDesigner::where('user_id','=',$user->id)
                 ->where('type','=',1)
                 ->orderBy('updated_at', 'desc')
-                ->paginate(8);
+                ->get();
             foreach ($record as $k=>$value){
                 $record[$k] = Product::where('id','=',$value->product_id)
                     ->where('on_sale','=',1)
@@ -127,8 +127,17 @@ class UserLikeController extends Controller
                 /*if($record[$k]['label_id']){
                     $record[$k]['label_name'] = ProductLabel::all()->whereIn('id',$record[$k]['label_id'])->pluck('name')->toArray();
                 }*/
-
             }
+            $record1 = json_decode(json_encode($record), true);
+            $record2 = array_filter($record1);
+            $count = count($record2); //总条数
+            $page = $request->page;
+            $pagesize = 8;
+            $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
+            $product_orders1['data'] = array_slice($record2,$start,$pagesize);
+            $product_orders1['total'] = $count;
+            $product_orders1['current_page'] = $page;
+            return $product_orders1;
         }
 
         //转售记录
@@ -136,7 +145,7 @@ class UserLikeController extends Controller
             $record = UserLikeDesigner::where('user_id','=',$user->id)
                 ->where('type','=',2)
                 ->orderBy('updated_at', 'desc')
-                ->paginate(8);
+                ->get();
             foreach ($record as $k=>$value){
                 $record[$k] = Product::where('id','=',$value->idleproduct_id)
                     ->where('on_sale','=',1)
@@ -148,6 +157,17 @@ class UserLikeController extends Controller
                     $record[$k]['label_name'] = null;
                 }*/
             }
+
+            $record1 = json_decode(json_encode($record), true);
+            $record2 = array_filter($record1);
+            $count = count($record2); //总条数
+            $page = $request->page;
+            $pagesize = 8;
+            $start=($page-1)*$pagesize;//偏移量，当前页-1乘以每页显示条数
+            $product_orders1['data'] = array_slice($record2,$start,$pagesize);
+            $product_orders1['total'] = $count;
+            $product_orders1['current_page'] = $page;
+            return $product_orders1;
         }
 
         //发型师记录
@@ -161,6 +181,8 @@ class UserLikeController extends Controller
                     ->select('id','name','position','thumb','label_id')
                     ->first();
             }
+
+            return $record;
         }
 
         //作品记录
@@ -185,8 +207,9 @@ class UserLikeController extends Controller
                 }
                 unset($record[$k]['follows']);
             }
+
+            return $record;
         }
 
-        return $record;
     }
 }
