@@ -66,12 +66,12 @@ class ProductionController extends AdminController
             $actions->disableView();
             //$actions->disableDelete();
         });
-        $grid->tools(function ($tools) {
+        /*$grid->tools(function ($tools) {
             // 禁用批量删除按钮
             $tools->batch(function ($batch) {
                 $batch->disableDelete();
             });
-        });
+        });*/
         $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
