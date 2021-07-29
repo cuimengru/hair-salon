@@ -17,6 +17,27 @@ class CartController extends Controller
         $user = $request->user();
         $skuId  = $request->sku_id;
         $amount = $request->amount;
+        if (!$sku = ProductSku::find($skuId)) {
+            $data['message'] = "该商品不存在";
+            return response()->json($data, 403);
+            //return $fail('该商品不存在');
+        }
+        if (!$sku->product->on_sale) {
+            $data['message'] = "该商品未上架";
+            return response()->json($data, 403);
+                //return $fail('该商品未上架');
+        }
+        if ($sku->stock === 0) {
+            $data['message'] = "该商品已售完";
+            return response()->json($data, 403);
+            //return $fail('该商品已售完');
+        }
+        if ($amount > 0 && $sku->stock < $amount) {
+            $data['message'] = "该商品库存不足";
+            return response()->json($data, 403);
+            //return $fail('该商品库存不足');
+        }
+
 
         // 从数据库中查询该商品是否已经在购物车中
         if($cart = $user->cartItems()->where('product_sku_id',$skuId)->first()){

@@ -27,7 +27,7 @@ class AddCartRequest extends FormRequest
         return [
             'sku_id' => [
                 'required',
-                function ($attribute, $value, $fail) {
+                /*function ($attribute, $value, $fail) {
                     if (!$sku = ProductSku::find($value)) {
                         return $fail('该商品不存在');
                     }
@@ -40,7 +40,7 @@ class AddCartRequest extends FormRequest
                     if ($this->input('amount') > 0 && $sku->stock < $this->input('amount')) {
                         return $fail('该商品库存不足');
                     }
-                },
+                },*/
             ],
             'amount' => ['required', 'integer', 'min:1'],
         ];
