@@ -13,7 +13,7 @@ class Production extends Model
     use DefaultDatetimeFormat;
     protected $fillable = [
         'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend','type','many_images',
-        'rectangle_image','order','gender','age_id','length_id','color_id','style_id'
+        'rectangle_image','order','gender','age_id','length_id','color_id','style_id','on_sale'
     ];
 
     protected $casts = [

@@ -6,11 +6,11 @@ use Encore\Admin\Actions\BatchAction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class BatchProductonSale extends BatchAction
+class BatchProductionSalelist extends BatchAction
 {
-    public $name = '批量下架';
-    protected $selector = '.xiajia';
+    public $name = '批量上架';
 
+    protected $selector = '.production-sale';
     public function handle(Collection $collection,Request $request)
     {
         // 获取到表单中的`issue`值
@@ -20,21 +20,22 @@ class BatchProductonSale extends BatchAction
             $model->update(['on_sale'=> $request->get('on_sale')]);
         }
 
-        return $this->response()->success('已下架')->refresh();
+        return $this->response()->success('已上架')->refresh();
     }
 
     public function form()
     {
         //0-否  1-A 2-B 3-C
         $options = [
-            0 => '下架',
+            1 => '上架',
         ];
 
-        $this->radio('on_sale', '下架')->options($options);
+        $this->radio('on_sale', '上架')->options($options);
     }
 
     public function html()
     {
-        return "<a class='xiajia btn btn-sm btn-primary'> <i class='fa fa-info-circle'></i> 批量下架</a>";
+        return "<a class='production-sale btn btn-sm btn-primary'> <i class='fa fa-info-circle'></i> 批量上架</a>";
     }
+
 }

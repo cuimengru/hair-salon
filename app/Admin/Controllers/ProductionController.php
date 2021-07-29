@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\BatchProductionSalelist;
+use App\Admin\Actions\Post\BatchProductiSalelist;
 use App\Models\Designer;
 use App\Models\Production;
 use App\Models\ProductionAge;
@@ -47,7 +49,12 @@ class ProductionController extends AdminController
         });
 
         $grid->column('rating', __('浏览次数'));
-        $grid->column('is_recommend', __('是否推荐'))->display(function ($value) {
+        $states = [
+            'on'  => ['value' => 0, 'text' => '否', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+        ];
+        $grid->column('on_sale', __('是否上架'))->switch($states);
+        /*$grid->column('is_recommend', __('是否推荐'))->display(function ($value) {
             $html = '';
             if ($value == 1) {
                 $html .= "<span class='label label-success' style='margin-left: 10px'>是</span>";
@@ -55,23 +62,29 @@ class ProductionController extends AdminController
                 $html .= "<span class='label label-success' style='margin-left: 10px'>否</span>";
             }
             return $html; // 标题添加strong标签
-        });
-        /*$states1 = [
+        });*/
+       /* $states1 = [
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
         $grid->column('is_recommend', __('是否推荐'))->switch($states1);*/
+        $grid->column('is_recommend', __('是否推荐'))->radio([
+            0 => '不推荐',
+            1 => '推荐',
+        ]);
         $grid->column('created_at', __('创建时间'));
         $grid->actions(function ($actions) {
             $actions->disableView();
             //$actions->disableDelete();
         });
-        /*$grid->tools(function ($tools) {
+        $grid->tools(function ($tools) {
             // 禁用批量删除按钮
-            $tools->batch(function ($batch) {
+            /*$tools->batch(function ($batch) {
                 $batch->disableDelete();
-            });
-        });*/
+            });*/
+            $tools->append(new BatchProductionSalelist());
+            $tools->append(new BatchProductiSalelist());
+        });
         $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
@@ -120,7 +133,11 @@ class ProductionController extends AdminController
         $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0')->required();
         $form->text('title', __('标题'))->required();
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片参考尺寸至少 108*108 比例1:1')->required();
-
+        $states = [
+            'on'  => ['value' => 0, 'text' => '否', 'color' => 'default'],
+            'off' => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+        ];
+        $form->switch('on_sale', __('是否上架'))->states($states);
         $form->radio('is_recommend','是否推荐')->options([
             0 => '否',
             1 => '是'

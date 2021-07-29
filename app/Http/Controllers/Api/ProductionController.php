@@ -27,6 +27,7 @@ class ProductionController extends Controller
 
         //作品$index['production']
          $productions= Production::where('is_recommend','=',1)->orderBy('created_at','desc')
+             ->where('on_sale','=',1)
             ->select('id','title','thumb','type','video')
             ->get();
          foreach ($productions as $p=>$product){
@@ -189,6 +190,7 @@ class ProductionController extends Controller
                 //AllowedFilter::exact('style_id'), //风格
                 'style_id'
             ])
+            ->where('on_sale','=',1)
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','title','thumb','type','video')

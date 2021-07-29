@@ -6,11 +6,11 @@ use Encore\Admin\Actions\BatchAction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class BatchProductonSale extends BatchAction
+class BatchProductiSalelist extends BatchAction
 {
     public $name = '批量下架';
-    protected $selector = '.xiajia';
 
+    protected $selector = '.production-onsale';
     public function handle(Collection $collection,Request $request)
     {
         // 获取到表单中的`issue`值
@@ -35,6 +35,7 @@ class BatchProductonSale extends BatchAction
 
     public function html()
     {
-        return "<a class='xiajia btn btn-sm btn-primary'> <i class='fa fa-info-circle'></i> 批量下架</a>";
+        return "<a class='production-onsale btn btn-sm btn-primary'> <i class='fa fa-info-circle'></i> 批量下架</a>";
     }
+
 }
