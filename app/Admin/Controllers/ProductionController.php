@@ -77,6 +77,63 @@ class ProductionController extends AdminController
             0 => '不推荐',
             1 => '推荐',
         ]);
+        $grid->column('gender',__('性别'))->display(function ($value){
+            if ($value == 0){
+                return '男';
+            }else{
+                return '女';
+            }
+        });
+        $grid->column('height.name', __('身高'));
+        $grid->column('age_id', __('年龄段'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionAge::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+
+        });
+        $grid->column('color.name', __('发质'));
+        $grid->column('length.name', __('长度'));
+        $grid->column('face.name', __('脸型'));
+        $grid->column('style_id', __('风格'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionStyle::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+
+        });
+        $grid->column('project.name', __('项目'));
+        $grid->column('hair_id', __('烫染'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionHair::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+
+        });
         $grid->column('created_at', __('创建时间'));
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -174,6 +231,10 @@ class ProductionController extends AdminController
         $form->multipleSelect('style_id','风格')->options(ProductionStyle::all()->pluck('name','id'));
         $form->select('project_id','项目')->options(ProductionProject::all()->pluck('name','id'));
         $form->multipleSelect('hair_id','烫染')->options(ProductionHair::all()->pluck('name','id'));
+        $form->tools(function (Form\Tools $tools) {
+            // 去掉`查看`按钮
+            $tools->disableView();
+        });
         $form->saved(function (Form $form) {
             if($form->model()->is_recommend == 0){
                     $production = Production::find($form->model()->id);

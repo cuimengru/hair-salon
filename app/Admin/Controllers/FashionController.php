@@ -104,7 +104,10 @@ class FashionController extends AdminController
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
         $form->switch('is_recommend', __('是否推荐'))->states($states1);
-
+        $form->tools(function (Form\Tools $tools) {
+            // 去掉`查看`按钮
+            $tools->disableView();
+        });
         return $form;
     }
 }
