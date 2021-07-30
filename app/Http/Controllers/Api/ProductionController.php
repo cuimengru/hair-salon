@@ -186,8 +186,11 @@ class ProductionController extends Controller
                 AllowedFilter::exact('gender'), //性别
                 AllowedFilter::exact('age_id'), //年龄段
                 AllowedFilter::exact('length_id'), //长度
-                AllowedFilter::exact('color_id'), //色系
-                //AllowedFilter::exact('style_id'), //风格
+                AllowedFilter::exact('color_id'), //发质
+                AllowedFilter::exact('height_id'), //身高
+                AllowedFilter::exact('face_id'), //脸型id
+                AllowedFilter::exact('project_id'), //项目id
+                AllowedFilter::exact('hair_id'), //烫染id
                 'style_id'
             ])
             ->where('on_sale','=',1)

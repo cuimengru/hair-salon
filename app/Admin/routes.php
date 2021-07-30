@@ -72,4 +72,8 @@ Route::group([
     $router->resource('production_colors', ProductionColorController::class); //作品色系
     $router->resource('production_styles', ProductionStyleController::class); //作品风格
     $router->resource('vip_records', VipRecordController::class); //贵宾卡充值列表
+    $router->resource('production_faces', ProductionFaceController::class); //作品脸型
+    $router->resource('production_heights', ProductionHeightController::class); //作品身高
+    $router->resource('production-projects', ProductionProjectController::class); //作品属性的项目
+    $router->resource('production-hairs', ProductionHairController::class);//作品烫染
 });

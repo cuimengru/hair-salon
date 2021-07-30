@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\ProductionColor;
+use App\Models\ProductionHair;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class ProductionColorController extends AdminController
+class ProductionHairController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '发质';
+    protected $title = '烫染';
 
     /**
      * Make a grid builder.
@@ -24,14 +24,10 @@ class ProductionColorController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new ProductionColor());
-        $grid->filter(function ($filter) {
-            $filter->like('name', __('发质'));
-            $filter->between('paid_at','创建时间')->datetime();
-        });
+        $grid = new Grid(new ProductionHair());
+
         $grid->column('id', __('Id'));
-        $grid->column('name', __('发质'));
-        $grid->column('created_at', __('创建时间'));
+        $grid->column('name', __('名称'));
         //$grid->column('updated_at', __('Updated at'));
         $grid->actions(function ($actions) {
             //$actions->disableDelete();
@@ -48,7 +44,7 @@ class ProductionColorController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(ProductionColor::findOrFail($id));
+        $show = new Show(ProductionHair::findOrFail($id));
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
@@ -65,9 +61,9 @@ class ProductionColorController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new ProductionColor());
+        $form = new Form(new ProductionHair());
 
-        $form->text('name', __('发质'));
+        $form->text('name', __('名称'));
 
         return $form;
     }

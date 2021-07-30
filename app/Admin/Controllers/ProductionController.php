@@ -2,13 +2,18 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\BatchProduction;
 use App\Admin\Actions\Post\BatchProductionSalelist;
 use App\Admin\Actions\Post\BatchProductiSalelist;
 use App\Models\Designer;
 use App\Models\Production;
 use App\Models\ProductionAge;
 use App\Models\ProductionColor;
+use App\Models\ProductionFace;
+use App\Models\ProductionHair;
+use App\Models\ProductionHeight;
 use App\Models\ProductionLength;
+use App\Models\ProductionProject;
 use App\Models\ProductionStyle;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -84,6 +89,7 @@ class ProductionController extends AdminController
             });*/
             $tools->append(new BatchProductionSalelist());
             $tools->append(new BatchProductiSalelist());
+            $tools->append(new BatchProduction());
         });
         $grid->model()->orderBy('id', 'desc');
         return $grid;
@@ -160,10 +166,14 @@ class ProductionController extends AdminController
             '0'=>'男',
             '1'=> '女'
         ])->default(0);
+        $form->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id'));
         $form->select('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
+        $form->select('color_id','发质')->options(ProductionColor::all()->pluck('name','id'));
         $form->select('length_id','长度')->options(ProductionLength::all()->pluck('name','id'));
-        $form->select('color_id','色系')->options(ProductionColor::all()->pluck('name','id'));
+        $form->select('face_id','脸型')->options(ProductionFace::all()->pluck('name','id'));
         $form->multipleSelect('style_id','风格')->options(ProductionStyle::all()->pluck('name','id'));
+        $form->select('project_id','项目')->options(ProductionProject::all()->pluck('name','id'));
+        $form->select('hair_id','烫染')->options(ProductionHair::all()->pluck('name','id'));
         $form->saved(function (Form $form) {
             if($form->model()->is_recommend == 0){
                     $production = Production::find($form->model()->id);

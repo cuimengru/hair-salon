@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\ProductionColor;
+use App\Models\ProductionProject;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class ProductionColorController extends AdminController
+class ProductionProjectController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '发质';
+    protected $title = '项目';
 
     /**
      * Make a grid builder.
@@ -24,13 +24,10 @@ class ProductionColorController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new ProductionColor());
-        $grid->filter(function ($filter) {
-            $filter->like('name', __('发质'));
-            $filter->between('paid_at','创建时间')->datetime();
-        });
+        $grid = new Grid(new ProductionProject());
+
         $grid->column('id', __('Id'));
-        $grid->column('name', __('发质'));
+        $grid->column('name', __('项目'));
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('Updated at'));
         $grid->actions(function ($actions) {
@@ -48,7 +45,7 @@ class ProductionColorController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(ProductionColor::findOrFail($id));
+        $show = new Show(ProductionProject::findOrFail($id));
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
@@ -65,9 +62,9 @@ class ProductionColorController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new ProductionColor());
+        $form = new Form(new ProductionProject());
 
-        $form->text('name', __('发质'));
+        $form->text('name', __('项目'));
 
         return $form;
     }

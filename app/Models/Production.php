@@ -13,7 +13,8 @@ class Production extends Model
     use DefaultDatetimeFormat;
     protected $fillable = [
         'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend','type','many_images',
-        'rectangle_image','order','gender','age_id','length_id','color_id','style_id','on_sale'
+        'rectangle_image','order','gender','age_id','length_id','color_id','style_id','on_sale','height_id','face_id',
+        'project_id','hair_id'
     ];
 
     protected $casts = [
@@ -99,5 +100,25 @@ class Production extends Model
     public function style()
     {
         return $this->hasMany(ProductionStyle::class);
+    }
+
+    public function face()
+    {
+        return $this->belongsTo(ProductionFace::class);
+    }
+
+    public function height()
+    {
+        return $this->belongsTo(ProductionHeight::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(ProductionProject::class);
+    }
+
+    public function hair()
+    {
+        return $this->belongsTo(ProductionHair::class);
     }
 }

@@ -26,7 +26,7 @@ class ProductionStyleController extends AdminController
     {
         $grid = new Grid(new ProductionStyle());
         $grid->filter(function ($filter) {
-            $filter->like('name', __('色系'));
+            $filter->like('name', __('风格'));
             $filter->between('paid_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'));

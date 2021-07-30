@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ProductionAge;
 use App\Models\ProductionColor;
+use App\Models\ProductionFace;
+use App\Models\ProductionHair;
+use App\Models\ProductionHeight;
 use App\Models\ProductionLength;
+use App\Models\ProductionProject;
 use App\Models\ProductionStyle;
 use App\Models\SensitiveWord;
 use App\Services\SensitiveWords;
@@ -17,12 +21,25 @@ class PropertyController extends Controller
     public function agelist()
     {
         $data = [];
-        $age['age'] = ProductionAge::select('id','name')->get();
-        $age['length'] = ProductionLength::select('id','name')->get();
-        $age['color'] = ProductionColor::select('id','name')->get();
-        $age['style'] = ProductionStyle::select('id','name','created_at')->get();
-        $data[0] = ['name'=>'年龄','value'=>$age['age']];
-        $data[1] = ['name'=>'长度','value'=>$age['length']];
+        $age['gender'] = [['id'=>0,'name'=>'男'],['id'=>1,'name'=>'女']]; //性别
+        $age['height'] = ProductionHeight::select('id','name')->get(); //身高
+        $age['age'] = ProductionAge::select('id','name')->get(); //年龄
+        $age['color'] = ProductionColor::select('id','name')->get(); //作品发质
+        $age['length'] = ProductionLength::select('id','name')->get(); //长度
+        $age['face'] = ProductionFace::select('id','name')->get(); //脸型
+        $age['style'] = ProductionStyle::select('id','name')->get(); //风格
+        $age['project'] = ProductionProject::select('id','name')->get(); //项目
+        $age['hair'] = ProductionHair::select('id','name')->get(); //烫染
+
+        $data[0] = ['name'=>'性别','key'=>'filter[gender]','value'=>$age['gender']];
+        $data[1] = ['name'=>'身高','key'=>'filter[height_id]','value'=>$age['height']];
+        $data[2] = ['name'=>'年龄','key'=>'filter[age_id]','value'=>$age['age']];
+        $data[3] = ['name'=>'发质','key'=>'filter[color_id]','value'=>$age['color']];
+        $data[4] = ['name'=>'长度','key'=>'filter[length_id]','value'=>$age['length']];
+        $data[5] = ['name'=>'脸型','key'=>'filter[face_id]','value'=>$age['face']];
+        $data[6] = ['name'=>'风格','key'=>'filter[style_id]','value'=>$age['style']];
+        $data[7] = ['name'=>'项目','key'=>'filter[project_id]','value'=>$age['project']];
+        $data[8] = ['name'=>'烫染','key'=>'filter[hair_id]','value'=>$age['hair']];
         return $data;
     }
 
