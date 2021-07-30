@@ -62,7 +62,7 @@ class ReserveInformationController extends Controller
         $year = $request->year ? $request->year : date('Y');// 年
         $m = $year . '-' . $month . '-' .$now_day;
         $start = Carbon::parse($m)->startOfMonth();
-        $end = Carbon::parse($m)->endOfMonth()->addDays(14);
+        $end = Carbon::parse($m)->endOfMonth()->addDays(13);
         $period = CarbonPeriod::create($start, $end);
 
         foreach ($period as $date) {
