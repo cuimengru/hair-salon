@@ -167,13 +167,13 @@ class ProductionController extends AdminController
             '1'=> '女'
         ])->default(0);
         $form->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id'));
-        $form->select('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
+        $form->multipleSelect('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
         $form->select('color_id','发质')->options(ProductionColor::all()->pluck('name','id'));
         $form->select('length_id','长度')->options(ProductionLength::all()->pluck('name','id'));
         $form->select('face_id','脸型')->options(ProductionFace::all()->pluck('name','id'));
         $form->multipleSelect('style_id','风格')->options(ProductionStyle::all()->pluck('name','id'));
         $form->select('project_id','项目')->options(ProductionProject::all()->pluck('name','id'));
-        $form->select('hair_id','烫染')->options(ProductionHair::all()->pluck('name','id'));
+        $form->multipleSelect('hair_id','烫染')->options(ProductionHair::all()->pluck('name','id'));
         $form->saved(function (Form $form) {
             if($form->model()->is_recommend == 0){
                     $production = Production::find($form->model()->id);

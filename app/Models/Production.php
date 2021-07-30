@@ -19,7 +19,9 @@ class Production extends Model
 
     protected $casts = [
         'many_images'=>'array',
-        'style_id' => 'array'
+        'style_id' => 'array',
+        'age_id' => 'array',
+        'hair_id' => 'array'
     ];
 
     protected $appends = [
@@ -73,6 +75,30 @@ class Production extends Model
     }
 
     public function getStyleIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setAgeIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['age_id'] = json_encode($value);
+        }
+    }
+
+    public function getAgeIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setHairIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['hair_id'] = json_encode($value);
+        }
+    }
+
+    public function getHairIdAttribute($value)
     {
         return json_decode($value, true);
     }

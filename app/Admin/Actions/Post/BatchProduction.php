@@ -57,13 +57,13 @@ class BatchProduction extends BatchAction
             '1'=> '女'
         ])->default(0);
         $this->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id'));
-        $this->select('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
+        $this->multipleSelect('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
         $this->select('color_id','发质')->options(ProductionColor::all()->pluck('name','id'));
         $this->select('length_id','长度')->options(ProductionLength::all()->pluck('name','id'));
         $this->select('face_id','脸型')->options(ProductionFace::all()->pluck('name','id'));
         $this->multipleSelect('style_id','风格')->options(ProductionStyle::all()->pluck('name','id'));
         $this->select('project_id','项目')->options(ProductionProject::all()->pluck('name','id'));
-        $this->select('hair_id','烫染')->options(ProductionHair::all()->pluck('name','id'));
+        $this->multipleSelect('hair_id','烫染')->options(ProductionHair::all()->pluck('name','id'));
     }
 
     public function html()
