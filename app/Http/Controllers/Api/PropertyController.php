@@ -16,11 +16,14 @@ class PropertyController extends Controller
     //作品年龄段
     public function agelist()
     {
-        $age['age'] = ProductionAge::select('id','name','created_at')->get();
-        $age['length'] = ProductionLength::select('id','name','created_at')->get();
-        $age['color'] = ProductionColor::select('id','name','created_at')->get();
+        $data = [];
+        $age['age'] = ProductionAge::select('id','name')->get();
+        $age['length'] = ProductionLength::select('id','name')->get();
+        $age['color'] = ProductionColor::select('id','name')->get();
         $age['style'] = ProductionStyle::select('id','name','created_at')->get();
-        return $age;
+        $data[0] = ['name'=>'年龄','value'=>$age['age']];
+        $data[1] = ['name'=>'长度','value'=>$age['length']];
+        return $data;
     }
 
     public function lengthlist()

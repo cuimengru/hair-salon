@@ -55,15 +55,16 @@ class ReserveInformationController extends Controller
             $data['message'] = "Date is wrong";
             return response()->json($data, 404);
         }*/
-
-        //$day = $request->day ? $request->day : date('d');// 天
+        $now = Carbon::now('Asia/shanghai');
+        $now_day = $now->format('d');
+        $day = $request->day ? $request->day : date('d');// 天
         $month = $request->month ? $request->month : date('m');// 月
         $year = $request->year ? $request->year : date('Y');// 年
-        $m = $year . '-' . $month;
+        $m = $year . '-' . $month . '-' .$now_day;
         $start = Carbon::parse($m)->startOfMonth();
-        $end = Carbon::parse($m)->endOfMonth();
+        $end = Carbon::parse($m)->endOfMonth()->addDays(14);
         $period = CarbonPeriod::create($start, $end);
-        $now = Carbon::now('Asia/shanghai');
+
         foreach ($period as $date) {
             $can_choose = 0;
             $day = $date->format('d');
@@ -178,9 +179,9 @@ class ReserveInformationController extends Controller
             unset($workTime['list'][$i]['time']);
             $workTime['list'][$i]['time2'] = array_values($workTime['list'][$i]['time2']);
 
-            if($item['day'] < $day_now){
+            /*if($item['day'] < $day_now){
                 unset($workTime['list'][0]);
-            }
+            }*/
         }
         $workTime['list'] = array_values($workTime['list']);
         return $workTime;
