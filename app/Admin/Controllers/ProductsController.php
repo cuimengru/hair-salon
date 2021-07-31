@@ -164,7 +164,7 @@ class ProductsController extends AdminController
 
         // 定义事件回调，当模型即将保存时会触发这个回调
         $form->saving(function (Form $form) {
-            $form->model()->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: 0;
+            $form->model()->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: $form->model()->price;
         });
         $form->hidden('type')->default(1);
         $form->tools(function (Form\Tools $tools) {
