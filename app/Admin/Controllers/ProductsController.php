@@ -35,7 +35,7 @@ class ProductsController extends AdminController
             $filter->between('created_at','创建时间')->datetime();
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('category.name', __('商品类目A'));
+        $grid->column('category.name', __('商品类目'));
         $grid->column('title', __('商品名称'));
         /*$grid->on_sale('已上架')->display(function ($value) {
             return $value ? '是' : '否';
