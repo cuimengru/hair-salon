@@ -47,6 +47,7 @@ class CategoryController extends AdminController
                     $form->hidden('_token')->default(csrf_token());
                     $column->append((new Box(__('新增集品类商品类目'), $form))->style('success'));
                 });
+
             });
     }
     /**
