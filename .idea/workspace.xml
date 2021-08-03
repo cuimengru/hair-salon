@@ -4,7 +4,6 @@
     <list default="true" id="0a323fc4-c88d-431d-a52f-f87b64d2cb1b" name="默认" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ReserveInformationController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ReserveInformationController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2021_05_13_090925_create_designers_table.php" afterPath="$PROJECT_DIR$/database/migrations/2021_05_13_090925_create_designers_table.php" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/asm89/stack-cors/" />
     <ignored path="$PROJECT_DIR$/vendor/brick/math/" />
@@ -1773,8 +1772,8 @@
       <file leaf-file-name="ReserveInformationController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/ReserveInformationController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="200" column="18" lean-forward="false" selection-start-line="200" selection-start-column="18" selection-end-line="200" selection-end-column="18" />
+            <state relative-caret-position="468">
+              <caret line="200" column="43" lean-forward="true" selection-start-line="200" selection-start-column="43" selection-end-line="200" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -1804,7 +1803,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>, 'author_id')</find>
       <find>, 'p')</find>
       <find>, 'pr')</find>
       <find>, 'pri')</find>
@@ -1831,9 +1829,10 @@
       <find>&gt;first()</find>
       <find>[$k][</find>
       <find>'='</find>
-      <find>designerIndex</find>
       <find>Reserve</find>
       <find>name</find>
+      <find>paginate</find>
+      <find>designerIndex</find>
     </findStrings>
     <dirStrings>
       <dir>E:\www_web\lavaral\hair-salon</dir>
@@ -1886,8 +1885,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="187" />
+    <option name="y" value="69" />
     <option name="width" value="2576" />
     <option name="height" value="1416" />
   </component>
@@ -2107,15 +2106,15 @@
       <workItem from="1627606716662" duration="21035000" />
       <workItem from="1627691468733" duration="13013000" />
       <workItem from="1627863425146" duration="2339000" />
-      <workItem from="1627958475019" duration="11692000" />
+      <workItem from="1627958475019" duration="13095000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="151674000" />
+    <option name="totallyTimeSpent" value="153077000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <frame x="187" y="69" width="2576" height="1416" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07046178" sideWeight="0.6818182" order="0" side_tool="false" content_ui="combo" />
@@ -2827,14 +2826,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/ProductsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/storage/logs/laravel.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -2859,10 +2850,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/ProductsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/ReserveInformationController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="200" column="18" lean-forward="false" selection-start-line="200" selection-start-column="18" selection-end-line="200" selection-end-column="18" />
+        <state relative-caret-position="468">
+          <caret line="200" column="43" lean-forward="true" selection-start-line="200" selection-start-column="43" selection-end-line="200" selection-end-column="43" />
           <folding />
         </state>
       </provider>
