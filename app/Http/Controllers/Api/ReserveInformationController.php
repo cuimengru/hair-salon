@@ -197,7 +197,8 @@ class ReserveInformationController extends Controller
             ->defaultSort('id') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','designer_id','service_project')
-            ->paginate(3);
+//            ->paginate(3);
+            ->get();
         foreach ($designers as $k=>$value){
             $designer = Designer::where('id','=',$value['designer_id'])->first();
             $designers[$k]['designer_name'] = $designer->name;

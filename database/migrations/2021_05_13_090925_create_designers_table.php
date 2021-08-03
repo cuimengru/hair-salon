@@ -19,7 +19,7 @@ class CreateDesignersTable extends Migration
             $table->string('thumb')->comment('图片');
             $table->string('position')->nullable()->comment('职位');
             $table->integer('rating')->default(0)->comment('评价数量');
-            $table->string('description')->nullable()->comment('描述');
+            $table->longtext('description')->nullable()->comment('描述');
             $table->timestamps();
         });
         DB::statement("ALTER TABLE designers comment '设计师信息管理'");
