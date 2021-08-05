@@ -84,7 +84,23 @@ class ProductionController extends AdminController
                 return '女';
             }
         });
-        $grid->column('height.name', __('身高'));
+//        hyh身高改多选
+        $grid->column('height_id', __('身高'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionHeight::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+
+        });
+
         $grid->column('age_id', __('年龄段'))->display(function ($service_project) {
             $html = '';
             if(!empty($service_project)){
@@ -223,7 +239,8 @@ class ProductionController extends AdminController
             '0'=>'男',
             '1'=> '女'
         ])->default(0);
-        $form->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id'));
+//        $form->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id')); //hyh身高改多选
+        $form->multipleSelect('height_id','身高')->options(ProductionHeight::all()->pluck('name','id'));
         $form->multipleSelect('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
         $form->select('color_id','发质')->options(ProductionColor::all()->pluck('name','id'));
         $form->select('length_id','长度')->options(ProductionLength::all()->pluck('name','id'));

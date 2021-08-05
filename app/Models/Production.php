@@ -21,7 +21,8 @@ class Production extends Model
         'many_images'=>'array',
         'style_id' => 'array',
         'age_id' => 'array',
-        'hair_id' => 'array'
+        'hair_id' => 'array',
+        'height_id' => 'array' //hyh身高改多选
     ];
 
     protected $appends = [
@@ -102,6 +103,21 @@ class Production extends Model
     {
         return json_decode($value, true);
     }
+
+//hyh身高改多选
+    public function setHeightIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['height_id'] = json_encode($value);
+        }
+    }
+
+    public function getHeightIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+
 
     public function designer()
     {
