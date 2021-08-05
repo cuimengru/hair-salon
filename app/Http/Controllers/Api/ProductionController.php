@@ -26,8 +26,10 @@ class ProductionController extends Controller
         $index['advert'] = Advert::where('category_id','=',6)->orderBy('order', 'asc')->select('id','thumb', 'url')->get();
 
         //作品$index['production']
-         $productions= Production::where('is_recommend','=',1)->orderBy('created_at','desc')
+         $productions= Production::where('is_recommend','=',1)
              ->where('on_sale','=',1)
+             ->orderBy('sort','desc')//hyh作品排序
+             ->orderBy('created_at','desc')
             ->select('id','title','thumb','type','video')
             ->get();
          foreach ($productions as $p=>$product){
@@ -52,6 +54,7 @@ class ProductionController extends Controller
         //设计师$index['designers']
         $index['designers'] = Designer::where('is_recommend','=',1)
             ->where('is_employee','=',1)
+            ->orderBy('sort','desc')//hyh设计师排序
             ->orderBy('created_at','desc')
             ->select('id','name','thumb','description','position','label_id')->get();
          //收藏设计师

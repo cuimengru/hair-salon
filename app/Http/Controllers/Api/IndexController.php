@@ -29,6 +29,8 @@ class IndexController extends Controller
         //推荐作品展示
         $production = Production::where('is_recommend','=',1)
             ->where('on_sale','=',1)
+            ->orderBy('sort','desc')//hyh作品排序
+            ->orderBy('created_at','desc')
             ->select('id','title','thumb','video','description','content','type','rectangle_image')
             ->limit(3)
             ->get();

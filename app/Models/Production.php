@@ -14,7 +14,7 @@ class Production extends Model
     protected $fillable = [
         'title','description','thumb', 'video', 'rating','designer_id','content','is_recommend','type','many_images',
         'rectangle_image','order','gender','age_id','length_id','color_id','style_id','on_sale','height_id','face_id',
-        'project_id','hair_id'
+        'project_id','hair_id','sort'
     ];
 
     protected $casts = [
