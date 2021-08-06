@@ -111,7 +111,7 @@ return [
         'new_config_help' => '配置help',
         'new_config_options' => '配置扩展项',
         'header' => '网站设置',
-        'desc' => '网站设置设置',
+        'desc' => '网站设置',
         'backup' => '备份',
         'element' => [
             'normal' => '默认',
@@ -154,5 +154,11 @@ return [
         'scroll_right' => '滚动到最右',
         'scroll_current' => '滚动到当前',
         'goto_login' => '登录超时，正在跳转登录页面...'
+    ],
+//    hyh测试
+    'auth'=>[
+        'Auth' => '系统管理6',
+        'Users' => '管理员6',
+        'Logs'=>'日志6'
     ],
 ];

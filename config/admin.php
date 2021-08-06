@@ -85,7 +85,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'Hair Salon管理后台',
+    'title' => 'Hair Salon 管理后台',
 
     /*
     |--------------------------------------------------------------------------
@@ -425,7 +425,7 @@ return [
             // The controller and action of dashboard page `/admin/dashboard`
             'home_action' => App\Admin\Controllers\HomeController::class . '@index',
             // Default page tab-title
-            'home_title' => 'Home',
+            'home_title' => '首页',//hyh
             // Default page tab-title icon
             'home_icon' => 'fa-home',
             // Whether show icon befor titles for all tab

@@ -15,7 +15,6 @@ class VersionsController extends AdminController
      *
      * @var string
      */
-    protected $title = '客户端版本';
 
     /**
      * Make a grid builder.
