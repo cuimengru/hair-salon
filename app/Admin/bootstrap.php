@@ -18,6 +18,7 @@
  *
  */
 
+
 Encore\Admin\Form::forget(['map']);
 /*Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $navbar->right(Nav\Link::make('Settings', 'configx/edit'));
@@ -31,3 +32,6 @@ Encore\Admin\Form::forget(['map']);
         $tools->disableList();
     });
 });*/
+
+app('view')->prependNamespace('admin', resource_path('views/admin'));
+//app('translator')->addNamespace('admin', resource_path('lang/admin'));

@@ -1,10 +1,8 @@
 <?php
 
 return [
-    'home'                  => '首页',
-    'users'                 => '用户2',
-    'dashboard'             => '面板php',
-    'offline_users'         => '线下用户hyh',
+    'dashboard'             => '首1页',
+    'auth'                  => '权限',
     'online'                => '在线',
     'login'                 => '登录',
     'logout'                => '登出',
@@ -47,7 +45,8 @@ return [
     'back'                  => '返回',
     'back_to_list'          => '返回列表',
     'submit'                => '提交',
-    'menu'                  => '菜8单',
+    'menu'                  => '菜14单',
+    'users'                 => '用户',
     'input'                 => '输入',
     'succeeded'             => '成功',
     'failed'                => '失败',

@@ -23,7 +23,6 @@
       </tr>
 
       <tr style="height: 50px">
-
         <td style="line-height: 50px">{{ $order->designer->name }}</td>
         <td style="line-height: 50px">{{ $order->service_name}}</td>
         <td style="line-height: 50px">{{$order->num}}</td>
