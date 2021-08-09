@@ -188,16 +188,20 @@ class ProductionController extends Controller
             ->allowedFilters([
                 AllowedFilter::exact('gender'), //性别
                 //AllowedFilter::exact('age_id'), //年龄段
-                AllowedFilter::exact('length_id'), //长度
-                AllowedFilter::exact('color_id'), //发质
+//                AllowedFilter::exact('length_id'), //长度
+//                AllowedFilter::exact('color_id'), //发质
 //                AllowedFilter::exact('height_id'), //身高 //hyh身高改多选
-                AllowedFilter::exact('face_id'), //脸型id
-                AllowedFilter::exact('project_id'), //项目id
+//                AllowedFilter::exact('face_id'), //脸型id
+//                AllowedFilter::exact('project_id'), //项目id
                 //AllowedFilter::exact('hair_id'), //烫染id
                 'style_id',
                 'age_id',
                 'hair_id',
-                'height_id'//hyh身高改多选
+                'height_id',//hyh身高改多选
+                'color_id',
+                'length_id',
+                'face_id',
+                'project_id'
             ])
             ->where('on_sale','=',1)
             ->defaultSort('-created_at') //按照创建时间排序

@@ -121,9 +121,54 @@ class ProductionController extends AdminController
             }
 
         });
-        $grid->column('color.name', __('发质'));
-        $grid->column('length.name', __('长度'));
-        $grid->column('face.name', __('脸型'));
+//        $grid->column('color.name', __('发质'));
+        $grid->column('color_id', __('发质'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionColor::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+        });
+
+//        $grid->column('length.name', __('长度'));
+        $grid->column('length_id', __('长度'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionLength::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+        });
+
+//        $grid->column('face.name', __('脸型'));
+        $grid->column('face_id', __('脸型'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionFace::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+        });
+
         $grid->column('style_id', __('风格'))->display(function ($service_project) {
             $html = '';
             if(!empty($service_project)){
@@ -139,7 +184,23 @@ class ProductionController extends AdminController
             }
 
         });
-        $grid->column('project.name', __('项目'));
+//        $grid->column('project.name', __('项目'));
+        $grid->column('project_id', __('项目'))->display(function ($service_project) {
+            $html = '';
+            if(!empty($service_project)){
+                foreach ($service_project as $k => $value){
+                    $service = ProductionProject::where('id','=',$value)->select('name')->first();
+                    if($service){
+                        $html .= "<span class='label label-success' style='margin-left: 8px'>{$service['name']}</span>";
+                    }
+                }
+                return $html;
+            }else{
+                return $html;
+            }
+        });
+
+
         $grid->column('hair_id', __('烫染'))->display(function ($service_project) {
             $html = '';
             if(!empty($service_project)){
@@ -265,11 +326,11 @@ class ProductionController extends AdminController
 //      $form->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id')); //hyh身高改多选
         $form->multipleSelect('height_id','身高')->options(ProductionHeight::all()->pluck('name','id'));
         $form->multipleSelect('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
-        $form->select('color_id','发质')->options(ProductionColor::all()->pluck('name','id'));
-        $form->select('length_id','长度')->options(ProductionLength::all()->pluck('name','id'));
-        $form->select('face_id','脸型')->options(ProductionFace::all()->pluck('name','id'));
+        $form->multipleSelect('color_id','发质')->options(ProductionColor::all()->pluck('name','id'));
+        $form->multipleSelect('length_id','长度')->options(ProductionLength::all()->pluck('name','id'));
+        $form->multipleSelect('face_id','脸型')->options(ProductionFace::all()->pluck('name','id'));
         $form->multipleSelect('style_id','风格')->options(ProductionStyle::all()->pluck('name','id'));
-        $form->select('project_id','项目')->options(ProductionProject::all()->pluck('name','id'));
+        $form->multipleSelect('project_id','项目')->options(ProductionProject::all()->pluck('name','id'));
         $form->multipleSelect('hair_id','烫染')->options(ProductionHair::all()->pluck('name','id'));
         $form->tools(function (Form\Tools $tools) {
             // 去掉`查看`按钮

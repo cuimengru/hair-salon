@@ -22,7 +22,12 @@ class Production extends Model
         'style_id' => 'array',
         'age_id' => 'array',
         'hair_id' => 'array',
-        'height_id' => 'array' //hyh身高改多选
+        'height_id' => 'array', //hyh身高改多选
+        'color_id' => 'array',
+        'length_id' => 'array',
+        'face_id' => 'array',
+        'project_id' => 'array'
+
     ];
 
     protected $appends = [
@@ -111,12 +116,54 @@ class Production extends Model
             $this->attributes['height_id'] = json_encode($value);
         }
     }
-
     public function getHeightIdAttribute($value)
     {
         return json_decode($value, true);
     }
 
+    public function setColorIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['color_id'] = json_encode($value);
+        }
+    }
+    public function getColorIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setLengthIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['length_id'] = json_encode($value);
+        }
+    }
+    public function getLengthIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setFaceIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['face_id'] = json_encode($value);
+        }
+    }
+    public function getFaceIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setProjectIdAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['project_id'] = json_encode($value);
+        }
+    }
+    public function getProjectIdAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
 
     public function designer()
