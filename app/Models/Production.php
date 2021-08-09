@@ -61,6 +61,16 @@ class Production extends Model
         }
     }
 
+//hyh作品标题改为非必填 不设置这个的话 接口返回null 不是想要的
+    public function getTitleAttribute()
+    {
+        if (empty($this->title)) {
+            return "";
+        }
+    }
+
+
+
     public function setManyImagesAttribute($value)
     {
         if (is_array($value)) {

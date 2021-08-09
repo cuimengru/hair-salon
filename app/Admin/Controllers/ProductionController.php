@@ -276,7 +276,10 @@ class ProductionController extends AdminController
             }
         })->ajax('/admin/api/designer')->required();*/
         $form->radio('type',__('作品类型'))->options(['0' => '视频', '1' => '图文'])->default('0')->required();
-        $form->text('title', __('标题'))->required();
+//        $form->text('title', __('标题'))->required();
+        $form->text('title', __('标题'));//hyh作品标题改为非必填
+
+
         $form->image('thumb', __('封面图片'))->rules('image')->move('images/articleimage')->uniqueName()->help('图片参考尺寸至少 108*108 比例1:1')->required();
         $states = [
             'on'  => ['value' => 0, 'text' => '否', 'color' => 'default'],
