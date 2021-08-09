@@ -262,7 +262,7 @@ class ProductionController extends AdminController
             '0'=>'男',
             '1'=> '女'
         ])->default(0);
-//        $form->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id')); //hyh身高改多选
+//      $form->select('height_id','身高')->options(ProductionHeight::all()->pluck('name','id')); //hyh身高改多选
         $form->multipleSelect('height_id','身高')->options(ProductionHeight::all()->pluck('name','id'));
         $form->multipleSelect('age_id','年龄段')->options(ProductionAge::all()->pluck('name','id'));
         $form->select('color_id','发质')->options(ProductionColor::all()->pluck('name','id'));

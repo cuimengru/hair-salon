@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'home'                  => '首页',
-    'users'                 => '用户2',
-    'dashboard'             => '面板php',
-    'offline_users'         => '线下用户hyh',
     'online'                => '在线',
     'login'                 => '登录',
     'logout'                => '登出',

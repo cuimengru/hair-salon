@@ -22,9 +22,25 @@
         <td>预约人数</td>
       </tr>
 
+      {{--$order->designer->name  $order->service_name 要判断是否为空 否则页面报错hyh--}}
+
       <tr style="height: 50px">
-        <td style="line-height: 50px">{{ $order->designer->name }}</td>
-        <td style="line-height: 50px">{{ $order->service_name}}</td>
+        <td style="line-height: 50px">
+          @if(!empty($order->designer->name))
+            {{ $order->designer->name }}
+          @else
+          {{ "-设计师不存在-" }}
+          @endif
+        </td>
+
+        <td style="line-height: 50px">
+          @if(!empty($order->service_name))
+            {{ $order->service_name }}
+          @else
+            {{ "-服务项目不存在-" }}
+          @endif
+        </td>
+
         <td style="line-height: 50px">{{$order->num}}</td>
       </tr>
       <tr style="color:#000000;font-weight: 900;font-size: 15px">
@@ -34,7 +50,9 @@
       </tr>
       <tr style="height: 80px">
         <td style="line-height: 80px">{{$order->phone}}</td>
-        <td style="line-height: 80px">{{$order->reserve_date}}</td>
+        <td style="line-height: 80px">
+            {{ $order->reserve_date }}
+         </td>
         <td style="word-wrap:break-word;word-break:break-all;" width="450px">{{$order->remark}}</td>
 
       </tr>

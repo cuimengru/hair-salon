@@ -29,8 +29,8 @@ class BatchProductionSalelist extends BatchAction
         $options = [
             1 => '上架',
         ];
-
-        $this->radio('on_sale', '上架')->options($options);
+//        hyh增加default
+        $this->radio('on_sale', '上架')->options($options)->default(1);
     }
 
     public function html()

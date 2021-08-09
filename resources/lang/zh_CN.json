@@ -50,5 +50,6 @@
     "admin.roles": "角色",
     "admin.permissions": "权限",
     "admin.menu": "菜单",
-    "admin.logs": "日志"
+    "admin.logs": "日志",
+    "No data selected!": "请选择要批量修改属性的作品"
 }

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class BatchProductiSalelist extends BatchAction
 {
-    public $name = '批量下架';
+    public $name = '2批量下架';
 
     protected $selector = '.production-onsale';
     public function handle(Collection $collection,Request $request)
@@ -30,7 +30,8 @@ class BatchProductiSalelist extends BatchAction
             0 => '下架',
         ];
 
-        $this->radio('on_sale', '下架')->options($options);
+//        hyh增加default
+        $this->radio('on_sale', '下架')->options($options)->default(0);
     }
 
     public function html()
