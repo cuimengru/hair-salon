@@ -5,12 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php" afterPath="$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/DesignersController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/DesignersController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/IndexController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/IndexController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Models/Production.php" afterPath="$PROJECT_DIR$/app/Models/Production.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2021_08_05_133354_add_sort_to_productions_table.php" afterPath="$PROJECT_DIR$/database/migrations/2021_08_05_133354_add_sort_to_productions_table.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2021_08_05_140226_add_sort_to_designers_table.php" afterPath="$PROJECT_DIR$/database/migrations/2021_08_05_140226_add_sort_to_designers_table.php" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/asm89/stack-cors/" />
     <ignored path="$PROJECT_DIR$/vendor/brick/math/" />
@@ -1746,13 +1741,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DesignerController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DesignerController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="111" column="49" lean-forward="true" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
+            <state relative-caret-position="342">
+              <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
               <folding>
-                <marker date="1628560082535" expanded="true" signature="1133:1180" ph="..." />
+                <marker date="1628566083754" expanded="true" signature="1133:1180" ph="..." />
               </folding>
             </state>
           </provider>
@@ -1761,8 +1756,8 @@
       <file leaf-file-name="ProductionController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="209" column="67" lean-forward="false" selection-start-line="209" selection-start-column="67" selection-end-line="209" selection-end-column="67" />
+            <state relative-caret-position="360">
+              <caret line="20" column="43" lean-forward="true" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -1778,10 +1773,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DesignersController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ProductionController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="86" column="6" lean-forward="false" selection-start-line="86" selection-start-column="6" selection-end-line="90" selection-end-column="11" />
+              <folding>
+                <marker date="1628566075116" expanded="true" signature="1573:1620" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="3657:3673" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="4262:4278" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="4918:4934" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="5577:5593" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="6230:6246" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="6837:6853" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="7499:7515" ph="..." />
+                <marker date="1628566075116" expanded="true" signature="8105:8121" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DesignersController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/DesignersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
+            <state relative-caret-position="378">
               <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
               <folding />
             </state>
@@ -1792,16 +1807,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>排序 数字越大越靠前</find>
-      <find>hyh身高改多选</find>
-      <find>video</find>
-      <find>rectangle_image</find>
-      <find>排序</find>
-      <find>allproduction</find>
-      <find>allIndex</find>
-      <find>t</find>
-      <find>tuiij</find>
-      <find>tuii</find>
       <find>tui</find>
       <find>推荐</find>
       <find>推荐设计师排血</find>
@@ -1820,8 +1825,18 @@
       <find>hyh</find>
       <find>hyh作品拍</find>
       <find>hyh作品</find>
-      <find>hyh作品排序</find>
       <find>designers/index</find>
+      <find>-&gt;sortable()</find>
+      <find>zuopi</find>
+      <find>zuop</find>
+      <find>zuo</find>
+      <find>z</find>
+      <find>作品</find>
+      <find>作品排序</find>
+      <find>hyh作品排序</find>
+      <find>排序</find>
+      <find>hh</find>
+      <find>sort</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -1913,11 +1928,11 @@
         <option value="$PROJECT_DIR$/app/Models/Production.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Api/IndexController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2021_08_10_092902_add_sort_list_to_productions_table.php" />
-        <option value="$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2021_08_10_094348_add_sort_list_to_designers_table.php" />
-        <option value="$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Api/DesignersController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php" />
+        <option value="$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php" />
+        <option value="$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php" />
       </list>
     </option>
   </component>
@@ -2079,6 +2094,28 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hair-salon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hair-salon" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Admin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controllers" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -2228,12 +2265,12 @@
       <workItem from="1628327186289" duration="35000" />
       <workItem from="1628327235373" duration="1023000" />
       <workItem from="1628468798738" duration="14495000" />
-      <workItem from="1628555406040" duration="4972000" />
+      <workItem from="1628555406040" duration="9701000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="238331000" />
+    <option name="totallyTimeSpent" value="243060000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1066" extended-state="6" />
@@ -2746,6 +2783,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="18" column="40" lean-forward="true" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2922,14 +2960,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13">
-          <caret line="274" column="28" lean-forward="true" selection-start-line="274" selection-start-column="28" selection-end-line="274" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2021_08_10_094348_add_sort_list_to_designers_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -2954,16 +2984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="111" column="49" lean-forward="true" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
-          <folding>
-            <marker date="1628560082535" expanded="true" signature="1133:1180" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
@@ -2972,19 +2992,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/DesignersController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="209" column="67" lean-forward="false" selection-start-line="209" selection-start-column="67" selection-end-line="209" selection-end-column="67" />
+        <state relative-caret-position="378">
+          <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/DesignersController.php">
+    <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+        <state relative-caret-position="468">
+          <caret line="86" column="6" lean-forward="false" selection-start-line="86" selection-start-column="6" selection-end-line="90" selection-end-column="11" />
+          <folding>
+            <marker date="1628566075116" expanded="true" signature="1573:1620" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="3657:3673" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="4262:4278" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="4918:4934" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="5577:5593" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="6230:6246" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="6837:6853" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="7499:7515" ph="..." />
+            <marker date="1628566075116" expanded="true" signature="8105:8121" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="43" lean-forward="true" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding>
+            <marker date="1628566083754" expanded="true" signature="1133:1180" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

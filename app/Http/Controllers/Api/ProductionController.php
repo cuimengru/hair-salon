@@ -204,6 +204,7 @@ class ProductionController extends Controller
                 'project_id'
             ])
             ->where('on_sale','=',1)
+            ->where('is_recommend','=',0)//hyh客户要求，列表页不显示推荐的作品。
             ->defaultSort('-sort_list') //hyh作品排序
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格

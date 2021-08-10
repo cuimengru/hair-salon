@@ -82,6 +82,14 @@ class ProductionController extends AdminController
             0 => '不推荐',
             1 => '推荐',
         ]);
+
+//      hyh如果筛选界面选择了推荐参数，点击搜索按钮后，就显示“推荐排序”一列
+//        if(!empty($_GET['is_recommend'])){
+//        $grid->column('sort', '推荐排序')->sortable();
+//        }else{
+//            $grid->column('sort_list', '排序')->sortable();
+//        }
+
         $grid->column('gender',__('性别'))->display(function ($value){
             if ($value == 0){
                 return '男';

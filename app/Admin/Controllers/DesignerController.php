@@ -59,6 +59,13 @@ class DesignerController extends AdminController
             1 => '推荐',
         ]);
 
+//      hyh如果筛选界面选择了推荐参数，点击搜索按钮后，就显示“推荐排序”一列
+//        if(!empty($_GET['is_recommend'])){
+//            $grid->column('sort', '推荐排序')->sortable();
+//        }else{
+//            $grid->column('sort_list', '排序')->sortable();
+//        }
+
 
         $grid->column('created_at', __('创建时间'));
         $grid->tools(function ($tools) {
