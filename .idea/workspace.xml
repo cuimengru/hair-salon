@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0a323fc4-c88d-431d-a52f-f87b64d2cb1b" name="默认" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php" afterPath="$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProductionController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductionController.php" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/asm89/stack-cors/" />
     <ignored path="$PROJECT_DIR$/vendor/brick/math/" />
@@ -1744,8 +1741,8 @@
       <file leaf-file-name="DesignerController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+            <state relative-caret-position="-414">
+              <caret line="55" column="46" lean-forward="true" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
               <folding>
                 <marker date="1628566083754" expanded="true" signature="1133:1180" ph="..." />
               </folding>
@@ -1949,10 +1946,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1928" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1066" />
+    <option name="height" value="1065" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -2265,15 +2262,15 @@
       <workItem from="1628327186289" duration="35000" />
       <workItem from="1628327235373" duration="1023000" />
       <workItem from="1628468798738" duration="14495000" />
-      <workItem from="1628555406040" duration="9701000" />
+      <workItem from="1628555406040" duration="13224000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="243060000" />
+    <option name="totallyTimeSpent" value="246583000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1065" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22542734" sideWeight="0.65938866" order="0" side_tool="false" content_ui="combo" />
@@ -3028,8 +3025,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Admin/Controllers/DesignerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+        <state relative-caret-position="-414">
+          <caret line="55" column="46" lean-forward="true" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
           <folding>
             <marker date="1628566083754" expanded="true" signature="1133:1180" ph="..." />
           </folding>
