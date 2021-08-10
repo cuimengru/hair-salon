@@ -28,9 +28,9 @@ class ProductionController extends Controller
         //作品$index['production']
          $productions= Production::where('is_recommend','=',1)
              ->where('on_sale','=',1)
-             ->orderBy('sort','desc')//hyh作品排序
+             ->orderBy('sort','desc')//hyh推荐作品排序
              ->orderBy('created_at','desc')
-            ->select('id','title','thumb','type','video')
+            ->select('id','title','thumb','type','video','sort')
             ->get();
          foreach ($productions as $p=>$product){
              //收藏作品
@@ -54,7 +54,7 @@ class ProductionController extends Controller
         //设计师$index['designers']
         $index['designers'] = Designer::where('is_recommend','=',1)
             ->where('is_employee','=',1)
-            ->orderBy('sort','desc')//hyh设计师排序
+            ->orderBy('sort','desc')//hyh推荐设计师排序
             ->orderBy('created_at','desc')
             ->select('id','name','thumb','description','position','label_id')->get();
          //收藏设计师
@@ -204,9 +204,10 @@ class ProductionController extends Controller
                 'project_id'
             ])
             ->where('on_sale','=',1)
+            ->defaultSort('-sort_list') //hyh作品排序
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
-            ->select('id','title','thumb','type','video')
+            ->select('id','title','thumb','type','video','sort_list')
             ->paginate(15);
         foreach ($productions as $p=>$product){
             //收藏作品

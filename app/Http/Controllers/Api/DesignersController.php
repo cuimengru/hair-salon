@@ -24,9 +24,10 @@ class DesignersController extends Controller
                 'title'
             ])*/
             ->where('is_employee','=',1)
+            ->defaultSort('-sort_list') //hyh设计师排序
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
-            ->select('id','name','position','thumb','label_id')
+            ->select('id','name','position','thumb','label_id','sort_list')
             ->paginate(6);
         foreach ($designer as $k=>$value){
             //收藏发型师

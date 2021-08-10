@@ -57,15 +57,17 @@ class Production extends Model
         if ($this->rectangle_image) {
             return Storage::disk('oss')->url($this->rectangle_image);
         } else {
-            return '';
+            return "";
         }
     }
 
 //hyh作品标题改为非必填 不设置这个的话 接口返回null 不是想要的
-    public function getTitleAttribute()
+    public function getTitleAttribute($value)
     {
-        if (empty($this->title)) {
+        if (empty($value)) {
             return "";
+        }else{
+            return $value;
         }
     }
 

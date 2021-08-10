@@ -53,7 +53,7 @@ class DesignerController extends AdminController
 //        ];
 //        $grid->column('is_recommend', __('是否推荐'))->switch($states1);
 
-//      hyh设计师排序 switch开关无法满足要求 改成普通的radio选择
+//      hyh推荐设计师排序 switch开关无法满足要求 改成普通的radio选择
         $grid->column('is_recommend', __('是否推荐'))->radio([
             0 => '不推荐',
             1 => '推荐',
@@ -67,6 +67,7 @@ class DesignerController extends AdminController
                 $batch->disableDelete();
             });
         });
+        $grid->model()->orderBy('sort_list', 'desc');//hyh设计师排序
         $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
@@ -107,6 +108,7 @@ class DesignerController extends AdminController
         $form->text('name', __('姓名'))->required();
         $form->image('thumb', __('封面图片'))->required()->help('图片尺寸 142*80');
         $form->multipleImage('many_images','多图上传')->uniqueName()->removable()->help('图片尺寸 375*375');
+        $form->number('sort_list', __('排序'))->help('请填写数字 数字越大越靠前');//hyh设计师排序
         $form->textarea('description', __('描述'));
         $form->multipleSelect('label_id','设计师标签')->options(DesignerLabel::all()->pluck('name','id'));
         $form->text('position', __('职位'));
@@ -124,7 +126,7 @@ class DesignerController extends AdminController
 //        $form->switch('is_recommend', __('是否推荐'))->states($states1);
 
 
-//hyh设计师排序 把switch开关改成radio选择
+//hyh推荐设计师排序 把switch开关改成radio选择
         $form->radio('is_recommend','是否推荐')->options([
             0 => '否',
             1 => '是'
@@ -132,7 +134,7 @@ class DesignerController extends AdminController
             $form->number('sort', __('排序'))->default(0)->help('请填写数字 数字越大越靠前');
         })
             ->when(0,function (Form $form){
-            //hyh作品排序 选择“否”的时候，不显数字示表单
+            //hyh推荐设计师排序 选择“否”的时候，不显数字示表单
 //          $form->number('sort', __('排序'))->default(0)->help('');
             })->help('如果选择“是”，下面的排序字段不能为空，否则页面报错');
 

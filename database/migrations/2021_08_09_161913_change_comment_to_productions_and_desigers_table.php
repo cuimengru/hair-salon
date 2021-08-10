@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSortToProductionsTable extends Migration
+class ChangeCommentToProductionsAndDesigersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class AddSortToProductionsTable extends Migration
      */
     public function up()
     {
-//        hyh推荐作品排序
         Schema::table('productions', function (Blueprint $table) {
-            $table->integer('sort')->default(0)->nullable()->comment('排序 数字越大越靠前');
+            $table->integer('sort')->default(0)->nullable()->comment('作品推荐的排序 数字越大越靠前')->change();
         });
+
+        Schema::table('designers', function (Blueprint $table) {
+            $table->integer('sort')->default(0)->nullable()->comment('设计师推荐的排序 数字越大越靠前')->change();
+        });
+
     }
 
     /**
@@ -29,5 +33,10 @@ class AddSortToProductionsTable extends Migration
         Schema::table('productions', function (Blueprint $table) {
             //
         });
+
+        Schema::table('desigers', function (Blueprint $table) {
+        //
+        });
+
     }
 }

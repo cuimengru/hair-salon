@@ -13,7 +13,7 @@ class AddSortToDesignersTable extends Migration
      */
     public function up()
     {
-        //hyh设计师排序
+        //hyh推荐设计师排序
         Schema::table('designers', function (Blueprint $table) {
             $table->integer('sort')->default(0)->nullable()->comment('排序 数字越大越靠前');
         });

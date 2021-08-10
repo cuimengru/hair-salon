@@ -230,6 +230,7 @@ class ProductionController extends AdminController
             $tools->append(new BatchProductiSalelist());
             $tools->append(new BatchProduction());
         });
+        $grid->model()->orderBy('sort_list', 'desc');//hyh作品排序
         $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
@@ -285,20 +286,24 @@ class ProductionController extends AdminController
             'on'  => ['value' => 0, 'text' => '否', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '是', 'color' => 'primary'],
         ];
+
+//        hyh作品排序
+        $form->number('sort_list', __('排序'))->help('请填写数字 数字越大越靠前');
+
         $form->switch('on_sale', __('是否上架'))->states($states);
         $form->radio('is_recommend','是否推荐')->options([
             0 => '否',
             1 => '是'
         ])->when(1,function (Form $form){
 
-//      hyh作品排序
+//      hyh推荐作品排序
             $form->number('sort', __('排序'))->help('请填写数字 数字越大越靠前');
 
             $form->image('rectangle_image','封面长图')->rules('image')->uniqueName()->help('如果需要推荐到首页，需要上传封面长图，前端首页右边的长方形图片参考尺寸 175*75 比例 7:3，前端首页左边的正方形的图片参考尺寸还是108*108');
 
         })
           ->when(0,function (Form $form){
-          //hyh作品排序 选择“否”的时候，不显数字示表单
+          //hyh推荐作品排序 选择“否”的时候，不显数字示表单
 //        $form->number('sort', __('排序'))->default(0)->help('');
         })->help('如果选择“是”，下面的排序字段不能为空，否则页面报错');
 //       如果推荐=1，那么sort字段为后台填写的数字或者默认为0
