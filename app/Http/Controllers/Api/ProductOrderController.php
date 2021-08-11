@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductOrderController extends Controller
 {
@@ -105,11 +106,31 @@ class ProductOrderController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
             foreach ($reserveOrder as $i=>$item){
+//                hyh新增对设计师和项目是否存在的判断 如果存在findOrFail直接返回404
+//                $ifdesigner = Designer::find($item['designer_id']);
+//                if($ifdesigner){
+//                $reserveOrder[$i]['designer_name']="";
+//                $reserveOrder[$i]['designer_thumb']="";
+                try{
                 $designer = Designer::findOrFail($item['designer_id']);
                 $reserveOrder[$i]['designer_name'] = $designer->name;
                 $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
-                $service_project = ServiceProject::findOrFail($item['service_project']);
-                $reserveOrder[$i]['service_project_name'] = $service_project->name;
+                }catch(ModelNotFoundException $e)
+                {
+                    $reserveOrder[$i]['designer_name'] = "-设计师不存在-";
+                    $reserveOrder[$i]['designer_thumb'] = "";
+                }
+
+
+//                $ifservice_project = Designer::find($item['service_project']);
+//                if($ifservice_project){
+                try{
+                    $service_project = ServiceProject::findOrFail($item['service_project']);
+                    $reserveOrder[$i]['service_project_name'] = $service_project->name;
+                }catch(ModelNotFoundException $e){
+                    $reserveOrder[$i]['service_project_name'] = "服务项目不存在-";
+                }
+
                 $reserveOrder[$i]['orderType'] = 2; //预约订单
                 if($item['status'] == 1){
                     if($item['closed'] == false){
@@ -170,11 +191,31 @@ class ProductOrderController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(3);
             foreach ($reserveOrder as $i=>$item){
+//                $designer = Designer::findOrFail($item['designer_id']);
+//                $reserveOrder[$i]['designer_name'] = $designer->name;
+//                $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
+//                hyh新增对设计师和项目是否存在的判断 如果存在findOrFail直接返回404
+
+//                $ifdesigner = Designer::find($item['designer_id']);
+//                if($ifdesigner){
+                try{
                 $designer = Designer::findOrFail($item['designer_id']);
                 $reserveOrder[$i]['designer_name'] = $designer->name;
                 $reserveOrder[$i]['designer_thumb'] = $designer->thumb_url;
+                }catch(ModelNotFoundException $e){
+                    $reserveOrder[$i]['designer_name'] = "-设计师不存在-";
+                    $reserveOrder[$i]['designer_thumb'] = "";
+                }
+
+//                $ifservice_project = Designer::find($item['service_project']);
+//                if($ifservice_project){
+                try{
                 $service_project = ServiceProject::findOrFail($item['service_project']);
                 $reserveOrder[$i]['service_project_name'] = $service_project->name;
+                }catch(ModelNotFoundException $e){
+                    $reserveOrder[$i]['service_project_name'] = "-服务项目不存在-";
+                }
+
                 $reserveOrder[$i]['orderType'] = 2; //预约订单
                 if($item['status'] == 1){
                     if($item['closed'] == false){
