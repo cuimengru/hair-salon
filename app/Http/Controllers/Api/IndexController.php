@@ -34,8 +34,8 @@ class IndexController extends Controller
             ->select('id','title','thumb','video','description','content','type','rectangle_image','sort')
             ->limit(3)
             ->get();
-        $index['production']['modelname'] = config('modelname.production');
-        $index['production']['list'] = $production;
+//        $index['production']['modelname'] = config('modelname.production');
+//        $index['production']['list'] = $production;
 
 
 

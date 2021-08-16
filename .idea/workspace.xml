@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0a323fc4-c88d-431d-a52f-f87b64d2cb1b" name="默认" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Admin/Controllers/DesignersCommentController.php" afterPath="$PROJECT_DIR$/app/Admin/Controllers/DesignersCommentController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/IndexController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/IndexController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/admin.php" afterPath="$PROJECT_DIR$/config/admin.php" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/asm89/stack-cors/" />
     <ignored path="$PROJECT_DIR$/vendor/brick/math/" />
@@ -1764,8 +1762,8 @@
       <file leaf-file-name="IndexController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/IndexController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="36" column="72" lean-forward="false" selection-start-line="36" selection-start-column="72" selection-end-line="36" selection-end-column="72" />
+            <state relative-caret-position="324">
+              <caret line="36" column="9" lean-forward="false" selection-start-line="36" selection-start-column="9" selection-end-line="37" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -1986,8 +1984,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="29" />
-    <option name="y" value="26" />
+    <option name="x" value="355" />
     <option name="width" value="1936" />
     <option name="height" value="1065" />
   </component>
@@ -2200,15 +2197,15 @@
       <workItem from="1628641692414" duration="9266000" />
       <workItem from="1628728023371" duration="4882000" />
       <workItem from="1628814368981" duration="3536000" />
-      <workItem from="1629073653420" duration="4112000" />
+      <workItem from="1629073653420" duration="4750000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="268804000" />
+    <option name="totallyTimeSpent" value="269442000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="29" y="26" width="1936" height="1065" extended-state="0" />
+    <frame x="355" y="0" width="1936" height="1065" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2361111" sideWeight="0.65938866" order="0" side_tool="false" content_ui="combo" />
@@ -2956,8 +2953,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/IndexController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="36" column="72" lean-forward="false" selection-start-line="36" selection-start-column="72" selection-end-line="36" selection-end-column="72" />
+        <state relative-caret-position="324">
+          <caret line="36" column="9" lean-forward="false" selection-start-line="36" selection-start-column="9" selection-end-line="37" selection-end-column="53" />
           <folding />
         </state>
       </provider>
