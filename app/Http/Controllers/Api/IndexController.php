@@ -34,7 +34,10 @@ class IndexController extends Controller
             ->select('id','title','thumb','video','description','content','type','rectangle_image','sort')
             ->limit(3)
             ->get();
-        $index['production'] = $production;
+        $index['production']['modelname'] = config('modelname.production');
+        $index['production']['list'] = $production;
+
+
 
         //锦之选 产品推荐
         $product = Product::where('is_recommend','=',1)->where('on_sale','=',1)

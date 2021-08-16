@@ -36,7 +36,7 @@ class DesignersCommentController extends AdminController
         //$grid->column('type', __('Type'));
         $grid->column('user.nickname', __('用户昵称'));
         $grid->column('reserveorder.no', __('预约订单号'));
-        $grid->column('designer.name', __('设计师'));
+        $grid->column('designerl.name', __('设计师'));
         $grid->column('rate', __('评分'));
         /*$grid->column('render_content', __('Render content'));
         $grid->column('render_image', __('Render image'));
