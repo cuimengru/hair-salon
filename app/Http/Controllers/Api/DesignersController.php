@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Str;
 
 class DesignersController extends Controller
 {
@@ -65,6 +66,9 @@ class DesignersController extends Controller
         if($designer['certificate'] == [null]){
             $designer['certificate'] = [];
         }
+
+//        hyh换行
+         $designer['description'] = Str::replace("\r\n", '<br/>',$designer['description']);
 
         if($designer['honor'] == [null]){
             $designer['honor'] = [];

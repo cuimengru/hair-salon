@@ -57,29 +57,33 @@ class ProductionController extends Controller
 
 
         //设计师$index['designers']
-        $index['designers'] = Designer::where('is_recommend','=',1)
+        $index1['designers'] = Designer::where('is_recommend','=',1)
             ->where('is_employee','=',1)
             ->orderBy('sort','desc')//hyh推荐设计师排序
             ->orderBy('created_at','desc')
             ->select('id','name','thumb','description','position','label_id')->get();
          //收藏设计师
-        foreach ($index['designers'] as $d=>$designer){
+        foreach ($index1['designers'] as $d=>$designer){
             //收藏设计师
             if($request->user_id){
-                $index['designers'][$d]['follows'] = DB::table('user_favorite_designers')
+                $index1['designers'][$d]['follows'] = DB::table('user_favorite_designers')
                     ->where('user_id','=',$request->user_id)
                     ->where('designer_id','=',$designer->id)
                     ->first();
-                if($index['designers'][$d]['follows']){
-                    $index['designers'][$d]['follows_designer'] = 1; //已收藏
+                if($index1['designers'][$d]['follows']){
+                    $index1['designers'][$d]['follows_designer'] = 1; //已收藏
                 }else{
-                    $index['designers'][$d]['follows_designer'] = 0; //未收藏
+                    $index1['designers'][$d]['follows_designer'] = 0; //未收藏
                 }
-                unset($index['designers'][$d]['follows']);
+                unset($index1['designers'][$d]['follows']);
             }else{
-                $index['designers'][$d]['follows_designer'] = 0; //未收藏
+                $index1['designers'][$d]['follows_designer'] = 0; //未收藏
             }
         }
+//        hyhmodelname
+        $index['designers']['modelname'] = config('modelname.designers');
+        $index['designers']['list'] = $index1['designers'];
+
 
 //   资讯
         $index1['fashions'] = Fashion::where('is_recommend','=',1)
@@ -95,8 +99,6 @@ class ProductionController extends Controller
 //        hyhmodelname
         $index['fashions']['modelname'] = config('modelname.fashions');
         $index['fashions']['list'] = $index1['fashions'];
-
-
 
         return $index;
     }
