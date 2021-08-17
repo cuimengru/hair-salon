@@ -22,9 +22,18 @@ class IndexController extends Controller
 
         $advert = [];
         $advert['top'] = Advert::where('category_id','=',1)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
-        //文教娱乐
-        $advert['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+
+         //文教娱乐 hyh屏蔽改造
+//        $advert['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+//        $index['ads'] = $advert;
+
+//      hyhmodelname
+        $advert_data['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+        $advert['bottom']['modelname'] = config('modelname.bottom');
+        $advert['bottom']['list'] = $advert_data['bottom'];
+
         $index['ads'] = $advert;
+
 
         //推荐作品展示
         $production = Production::where('is_recommend','=',1)
@@ -53,7 +62,12 @@ class IndexController extends Controller
             }
             $product[$k]['product_sku_count'] = ProductSku::where('product_id','=',$value['id'])->count();
         }
-        $index['product'] = $product;
+//        $index['product'] = $product;
+//        hyhmodelname
+        $index['product']['modelname'] = config('modelname.product');
+        $index['product']['list'] = $product;
+
+
         return $index;
     }
 

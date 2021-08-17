@@ -48,8 +48,13 @@ class ProductionController extends Controller
              }else{
                  $productions[$p]['follows_production'] = 0; //未收藏
              }
-             $index['production'] = $productions;
+             $index1['production'] = $productions;
          }
+
+//        hyhmodelname
+        $index['production']['modelname'] = config('modelname.productions');
+        $index['production']['list'] = $index1['production'];
+
 
         //设计师$index['designers']
         $index['designers'] = Designer::where('is_recommend','=',1)
@@ -76,16 +81,23 @@ class ProductionController extends Controller
             }
         }
 
-
-        $index['fashions'] = Fashion::where('is_recommend','=',1)
+//   资讯
+        $index1['fashions'] = Fashion::where('is_recommend','=',1)
             ->orderBy('order','asc')
             ->orderBy('created_at','desc')
             ->select('id','title','thumb','description','created_at','updated_at')
             ->paginate(4);
-        foreach ($index['fashions'] as $k=>$value){
-            $index['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
-            $index['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+        foreach ($index1['fashions'] as $k=>$value){
+            $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+            $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
         }
+
+//        hyhmodelname
+        $index['fashions']['modelname'] = config('modelname.fashions');
+        $index['fashions']['list'] = $index1['fashions'];
+
+
+
         return $index;
     }
 
