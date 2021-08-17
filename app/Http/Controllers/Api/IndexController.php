@@ -11,7 +11,7 @@ use App\Models\Production;
 use App\Models\ProductLabel;
 use App\Models\ProductSku;
 use Illuminate\Http\Request;
-
+use App\Models\Fashion;
 class IndexController extends Controller
 {
     //猜你喜欢首页
@@ -66,6 +66,25 @@ class IndexController extends Controller
 //        hyhmodelname
         $index['product']['modelname'] = config('modelname.product');
         $index['product']['list'] = $product;
+
+
+
+//   资讯 hyh从作品首页搬过来的
+        $index1['fashions'] = Fashion::where('is_recommend','=',1)
+            ->orderBy('order','asc')
+            ->orderBy('created_at','desc')
+            ->select('id','title','thumb','description','created_at','updated_at')
+            ->paginate(4);
+        foreach ($index1['fashions'] as $k=>$value){
+            $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+            $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+        }
+
+//        hyhmodelname
+        $index['fashions']['modelname'] = config('modelname.fashions');
+        $index['fashions']['list'] = $index1['fashions'];
+
+
 
 
         return $index;

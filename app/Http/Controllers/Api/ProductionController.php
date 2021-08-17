@@ -85,20 +85,20 @@ class ProductionController extends Controller
         $index['designers']['list'] = $index1['designers'];
 
 
-//   资讯
-        $index1['fashions'] = Fashion::where('is_recommend','=',1)
-            ->orderBy('order','asc')
-            ->orderBy('created_at','desc')
-            ->select('id','title','thumb','description','created_at','updated_at')
-            ->paginate(4);
-        foreach ($index1['fashions'] as $k=>$value){
-            $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
-            $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
-        }
-
-//        hyhmodelname
-        $index['fashions']['modelname'] = config('modelname.fashions');
-        $index['fashions']['list'] = $index1['fashions'];
+////   资讯 hyh挪动到app首页去了
+//        $index1['fashions'] = Fashion::where('is_recommend','=',1)
+//            ->orderBy('order','asc')
+//            ->orderBy('created_at','desc')
+//            ->select('id','title','thumb','description','created_at','updated_at')
+//            ->paginate(4);
+//        foreach ($index1['fashions'] as $k=>$value){
+//            $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+//            $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+//        }
+//
+////        hyhmodelname
+//        $index['fashions']['modelname'] = config('modelname.fashions');
+//        $index['fashions']['list'] = $index1['fashions'];
 
         return $index;
     }
