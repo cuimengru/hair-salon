@@ -35,8 +35,9 @@ class IndexController extends Controller
             ->limit(3)
             ->get();
         $index['production'] = $production;
-//        $index['production']['modelname'] = config('modelname.production');
-//        $index['production']['list'] = $production;
+//        hyhmodelname
+        $index['production']['modelname'] = config('modelname.production');
+        $index['production']['list'] = $production;
 
 
 
