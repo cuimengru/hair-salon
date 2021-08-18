@@ -84,9 +84,6 @@ class IndexController extends Controller
         $index['fashions']['modelname'] = config('modelname.fashions');
         $index['fashions']['list'] = $index1['fashions'];
 
-
-
-
         return $index;
     }
 
