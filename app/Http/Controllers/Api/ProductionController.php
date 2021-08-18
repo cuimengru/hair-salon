@@ -48,44 +48,58 @@ class ProductionController extends Controller
              }else{
                  $productions[$p]['follows_production'] = 0; //未收藏
              }
-             $index['production'] = $productions;
+             $index1['production'] = $productions;
          }
 
+//        hyhmodelname
+        $index['production']['modelname'] = config('modelname.productions');
+        $index['production']['list'] = $index1['production'];
+
+
         //设计师$index['designers']
-        $index['designers'] = Designer::where('is_recommend','=',1)
+        $index1['designers'] = Designer::where('is_recommend','=',1)
             ->where('is_employee','=',1)
             ->orderBy('sort','desc')//hyh推荐设计师排序
             ->orderBy('created_at','desc')
             ->select('id','name','thumb','description','position','label_id')->get();
          //收藏设计师
-        foreach ($index['designers'] as $d=>$designer){
+        foreach ($index1['designers'] as $d=>$designer){
             //收藏设计师
             if($request->user_id){
-                $index['designers'][$d]['follows'] = DB::table('user_favorite_designers')
+                $index1['designers'][$d]['follows'] = DB::table('user_favorite_designers')
                     ->where('user_id','=',$request->user_id)
                     ->where('designer_id','=',$designer->id)
                     ->first();
-                if($index['designers'][$d]['follows']){
-                    $index['designers'][$d]['follows_designer'] = 1; //已收藏
+                if($index1['designers'][$d]['follows']){
+                    $index1['designers'][$d]['follows_designer'] = 1; //已收藏
                 }else{
-                    $index['designers'][$d]['follows_designer'] = 0; //未收藏
+                    $index1['designers'][$d]['follows_designer'] = 0; //未收藏
                 }
-                unset($index['designers'][$d]['follows']);
+                unset($index1['designers'][$d]['follows']);
             }else{
-                $index['designers'][$d]['follows_designer'] = 0; //未收藏
+                $index1['designers'][$d]['follows_designer'] = 0; //未收藏
             }
         }
+//        hyhmodelname
+        $index['designers']['modelname'] = config('modelname.designers');
+        $index['designers']['list'] = $index1['designers'];
 
 
-        $index['fashions'] = Fashion::where('is_recommend','=',1)
-            ->orderBy('order','asc')
-            ->orderBy('created_at','desc')
-            ->select('id','title','thumb','description','created_at','updated_at')
-            ->paginate(4);
-        foreach ($index['fashions'] as $k=>$value){
-            $index['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
-            $index['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
-        }
+////   资讯 hyh挪动到app首页去了
+//        $index1['fashions'] = Fashion::where('is_recommend','=',1)
+//            ->orderBy('order','asc')
+//            ->orderBy('created_at','desc')
+//            ->select('id','title','thumb','description','created_at','updated_at')
+//            ->paginate(4);
+//        foreach ($index1['fashions'] as $k=>$value){
+//            $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+//            $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+//        }
+//
+////        hyhmodelname
+//        $index['fashions']['modelname'] = config('modelname.fashions');
+//        $index['fashions']['list'] = $index1['fashions'];
+
         return $index;
     }
 

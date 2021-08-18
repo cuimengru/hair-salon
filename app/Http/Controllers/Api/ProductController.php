@@ -14,6 +14,7 @@ use App\Models\UserLikeDesigner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use function MongoDB\BSON\toJSON;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -22,13 +23,24 @@ class ProductController extends Controller
     //商城产品首页
     public function index(Request $request)
     {
-        if($request->filter['type'] == 1){
+//      hyhmodelname
+        $product['category_aim'][0] = Array('type'=>'1','name'=>config('modelname.cate1'));//1 集品
+        $product['category_aim'][1] = Array('type'=>'2','name'=>config('modelname.cate2'));//2 自营
+        $product['category_aim'][2] = Array('type'=>'3','name'=>config('modelname.cate3'));//3 闲置=转让
+
+        if($request->filter['type'] == 1) {
+
+            $product['category_aim'];//hyhmodelname
+
             //集品类处的banner
             $product['banner'] = Advert::where('category_id','=',3)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+
         }elseif ($request->filter['type'] == 2){
+            $product['category_aim'];
             //自营类处的banner
             $product['banner'] = Advert::where('category_id','=',5)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         }elseif ($request->filter['type'] == 3){
+            $product['category_aim'];
             //闲置类处的banner
             $product['banner'] = Advert::where('category_id','=',4)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         }
@@ -36,7 +48,7 @@ class ProductController extends Controller
         //推荐产品
         if($request->filter['type'] == 1 || $request->filter['type'] == 2){
             //集品类
-            $product['recommend_product'] = QueryBuilder::for(Product::class)
+            $product1['recommend_product'] = QueryBuilder::for(Product::class)
                 ->allowedFilters([
                     AllowedFilter::exact('type') //商品类型 1集品 2自营 3闲置
                 ])
@@ -46,18 +58,29 @@ class ProductController extends Controller
                 ->where('is_recommend','=',1)
                 ->select('id','title','country_name','label_id','image','price','original_price')
                 ->get();
-            foreach ($product['recommend_product'] as $k=>$value){
-                $product['recommend_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+            foreach ($product1['recommend_product'] as $k=>$value){
+                $product1['recommend_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
                 if($value['original_price'] == 0.00){
-                    $product['recommend_product'][$k]['original_price'] = null;
+                    $product1['recommend_product'][$k]['original_price'] = null;
                 }
-                $product['recommend_product'][$k]['product_sku_count'] = ProductSku::where('product_id','=',$value['id'])->count();
+                $product1['recommend_product'][$k]['product_sku_count'] = ProductSku::where('product_id','=',$value['id'])->count();
             }
+        }
+//        hyhmodelname
+        if($request->filter['type'] == 1){//集品
+        $product['recommend_product']['modelname'] = config('modelname.cate1_recommend');
+        $product['recommend_product']['list'] = $product1;
+        }
+        if($request->filter['type'] == 2){//自营
+            $product['recommend_product']['modelname'] = config('modelname.cate2_recommend');
+            $product['recommend_product']['list'] = $product1;
         }
 
 
+
+
         //锦之选处的产品
-        $product['choice_product'] = QueryBuilder::for(Product::class)
+        $product2['choice_product'] = QueryBuilder::for(Product::class)
             ->allowedFilters([
                 AllowedFilter::exact('type') //商品类型 1集品 2自营 3闲置
             ])
@@ -66,13 +89,29 @@ class ProductController extends Controller
             ->where('on_sale','=',1)
             ->select('id','title','country_name','label_id','image','price','original_price')
             ->paginate(8);
-        foreach ($product['choice_product'] as $k=>$value){
-            $product['choice_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
+        foreach ($product2['choice_product'] as $k=>$value){
+            $product2['choice_product'][$k]['label_name'] = ProductLabel::all()->whereIn('id',$value['label_id'])->pluck('name')->toArray();
             if($value['original_price'] == 0.00){
-                $product['choice_product'][$k]['original_price'] = null;
+                $product2['choice_product'][$k]['original_price'] = null;
             }
-            $product['choice_product'][$k]['product_sku_count'] = ProductSku::where('product_id','=',$value['id'])->count();
+            $product2['choice_product'][$k]['product_sku_count'] = ProductSku::where('product_id','=',$value['id'])->count();
         }
+
+
+//        hyhmodelname
+        if($request->filter['type'] == 1){//集品
+            $product['choice_product']['modelname'] = config('modelname.cate1_list');;
+            $product['choice_product']['list'] = $product2;
+        }
+        if($request->filter['type'] == 2){//自营
+            $product['choice_product']['modelname'] = config('modelname.cate2_list');;
+            $product['choice_product']['list'] = $product2;
+        }
+        if($request->filter['type'] == 3){//闲置
+            $product['choice_product']['modelname'] = config('modelname.cate3_list');;
+            $product['choice_product']['list'] = $product2;
+        }
+
 
         return $product;
     }
