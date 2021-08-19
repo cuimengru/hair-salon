@@ -122,7 +122,7 @@ class Product extends Model
             foreach($cate_level2 as $key=>$obj){
                 $c_data[]=json_encode($obj->id);
             }
-            array_push($c_data, 9);
+            array_push($c_data, $c_id);
             return $query->whereIn('category_id', $c_data);
             }else{
 //          如果1级分类下无2级分类
@@ -147,7 +147,7 @@ class Product extends Model
                 foreach($cate_level2 as $key=>$obj){
                     $c_data[]=json_encode($obj->id);
                 }
-                array_push($c_data, 9);
+                array_push($c_data, $c_id);
                 return $query->whereIn('selfcategory_id', $c_data);
             }else{
                 return $query->where('selfcategory_id','=', $c_id);
