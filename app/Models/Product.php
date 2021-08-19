@@ -137,4 +137,26 @@ class Product extends Model
 
     }
 
+
+    public function scopeSelfcategoryId($query, $c_id)
+    {
+        $cate_level = DB::table('categories')->where('id','=',$c_id)->first();
+        if($cate_level->parent_id==0){
+            $cate_level2 = DB::table('categories')->where('parent_id','=',$c_id)->select('id')->get();
+            if($cate_level2->toArray()){
+                foreach($cate_level2 as $key=>$obj){
+                    $c_data[]=json_encode($obj->id);
+                }
+                array_push($c_data, 9);
+                return $query->whereIn('selfcategory_id', $c_data);
+            }else{
+                return $query->where('selfcategory_id','=', $c_id);
+            }
+        }
+        if($cate_level->parent_id>0){
+            return $query->where('selfcategory_id','=', $c_id);
+        }
+    }
+
+
 }

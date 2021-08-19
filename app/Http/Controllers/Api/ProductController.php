@@ -235,7 +235,8 @@ class ProductController extends Controller
                 AllowedFilter::exact('type'), //商品类型 1集品 2自营 3闲置
 //              AllowedFilter::exact('category_id'), //商品分类 集品////hyh二级分类改造
                 AllowedFilter::scope('category_id'),//hyh二级分类改造
-                AllowedFilter::exact('selfcategory_id'), //商品分类 自营
+//              AllowedFilter::exact('selfcategory_id'), //商品分类 自营
+                AllowedFilter::scope('selfcategory_id'),
                 'title'
             ])
             ->defaultSort('-created_at') //按照创建时间排序
