@@ -233,13 +233,13 @@ class ProductController extends Controller
         $product = QueryBuilder::for(Product::class)
             ->allowedFilters([
                 AllowedFilter::exact('type'), //商品类型 1集品 2自营 3闲置
-                AllowedFilter::exact('category_id'), //商品分类 集品
+//              AllowedFilter::exact('category_id'), //商品分类 集品////hyh二级分类改造
+                AllowedFilter::scope('category_id'),//hyh二级分类改造
                 AllowedFilter::exact('selfcategory_id'), //商品分类 自营
                 'title'
             ])
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at', 'price') // 支持排序字段 更新时间 价格
-            ->where('on_sale','=',1)
             ->select('id','title','country_name','label_id','image','price','original_price')
             ->paginate(8);
         foreach ($product as $k=>$value){
