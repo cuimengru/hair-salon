@@ -23,7 +23,12 @@ class CultureController extends Controller
             ->select('id','title','thumb','start_time')
             ->paginate(3);
         foreach ($cultures as $k=>$value){
+//            hyh增加判断，如果时间为空，返回空值，默认返回1970.01.01
+            if($value['start_time']){
             $cultures[$k]['start_time'] = date("Y.m.d", strtotime($value['start_time']));
+            }else{
+            $cultures[$k]['start_time']="";
+            }
         }
         return $cultures;
     }
@@ -47,8 +52,23 @@ class CultureController extends Controller
             ->select('id','title','thumb','description','created_at','updated_at')
             ->paginate(8);
         foreach ($fashions as $k=>$value){
-            $fashions[$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
-            $fashions[$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+//            hyh增加判断，如果时间为空，返回空值，默认返回1970.01.01
+//            $fashions[$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+//            $fashions[$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+
+            if($value['created_at']){
+                $fashions[$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+            }else{
+                $fashions[$k]['created_time']="";
+            }
+
+            if($value['updated_at']){
+                $fashions[$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+            }else{
+                $fashions[$k]['updated_time']="";
+            }
+
+
         }
         return $fashions;
     }

@@ -103,6 +103,8 @@ class FashionController extends AdminController
             'on'  => ['value' => 0, 'text' => '不推荐', 'color' => 'default'],
             'off' => ['value' => 1, 'text' => '推荐', 'color' => 'primary'],
         ];
+//   hyh客户要求增加时间修改 app端用的是update_at     hyh增加判断，如果时间为空，返回空值，默认返回1970.01.01
+        $form->datetime('updated_at',__('更新时间'));
         $form->switch('is_recommend', __('是否推荐'))->states($states1);
         $form->tools(function (Form\Tools $tools) {
             // 去掉`查看`按钮

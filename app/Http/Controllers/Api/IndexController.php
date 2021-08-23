@@ -76,8 +76,22 @@ class IndexController extends Controller
             ->select('id','title','thumb','description','created_at','updated_at')
             ->paginate(4);
         foreach ($index1['fashions'] as $k=>$value){
-            $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
-            $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+//            hyh增加判断，如果时间为空，返回空值，默认返回1970.01.01
+//            $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+//            $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+
+            if($value['created_at']){
+                $index1['fashions'][$k]['created_time'] = date("Y.m.d", strtotime($value['created_at']));
+            }else{
+                $index1['fashions'][$k]['created_time']="";
+            }
+
+            if($value['updated_at']){
+                $index1['fashions'][$k]['updated_time'] = date("Y.m.d", strtotime($value['updated_at']));
+            }else{
+                $index1['fashions'][$k]['updated_time']="";
+            }
+
         }
 
 //        hyhmodelname
