@@ -79,8 +79,20 @@ class CultureController extends Controller
         $fashions = Fashion::where('id','=',$Id)
             ->select('id','title','thumb','video','description','content','created_at','updated_at')
             ->first();
-        $fashions['created_time'] = date("Y.m.d", strtotime($fashions['created_at']));
-        $fashions['updated_time'] = date("Y.m.d", strtotime($fashions['updated_at']));
+//        hyh增加判断，如果时间为空，返回空值，默认返回1970.01.01
+//        $fashions['created_time'] = date("Y.m.d", strtotime($fashions['created_at']));
+//        $fashions['updated_time'] = date("Y.m.d", strtotime($fashions['updated_at']));
+        if($fashions['created_at']){
+            $fashions['created_time'] = date("Y.m.d", strtotime($fashions['created_at']));
+        }else{
+            $fashions['created_time']="";
+        }
+
+        if($fashions['updated_at']){
+            $fashions['updated_time'] = date("Y.m.d", strtotime($fashions['updated_at']));
+        }else{
+            $fashions['updated_time']="";
+        }
         return $fashions;
     }
 }
