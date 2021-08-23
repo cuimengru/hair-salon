@@ -186,6 +186,7 @@ class CommentController extends Controller
                 'title'
             ])*/
             ->where('product_id','=',$productId)
+            ->where('on_sale','=',1)//hyh补充
             ->where('type','=',2)
             ->where('status','=',1)
             ->defaultSort('-created_at') //按照创建时间排序

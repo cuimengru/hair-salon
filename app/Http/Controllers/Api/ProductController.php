@@ -239,6 +239,7 @@ class ProductController extends Controller
                 AllowedFilter::scope('selfcategory_id'),
                 'title'
             ])
+            ->where('on_sale','=',1)//hyh补充
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at', 'price') // 支持排序字段 更新时间 价格
             ->select('id','title','country_name','label_id','image','price','original_price')
