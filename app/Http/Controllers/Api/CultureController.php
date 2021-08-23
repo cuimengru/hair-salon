@@ -39,7 +39,12 @@ class CultureController extends Controller
         $cultures = Culture::where('id','=',$Id)
             ->select('id','title','thumb','teacher','description','content','start_time')
             ->first();
+//        hyh增加判断，如果时间为空，返回空值，默认返回1970.01.01
+        if($cultures['start_time']){
         $cultures['start_time'] = date("Y.m.d", strtotime($cultures['start_time']));
+        }else{
+            $cultures['start_time']="";
+        }
         return $cultures;
     }
 
