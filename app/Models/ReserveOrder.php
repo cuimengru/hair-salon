@@ -81,7 +81,11 @@ class ReserveOrder extends Model
     public function getServiceNameAttribute(){
         if($this->service_project){
            $service_project = ServiceProject::find($this->service_project);
+           if($service_project){ //hyh做非空判断
            return ($service_project->name).'&nbsp;&nbsp;&nbsp;&nbsp;  ¥'.($service_project->price);
+           }else{
+               return '';
+           }
         }else{
             return '';
         }

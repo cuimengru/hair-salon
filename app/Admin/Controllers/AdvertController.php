@@ -93,20 +93,32 @@ class AdvertController extends AdminController
         $form->textarea('description', __('描述'));
         //$form->editor('content', __('内容'))->required();
         //$form->url('url', __('跳转链接'));
+
+//        $form->radio('type','类型')->options([
+//            0 => '编辑内容',
+//            1 => '跳转站内产品',
+//            2 => '接外部广告'
+//        ])->when(1,function (Form $form){
+//            $form->select('product_id', __('站内产品链接'))->options(Product::all()->pluck('title', 'id'));
+//        })->when(2,function (Form $form){
+//            $form->url('url', __('外部广告链接'));
+//        })->required()->help('广告位展示的内容及跳转的链接');
+//        $form->editor('content', __('内容'));
+
+
         $form->radio('type','类型')->options([
             0 => '编辑内容',
             1 => '跳转站内产品',
             2 => '接外部广告',
-            3 => '只有图片' //hyh新增广告类型 11 23 45
-        ])->when(0,function (Form $form){
-            $form->editor('content', __('内容'));
-        })->when(1,function (Form $form){
+            3 => '只有图片'//hyh新增广告类型
+        ])->when(1,function (Form $form){
             $form->select('product_id', __('站内产品链接'))->options(Product::all()->pluck('title', 'id'));
         })->when(2,function (Form $form){
             $form->url('url', __('外部广告链接'));
-        })->when(3,function (Form $form){//hyh新增广告类型 只上传图片
-
+        })->when(3,function (Form $form){
+            //hyh新增广告类型
         })->required()->help('广告位展示的内容及跳转的链接');
+        $form->editor('content', __('内容'))->help('选择 编辑内容 的时候填写');
 
 
         $form->number('order', __('排序'))->default(0)->help('越小越靠前');
