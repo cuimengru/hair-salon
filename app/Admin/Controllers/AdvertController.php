@@ -97,7 +97,7 @@ class AdvertController extends AdminController
             0 => '编辑内容',
             1 => '跳转站内产品',
             2 => '接外部广告',
-            3 => '只有图片' //hyh新增广告类型
+            3 => '只有图片' //hyh新增广告类型 11
         ])->when(0,function (Form $form){
             $form->editor('content', __('内容'));
         })->when(1,function (Form $form){
