@@ -14,8 +14,10 @@ use App\Services\MessageService;
 use App\Services\SensitiveWords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use function MongoDB\BSON\toJSON;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Models\Product;
 
 class CommunityController extends Controller
 {
@@ -95,6 +97,16 @@ class CommunityController extends Controller
     public function index(Request $request)
     {
         $community['banner'] = Advert::where('category_id', '=', 7)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断 上方引入use App\Models\Product;
+        foreach ($community['banner'] as $k=>$value){
+            $product_sale=Product::where('id','=',$value['product_id'])->first();
+            if($product_sale && $product_sale['on_sale']==1){
+                $community['banner'][$k]['product_state']="1";
+            }else{
+                $community['banner'][$k]['product_state']="0";//不存在或已下架
+            }
+        }
+
         if($request->user_id){
             $shield = CommunityShield::where('user_id','=',$request->user_id)
                 ->pluck('community_id')->toArray(); //拉黑
@@ -386,6 +398,13 @@ class CommunityController extends Controller
     public function activeShow($activeId, Request $request)
     {
         $active = Advert::where('id','=',$activeId)->select('id','title','description','content','url','product_id')->first();
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断
+            $product_sale=Product::where('id','=',$active['product_id'])->first();
+            if($product_sale && $product_sale['on_sale']==1){
+                $active['product_state']="1";
+            }else{
+                $active['product_state']="0";//不存在或已下架
+            }
 
         if(!$active){
             $data['message'] = "该广告位不存在！";

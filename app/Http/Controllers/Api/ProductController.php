@@ -34,15 +34,42 @@ class ProductController extends Controller
 
             //集品类处的banner
             $product['banner'] = Advert::where('category_id','=',3)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断
+            foreach ($product['banner'] as $k=>$value){
+                $product_sale=Product::where('id','=',$value['product_id'])->first();
+                if($product_sale && $product_sale['on_sale']==1){
+                    $product['banner'][$k]['product_state']="1";
+                }else{
+                    $product['banner'][$k]['product_state']="0";//不存在或已下架
+                }
+            }
 
         }elseif ($request->filter['type'] == 2){
             $product['category_aim'];
             //自营类处的banner
             $product['banner'] = Advert::where('category_id','=',5)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断
+            foreach ($product['banner'] as $k=>$value){
+                $product_sale=Product::where('id','=',$value['product_id'])->first();
+                if($product_sale && $product_sale['on_sale']==1){
+                    $product['banner'][$k]['product_state']="1";
+                }else{
+                    $product['banner'][$k]['product_state']="0";//不存在或已下架
+                }
+            }
         }elseif ($request->filter['type'] == 3){
             $product['category_aim'];
             //闲置类处的banner
             $product['banner'] = Advert::where('category_id','=',4)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断
+            foreach ($product['banner'] as $k=>$value){
+                $product_sale=Product::where('id','=',$value['product_id'])->first();
+                if($product_sale && $product_sale['on_sale']==1){
+                    $product['banner'][$k]['product_state']="1";
+                }else{
+                    $product['banner'][$k]['product_state']="0";//不存在或已下架
+                }
+            }
         }
 
         //推荐产品

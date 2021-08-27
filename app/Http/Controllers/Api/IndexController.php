@@ -23,6 +23,16 @@ class IndexController extends Controller
         $advert = [];
         $advert['top'] = Advert::where('category_id','=',1)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
 
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断
+        foreach ($advert['top'] as $k=>$value){
+            $product_sale=Product::where('id','=',$value['product_id'])->first();
+            if($product_sale && $product_sale['on_sale']==1){
+                $advert['top'][$k]['product_state']="1";
+            }else{
+                $advert['top'][$k]['product_state']="0";//不存在或已下架
+            }
+        }
+
          //文教娱乐 hyh屏蔽改造
 //        $advert['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
 //        $index['ads'] = $advert;
@@ -31,6 +41,16 @@ class IndexController extends Controller
         $advert_data['bottom'] = Advert::where('category_id','=',2)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
         $advert['bottom']['modelname'] = config('modelname.bottom');
         $advert['bottom']['list'] = $advert_data['bottom'];
+
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断
+        foreach ($advert_data['bottom'] as $k=>$value){
+            $product_sale=Product::where('id','=',$value['product_id'])->first();
+            if($product_sale && $product_sale['on_sale']==1){
+                $advert_data['bottom'][$k]['product_state']="1";
+            }else{
+                $advert_data['bottom'][$k]['product_state']="0";//不存在或已下架
+            }
+        }
 
         $index['ads'] = $advert;
 

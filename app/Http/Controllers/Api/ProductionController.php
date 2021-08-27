@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Models\Product;
 
 class ProductionController extends Controller
 {
@@ -22,8 +23,17 @@ class ProductionController extends Controller
     {
         //广告banner
         $index = [];
-
-        $index['advert'] = Advert::where('category_id','=',6)->orderBy('order', 'asc')->select('id','thumb', 'url')->get();
+//        $index['advert'] = Advert::where('category_id','=',6)->orderBy('order', 'asc')->select('id','thumb', 'url')->get();hyh屏蔽
+        $index['advert'] = Advert::where('category_id','=',6)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断 上方引入 use App\Models\Product;
+        foreach ($index['advert'] as $k=>$value){
+            $product_sale=Product::where('id','=',$value['product_id'])->first();
+            if($product_sale && $product_sale['on_sale']==1){
+                $index['advert'][$k]['product_state']="1";
+            }else{
+                $index['advert'][$k]['product_state']="0";//不存在或已下架
+            }
+        }
 
         //作品$index['production']
          $productions= Production::where('is_recommend','=',1)
