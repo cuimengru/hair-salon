@@ -66,7 +66,7 @@ class DesignerController extends AdminController
 //            $grid->column('sort_list', '排序')->sortable();
 //        }
 
-
+        $grid->column('sort', __('排序（推荐）'));//hyh新增预约设计师列表排序（预约管理--预约信息管理） 此处仅用于与预约部分作对比
         $grid->column('created_at', __('创建时间'));
         $grid->tools(function ($tools) {
             // 禁用批量删除按钮

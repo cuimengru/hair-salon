@@ -45,6 +45,10 @@ class ReserveInformationController extends AdminController
             return $html;
         });
         //$grid->column('time', __('Time'));
+
+        //hyh新增预约设计师列表排序
+        $grid->column('sort', __('排序'));
+
         $grid->column('created_at', __('创建时间'));
         //$grid->column('updated_at', __('Updated at'));
         $grid->actions(function ($actions) {
@@ -94,6 +98,9 @@ class ReserveInformationController extends AdminController
 
         $form->multipleSelect('service_project', __('服务项目'))->options(ServiceProject::all()->pluck('service_name','id'));
         //$form->text('time', __('可预约时间'));
+
+        //hyh新增预约设计师列表排序
+        $form->number('sort', __('排序'))->help('请填写数字 数字越大越靠前【请与推荐的设计师排序保持一致】');
 
         return $form;
     }

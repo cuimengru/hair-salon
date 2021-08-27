@@ -103,7 +103,7 @@ class AdvertController extends AdminController
 //        })->when(2,function (Form $form){
 //            $form->url('url', __('外部广告链接'));
 //        })->required()->help('广告位展示的内容及跳转的链接');
-//        $form->editor('content', __('内容'));
+//        $form->editor('content', __('内容'))E:\www_web\studycenter\nodejsE:\www_web\studycenter\nodejs;
 
 
         $form->radio('type','类型')->options([

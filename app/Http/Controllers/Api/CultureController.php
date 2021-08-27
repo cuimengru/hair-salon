@@ -21,7 +21,8 @@ class CultureController extends Controller
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('start_time','updated_at') // 支持排序字段 开始时间 更新时间
             ->select('id','title','thumb','start_time')
-            ->paginate(3);
+           ->paginate(3);  //hyh解除3个的限制
+//            ->get();
         foreach ($cultures as $k=>$value){
 //            hyh增加判断，如果时间为空，返回空值，默认返回1970.01.01
             if($value['start_time']){

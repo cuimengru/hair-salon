@@ -187,23 +187,25 @@ class ReserveInformationController extends Controller
         return $workTime;
     }
 
-    //可预约的设计师列表
+    //可预约的设计师列表  hyh app上，进入某个双色即是
     public function designerIndex(Request $request)
     {
         $designers = QueryBuilder::for(ReserveInformation::class)
             ->allowedFilters([
-                AllowedFilter::exact('designer_id'), //设计师id
+                AllowedFilter::exact('designer_id'), //设计师id  这个参数不要了！！AllowedFilter是非必填！！实际上不需要designer_id传进来！！
             ])
-            ->defaultSort('id') //按照创建时间排序
+            ->orderBy('sort', 'desc') //hyh新增预约设计师列表排序
+//            ->defaultSort('id') //按照创建时间排序 //hyh屏蔽
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','designer_id','service_project')
             ->paginate(99999);//hyhyh设计师列表不需要分页改造
         foreach ($designers as $k=>$value){
+            //hyh推荐设计师排序 20210827修改
             $designer = Designer::where('id','=',$value['designer_id'])->first();
-            $designers[$k]['designer_name'] = $designer->name;
-            $designers[$k]['designer_thumb'] = $designer->thumb_url;
-            $designers[$k]['designer_position'] = $designer->position;
-            $designers[$k]['service'] = ServiceProject::whereIn('id',$value['service_project'])->select('id','name','price')->get();
+          $designers[$k]['designer_name'] = $designer->name;
+//            $designers[$k]['designer_thumb'] = $designer->thumb_url;
+//            $designers[$k]['designer_position'] = $designer->position;
+//            $designers[$k]['service'] = ServiceProject::whereIn('id',$value['service_project'])->select('id','name','price')->get();
         }
 
         return $designers;
