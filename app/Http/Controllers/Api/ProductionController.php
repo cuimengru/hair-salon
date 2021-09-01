@@ -25,7 +25,7 @@ class ProductionController extends Controller
         $index = [];
 //        $index['advert'] = Advert::where('category_id','=',6)->orderBy('order', 'asc')->select('id','thumb', 'url')->get();hyh屏蔽
         $index['advert'] = Advert::where('category_id','=',6)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
-//      hyh如果广告链接的产品对此做是否存在和是否上架的判断 上方引入 use App\Models\Product;
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断  上方引入 use App\Models\Product;
         foreach ($index['advert'] as $k=>$value){
             $product_sale=Product::where('id','=',$value['product_id'])->first();
             if($product_sale && $product_sale['on_sale']==1){

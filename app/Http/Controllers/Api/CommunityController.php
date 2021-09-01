@@ -97,7 +97,7 @@ class CommunityController extends Controller
     public function index(Request $request)
     {
         $community['banner'] = Advert::where('category_id', '=', 7)->orderBy('order', 'asc')->select('id','type','thumb','url','product_id')->get();
-//      hyh如果广告链接的产品对此做是否存在和是否上架的判断 上方引入use App\Models\Product;
+//      hyh如果广告链接的产品对此做是否存在和是否上架的判断  上方引入use App\Models\Product;
         foreach ($community['banner'] as $k=>$value){
             $product_sale=Product::where('id','=',$value['product_id'])->first();
             if($product_sale && $product_sale['on_sale']==1){
