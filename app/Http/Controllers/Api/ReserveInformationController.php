@@ -203,9 +203,9 @@ class ReserveInformationController extends Controller
             //hyh推荐设计师排序 20210827修改
             $designer = Designer::where('id','=',$value['designer_id'])->first();
           $designers[$k]['designer_name'] = $designer->name;
-//            $designers[$k]['designer_thumb'] = $designer->thumb_url;
-//            $designers[$k]['designer_position'] = $designer->position;
-//            $designers[$k]['service'] = ServiceProject::whereIn('id',$value['service_project'])->select('id','name','price')->get();
+            $designers[$k]['designer_thumb'] = $designer->thumb_url;
+            $designers[$k]['designer_position'] = $designer->position;
+            $designers[$k]['service'] = ServiceProject::whereIn('id',$value['service_project'])->select('id','name','price')->get();
         }
 
         return $designers;
