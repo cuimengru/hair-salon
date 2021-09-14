@@ -208,8 +208,17 @@ class ProductionController extends Controller
     //全部作品列表
     public function allIndex(Request $request)
     {
+//        $filter_gender='gender';
+//        print_R($gender);
+//        exit();
+//
+//        $hhh = $request->all();
+//        file_put_contents("../1234hhh.txt", var_export($hhh,true));
+
+
         $productions = QueryBuilder::for(Production::class)
             ->allowedFilters([
+
                 AllowedFilter::exact('gender'), //性别
                 //AllowedFilter::exact('age_id'), //年龄段
 //                AllowedFilter::exact('length_id'), //长度
@@ -227,12 +236,19 @@ class ProductionController extends Controller
                 'face_id',
                 'project_id'
             ])
+
+
+//            用like方法，要先根据逗号拆解 过滤器返回的多个值，然后逐个值进行like。
+//            ？？？？？不拆值的通俗mysql查询结果
+//                select * from productions where age_id like '%5%' and age_id like '%4%'
+
+
             ->where('on_sale','=',1)
             ->where('is_recommend','=',0)//hyh客户要求，列表页不显示推荐的作品。
             ->defaultSort('-sort_list') //hyh作品排序
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
-            ->select('id','title','thumb','type','video','sort_list')
+            ->select('length_id','id','title','thumb','type','video','sort_list','age_id','gender')
             ->paginate(15);
         foreach ($productions as $p=>$product){
             //收藏作品

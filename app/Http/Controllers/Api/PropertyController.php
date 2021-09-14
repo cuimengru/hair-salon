@@ -30,16 +30,17 @@ class PropertyController extends Controller
         $age['style'] = ProductionStyle::select('id','name')->get(); //风格
         $age['project'] = ProductionProject::select('id','name')->get(); //项目
         $age['hair'] = ProductionHair::select('id','name')->get(); //烫染
-
-        $data[0] = ['name'=>'性别','key'=>'filter[gender]','value'=>$age['gender']];
-        $data[1] = ['name'=>'身高','key'=>'filter[height_id]','value'=>$age['height']];
-        $data[2] = ['name'=>'年龄','key'=>'filter[age_id]','value'=>$age['age']];
-        $data[3] = ['name'=>'发质','key'=>'filter[color_id]','value'=>$age['color']];
-        $data[4] = ['name'=>'长度','key'=>'filter[length_id]','value'=>$age['length']];
-        $data[5] = ['name'=>'脸型','key'=>'filter[face_id]','value'=>$age['face']];
-        $data[6] = ['name'=>'风格','key'=>'filter[style_id]','value'=>$age['style']];
-        $data[7] = ['name'=>'项目','key'=>'filter[project_id]','value'=>$age['project']];
-        $data[8] = ['name'=>'烫染','key'=>'filter[hair_id]','value'=>$age['hair']];
+//        hyh小程序筛选条件改造
+//        $data[0] = ['name'=>'性别','key'=>'filter[gender]','value'=>$age['gender']];
+        $data[0] = ['name'=>'性别','key'=>'filter_gender','value'=>$age['gender']];
+        $data[1] = ['name'=>'身高','key'=>'filter_height_id','value'=>$age['height']];
+        $data[2] = ['name'=>'年龄','key'=>'filter_age_id','value'=>$age['age']];
+        $data[3] = ['name'=>'发质','key'=>'filter_color_id','value'=>$age['color']];
+        $data[4] = ['name'=>'长度','key'=>'filter_length_id','value'=>$age['length']];
+        $data[5] = ['name'=>'脸型','key'=>'filter_face_id','value'=>$age['face']];
+        $data[6] = ['name'=>'风格','key'=>'filter_style_id','value'=>$age['style']];
+        $data[7] = ['name'=>'项目','key'=>'filter_project_id','value'=>$age['project']];
+        $data[8] = ['name'=>'烫染','key'=>'filter_hair_id','value'=>$age['hair']];
         return $data;
     }
 

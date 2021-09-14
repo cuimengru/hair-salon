@@ -45,6 +45,7 @@ class Kernel extends HttpKernel
             //'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\ChangeResponseStructureMiddleware::class,
+            \App\Http\Middleware\FormatXiaochengxu::class,//hyh小程序筛选条件改造
         ],
     ];
 

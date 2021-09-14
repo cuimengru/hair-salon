@@ -62,7 +62,11 @@ Route::prefix('v1')
                 Route::get('help_center/{id}', [HelpCenterController::class, 'show']);  //某个帮助中心详情
 
                 Route::get('production', [ProductionController::class, 'index']);  //作品首页
+
+
                 Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
+
+
                 Route::get('production/{id}', [ProductionController::class, 'show']);  //作品详情
                 /*Route::get('designers', [DesignerController::class, 'index']);//设计师列表*/
                 Route::get('designer/{id}', [DesignerController::class, 'show']);//某个设计师详情
