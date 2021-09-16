@@ -1,0 +1,12 @@
+array (
+  'gender' => '0',
+  'age_id' => '1',
+  'length_id' => '1',
+  'color_id' => '1',
+  'style_id' => '1',
+  'height_id' => '1',
+  'face_id' => '1',
+  'project_id' => '1',
+  'hair_id' => '1',
+  'type' => '1',
+)

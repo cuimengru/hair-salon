@@ -45,6 +45,10 @@ class ProductionController extends AdminController
                 0 => '不推荐',
                 1 => '推荐',
             ]);
+            $filter->equal('is_new', __('是否新品'))->radio([
+                0 => '否',
+                1 => '是',
+            ]);
         });
 
         $grid->column('id', __('Id'))->sortable();
@@ -83,7 +87,7 @@ class ProductionController extends AdminController
             1 => '推荐',
         ]);
 
-//      hyh如果筛选界面选择了推荐参数，点击搜索按钮后，就显示“推荐排序”一列
+//      hyh如果筛选界面选择了推荐参数，点击搜索按钮后，就显示“推荐排序”一列 客户没要 暂时屏蔽
 //        if(!empty($_GET['is_recommend'])){
 //        $grid->column('sort', '推荐排序')->sortable();
 //        }else{
@@ -316,6 +320,17 @@ class ProductionController extends AdminController
         })->help('如果选择“是”，下面的排序字段不能为空，否则页面报错');
 //       如果推荐=1，那么sort字段为后台填写的数字或者默认为0
 //       如果推荐=0，那么sort字段设置为0
+
+//        hyh作品 增加新品标识
+        $form->radio('is_new','新品展示')->options([
+            0 => '否',
+            1 => '是'
+        ])->when(1,function (Form $form){
+            $form->text('is_new_lable', __('新品标签'))->help('最好不超过4个汉字或字符 否则影响显示');//hyh作品标题改为非必填
+        })->when(0,function (Form $form){
+            })->help('全部作品页面 设置新品');
+
+
 //       $form->sort==0 实际上是为后台列表页处选择更改推荐而写的
         $form->saving(function (Form $form) {
             ($form->is_recommend==0 || $form->sort==0)?$hyh=0:$hyh=$form->sort;

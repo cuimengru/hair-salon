@@ -220,6 +220,7 @@ class ProductionController extends Controller
             ->allowedFilters([
 
                 AllowedFilter::exact('gender'), //性别
+                AllowedFilter::exact('type'), //作品类型 hyh新增作品类型筛选
                 //AllowedFilter::exact('age_id'), //年龄段
 //                AllowedFilter::exact('length_id'), //长度
 //                AllowedFilter::exact('color_id'), //发质
@@ -248,7 +249,7 @@ class ProductionController extends Controller
             ->defaultSort('-sort_list') //hyh作品排序
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
-            ->select('length_id','id','title','thumb','type','video','sort_list','age_id','gender')
+            ->select('id','title','thumb','type','video','sort_list','is_new','is_new_lable')
             ->paginate(15);
         foreach ($productions as $p=>$product){
             //收藏作品
