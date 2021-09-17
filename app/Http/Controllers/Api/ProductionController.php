@@ -268,7 +268,18 @@ class ProductionController extends Controller
                 $productions[$p]['follows_production'] = 0; //未收藏
             }
             $index['production'] = $productions;
+
+
+            if($productions[$p]['is_new']=="0"){
+                $productions[$p]['is_new_lable']="";
+            }else{
+                if($productions[$p]['is_new_lable']==""){
+                    $productions[$p]['is_new_lable']="新品";
+                }
+            }
+
         }
+
 
         return $productions;
     }
