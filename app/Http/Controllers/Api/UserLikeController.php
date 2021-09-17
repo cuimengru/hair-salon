@@ -122,7 +122,7 @@ class UserLikeController extends Controller
             foreach ($record as $k=>$value){
                 $record[$k] = Product::where('id','=',$value->product_id)
                     ->where('on_sale','=',1)
-                    ->select('id','title','country_name','label_id','image','price','original_price','is_new','is_new_lable')
+                    ->select('id','title','country_name','label_id','image','price','original_price')
                     ->first();
                 /*if($record[$k]['label_id']){
                     $record[$k]['label_name'] = ProductLabel::all()->whereIn('id',$record[$k]['label_id'])->pluck('name')->toArray();
@@ -193,7 +193,7 @@ class UserLikeController extends Controller
                 ->paginate(15);
             foreach ($record as $k=>$value){
                 $record[$k] = Production::where('id','=',$value->production_id)
-                    ->select('id','type','title','thumb','video')
+                    ->select('id','type','title','thumb','video','is_new','is_new_lable')
                     ->first();
                 $record[$k]['follows'] = DB::table('user_favorite_productions')
                     ->where('user_id','=',$user->id)
