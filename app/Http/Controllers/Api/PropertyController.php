@@ -30,6 +30,8 @@ class PropertyController extends Controller
         $age['style'] = ProductionStyle::select('id','name')->get(); //风格
         $age['project'] = ProductionProject::select('id','name')->get(); //项目
         $age['hair'] = ProductionHair::select('id','name')->get(); //烫染
+        $age['type'] = [['id'=>0,'name'=>'视频'],['id'=>1,'name'=>'图文']]; //作品类型
+
 //        hyh小程序筛选条件改造
 //        $data[0] = ['name'=>'性别','key'=>'filter[gender]','value'=>$age['gender']];
         $data[0] = ['name'=>'性别','key'=>'filter_gender','value'=>$age['gender']];
@@ -41,6 +43,7 @@ class PropertyController extends Controller
         $data[6] = ['name'=>'风格','key'=>'filter_style_id','value'=>$age['style']];
         $data[7] = ['name'=>'项目','key'=>'filter_project_id','value'=>$age['project']];
         $data[8] = ['name'=>'烫染','key'=>'filter_hair_id','value'=>$age['hair']];
+        $data[9] = ['name'=>'作品类型','key'=>'filter_type','value'=>$age['type']];
         return $data;
     }
 

@@ -122,7 +122,7 @@ class UserLikeController extends Controller
             foreach ($record as $k=>$value){
                 $record[$k] = Product::where('id','=',$value->product_id)
                     ->where('on_sale','=',1)
-                    ->select('id','title','country_name','label_id','image','price','original_price')
+                    ->select('id','title','country_name','label_id','image','price','original_price','is_new','is_new_lable')
                     ->first();
                 /*if($record[$k]['label_id']){
                     $record[$k]['label_name'] = ProductLabel::all()->whereIn('id',$record[$k]['label_id'])->pluck('name')->toArray();

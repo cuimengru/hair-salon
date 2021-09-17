@@ -40,7 +40,7 @@ class ProductionController extends Controller
              ->where('on_sale','=',1)
              ->orderBy('sort','desc')//hyh推荐作品排序
              ->orderBy('created_at','desc')
-            ->select('id','title','thumb','type','video','sort')
+            ->select('id','title','thumb','type','video','sort','is_new','is_new_lable')
             ->get();
          foreach ($productions as $p=>$product){
              //收藏作品
@@ -59,6 +59,14 @@ class ProductionController extends Controller
                  $productions[$p]['follows_production'] = 0; //未收藏
              }
              $index1['production'] = $productions;
+
+             if($productions[$p]['is_new']=="0"){
+                 $productions[$p]['is_new_lable']="";
+             }else{
+                 if($productions[$p]['is_new_lable']==""){
+                     $productions[$p]['is_new_lable']="新品";
+                 }
+             }
          }
 
 //        hyhmodelname
@@ -201,6 +209,14 @@ class ProductionController extends Controller
             unset($production[$k]['created_at']);
             unset($production[$k]['updated_at']);
             unset($production[$k]['pivot']);
+
+            if($production[$k]['is_new']=="0"){
+                $production[$k]['is_new_lable']="";
+            }else{
+                if($production[$k]['is_new_lable']==""){
+                    $production[$k]['is_new_lable']="新品";
+                }
+            }
         }
         return $production;
     }
