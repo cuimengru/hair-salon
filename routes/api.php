@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\DesignersController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\VersionsController;
 use App\Http\Controllers\Api\PropertyController;
+use App\Http\Controllers\Api\ServicephoneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +113,8 @@ Route::prefix('v1')
                 Route::get('product/colorlist', [PropertyController::class, 'colorlist']);  //作品色系列表
                 Route::get('product/stylelist', [PropertyController::class, 'stylelist']);  //作品风格列表
                 Route::get('sensitive_words', [PropertyController::class, 'sensitiveWords']);  //敏感词管理
+
+                Route::get('phone', [ServicephoneController::class, 'phone']); // 客服电话 20210927 hyh新增客服电话
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {

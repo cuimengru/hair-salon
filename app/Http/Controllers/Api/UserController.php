@@ -35,6 +35,23 @@ class UserController extends Controller
 
         $user = User::where('phone','=',$phone)->first();
 
+
+//        hyh判断用户是否应注册，并给出提示。
+        if ($user) {
+            //如果是已注册的线下用户
+            if($user['type']=='1'){
+            $data['message'] = '您已在线下注册过账号，密码默认为手机号码后六位。请直接登录或在登录界面找回密码。';
+            return response()->json($data, 403);
+            }
+            //如果是已注册的线上用户
+            if($user['type']=='0'){
+                $data['message'] = '您已注册过账号。请直接登录或在登录界面找回密码。';
+                return response()->json($data, 403);
+            }
+        }
+
+
+
         $code = str_pad(random_int(1, 999999), 6, 0, STR_PAD_LEFT); // 生成6位随机数，左侧补0
         /*if($user){
             $user->notify(new VerificationCode($code));
