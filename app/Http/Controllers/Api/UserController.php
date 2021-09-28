@@ -35,46 +35,53 @@ class UserController extends Controller
 
         $user = User::where('phone','=',$phone)->first();
 
+        $ifphone = $request->ifphone;
+
+        if($ifphone=='1') { //hyh判断是否需要验证手机号已经注册 1需要 0不需要
 
 //        hyh判断用户是否应注册，并给出提示。
-        if ($user) {
-            //如果是已注册的线下用户
-            if($user['type']=='1'){
-            $data['message'] = '您已在线下注册过账号，密码默认为手机号码后六位。请直接登录或在登录界面找回密码。';
-            return response()->json($data, 403);
+            if ($user) {
+                //如果是已注册的线下用户
+                if ($user['type'] == '1') {
+                    $data['message'] = '您已在线下注册过账号，密码默认为手机号码后六位。请直接登录或在登录界面找回密码。';
+                    return response()->json($data, 403);
+                }
+                //如果是已注册的线上用户
+                if ($user['type'] == '0') {
+                    $data['message'] = '您已注册过账号。请直接登录或在登录界面找回密码。';
+                    return response()->json($data, 403);
+                }
             }
-            //如果是已注册的线上用户
-            if($user['type']=='0'){
-                $data['message'] = '您已注册过账号。请直接登录或在登录界面找回密码。';
-                return response()->json($data, 403);
-            }
+
         }
 
+            $code = str_pad(random_int(1, 999999), 6, 0, STR_PAD_LEFT); // 生成6位随机数，左侧补0
+            /*if($user){
+                $user->notify(new VerificationCode($code));
+                Notification::send($user,new VerificationCode($code));
+            }*/
+            Notification::route(
+                EasySmsChannel::class,
+                new PhoneNumber($phone)
+            )->notify(new VerificationCode($code)); //发送短信验证码
+            $key = 'verificationCode_' . $phone;
+            $expiredAt = now()->addMinutes(5);
+            $verifyData = \Cache::get($key);
+            /*if ($verifyData) {
+                abort(403,'已经发送过验证码了');
+            }*/
+
+            \Cache::put($key, ['phone' => $phone, 'code' => $code], $expiredAt);
+
+            $data['message'] = "验证码发送成功";
+            $data['key'] = $key;
+            //$data['code'] = $code;
+            //$data['expired_at'] = $expiredAt->toDateTimeString();
+            return response()->json($data, 200);
 
 
-        $code = str_pad(random_int(1, 999999), 6, 0, STR_PAD_LEFT); // 生成6位随机数，左侧补0
-        /*if($user){
-            $user->notify(new VerificationCode($code));
-            Notification::send($user,new VerificationCode($code));
-        }*/
-        Notification::route(
-            EasySmsChannel::class,
-            new PhoneNumber($phone)
-        )->notify(new VerificationCode($code)); //发送短信验证码
-        $key = 'verificationCode_' . $phone;
-        $expiredAt = now()->addMinutes(5);
-        $verifyData = \Cache::get($key);
-        /*if ($verifyData) {
-            abort(403,'已经发送过验证码了');
-        }*/
 
-        \Cache::put($key, ['phone' => $phone, 'code' => $code], $expiredAt);
 
-        $data['message'] = "验证码发送成功";
-        $data['key'] = $key;
-        //$data['code'] = $code;
-        //$data['expired_at'] = $expiredAt->toDateTimeString();
-        return response()->json($data, 200);
     }
 
     //用户注册
