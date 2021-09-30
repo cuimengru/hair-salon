@@ -9,6 +9,14 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
+//hyh后台增加短信 新增
+use App\Notifications\VerificationCodeAdmin;
+use Leonis\Notifications\EasySms\Channels\EasySmsChannel;
+use Overtrue\EasySms\PhoneNumber;
+use App\Notifications\EmailVerify;
+use Illuminate\Support\Facades\Notification;
+
+
 class OfflineUserController extends AdminController
 {
     /**
@@ -112,6 +120,7 @@ class OfflineUserController extends AdminController
      */
     protected function form()
     {
+//        admin_toastr('测试');
         $form = new Form(new User());
         $form->image('avatar', __('头像'));
         $form->text('name', __('姓名'));
@@ -124,7 +133,7 @@ class OfflineUserController extends AdminController
         if ($form->isCreating()) {
             $form->mobile('phone', __('手机号'))->required();
             //$form->text('email', __('邮箱'))->required();
-            $form->password('password', __('密码'))->default(bcrypt(123456))->required()->help('默认密码 123456');
+            $form->password('password', __('密码'))->default(bcrypt(123456))->required()->help('请设置为手机号后六位！！！ 默认密码 123456');
         }
         $form->textarea('introduce', __('简介'));
         $form->text('integral', __('积分'))->default(0.00);
@@ -132,6 +141,29 @@ class OfflineUserController extends AdminController
         $form->text('balance', __('余额'))->default(0.00);
         $form->radioCard('status', __('审核状态'))->options(['0' => '未审核', '1' => '已审核','-1'=>'审核中'])->default('0');
         $form->hidden('type')->default(1);
+
+//        hyh后台增加短信
+        if ($form->isCreating()) {
+            $form->saving(function (Form $form) {
+//               file_put_contents("../1234hhh-phone.txt", var_export($form->phone,true));
+                //$code='1234';
+
+                $phone=$form->phone;
+                try{
+                Notification::route(
+                    EasySmsChannel::class,
+                    new PhoneNumber($phone)
+                )->notify(new VerificationCodeAdmin());
+
+                }catch (\Exception $e) {
+                    file_put_contents("../sms-error.txt", var_export($e,true));
+                }
+
+//                SMS_225120534
+//                已成功为您注册会员，初始密码为手机号后六位。如需下载APP请在各大应用商店搜索“锦之DO”即可，感谢您的支持！回T退订
+            });
+        }
+
         return $form;
     }
 }

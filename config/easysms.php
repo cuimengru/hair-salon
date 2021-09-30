@@ -23,6 +23,10 @@ return [
         ],
     ],
     'aliyun_sms_template' => env('ALIYUN_SMS_TEMPLATE'),
+
+//    hyh后台增加短信
+    'aliyun_sms_template_admin' => env('ALIYUN_SMS_TEMPLATE_ADMIN'),
+
     // 可用的网关配置
     'gateways' => [
         // 失败日志
@@ -35,7 +39,6 @@ return [
             'access_key_id' => env('OSS_ACCESS_KEY_ID',''),
             'access_key_secret' => env('OSS_ACCESS_KEY_SECRET',''),
             'sign_name' => env('ALIYUN_SMS_SIGN_NAME',''),
-
         ],
         // ...
     ],
