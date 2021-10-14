@@ -16,6 +16,7 @@ return [
 
     'wechat' => [
         'appid'      => env('WECHAT_PAY_APP_ID'),
+        'miniapp_id' => env('MINIAPP_ID'), // hyh新增小程序支付 APPID 20211014
         'mch_id'      => env('WECHAT_PAY_MCH_ID'),
         'key'         => env('WECHAT_PAY_KEY'),
         'cert_client' => resource_path('wechat_pay/apiclient_cert.pem'),

@@ -14,11 +14,13 @@ class BalanceRecord extends Model
     const PAYMENT_METHOD_BANLANCE = 1;
     const PAYMENT_METHOD_ALIPAY = 2;
     const PAYMENT_METHOD_WECHAT = 3;
+    const PAYMENT_METHOD_MINI = 5;
 
     public static $paymentMethodMap = [
         self::PAYMENT_METHOD_BANLANCE  => '后台充值',
         self::PAYMENT_METHOD_ALIPAY => '支付宝',
         self::PAYMENT_METHOD_WECHAT  => '微信',
+        self::PAYMENT_METHOD_MINI  => '小程序',
     ];
 
     protected $fillable = [

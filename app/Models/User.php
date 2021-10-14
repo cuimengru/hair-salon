@@ -20,10 +20,12 @@ class User extends Authenticatable
 
     const PAYMENT_METHOD_ALIPAY = 2;
     const PAYMENT_METHOD_WECHAT = 3;
+    const PAYMENT_METHOD_MINI = 5;
 
     public static $paymentMethodMap = [
         self::PAYMENT_METHOD_ALIPAY => '支付宝',
         self::PAYMENT_METHOD_WECHAT  => '微信',
+        self::PAYMENT_METHOD_MINI  => '小程序',
     ];
 
     /**

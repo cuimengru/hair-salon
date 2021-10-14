@@ -108,6 +108,25 @@ class PaymentController extends Controller
             $order['datas'] = json_decode($datas->getContent());
             return $order;
         }
+
+
+
+        //hyh新增小程序支付 商品
+        if ($payment_method == Order::PAYMENT_METHOD_MINI){
+            $wechatorder = [
+                'out_trade_no' => $order->no,
+                'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
+                'body'      => '支付商品的订单：'.$order->no, // 订单描述
+                'openid' => $request->mini_openid,//hyh新增
+                'trade_type'       => 'JSAPI',//hyh新增
+            ];
+
+            $datas = app('wechat_pay')->miniapp($wechatorder);
+            $order['datas'] = json_decode($datas->getContent());
+            return $order;
+        }
+
+
         //return $order;
     }
 
@@ -179,6 +198,21 @@ class PaymentController extends Controller
             ];
 
             $datas = app('reservewechat_pay')->app($wechatorder);
+            $order['datas'] = json_decode($datas->getContent());
+            return $order;
+        }
+
+        //hyh新增小程序支付
+        if ($payment_method == Order::PAYMENT_METHOD_MINI){
+            $wechatorder = [
+                'out_trade_no' => $order->no,
+                'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
+                'body'      => '支付预约的订单：'.$order->no, // 订单描述
+                'openid' => $request->mini_openid,//hyh新增
+                'trade_type'       => 'JSAPI',//hyh新增
+            ];
+
+            $datas = app('reservewechat_pay')->miniapp($wechatorder);
             $order['datas'] = json_decode($datas->getContent());
             return $order;
         }
@@ -499,6 +533,23 @@ class PaymentController extends Controller
             $user['datas'] = json_decode($datas->getContent());
             return $user;
         }
+
+
+        //hyh新增小程序支付
+        if ($payment_method == Order::PAYMENT_METHOD_MINI){
+            $wechatorder = [
+                'out_trade_no' => $user->phone.time(),
+                'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
+                'body'      => '充值余额的订单：'.$user->phone.time(), // 订单描述
+                'openid' => $request->mini_openid,//hyh新增
+                'trade_type'       => 'JSAPI',//hyh新增
+            ];
+
+            $datas = app('balancewechat_pay')->miniapp($wechatorder);
+            $user['datas'] = json_decode($datas->getContent());
+            return $user;
+        }
+
     }
 
     //余额充值支付宝前端回调

@@ -116,7 +116,7 @@ Route::prefix('v1')
                 Route::get('sensitive_words', [PropertyController::class, 'sensitiveWords']);  //敏感词管理
 
                 Route::get('phone', [ServicephoneController::class, 'phone']); // 客服电话 20210927 hyh新增客服电话
-                Route::get('ios_switch', [IosswitchController::class, 'iosswitch']); // 苹果审核开关 20210930 hyh新增苹果审核开关
+                Route::get('ios_switch', [IosswitchController::class, 'iosswitch']); // 苹果审核开关 20210930 hyh新增苹果审核开关git
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
