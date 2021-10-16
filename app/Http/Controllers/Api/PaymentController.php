@@ -202,11 +202,11 @@ class PaymentController extends Controller
             return $order;
         }
 
-        //hyh新增小程序支付
-        if ($payment_method == Order::PAYMENT_METHOD_MINI){
+        //hyh新增小程序支付 预约
+        if ($payment_method == ReserveOrder::PAYMENT_METHOD_MINI){
             $wechatorder = [
                 'out_trade_no' => $order->no,
-                'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
+                'total_fee' => $order->money * 100, //与支付宝不同，微信支付的金额单位是分。
                 'body'      => '支付预约的订单：'.$order->no, // 订单描述
                 'openid' => $request->mini_openid,//hyh新增
                 'trade_type'       => 'JSAPI',//hyh新增
@@ -535,11 +535,11 @@ class PaymentController extends Controller
         }
 
 
-        //hyh新增小程序支付
-        if ($payment_method == Order::PAYMENT_METHOD_MINI){
+        //hyh新增小程序支付 充值
+        if ($payment_method == User::PAYMENT_METHOD_MINI){
             $wechatorder = [
                 'out_trade_no' => $user->phone.time(),
-                'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
+                'total_fee' => $request->balance * 100, //与支付宝不同，微信支付的金额单位是分。
                 'body'      => '充值余额的订单：'.$user->phone.time(), // 订单描述
                 'openid' => $request->mini_openid,//hyh新增
                 'trade_type'       => 'JSAPI',//hyh新增
