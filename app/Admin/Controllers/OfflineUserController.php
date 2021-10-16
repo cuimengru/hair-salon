@@ -80,11 +80,6 @@ class OfflineUserController extends AdminController
             $tools->append(new BatchVipUser());
         });
         $grid->disableExport(); // 禁用导出数据
-        * @param mixed $id
-    * @return Show
-        */
-    protected function detail($id)
-    {
         $grid->disableColumnSelector();// 禁用行选择器
         $grid->model()->orderBy('id', 'desc');
         $grid->model()->where('type', '=',1);
@@ -94,6 +89,11 @@ class OfflineUserController extends AdminController
     /**
      * Make a show builder.
      *
+     * @param mixed $id
+     * @return Show
+     */
+    protected function detail($id)
+    {
         $show = new Show(User::findOrFail($id));
 
         $show->field('id', __('Id'));
