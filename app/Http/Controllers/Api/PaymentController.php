@@ -113,7 +113,11 @@ class PaymentController extends Controller
 
         //hyh新增小程序支付 商品
         if ($payment_method == Order::PAYMENT_METHOD_MINI){
-            $wechatorder = [
+            file_put_contents("../hyh1-payment_method.txt", var_export($payment_method,true));
+            file_put_contents("../hyh2-mini_openid.txt", var_export($request->mini_openid,true));
+            file_put_contents("../hyh3-no.txt", var_export($order->no,true));
+
+            $mini_wechatorder = [
                 'out_trade_no' => $order->no,
                 'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
                 'body'      => '支付商品的订单：'.$order->no, // 订单描述
@@ -121,8 +125,10 @@ class PaymentController extends Controller
                 'trade_type'       => 'JSAPI',//hyh新增
             ];
 
-            $datas = app('wechat_pay')->miniapp($wechatorder);
+            $datas = app('wechat_pay')->miniapp($mini_wechatorder);
+            file_put_contents("../hyh4-payment_method.txt", var_export($datas,true));
             $order['datas'] = json_decode($datas->getContent());
+            file_put_contents("../hyh5-payment_method.txt", var_export($order['datas'],true));
             return $order;
         }
 
