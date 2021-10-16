@@ -112,6 +112,7 @@ class PaymentController extends Controller
 
 
         //hyh新增小程序支付 商品
+//        https://pay.yansongda.cn/docs/v2/wechat/pay.html#%E6%B3%A8%E6%84%8F
         if ($payment_method == Order::PAYMENT_METHOD_MINI){
             file_put_contents("../hyh1-payment_method.txt", var_export($payment_method,true));
             file_put_contents("../hyh2-mini_openid.txt", var_export($request->mini_openid,true));
@@ -125,10 +126,21 @@ class PaymentController extends Controller
 //                'trade_type'       => 'JSAPI',//hyh新增
             ];
 
-            $datas = app('wechat_pay')->miniapp($mini_wechatorder);
-            file_put_contents("../hyh4-payment_method.txt", var_export($datas,true));
-            $order['datas'] = json_decode($datas->getContent());
-            file_put_contents("../hyh5-payment_method.txt", var_export($order['datas'],true));
+            $mini_datas = app('wechat_pay')->miniapp($mini_wechatorder);
+//            $mini_datas=  array (
+//                'appId' => 'wx3f8c2c0a44cf1a50',
+//                'timeStamp' => '1634368475',
+//                'nonceStr' => 'eAAaCs9YxCOqY1vW',
+//                'package' => 'prepay_id=wx16151435485720bc196cca2b8641a60000',
+//                'signType' => 'MD5',
+//                'paySign' => '0280757D8778B0195DF2AA4BECD10BE6',
+//            );
+
+            $mini_datas['signType']='RSA';
+
+            file_put_contents("../hyh4-payment_method.txt", var_export($mini_datas,true));
+            $hh=$order['datas'] = json_decode($mini_datas->getContent());
+            file_put_contents("../hyh5-payment_method.txt", var_export($hh,true));
             return $order;
         }
 
