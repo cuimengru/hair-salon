@@ -126,7 +126,9 @@ class PaymentController extends Controller
 //                'trade_type'       => 'JSAPI',//hyh新增
             ];
 
-            $mini_datas = app('wechat_pay')->miniapp($mini_wechatorder);
+            $mini_datas = app('wechat_pay')->miniapp($mini_wechatorder);//hyh这一步必须在小程序线上正式环境（域名）下进行。
+
+//            原始数据：
 //            $mini_datas=  array (
 //                'appId' => 'wx3f8c2c0a44cf1a50',
 //                'timeStamp' => '1634368475',
@@ -136,9 +138,10 @@ class PaymentController extends Controller
 //                'paySign' => '0280757D8778B0195DF2AA4BECD10BE6',
 //            );
 
-            $mini_datas['signType']='RSA';
+            //$mini_datas['signType']='RSA'; //小程序官方要求现在必须是RSA
 
             file_put_contents("../hyh4-payment_method.txt", var_export($mini_datas,true));
+//            $hh=$order['datas'] = '';
             $hh=$order['datas'] = json_decode($mini_datas->getContent());
             file_put_contents("../hyh5-payment_method.txt", var_export($hh,true));
             return $order;
