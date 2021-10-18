@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
             return Pay::alipay($config);
         });
 
-        //商品微信支付
+        //商品微信支付   hyh新增小程序支付-这里没有改什么，只是做个标记。
         $this->app->singleton('wechat_pay', function () {
             $config = config('pay.wechat');
             $config['notify_url'] = route('api.v1.payment.wechat.notify');

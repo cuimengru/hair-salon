@@ -114,16 +114,15 @@ class PaymentController extends Controller
         //hyh新增小程序支付 商品
 //        https://pay.yansongda.cn/docs/v2/wechat/pay.html#%E6%B3%A8%E6%84%8F
         if ($payment_method == Order::PAYMENT_METHOD_MINI){
-            file_put_contents("../hyh1-payment_method.txt", var_export($payment_method,true));
-            file_put_contents("../hyh2-mini_openid.txt", var_export($request->mini_openid,true));
-            file_put_contents("../hyh3-no.txt", var_export($order->no,true));
+//            file_put_contents("../hyh1-payment_method.txt", var_export($payment_method,true));
+//            file_put_contents("../hyh2-mini_openid.txt", var_export($request->mini_openid,true));
+//            file_put_contents("../hyh3-no.txt", var_export($order->no,true));
 
             $mini_wechatorder = [
                 'out_trade_no' => $order->no,
                 'total_fee' => $order->total_amount * 100, //与支付宝不同，微信支付的金额单位是分。
                 'body'      => '支付商品的订单：'.$order->no, // 订单描述
                 'openid' => $request->mini_openid,//hyh新增
-//                'trade_type'       => 'JSAPI',//hyh新增
             ];
 
             $mini_datas = app('wechat_pay')->miniapp($mini_wechatorder);//hyh这一步必须在小程序线上正式环境（域名）下进行。
@@ -138,13 +137,13 @@ class PaymentController extends Controller
 //                'paySign' => '0280757D8778B0195DF2AA4BECD10BE6',
 //            );
 
-            //$mini_datas['signType']='RSA'; //小程序官方要求现在必须是RSA
+            //$mini_datas['signType']='RSA'; //小程序官方要求现在必须是RSA  但是，实际上，只能用MD5。。。
 
-            file_put_contents("../hyh4-payment_method.txt", var_export($mini_datas,true));
-//          $hh=$order['datas'] = '';
-            //$hh=$order['datas'] = json_decode($mini_datas->getContent());
-            $hh=$order['datas'] = $mini_datas;
-            file_put_contents("../hyh5-payment_method.txt", var_export($hh,true));
+//            file_put_contents("../hyh4-payment_method.txt", var_export($mini_datas,true));
+
+            //$order['datas'] = json_decode($mini_datas->getContent());
+            $order['datas'] = $mini_datas;//这里的数据，不用进行处理了。之前卡在这里了。
+//            file_put_contents("../hyh5-payment_method.txt", var_export($order['datas'],true));
             return $order;
         }
 
@@ -231,11 +230,11 @@ class PaymentController extends Controller
                 'total_fee' => $order->money * 100, //与支付宝不同，微信支付的金额单位是分。
                 'body'      => '支付预约的订单：'.$order->no, // 订单描述
                 'openid' => $request->mini_openid,//hyh新增
-//                'trade_type'       => 'JSAPI',//hyh新增
             ];
 
-            $datas = app('reservewechat_pay')->miniapp($wechatorder);
-            $order['datas'] = json_decode($datas->getContent());
+            $mini_datas = app('reservewechat_pay')->miniapp($wechatorder);
+//            $order['datas'] = json_decode($datas->getContent());
+            $order['datas'] = $mini_datas;
             return $order;
         }
 
@@ -564,11 +563,11 @@ class PaymentController extends Controller
                 'total_fee' => $request->balance * 100, //与支付宝不同，微信支付的金额单位是分。
                 'body'      => '充值余额的订单：'.$user->phone.time(), // 订单描述
                 'openid' => $request->mini_openid,//hyh新增
-//                'trade_type'       => 'JSAPI',//hyh新增
             ];
 
-            $datas = app('balancewechat_pay')->miniapp($wechatorder);
-            $user['datas'] = json_decode($datas->getContent());
+            $mini_datas = app('balancewechat_pay')->miniapp($wechatorder);
+//            $user['datas'] = json_decode($mini_datas->getContent());
+            $user['datas'] = $mini_datas;
             return $user;
         }
 
