@@ -138,7 +138,7 @@ class PaymentController extends Controller
 //                'paySign' => '0280757D8778B0195DF2AA4BECD10BE6',
 //            );
 
-            $mini_datas['signType']='RSA'; //小程序官方要求现在必须是RSA
+            //$mini_datas['signType']='RSA'; //小程序官方要求现在必须是RSA
 
             file_put_contents("../hyh4-payment_method.txt", var_export($mini_datas,true));
 //          $hh=$order['datas'] = '';
