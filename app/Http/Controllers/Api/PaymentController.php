@@ -26,21 +26,30 @@ class PaymentController extends Controller
 
         $no_new = date('YmdHis').rand(100000,999999);
 
+//
+//        $order_origin = Order::where('user_id','=',$user->id)
+//            ->where('id','=',$orderId)
+////            ->decrement('no',1)//hyh每次调用支付，订单号都减1
+//            ->first();
+//
+//        Order::where('id','=',$order_origin['id'])
+//            ->update([
+//                'no'=>$no_new
+//            ]);
+//
+//        $order = Order::where('user_id','=',$order_origin['user_id'])
+//            ->where('id','=',$order_origin['id'])
+////            ->decrement('no',1)//hyh每次调用支付，订单号都减1
+//            ->first();
 
-        $order_origin = Order::where('user_id','=',$user->id)
+//      hyh每次调用支付,订单号都改变一次。
+        $order = Order::where('user_id','=',$user->id)
             ->where('id','=',$orderId)
-//            ->decrement('no',1)//hyh每次调用支付，订单号都减1
-            ->first();
-
-        Order::where('id','=',$order_origin['id'])
             ->update([
                 'no'=>$no_new
-            ]);
-
-        $order = Order::where('user_id','=',$order_origin['user_id'])
-            ->where('id','=',$order_origin['id'])
-//            ->decrement('no',1)//hyh每次调用支付，订单号都减1
+            ])
             ->first();
+
 
        Order::where('user_id','=',$user->id)
             ->where('id','=',$orderId)->first();
