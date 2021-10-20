@@ -80,6 +80,20 @@ class AppServiceProvider extends ServiceProvider
             return Pay::wechat($config);
         });
 
+
+        $this->app->singleton('mini_wechat_pay', function () {
+            $config = config('pay.mini_wechat');
+            $config['notify_url'] = route('api.v1.payment.mini_wechat.notify');
+            if (app()->environment() !== 'production') {
+                $config['log']['level'] = Logger::DEBUG;
+            } else {
+                $config['log']['level'] = Logger::WARNING;
+            }
+            // 调用 Yansongda\Pay 来创建一个微信支付对象
+            return Pay::wechat($config);
+        });
+
+
         //预约微信支付
         $this->app->singleton('reservewechat_pay', function () {
             $config = config('pay.wechat');

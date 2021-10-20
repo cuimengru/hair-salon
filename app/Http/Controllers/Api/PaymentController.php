@@ -125,7 +125,7 @@ class PaymentController extends Controller
                 'openid' => $request->mini_openid,//hyh新增
             ];
 
-            $mini_datas = app('wechat_pay')->miniapp($mini_wechatorder);//hyh这一步必须在小程序线上正式环境（域名）下进行。
+            $mini_datas = app('mini_wechat_pay')->miniapp($mini_wechatorder);//hyh这一步必须在小程序线上正式环境（域名）下进行。
 
 //            原始数据：
 //            $mini_datas=  array (
@@ -321,6 +321,38 @@ class PaymentController extends Controller
         $this->afterPaid($order);
 
         return app('wechat_pay')->success();
+
+    }
+
+
+    //小程序 商品微信回调
+    public function miniwechatNotify()
+    {
+        // 校验回调参数是否正确
+        $data  = app('mini_wechat_pay')->verify();
+        // 找到对应的订单
+        $order = Order::where('no', $data->out_trade_no)->first();
+        // 订单不存在则告知微信支付
+        if (!$order) {
+            return 'fail';
+        }
+        // 订单已支付
+        if ($order->paid_at) {
+            // 告知微信支付此订单已处理
+            return app('mini_wechat_pay')->success();
+        }
+
+        // 将订单标记为已支付
+        $order->update([
+            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+            'payment_method' => 5, //支付方式 小程序是5
+            'payment_no'     => $data->transaction_id,
+            'status' => Order::STATUS_PAID,// 更新订单状态
+        ]);
+
+        $this->afterPaid($order);
+
+        return app('mini_wechat_pay')->success();
 
     }
 

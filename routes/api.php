@@ -101,6 +101,10 @@ Route::prefix('v1')
 
                 //商品订单微信回调
                 Route::post('payment/wechat/notify', [PaymentController::class, 'wechatNotify'])->name('payment.wechat.notify');
+
+                //小程序商品订单微信回调
+                Route::post('payment/wechat/mini_notify', [PaymentController::class, 'miniwechatNotify'])->name('payment.mini_wechat.notify');
+
                 //预约订单微信回调
                 Route::post('payment/reservewechat/notify', [PaymentController::class, 'rewechatNotify'])->name('payment.reservewechat.notify');
                 //余额充值微信回调

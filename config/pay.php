@@ -16,6 +16,18 @@ return [
 
     'wechat' => [
         'appid'      => env('WECHAT_PAY_APP_ID'),
+//        'miniapp_id' => env('MINIAPP_ID'), // hyh新增小程序支付 APPID 20211014
+        'mch_id'      => env('WECHAT_PAY_MCH_ID'),
+        'key'         => env('WECHAT_PAY_KEY'),
+        'cert_client' => resource_path('wechat_pay/apiclient_cert.pem'),
+        'cert_key'    => resource_path('wechat_pay/apiclient_key.pem'),
+        'log'         => [
+            'file' => storage_path('logs/wechat_pay.log'),
+        ],
+    ],
+
+
+    'mini_wechat' => [
         'miniapp_id' => env('MINIAPP_ID'), // hyh新增小程序支付 APPID 20211014
         'mch_id'      => env('WECHAT_PAY_MCH_ID'),
         'key'         => env('WECHAT_PAY_KEY'),
@@ -25,5 +37,6 @@ return [
             'file' => storage_path('logs/wechat_pay.log'),
         ],
     ],
+
 
 ];
