@@ -131,6 +131,10 @@ Route::prefix('v1')
                     Route::post('phone', [UserController::class,'ResetPhone']); // 修改手机号
                     Route::post('images', [ImagesController::class,'store']); // 上传图片
 
+
+//                  hyh小程序支付获取openid
+                    Route::get('get_miniOpenid', [MiniOpenidController::class,'getOpenId']); // hyh小程序支付 获取openid
+
                     Route::post('user_addresses', [UserAddressController::class, 'store']);//创建收货地址
                     Route::get('user_addresses', [UserAddressController::class, 'index']);//收货地址列表
                     Route::patch('user_addresses/{id}', [UserAddressController::class, 'update']);//编辑收货地址
