@@ -23,7 +23,16 @@ class PaymentController extends Controller
         //判断订单是否属于当前用户
         $user = $request->user();
         $order = Order::where('user_id','=',$user->id)
+            ->where('id','=',$orderId)
+            ->decrement('no',1)//hyh每次调用支付，订单号都减1
+            ->first();
+
+       Order::where('user_id','=',$user->id)
             ->where('id','=',$orderId)->first();
+        $order->update([
+            'refund_number' => 1,
+        ]);
+
         if(!$order){
             $data['message'] = "未经许可!";
             return response()->json($data, 403);
