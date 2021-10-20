@@ -105,6 +105,9 @@ class PaymentController extends Controller
             ];
 
             $datas = app('wechat_pay')->app($wechatorder);
+
+            file_put_contents("../hyh-appzhifu.txt", var_export($datas,true));
+
             $order['datas'] = json_decode($datas->getContent());
             return $order;
         }
@@ -126,6 +129,8 @@ class PaymentController extends Controller
             ];
 
             $mini_datas = app('mini_wechat_pay')->miniapp($mini_wechatorder);//hyh这一步必须在小程序线上正式环境（域名）下进行。
+
+            file_put_contents("../hyh-xiaochengxu_zhifu.txt", var_export($mini_datas,true));
 
 //            原始数据：
 //            $mini_datas=  array (
