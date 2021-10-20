@@ -1,0 +1,4 @@
+array (
+  'errcode' => 41002,
+  'errmsg' => 'appid missing, rid: 616f95d2-55dcffd2-37cc8dbd',
+)

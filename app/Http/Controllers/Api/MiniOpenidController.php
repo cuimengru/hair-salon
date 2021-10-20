@@ -16,8 +16,13 @@ class MiniOpenidController extends Controller
 
         file_put_contents("../hyh-appid.txt", var_export($lll,true));
         file_put_contents("../hyh-appsecret.txt", var_export($appsecret,true));
-        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=".
+//        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=".
+//            $appid."&secret=".$appsecret."&js_code=".$js_code."&grant_type=authorization_code";
+
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".
             $appid."&secret=".$appsecret."&js_code=".$js_code."&grant_type=authorization_code";
+
+
         file_put_contents("../hyh-url.txt", var_export($url,true));
         //通过code换取网页授权access_token
         $weixin=file_get_contents($url);
