@@ -9,7 +9,7 @@ class MiniOpenidController extends Controller
 {
 //hyh小程序支付获取openid
     public function getOpenId(Request $request){
-        $js_code = $request->js_code;
+        $code = $request->code;
         $appid = env('MINIAPP_ID');
         $appsecret = env('MINIAPP_SECRET');
         $lll=env('WECHAT_PAY_KEY');
@@ -20,7 +20,7 @@ class MiniOpenidController extends Controller
 //            $appid."&secret=".$appsecret."&js_code=".$js_code."&grant_type=authorization_code";
 
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".
-            $appid."&secret=".$appsecret."&js_code=".$js_code."&grant_type=authorization_code";
+            $appid."&secret=".$appsecret."&code=".$code."&grant_type=authorization_code";
 
 
         file_put_contents("../hyh-url.txt", var_export($url,true));
