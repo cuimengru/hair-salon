@@ -23,31 +23,23 @@ class PaymentController extends Controller
         //判断订单是否属于当前用户
         $user = $request->user();
 
-
+//         hyh每次调用支付，都生成新的订单号
         $no_new = date('YmdHis').rand(100000,999999);
 
-//
-//        $order_origin = Order::where('user_id','=',$user->id)
-//            ->where('id','=',$orderId)
-////            ->decrement('no',1)//hyh每次调用支付，订单号都减1
-//            ->first();
-//
-//        Order::where('id','=',$order_origin['id'])
-//            ->update([
-//                'no'=>$no_new
-//            ]);
-//
-//        $order = Order::where('user_id','=',$order_origin['user_id'])
-//            ->where('id','=',$order_origin['id'])
-////            ->decrement('no',1)//hyh每次调用支付，订单号都减1
-//            ->first();
-
-//      hyh每次调用支付,订单号都改变一次。
-        $order = Order::where('user_id','=',$user->id)
+//        hyh原始订单数据
+        $order_origin = Order::where('user_id','=',$user->id)
             ->where('id','=',$orderId)
+            ->first();
+//        hyh更新订单的订单号 为了避免小程序的微信支付 和 app的微信支付冲突
+        Order::where('id','=',$order_origin['id'])
             ->update([
                 'no'=>$no_new
-            ])
+            ]);
+
+//        hyh获取最新的订单信息
+        $order = Order::where('user_id','=',$order_origin['user_id'])
+            ->where('id','=',$order_origin['id'])
+//            ->decrement('no',1)//hyh每次调用支付，订单号都减1
             ->first();
 
 
