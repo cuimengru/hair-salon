@@ -1,4 +1,0 @@
-array (
-  'errcode' => 41002,
-  'errmsg' => 'appid missing, rid: 616f935c-0dbe6338-21308857',
-)
