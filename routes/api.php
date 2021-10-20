@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\VersionsController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\ServicephoneController;
 use App\Http\Controllers\Api\IosswitchController;
+use App\Http\Controllers\Api\MiniOpenidController;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,7 +134,7 @@ Route::prefix('v1')
 
 
 //                  hyh小程序支付获取openid
-                    Route::get('get_miniOpenid', [MiniOpenidController::class,'getOpenId']); // hyh小程序支付 获取openid
+                    Route::get('get_miniopenid', [MiniOpenidController::class,'getOpenId']); // hyh小程序支付 获取openid
 
                     Route::post('user_addresses', [UserAddressController::class, 'store']);//创建收货地址
                     Route::get('user_addresses', [UserAddressController::class, 'index']);//收货地址列表
