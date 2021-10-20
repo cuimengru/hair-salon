@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
             return Pay::alipay($config);
         });
 
-        //商品微信支付   hyh新增小程序支付-这里没有改什么，只是做个标记。
+        //商品微信支付
         $this->app->singleton('wechat_pay', function () {
             $config = config('pay.wechat');
             $config['notify_url'] = route('api.v1.payment.wechat.notify');
@@ -80,7 +80,7 @@ class AppServiceProvider extends ServiceProvider
             return Pay::wechat($config);
         });
 
-
+        //hyh小程序微信支付分家2  小程序 商品微信支付
         $this->app->singleton('mini_wechat_pay', function () {
             $config = config('pay.mini_wechat');
             $config['notify_url'] = route('api.v1.payment.mini_wechat.notify');
@@ -107,10 +107,40 @@ class AppServiceProvider extends ServiceProvider
             return Pay::wechat($config);
         });
 
+
+
+        //小程序 预约微信支付
+        $this->app->singleton('mini_reservewechat_pay', function () {
+            $config = config('pay.mini_wechat');
+            $config['notify_url'] = route('api.v1.payment.mini_reservewechat.notify');
+            if (app()->environment() !== 'production') {
+                $config['log']['level'] = Logger::DEBUG;
+            } else {
+                $config['log']['level'] = Logger::WARNING;
+            }
+            // 调用 Yansongda\Pay 来创建一个微信支付对象
+            return Pay::wechat($config);
+        });
+
+
         //充值微信
         $this->app->singleton('balancewechat_pay', function () {
             $config = config('pay.wechat');
             $config['notify_url'] = route('api.v1.payment.balancewechat.notify');
+            if (app()->environment() !== 'production') {
+                $config['log']['level'] = Logger::DEBUG;
+            } else {
+                $config['log']['level'] = Logger::WARNING;
+            }
+            // 调用 Yansongda\Pay 来创建一个微信支付对象
+            return Pay::wechat($config);
+        });
+
+
+        //小程序 充值微信
+        $this->app->singleton('mini_balancewechat_pay', function () {
+            $config = config('pay.mini_wechat');
+            $config['notify_url'] = route('api.v1.payment.mini_balancewechat.notify');
             if (app()->environment() !== 'production') {
                 $config['log']['level'] = Logger::DEBUG;
             } else {

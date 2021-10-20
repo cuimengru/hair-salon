@@ -14,6 +14,7 @@ return [
         //"mode" => "dev", // optional,设置此参数，将进入沙箱模式
     ],
 
+//hyh此处专用于app的微信支付
     'wechat' => [
         'appid'      => env('WECHAT_PAY_APP_ID'),
 //        'miniapp_id' => env('MINIAPP_ID'), // hyh新增小程序支付 APPID 20211014
@@ -26,7 +27,7 @@ return [
         ],
     ],
 
-
+//hyh小程序微信支付分家1
     'mini_wechat' => [
         'miniapp_id' => env('MINIAPP_ID'), // hyh新增小程序支付 APPID 20211014
         'mch_id'      => env('WECHAT_PAY_MCH_ID'),

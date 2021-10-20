@@ -43,12 +43,6 @@ class PaymentController extends Controller
             ->first();
 
 
-       Order::where('user_id','=',$user->id)
-            ->where('id','=',$orderId)->first();
-        $order->update([
-            'refund_number' => 1,
-        ]);
-
         if(!$order){
             $data['message'] = "未经许可!";
             return response()->json($data, 403);
@@ -131,8 +125,6 @@ class PaymentController extends Controller
 
             $datas = app('wechat_pay')->app($wechatorder);
 
-            file_put_contents("../hyh-appzhifu.txt", var_export($datas,true));
-
             $order['datas'] = json_decode($datas->getContent());
             return $order;
         }
@@ -152,10 +144,8 @@ class PaymentController extends Controller
                 'body'      => '支付商品的订单：'.$order->no, // 订单描述
                 'openid' => $request->mini_openid,//hyh新增
             ];
-
+//            hyh小程序微信支付分家3
             $mini_datas = app('mini_wechat_pay')->miniapp($mini_wechatorder);//hyh这一步必须在小程序线上正式环境（域名）下进行。
-
-            file_put_contents("../hyh-xiaochengxu_zhifu.txt", var_export($mini_datas,true));
 
 //            原始数据：
 //            $mini_datas=  array (
@@ -186,8 +176,30 @@ class PaymentController extends Controller
     {
         //判断订单是否属于当前用户
         $user = $request->user();
-        $order = ReserveOrder::where('user_id','=',$user->id)
-            ->where('id','=',$orderId)->first();
+//        $order = ReserveOrder::where('user_id','=',$user->id)
+//            ->where('id','=',$orderId)->first();
+
+
+        //         hyh每次调用支付，都生成新的订单号
+        $no_new = date('YmdHis').rand(100000,999999);
+
+//        hyh原始订单数据
+        $order_origin = ReserveOrder::where('user_id','=',$user->id)
+            ->where('id','=',$orderId)
+            ->first();
+//        hyh更新订单的订单号 为了避免小程序的微信支付 和 app的微信支付冲突
+        ReserveOrder::where('id','=',$order_origin['id'])
+            ->update([
+                'no'=>$no_new
+            ]);
+
+//        hyh获取最新的订单信息
+        $order = ReserveOrder::where('user_id','=',$order_origin['user_id'])
+            ->where('id','=',$order_origin['id'])
+//            ->decrement('no',1)//hyh每次调用支付，订单号都减1
+            ->first();
+
+
         if(!$order){
             $data['message'] = "Without permission!";
             return response()->json($data, 403);
@@ -262,7 +274,7 @@ class PaymentController extends Controller
                 'openid' => $request->mini_openid,//hyh新增
             ];
 
-            $mini_datas = app('reservewechat_pay')->miniapp($wechatorder);
+            $mini_datas = app('mini_reservewechat_pay')->miniapp($wechatorder);
 //            $order['datas'] = json_decode($datas->getContent());
             $order['datas'] = $mini_datas;
             return $order;
@@ -355,7 +367,7 @@ class PaymentController extends Controller
     }
 
 
-    //小程序 商品微信回调
+    //hyh小程序微信支付分家4 小程序支付 商品 微信回调
     public function miniwechatNotify()
     {
         // 校验回调参数是否正确
@@ -461,6 +473,36 @@ class PaymentController extends Controller
         $this->reserveAfterPaid($order);
 
         return app('reservewechat_pay')->success();
+    }
+
+    //小程序 预约微信回调
+    public function minirewechatNotify()
+    {
+        // 校验回调参数是否正确
+        $data  = app('mini_reservewechat_pay')->verify();
+        // 找到对应的订单
+        $order = ReserveOrder::where('no', $data->out_trade_no)->first();
+        // 订单不存在则告知微信支付
+        if (!$order) {
+            return 'fail';
+        }
+        // 订单已支付
+        if ($order->paid_at) {
+            // 告知微信支付此订单已处理
+            return app('mini_reservewechat_pay')->success();
+        }
+
+        // 将订单标记为已支付
+        $order->update([
+            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+            'payment_method' => 5, //支付方式
+            'payment_no'     => $data->transaction_id,
+            'status' => ReserveOrder::STATUS_PAID,// 更新订单状态
+        ]);
+
+        $this->reserveAfterPaid($order);
+
+        return app('mini_reservewechat_pay')->success();
     }
 
     protected function reserveAfterPaid(ReserveOrder $order)
@@ -627,7 +669,7 @@ class PaymentController extends Controller
                 'openid' => $request->mini_openid,//hyh新增
             ];
 
-            $mini_datas = app('balancewechat_pay')->miniapp($wechatorder);
+            $mini_datas = app('mini_balancewechat_pay')->miniapp($wechatorder);
 //            $user['datas'] = json_decode($mini_datas->getContent());
             $user['datas'] = $mini_datas;
             return $user;
@@ -727,6 +769,45 @@ class PaymentController extends Controller
         $this->balanceAfterPaid($user);
 
         return app('balancewechat_pay')->success();
+    }
+
+
+    //小程序 充值微信回调
+    public function minibawechatNotify()
+    {
+        // 校验回调参数是否正确
+        $data  = app('mini_balancewechat_pay')->verify();
+        // 找到对应的订单
+        $phone = substr($data->out_trade_no,0,11);
+        $user = User::where('phone', $phone)->first();
+
+        //创建充值记录
+        BalanceRecord::create([
+            'user_id' => $user->id,
+            'paid_at'        => Carbon::now('Asia/shanghai'), // 支付时间
+            'payment_method' => 5, // 支付方式
+            'payment_no'     => $data->transaction_id, // 微信订单号
+            'total_amount' => $data->total_fee / 100,
+            'original_balance' => $user->balance,
+            'no' => $data->out_trade_no,
+        ]);
+        // 正常来说不太可能出现支付了一笔不存在的订单，这个判断只是加强系统健壮性。
+        if (!$user) {
+            return 'fail';
+        }
+
+        $balance_jilu = BalanceRecord::where('no', $data->out_trade_no)->first();
+
+        $balance = $balance_jilu->total_amount + $user->balance;
+
+        // 将订单标记为已支付
+        $user->update([
+            'balance' => $balance,
+        ]);
+
+        $this->balanceAfterPaid($user);
+
+        return app('mini_balancewechat_pay')->success();
     }
 
     public function balanceAfterPaid(User $user)
