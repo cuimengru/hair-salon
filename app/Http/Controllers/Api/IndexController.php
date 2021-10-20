@@ -146,7 +146,10 @@ class IndexController extends Controller
                 $balance[$k]['payment_name'] = '微信';
             }elseif ($value['payment_method'] == 1){
                 $balance[$k]['payment_name'] = '后台充值';
+            }elseif ($value['payment_method'] == 5){
+                $balance[$k]['payment_name'] = '小程序'; //hyh小程序微信支付分家6
             }
+
             $balance[$k]['status'] = '充值';
         }
         return $balance;
