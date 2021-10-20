@@ -28,17 +28,22 @@ class MiniOpenidController extends Controller
         file_put_contents("../hyh-array.txt", var_export($array,true));
 
         //输出openid
-        $openid = $array['openid'];
-        //返回给接口（小程序支付使用）
-        file_put_contents("../hyh-openid.txt", var_export($openid,true));
 
-        if(empty($openid)){
-            $openid="";
+        //返回给接口（小程序支付使用）
+
+
+        if(!empty($array['openid'])){
+
+            $data['mini_openid'] =$array['openid'];
+            return response()->json($data, 200);
+
+        }else{
+
+            return response()->json($array, 205);
+
         }
 
-        $data['mini_openid'] =$openid;
 
-        return response()->json($data, 200);
 
     }
 }
