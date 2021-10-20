@@ -121,6 +121,7 @@ Route::prefix('v1')
 
                 Route::get('phone', [ServicephoneController::class, 'phone']); // 客服电话 20210927 hyh新增客服电话
                 Route::get('ios_switch', [IosswitchController::class, 'iosswitch']); // 苹果审核开关 20210930 hyh新增苹果审核开关git
+                Route::get('get_miniopenid', [MiniOpenidController::class,'getOpenId']); // 20211020 hyh小程序支付获取openid
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -131,10 +132,6 @@ Route::prefix('v1')
                     Route::patch('user', [UserController::class, 'update']); // 编辑用户
                     Route::post('phone', [UserController::class,'ResetPhone']); // 修改手机号
                     Route::post('images', [ImagesController::class,'store']); // 上传图片
-
-
-//                  hyh小程序支付获取openid
-                    Route::get('get_miniopenid', [MiniOpenidController::class,'getOpenId']); // hyh小程序支付 获取openid
 
                     Route::post('user_addresses', [UserAddressController::class, 'store']);//创建收货地址
                     Route::get('user_addresses', [UserAddressController::class, 'index']);//收货地址列表
