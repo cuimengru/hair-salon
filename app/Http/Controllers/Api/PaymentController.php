@@ -22,15 +22,20 @@ class PaymentController extends Controller
     {
         //判断订单是否属于当前用户
         $user = $request->user();
+
+
+        $no_new = date('YmdHis').rand(100000,999999);
+
+
         $order_origin = Order::where('user_id','=',$user->id)
             ->where('id','=',$orderId)
 //            ->decrement('no',1)//hyh每次调用支付，订单号都减1
             ->first();
 
-        Order::where('id','=',$orderId)
+        Order::where('id','=',$order_origin['id'])
             ->update([
-                'no'=>$order_origin['no']+1
-            ]);//hyh每次调用支付，订单号都减1
+                'no'=>$no_new
+            ]);
 
         $order = Order::where('user_id','=',$order_origin['user_id'])
             ->where('id','=',$order_origin['id'])
