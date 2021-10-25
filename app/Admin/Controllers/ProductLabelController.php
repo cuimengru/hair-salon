@@ -15,7 +15,7 @@ class ProductLabelController extends AdminController
      *
      * @var string
      */
-    protected $title = 'ProductLabel';
+    protected $title = '商品标签';
 
     /**
      * Make a grid builder.

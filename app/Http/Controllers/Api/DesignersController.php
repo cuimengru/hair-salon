@@ -31,6 +31,13 @@ class DesignersController extends Controller
             ->select('id','name','position','thumb','label_id','sort_list')
             ->paginate(6);
         foreach ($designer as $k=>$value){
+
+//            hyh 20211025 避免职位为空时，小程序里显示null的情况  接口:/designers/index
+            if($designer[$k]['position']==''){
+                $designer[$k]['position']="";
+            }
+
+
             //收藏发型师
             if($request->user_id){
                 $designer[$k]['follows'] = DB::table('user_favorite_designers')
