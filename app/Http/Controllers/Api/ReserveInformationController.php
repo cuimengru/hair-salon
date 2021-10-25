@@ -204,7 +204,14 @@ class ReserveInformationController extends Controller
             $designer = Designer::where('id','=',$value['designer_id'])->first();
           $designers[$k]['designer_name'] = $designer->name;
             $designers[$k]['designer_thumb'] = $designer->thumb_url;
-            $designers[$k]['designer_position'] = $designer->position;
+
+//            hyh 20211025 避免职位为空时，小程序里显示null的情况  接口:/api/v1/reserve/designer
+             $designers[$k]['designer_position'] = $designer->position;
+            if($designers[$k]['designer_position']==''){
+               $designers[$k]['designer_position']="";
+            }
+
+
             $designers[$k]['service'] = ServiceProject::whereIn('id',$value['service_project'])->select('id','name','price')->get();
         }
 
