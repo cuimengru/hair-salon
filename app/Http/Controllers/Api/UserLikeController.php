@@ -193,7 +193,7 @@ class UserLikeController extends Controller
                 ->paginate(15);
             foreach ($record as $k=>$value){
                 $record[$k] = Production::where('id','=',$value->production_id)
-                    ->select('id','type','title','thumb','video','is_new','is_new_lable')
+                    ->select('id','type','title','thumb','video','is_new','is_newlable')
                     ->first();
                 $record[$k]['follows'] = DB::table('user_favorite_productions')
                     ->where('user_id','=',$user->id)

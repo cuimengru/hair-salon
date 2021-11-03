@@ -40,7 +40,7 @@ class ProductionController extends Controller
              ->where('on_sale','=',1)
              ->orderBy('sort','desc')//hyh推荐作品排序
              ->orderBy('created_at','desc')
-            ->select('id','title','thumb','type','video','sort','is_new','is_new_lable')
+            ->select('id','title','thumb','type','video','sort','is_new','is_newlable')
             ->get();
          foreach ($productions as $p=>$product){
              //收藏作品
@@ -61,10 +61,10 @@ class ProductionController extends Controller
              $index1['production'] = $productions;
 
              if($productions[$p]['is_new']=="0"){
-                 $productions[$p]['is_new_lable']="";
+                 $productions[$p]['is_newlable']="";
              }else{
-                 if($productions[$p]['is_new_lable']==""){
-                     $productions[$p]['is_new_lable']="新品";
+                 if($productions[$p]['is_newlable']==""){
+                     $productions[$p]['is_newlable']="新品";
                  }
              }
          }
@@ -211,10 +211,10 @@ class ProductionController extends Controller
             unset($production[$k]['pivot']);
 
             if($production[$k]['is_new']=="0"){
-                $production[$k]['is_new_lable']="";
+                $production[$k]['is_newlable']="";
             }else{
-                if($production[$k]['is_new_lable']==""){
-                    $production[$k]['is_new_lable']="新品";
+                if($production[$k]['is_newlable']==""){
+                    $production[$k]['is_newlable']="新品";
                 }
             }
         }
@@ -265,7 +265,7 @@ class ProductionController extends Controller
             ->defaultSort('-sort_list') //hyh作品排序
             ->defaultSort('-created_at') //按照创建时间排序
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
-            ->select('id','title','thumb','type','video','sort_list','is_new','is_new_lable')
+            ->select('id','title','thumb','type','video','sort_list','is_new','is_newlable')
             ->paginate(15);
         foreach ($productions as $p=>$product){
             //收藏作品
@@ -287,10 +287,10 @@ class ProductionController extends Controller
 
 
             if($productions[$p]['is_new']=="0"){
-                $productions[$p]['is_new_lable']="";
+                $productions[$p]['is_newlable']="";
             }else{
-                if($productions[$p]['is_new_lable']==""){
-                    $productions[$p]['is_new_lable']="新品";
+                if($productions[$p]['is_newlable']==""){
+                    $productions[$p]['is_newlable']="新品";
                 }
             }
 

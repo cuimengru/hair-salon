@@ -16,7 +16,7 @@ class AddIsNewAndIsNewLableToProductionsTable extends Migration
 //        hyh作品 增加新品标识
         Schema::table('productions', function (Blueprint $table) {
             $table->integer('is_new')->default(0)->nullable()->comment('是否为新品 0为否 1为是');
-            $table->string('is_new_lable')->nullable()->comment('自定义新品标识');
+            $table->string('is_newlable')->nullable()->comment('自定义新品标识');
         });
     }
 

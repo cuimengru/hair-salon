@@ -120,7 +120,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Production::class,'user_favorite_productions')
             ->withTimestamps()
-            ->select('productions.id','productions.type','productions.title','productions.thumb','productions.is_new','productions.is_new_lable')
+            ->select('productions.id','productions.type','productions.title','productions.thumb','productions.is_new','productions.is_newlable')
             ->orderBy('user_favorite_productions.created_at','desc');
     }
 

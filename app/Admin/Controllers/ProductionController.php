@@ -326,7 +326,7 @@ class ProductionController extends AdminController
             0 => '否',
             1 => '是'
         ])->when(1,function (Form $form){
-            $form->text('is_new_lable', __('新品标签'))->help('最好不超过4个汉字或字符 否则影响显示');//hyh作品标题改为非必填
+            $form->text('is_newlable', __('新品标签'))->help('最好不超过4个汉字或字符 否则影响显示');//hyh作品标题改为非必填
         })->when(0,function (Form $form){
             })->help('全部作品页面 设置新品');
 
