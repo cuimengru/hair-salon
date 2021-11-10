@@ -52,6 +52,12 @@ class CultureController extends Controller
     //时尚资讯列表
     public function fashionIndex(Request $request)
     {
+//        hyh测试
+        $requestall = $request->all();
+
+        file_put_contents("../1234567890-fashion.txt", var_export($requestall,true));
+
+
         $fashions= Fashion::where('is_recommend','=',1)
             ->orderBy('order','asc')
             ->orderBy('created_at','desc')
