@@ -66,7 +66,12 @@ Route::prefix('v1')
                 Route::get('production', [ProductionController::class, 'index']);  //作品首页
 
 
-                Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
+
+                Route::middleware('shaixuan')
+                    ->group(function () {
+                        Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
+                    });
+
 
 
                 Route::get('production/{id}', [ProductionController::class, 'show']);  //作品详情
