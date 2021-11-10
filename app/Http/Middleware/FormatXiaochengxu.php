@@ -24,10 +24,11 @@ class FormatXiaochengxu
         file_put_contents("../1234567890-chushi.txt", var_export($requestall,true));
         foreach ($requestall as $key => $value) {
 
-          $value=json_decode($value,true);
-          if($value==''){
-              $value=NULL;
-          }
+//            $value1=json_decode($value,true);
+//            if(!empty($value1)){
+//                $value = implode(",", $value1);
+//            }
+
 
 
             $needle = "filter_";//判断是否包含filter_这个字符
