@@ -26,7 +26,7 @@ class FormatXiaochengxu
 
           $value=json_decode($value,true);
           if($value==''){
-              $value==NULL;
+              $value=NULL;
           }
 
 
