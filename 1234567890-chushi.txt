@@ -2,7 +2,7 @@ array (
   'page' => '1',
   'user_id' => '1',
   'filter_gender' => '[0,1]',
-  'filter_age_id' => '[1]',
+  'filter_age_id' => NULL,
   'filter_length_id' => NULL,
   'filter_color_id' => NULL,
   'filter_style_id' => NULL,
@@ -10,5 +10,5 @@ array (
   'filter_face_id' => NULL,
   'filter_project_id' => NULL,
   'filter_hair_id' => NULL,
-  'filter_type' => '[0,1]',
+  'filter_type' => NULL,
 )
