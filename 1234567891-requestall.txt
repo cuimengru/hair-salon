@@ -11,4 +11,17 @@ array (
   'filter_project_id' => NULL,
   'filter_hair_id' => NULL,
   'filter_type' => '[0,1]',
+  'filter' => 
+  array (
+    'gender' => '0,1',
+    'age_id' => '1',
+    'length_id' => '',
+    'color_id' => '',
+    'style_id' => '',
+    'height_id' => '',
+    'face_id' => '',
+    'project_id' => '',
+    'hair_id' => '',
+    'type' => '0,1',
+  ),
 )

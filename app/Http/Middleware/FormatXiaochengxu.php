@@ -28,8 +28,11 @@ class FormatXiaochengxu
 //            if(!empty($value1)){
 //                $value = implode(",", $value1);
 //            }
+//
 
-
+//            $value = str_replace('[', 'p', $value);
+//            $value = str_replace(']', 'q', $value);
+            $value = str_replace(array('[',']'),array('',''), $value);
 
             $needle = "filter_";//判断是否包含filter_这个字符
             if (strpos($key, $needle) !== false) { //如果$key中存在filter_这个字符串
