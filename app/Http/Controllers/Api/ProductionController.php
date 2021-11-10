@@ -296,8 +296,12 @@ class ProductionController extends Controller
 
         }
 
-
+        file_put_contents("../1234567890-productions.txt", var_export($productions,true));
         return $productions;
+
+
+
+
     }
 
 }
