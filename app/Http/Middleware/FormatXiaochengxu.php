@@ -25,6 +25,10 @@ class FormatXiaochengxu
         foreach ($requestall as $key => $value) {
 
           $value=json_decode($value,true);
+          if($value==''){
+              $value==NULL;
+          }
+
 
             $needle = "filter_";//判断是否包含filter_这个字符
             if (strpos($key, $needle) !== false) { //如果$key中存在filter_这个字符串
