@@ -20,9 +20,14 @@ class FormatXiaochengxu
     {
 
         $requestall = $request->all();
+
+        file_put_contents("../1234567890-chushi.txt", var_export($requestall,true));
         foreach ($requestall as $key => $value) {
+
+            $value=json_decode($value,true);
+
             $needle = "filter_";//判断是否包含filter_这个字符
-            if (strpos($key, $needle) !== false) {
+            if (strpos($key, $needle) !== false) { //如果$key中存在filter_这个字符串
 //               echo 'true';
 //               echo $key;
                 $key_new = str_replace($needle, '', $key);
@@ -68,9 +73,9 @@ class FormatXiaochengxu
 
 
 //
-//     file_put_contents("../1234567890.txt", var_export($filter_new,true));
-//     file_put_contents("../1234567891.txt", var_export($requestall,true));
-//     file_put_contents("../1234567892.txt", var_export($requestall2,true));
+     file_put_contents("../1234567890-filter_new.txt", var_export($filter_new,true));
+     file_put_contents("../1234567891-requestall.txt", var_export($requestall,true));
+     file_put_contents("../1234567892-request.txt", var_export($request,true));
 
 
 //hyh小程序筛选条件改造 只针对当前接口可以是以下改法：
