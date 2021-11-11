@@ -21,20 +21,28 @@ class FormatXiaochengxu
 
         $requestall = $request->all();
 
+
+
         file_put_contents("../1234567890-chushi.txt", var_export($requestall,true));
         foreach ($requestall as $key => $value) {
 
-//            $value1=json_decode($value,true);
-//            if(!empty($value1)){
-//                $value = implode(",", $value1);
-//            }
 //
 
-//            $value = str_replace('[', 'p', $value);
-//            $value = str_replace(']', 'q', $value);
             if(!empty($value)){
-            $value = str_replace(array('[',']'),array('',''), $value);
+                if($value=="[]"){
+                    $value=NULL;
+                }else{
+                    $value = str_replace(array('[',']'),array('',''), $value);
+//                $value = json_decode($value,true);
+                }
             }
+
+
+
+            $requestall[$key]=$value;
+
+            file_put_contents("../1234567890-requestall-new.txt", var_export($requestall,true));
+
             $needle = "filter_";//判断是否包含filter_这个字符
             if (strpos($key, $needle) !== false) { //如果$key中存在filter_这个字符串
 //               echo 'true';
@@ -83,7 +91,7 @@ class FormatXiaochengxu
 
 //
 //     file_put_contents("../1234567890-filter_new.txt", var_export($filter_new,true));
-     file_put_contents("../1234567891-requestall.txt", var_export($requestall,true));
+        file_put_contents("../1234567891-requestall.txt", var_export($requestall,true));
 //     file_put_contents("../1234567892-request.txt", var_export($request,true));
 
 

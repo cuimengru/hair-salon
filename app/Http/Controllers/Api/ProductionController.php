@@ -36,38 +36,38 @@ class ProductionController extends Controller
         }
 
         //作品$index['production']
-         $productions= Production::where('is_recommend','=',1)
-             ->where('on_sale','=',1)
-             ->orderBy('sort','desc')//hyh推荐作品排序
-             ->orderBy('created_at','desc')
+        $productions= Production::where('is_recommend','=',1)
+            ->where('on_sale','=',1)
+            ->orderBy('sort','desc')//hyh推荐作品排序
+            ->orderBy('created_at','desc')
             ->select('id','title','thumb','type','video','sort','is_new','is_newlable')
             ->get();
-         foreach ($productions as $p=>$product){
-             //收藏作品
-             if($request->user_id){
-                 $productions[$p]['follows'] = DB::table('user_favorite_productions')
-                     ->where('user_id','=',$request->user_id)
-                     ->where('production_id','=',$product->id)
-                     ->first();
-                 if ($productions[$p]['follows']){
-                     $productions[$p]['follows_production'] = 1; //已收藏
-                 }else{
-                     $productions[$p]['follows_production'] = 0; //未收藏
-                 }
-                 unset($productions[$p]['follows']);
-             }else{
-                 $productions[$p]['follows_production'] = 0; //未收藏
-             }
-             $index1['production'] = $productions;
+        foreach ($productions as $p=>$product){
+            //收藏作品
+            if($request->user_id){
+                $productions[$p]['follows'] = DB::table('user_favorite_productions')
+                    ->where('user_id','=',$request->user_id)
+                    ->where('production_id','=',$product->id)
+                    ->first();
+                if ($productions[$p]['follows']){
+                    $productions[$p]['follows_production'] = 1; //已收藏
+                }else{
+                    $productions[$p]['follows_production'] = 0; //未收藏
+                }
+                unset($productions[$p]['follows']);
+            }else{
+                $productions[$p]['follows_production'] = 0; //未收藏
+            }
+            $index1['production'] = $productions;
 
-             if($productions[$p]['is_new']=="0"){
-                 $productions[$p]['is_newlable']="";
-             }else{
-                 if($productions[$p]['is_newlable']==""){
-                     $productions[$p]['is_newlable']="新品";
-                 }
-             }
-         }
+            if($productions[$p]['is_new']=="0"){
+                $productions[$p]['is_newlable']="";
+            }else{
+                if($productions[$p]['is_newlable']==""){
+                    $productions[$p]['is_newlable']="新品";
+                }
+            }
+        }
 
 //        hyhmodelname
         $index['production']['modelname'] = config('modelname.productions');
@@ -80,7 +80,7 @@ class ProductionController extends Controller
             ->orderBy('sort','desc')//hyh推荐设计师排序
             ->orderBy('created_at','desc')
             ->select('id','name','thumb','description','position','label_id')->get();
-         //收藏设计师
+        //收藏设计师
         foreach ($index1['designers'] as $d=>$designer){
             //收藏设计师
             if($request->user_id){
@@ -228,22 +228,15 @@ class ProductionController extends Controller
 //        print_R($gender);
 //        exit();
 //
-//        $hhh = $request->all();
-//        file_put_contents("../1234hhh.txt", var_export($hhh,true));
 
+        $hhh = $request->all();
+        file_put_contents("../1234-kongzhiqi.txt", var_export($hhh,true));
 
         $productions = QueryBuilder::for(Production::class)
             ->allowedFilters([
-
-                AllowedFilter::exact('gender'), //性别
-                AllowedFilter::exact('type'), //作品类型 hyh新增作品类型筛选
-                //AllowedFilter::exact('age_id'), //年龄段
-//                AllowedFilter::exact('length_id'), //长度
-//                AllowedFilter::exact('color_id'), //发质
-//                AllowedFilter::exact('height_id'), //身高 //hyh身高改多选
-//                AllowedFilter::exact('face_id'), //脸型id
-//                AllowedFilter::exact('project_id'), //项目id
-                //AllowedFilter::exact('hair_id'), //烫染id
+                'gender', //性别
+                //AllowedFilter::exact('type'), //作品类型 hyh新增作品类型筛选
+                'type',
                 'style_id',
                 'age_id',
                 'hair_id',
@@ -251,15 +244,8 @@ class ProductionController extends Controller
                 'color_id',
                 'length_id',
                 'face_id',
-                'project_id'
+                'project_id',
             ])
-
-
-//            用like方法，要先根据逗号拆解 过滤器返回的多个值，然后逐个值进行like。
-//            ？？？？？不拆值的通俗mysql查询结果
-//                select * from productions where age_id like '%5%' and age_id like '%4%'
-
-
             ->where('on_sale','=',1)
             ->where('is_recommend','=',0)//hyh客户要求，列表页不显示推荐的作品。
             ->defaultSort('-sort_list') //hyh作品排序
@@ -267,6 +253,12 @@ class ProductionController extends Controller
             ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
             ->select('id','title','thumb','type','video','sort_list','is_new','is_newlable')
             ->paginate(15);
+
+
+//            用like方法，要先根据逗号拆解 过滤器返回的多个值，然后逐个值进行like。
+//            ？？？？？不拆值的通俗mysql查询结果
+//                select * from productions where age_id like '%5%' and age_id like '%4%'
+
         foreach ($productions as $p=>$product){
             //收藏作品
             if($request->user_id){
