@@ -11,17 +11,4 @@ array (
   'filter_project_id' => NULL,
   'filter_hair_id' => NULL,
   'filter_type' => NULL,
-  'filter' => 
-  array (
-    'gender' => '0',
-    'age_id' => NULL,
-    'length_id' => NULL,
-    'color_id' => NULL,
-    'style_id' => NULL,
-    'height_id' => NULL,
-    'face_id' => NULL,
-    'project_id' => NULL,
-    'hair_id' => NULL,
-    'type' => NULL,
-  ),
 )
