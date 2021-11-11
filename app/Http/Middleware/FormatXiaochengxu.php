@@ -29,9 +29,13 @@ class FormatXiaochengxu
             if(!empty($value)){
                 $value = str_replace(array('[',']'),array('',''), $value);
             }
-//            else{
-//                $value=NULL;
-//            }
+            else{
+                $value=NULL;
+            }
+
+
+            $requestall[$key]=$value;
+
 
             $needle = "filter_";//判断是否包含filter_这个字符
             if (strpos($key, $needle) !== false) { //如果$key中存在filter_这个字符串
