@@ -21,20 +21,36 @@ class FormatXiaochengxu
 
         $requestall = $request->all();
 
+
+
+        $requestall['filter_gender'] = str_replace(array('[',']'),array('',''), $requestall['filter_gender']);
+        $requestall['filter_height_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_height_id']);
+        $requestall['filter_age_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_age_id']);
+        $requestall['filter_color_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_color_id']);
+        $requestall['filter_length_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_length_id']);
+        $requestall['filter_face_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_face_id']);
+        $requestall['filter_style_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_style_id']);
+        $requestall['filter_project_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_project_id']);
+        $requestall['filter_hair_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_hair_id']);
+        $requestall['filter_type'] = str_replace(array('[',']'),array('',''), $requestall['filter_type']);
+
+
+
+
         file_put_contents("../1234567890-chushi.txt", var_export($requestall,true));
         foreach ($requestall as $key => $value) {
 
 //
 
-            if(!empty($value)){
-                $value = str_replace(array('[',']'),array('',''), $value);
-            }
-            else{
-                $value=NULL;
-            }
+//            if(!empty($value)){
+//                $value = str_replace(array('[',']'),array('',''), $value);
+//            }
+//            else{
+//                $value=NULL;
+//            }
 
 
-            $requestall[$key]=$value;
+
 
 
             $needle = "filter_";//判断是否包含filter_这个字符
