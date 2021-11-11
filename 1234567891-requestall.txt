@@ -1,7 +1,7 @@
 array (
   'page' => '1',
   'user_id' => '1',
-  'filter_gender' => NULL,
+  'filter_gender' => '0',
   'filter_age_id' => NULL,
   'filter_length_id' => NULL,
   'filter_color_id' => NULL,
@@ -10,10 +10,10 @@ array (
   'filter_face_id' => NULL,
   'filter_project_id' => NULL,
   'filter_hair_id' => NULL,
-  'filter_type' => '[0]',
+  'filter_type' => NULL,
   'filter' => 
   array (
-    'gender' => NULL,
+    'gender' => '0',
     'age_id' => NULL,
     'length_id' => NULL,
     'color_id' => NULL,
@@ -22,9 +22,6 @@ array (
     'face_id' => NULL,
     'project_id' => NULL,
     'hair_id' => NULL,
-    'type' => 
-    array (
-      0 => 0,
-    ),
+    'type' => NULL,
   ),
 )

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b99b99f2a0bc45306432631f94535656",
+    "content-hash": "515105d3b5398c25a98a8d5e1640b99b",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -343,6 +343,7 @@
             "support": {
                 "source": "https://github.com/codingyu/laravel-ueditor/tree/2.0.2"
             },
+            "abandoned": true,
             "time": "2020-11-17T11:45:07+00:00"
         },
         {
@@ -4891,6 +4892,65 @@
                 "overtrue"
             ],
             "time": "2021-04-28T03:56:56+00:00"
+        },
+        {
+            "name": "overtrue/laravel-query-logger",
+            "version": "2.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/laravel-query-logger.git",
+                "reference": "46b546aa2c4f6319ce798c8f8128b08718b32bae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/laravel-query-logger/zipball/46b546aa2c4f6319ce798c8f8128b08718b32bae",
+                "reference": "46b546aa2c4f6319ce798c8f8128b08718b32bae",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "laravel/framework": "~5.5||~6.0||~7.0||~8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Overtrue\\LaravelQueryLogger\\ServiceProvider"
+                    ]
+                },
+                "hooks": {
+                    "pre-commit": [
+                        "composer test",
+                        "composer fix-style"
+                    ],
+                    "pre-push": [
+                        "composer test",
+                        "composer check-style"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\LaravelQueryLogger\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "anzhengchao@gmail.com"
+                }
+            ],
+            "description": "A dev tool to log all queries for laravel application.",
+            "time": "2021-08-12T08:49:45+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
