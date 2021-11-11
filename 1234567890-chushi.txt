@@ -10,5 +10,5 @@ array (
   'filter_face_id' => NULL,
   'filter_project_id' => NULL,
   'filter_hair_id' => NULL,
-  'filter_type' => NULL,
+  'filter_type' => '[0]',
 )

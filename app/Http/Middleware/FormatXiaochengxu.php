@@ -44,7 +44,8 @@ class FormatXiaochengxu
 //
 
             if(!empty($value)){
-                $value = str_replace(array('[',']'),array('',''), $value);
+//                $value = str_replace(array('[',']'),array('',''), $value);
+                $value = json_decode($value,true);
             }
             else{
                 $value=NULL;
