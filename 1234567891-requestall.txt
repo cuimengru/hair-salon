@@ -10,7 +10,7 @@ array (
   'filter_face_id' => NULL,
   'filter_project_id' => NULL,
   'filter_hair_id' => NULL,
-  'filter_type' => '[0,1]',
+  'filter_type' => '[0]',
   'filter' => 
   array (
     'gender' => NULL,
@@ -22,6 +22,9 @@ array (
     'face_id' => NULL,
     'project_id' => NULL,
     'hair_id' => NULL,
-    'type' => '0,1',
+    'type' => 
+    array (
+      0 => 0,
+    ),
   ),
 )
