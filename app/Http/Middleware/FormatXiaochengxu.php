@@ -23,21 +23,6 @@ class FormatXiaochengxu
 
 
 
-//        $requestall['filter_gender'] = str_replace(array('[',']'),array('',''), $requestall['filter_gender']);
-//        file_put_contents("../1234567890-filter.txt", var_export($requestall['filter_gender'],true));
-//        $requestall['filter_height_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_height_id']);
-//        $requestall['filter_age_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_age_id']);
-//        $requestall['filter_color_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_color_id']);
-//        $requestall['filter_length_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_length_id']);
-//        $requestall['filter_face_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_face_id']);
-//        $requestall['filter_style_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_style_id']);
-//        $requestall['filter_project_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_project_id']);
-//        $requestall['filter_hair_id'] = str_replace(array('[',']'),array('',''), $requestall['filter_hair_id']);
-//        $requestall['filter_type'] = str_replace(array('[',']'),array('',''), $requestall['filter_type']);
-
-
-
-
         file_put_contents("../1234567890-chushi.txt", var_export($requestall,true));
         foreach ($requestall as $key => $value) {
 
@@ -47,7 +32,7 @@ class FormatXiaochengxu
                 if($value=="[]"){
                     $value=NULL;
                 }else{
-                $value = str_replace(array('[',']'),array('',''), $value);
+                    $value = str_replace(array('[',']'),array('',''), $value);
 //                $value = json_decode($value,true);
                 }
             }
@@ -106,7 +91,7 @@ class FormatXiaochengxu
 
 //
 //     file_put_contents("../1234567890-filter_new.txt", var_export($filter_new,true));
-     file_put_contents("../1234567891-requestall.txt", var_export($requestall,true));
+        file_put_contents("../1234567891-requestall.txt", var_export($requestall,true));
 //     file_put_contents("../1234567892-request.txt", var_export($request,true));
 
 
