@@ -44,12 +44,14 @@ class FormatXiaochengxu
 //
 
             if(!empty($value)){
+                if($value=="[]"){
+                    $value=NULL;
+                }else{
                 $value = str_replace(array('[',']'),array('',''), $value);
 //                $value = json_decode($value,true);
+                }
             }
-            else{
-                $value=NULL;
-            }
+
 
 
             $requestall[$key]=$value;
