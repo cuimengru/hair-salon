@@ -45,7 +45,6 @@ class Kernel extends HttpKernel
             //'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\ChangeResponseStructureMiddleware::class,
-            \App\Http\Middleware\FormatXiaochengxu::class,//hyh小程序筛选条件改造
         ],
     ];
 
@@ -66,5 +65,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'shaixuan' => \App\Http\Middleware\FormatXiaochengxu::class,//hyh小程序筛选条件改造
     ];
 }

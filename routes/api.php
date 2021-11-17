@@ -65,9 +65,11 @@ Route::prefix('v1')
 
                 Route::get('production', [ProductionController::class, 'index']);  //作品首页
 
-
-                Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
-
+                Route::middleware('shaixuan')
+                    ->group(function () {
+                        Route::get('allproduction', [ProductionController::class, 'allIndex']);  //全部作品列表
+                        Route::get('allproduction_xiaochengxu', [ProductionController::class, 'allIndex_xiaochengxu']);  //全部作品列表_小程序
+                    });
 
                 Route::get('production/{id}', [ProductionController::class, 'show']);  //作品详情
                 /*Route::get('designers', [DesignerController::class, 'index']);//设计师列表*/

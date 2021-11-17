@@ -292,4 +292,224 @@ class ProductionController extends Controller
         return $productions;
     }
 
+    //全部作品列表_小程序
+    public function allIndex_xiaochengxu(Request $request)
+    {
+//        $filter_gender='gender';
+//        print_R($gender);
+//        exit();
+//
+
+        $requestall = $request->all();
+//        file_put_contents("../9999999999999-111.txt", var_export($requestall,true));
+
+//     $requestall['filter']= array (
+//     'gender' => NULL,
+//     'height_id' => NULL,
+//     'age_id' => NULL,
+//     'color_id' => NULL,
+//     'length_id' => NULL,
+//     'face_id' => NULL,
+//     'style_id' => NULL,
+//     'project_id' => NULL,
+//     'hair_id' => NULL,
+//     'type' => 0,
+//   );
+
+
+//   file_put_contents("../9999999999999-333333333333.txt", var_export($requestall['filter'],true));
+
+        if(isset($requestall['filter'])){
+
+            $type=$requestall['filter']['type'];
+            if(!empty($type)){
+                if($type!="\"\""){//选择“不限”
+                    $type= explode(",",$type);
+                }else{
+                    $type=NULL;
+                }
+            }
+
+            $gender=$requestall['filter']['gender'];
+            if(!empty($gender)){
+                if($gender!="\"\""){
+                    $gender= explode(",",$gender);
+                }else{
+                    $gender=NULL;
+                }
+            }
+
+            $age_id=$requestall['filter']['age_id'];
+            if(!empty($age_id)){
+                if($age_id!="\"\""){
+                    $age_id_new='%'.$age_id.'%';
+                    $age_id=str_replace(',','%,%',$age_id_new);
+                }else{
+                    $age_id='%[%';
+                }
+            }
+
+            $style_id=$requestall['filter']['style_id'];
+            if(!empty($style_id)){
+                if($style_id!="\"\""){
+                    $style_id_new='%'.$style_id.'%';
+                    $style_id=str_replace(',','%,%',$style_id_new);
+                }else{
+                    $style_id='%[%';
+                }
+            }
+
+            $hair_id=$requestall['filter']['hair_id'];
+            if(!empty($hair_id)){
+                if($hair_id!="\"\""){
+                    $hair_id_new='%'.$hair_id.'%';
+                    $hair_id=str_replace(',','%,%',$hair_id_new);
+                }else{
+                    $hair_id='%[%';
+                }
+            }
+
+            $height_id=$requestall['filter']['height_id'];
+            if(!empty($height_id)){
+                if($height_id!="\"\""){
+                    $height_id_new='%'.$height_id.'%';
+                    $height_id=str_replace(',','%,%',$height_id_new);
+                }else{
+                    $height_id='%[%';
+                }
+            }
+
+            $color_id=$requestall['filter']['color_id'];
+            if(!empty($color_id)){
+                if($color_id!="\"\""){
+                    $color_id_new='%'.$color_id.'%';
+                    $color_id=str_replace(',','%,%',$color_id_new);
+                }else{
+                    $color_id='%[%';
+                }
+            }
+
+            $length_id=$requestall['filter']['length_id'];
+            if(!empty($length_id)){
+                if($length_id!="\"\""){
+                    $length_id_new='%'.$length_id.'%';
+                    $length_id=str_replace(',','%,%',$length_id_new);
+                }else{
+                    $length_id='%[%';
+                }
+            }
+
+            $face_id=$requestall['filter']['face_id'];
+            if(!empty($face_id)){
+                if($face_id!="\"\""){
+                    $face_id_new='%'.$face_id.'%';
+                    $face_id=str_replace(',','%,%',$face_id_new);
+                }else{
+                    $face_id='%[%';
+                }
+            }
+
+            $project_id=$requestall['filter']['project_id'];
+            if(!empty($project_id)){
+                if($project_id!="\"\""){
+                    $project_id_new='%'.$project_id.'%';
+                    $project_id=str_replace(',','%,%',$project_id_new);
+                }else{
+                    $project_id='%[%';
+                }
+            }
+
+        }else{
+            $type=NULL;
+            $gender=NULL;
+            $age_id='%[%';
+            $style_id='%[%';
+            $hair_id='%[%';
+            $height_id='%[%';
+            $color_id='%[%';
+            $length_id='%[%';
+            $face_id='%[%';
+            $project_id='%[%';
+        }
+
+//  $type=NULL;
+
+// $aaagggeee="%1%,%2%";
+// $aaagggeee='%[%';
+
+
+        // $request->request->add(['filter' => $requestall['filter']]);
+
+//        file_put_contents("../9999999999999-222.txt", var_export($gender,true));
+
+        $productions = QueryBuilder::for(Production::class)
+            ->allowedFilters([
+                // 'gender', //性别
+                AllowedFilter::exact('gender')->default($gender),
+                AllowedFilter::exact('type')->default($type), //作品类型 hyh新增作品类型筛选
+                // 'type',
+                // 'style_id',
+                // 'age_id',
+                // AllowedFilter::exact('age_id')->default($age_id),
+                // 'hair_id',
+                // 'height_id',//hyh身高改多选
+                // 'color_id',
+                // 'length_id',
+                // 'face_id',
+                // 'project_id',
+            ])
+            ->where('age_id','like',$age_id)
+            ->where('style_id','like',$style_id)
+            ->where('hair_id','like',$hair_id)
+            ->where('height_id','like',$height_id)
+            ->where('color_id','like',$color_id)
+            ->where('length_id','like',$length_id)
+            ->where('face_id','like',$face_id)
+            ->where('project_id','like',$project_id)
+            ->where('on_sale','=',1)
+            ->where('is_recommend','=',0)//hyh客户要求，列表页不显示推荐的作品。
+            ->defaultSort('-sort_list') //hyh作品排序
+            ->defaultSort('-created_at') //按照创建时间排序
+            ->allowedSorts('updated_at') // 支持排序字段 更新时间 价格
+            ->select('id','title','thumb','type','video','sort_list','is_new','is_newlable')
+            ->paginate(15);
+
+
+//            用like方法，要先根据逗号拆解 过滤器返回的多个值，然后逐个值进行like。
+//            ？？？？？不拆值的通俗mysql查询结果
+//                select * from productions where age_id like '%5%' and age_id like '%4%'
+
+        foreach ($productions as $p=>$product){
+            //收藏作品
+            if($request->user_id){
+                $productions[$p]['follows'] = DB::table('user_favorite_productions')
+                    ->where('user_id','=',$request->user_id)
+                    ->where('production_id','=',$product->id)
+                    ->first();
+                if ($productions[$p]['follows']){
+                    $productions[$p]['follows_production'] = 1; //已收藏
+                }else{
+                    $productions[$p]['follows_production'] = 0; //未收藏
+                }
+                unset($productions[$p]['follows']);
+            }else{
+                $productions[$p]['follows_production'] = 0; //未收藏
+            }
+            $index['production'] = $productions;
+
+
+            if($productions[$p]['is_new']=="0"){
+                $productions[$p]['is_newlable']="";
+            }else{
+                if($productions[$p]['is_newlable']==""){
+                    $productions[$p]['is_newlable']="新品";
+                }
+            }
+
+        }
+
+
+        return $productions;
+    }
+
 }
